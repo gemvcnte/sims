@@ -1,40 +1,40 @@
-const { StudentApplication } = require('../models/userModel');
-const asyncHandler = require('express-async-handler')
-const bcrypt = require('bcrypt')
-    
-const applyStudent = asyncHandler(async(req, res) => {
-    try {
-        const registrationData = req.body;
+const { StudentApplication } = require("../models/userModel");
+const asyncHandler = require("express-async-handler");
+const bcryptjs = require("bcryptjs");
 
-//         // const validationError = validateRegistrationData(registrationData);
-        
-//         // if (validationError) {
-//         // return res.status(400).json({ error: validationError });
-//         // }
+const applyStudent = asyncHandler(async (req, res) => {
+  try {
+    const registrationData = req.body;
 
-        const hashedPassword = await bcrypt.hash(registrationData.birthDate, 16)
+    //         // const validationError = validateRegistrationData(registrationData);
 
-        registrationData.registrationDate = new Date();
-        registrationData.password = hashedPassword
+    //         // if (validationError) {
+    //         // return res.status(400).json({ error: validationError });
+    //         // }
 
-        const student = new StudentApplication(registrationData);
-        const savedStudent = await student.save();
-        
+    const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 16);
 
-        res.json({ message: "Personal information saved", student: savedStudent });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to save personal information' + `${err}` });
-    }
+    registrationData.registrationDate = new Date();
+    registrationData.password = hashedPassword;
+
+    const student = new StudentApplication(registrationData);
+    const savedStudent = await student.save();
+
+    res.json({ message: "Personal information saved", student: savedStudent });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Failed to save personal information" + `${err}` });
+  }
 });
-
 
 // const applyStudent = asyncHandler(async(req, res) => {
 //     try {
 //         const registrationData = req.body;
 
 //         // Hash the birthDate field
-//         const hashedBirthDate = await bcrypt.hash(registrationData.birthDate, 10);
+//         const hashedBirthDate = await bcryptjs.hash(registrationData.birthDate, 10);
 
 //         // Update the birthDate with the hashed value
 //         registrationData.birthDate = hashedBirthDate;
@@ -56,44 +56,40 @@ const applyStudent = asyncHandler(async(req, res) => {
 //     }
 // });
 
-
 module.exports = { applyStudent };
 
+//const validateRegistrationData = (data) => {
+// const requiredFields = [
+//     'firstName',
+//     'middleName',
+//     'lastName',
+//     'extensionName',
+//     'birthDate',
+//     'gender',
+//     'currentAddress',
+//     'emailAddress',
+//     'fatherName',
+//     'fatherContactNumber',
+//     'motherName',
+//     'motherContactNumber',
+//     'lrn',
+//     'schoolYear',
+//     'semester',
+//     'track',
+//     'strand',
+// ];
 
+// for (const field of requiredFields) {
+//     if (!data[field]) {
+//     return `Missing ${field}`;
+//     }
+// }
 
-    //const validateRegistrationData = (data) => {
-    // const requiredFields = [
-    //     'firstName',
-    //     'middleName',
-    //     'lastName',
-    //     'extensionName',
-    //     'birthDate',
-    //     'gender',
-    //     'currentAddress',
-    //     'emailAddress',
-    //     'fatherName',
-    //     'fatherContactNumber',
-    //     'motherName',
-    //     'motherContactNumber',
-    //     'lrn',
-    //     'schoolYear',
-    //     'semester',
-    //     'track',
-    //     'strand',
-    // ];
-    
-    // for (const field of requiredFields) {
-    //     if (!data[field]) {
-    //     return `Missing ${field}`;
-    //     }
-    // }
+// return null;
+// };
 
-    // return null;
-    // };
-
-
-        // if (!registrationData.guardianName || !registrationData.guardianContactNumber || registrationData.guardianRelationship !== 'studentApplication') {
-        // registrationData.guardianName = 'none';
-        // registrationData.guardianContactNumber = 'none';
-        // registrationData.guardianRelationship = 'none';
-        // }
+// if (!registrationData.guardianName || !registrationData.guardianContactNumber || registrationData.guardianRelationship !== 'studentApplication') {
+// registrationData.guardianName = 'none';
+// registrationData.guardianContactNumber = 'none';
+// registrationData.guardianRelationship = 'none';
+// }
