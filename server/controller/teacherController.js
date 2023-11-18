@@ -22,7 +22,13 @@ const teacherLogin = asyncHandler(async (req, res) => {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    const token = generateAuthToken(teacher);
+    const tokenPayload = {
+      _id: admin.id,
+      username: admin.username,
+      role: "teacher",
+    };
+
+    const token = generateAuthToken(tokenPayload);
 
     res.json({ message: "Login Successfully.", token });
   } catch (error) {
