@@ -23,8 +23,8 @@ const teacherLogin = asyncHandler(async (req, res) => {
     }
 
     const tokenPayload = {
-      _id: admin.id,
-      username: admin.username,
+      _id: teacher.id,
+      username: teacher.username,
       role: "teacher",
     };
 
