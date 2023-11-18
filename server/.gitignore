@@ -1,9 +1,0 @@
-
-.env
-client/.env
-server/.env
-
-build
-client/build
-
-server/public/assets

@@ -41,6 +41,7 @@ app.use(express.json())
 const studentApplicationRoute = require('./routes/studentApplicationRoute');
 app.use('/apply', studentApplicationRoute);
 
+// Routes specfic
 // Admin routes
 const adminRoute = require('./routes/adminRoute');
 app.use('/admin', adminRoute);
