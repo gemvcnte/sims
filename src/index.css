@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* For hsl(197deg 93% 53% / <alpha-value>) */
+    --clr-blue-400: 197deg 93% 53%;
+
+    --clr-black-300: #8596a8;
+    --clr-black-400: #123354;
+
+    --clr-white-400: #ffffff;
+    --clr-white-500: #e4e8ee;
+    --clr-white-600: #d2dae4;
+    --clr-white-700: #b6babe;
+    --clr-white-800: #e4e8ee;
+  }
+}
+
+@layer components {
+  body {
+    @apply bg-white-500 text-black-400;
+  }
+}
+
+body {
+  /* color: #123354; */
+  /* font-family: "Inter", sans-serif; */
+}
+
+* {
+  /* outline: 1px solid red; */
+}
