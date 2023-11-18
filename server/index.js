@@ -51,7 +51,7 @@ app.use('/student', studentRoute);
 
 // Teacher routes
 const teacherRoute = require('./routes/teacherRoute');
-app.use('/academic', teacherRoute);
+app.use('/teacher', teacherRoute);
 
 // Start the server
 app.listen(port, () => {
