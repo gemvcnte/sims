@@ -15,24 +15,22 @@ const HomeRoutes = () => {
     if (authToken) {
       try {
         const decodedToken = jwtDecode(authToken);
-        console.log(decodedToken);
-
         const role = decodedToken.role;
 
         setUserRole(role);
+
+        console.log(userRole);
       } catch (error) {
         console.error("Error decoding token:", error);
       }
     }
   }, []);
 
-  console.log(userRole);
-
   return (
     <Routes>
-      {userRole == "Student" && <Route path="*" element={<StudentRouter />} />}
-      {userRole == "Teacher" && <Route path="*" element={<TeacherRouter />} />}
-      {userRole == "Admin" && <Route path="*" element={<AdminRouter />} />}
+      {userRole == "student" && <Route path="*" element={<StudentRouter />} />}
+      {userRole == "teacher" && <Route path="*" element={<TeacherRouter />} />}
+      {userRole == "admin" && <Route path="*" element={<AdminRouter />} />}
       {!userRole && <Route path="*" element={<LoginRoutes />} />}
     </Routes>
   );

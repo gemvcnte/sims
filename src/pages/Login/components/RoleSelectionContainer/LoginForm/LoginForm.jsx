@@ -40,6 +40,7 @@ function LoginForm({ role, setSelectedRole }) {
           const token = response.data.token;
           localStorage.setItem("authToken", token);
           navigate("/");
+          window.location.reload();
         } else {
           console.log("Login failed");
         }
