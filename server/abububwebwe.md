@@ -1,3 +1,7 @@
+TRIGGER WARNING❗❗❗❗❗❗❗❗
+PUTANGINA MO YUNG .ENV MO MUNA BAGO MO BUKSAN❗❗❗
+
+
    packages to install in server side
 
     "bcrypt": "^5.1.1",
