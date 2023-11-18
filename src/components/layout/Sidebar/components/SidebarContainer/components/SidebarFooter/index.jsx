@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function SidebarFooter() {
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("authToken");
     navigate("/");
     window.location.reload();
   };
