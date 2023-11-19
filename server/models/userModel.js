@@ -272,7 +272,7 @@ const studentApplicationSchema = new mongoose.Schema(
       required: true,
     },
     schoolYear: {
-      type: Number,
+      type: String,
       required: true,
     },
     semester: {
