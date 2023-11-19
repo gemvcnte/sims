@@ -23,8 +23,6 @@ export default function ApplicationMonitoring() {
     fetchData();
   }, []);
 
-  console.log(userData);
-
   return (
     <section className="w-full">
       <header className="mx-4 flex justify-between border-b border-white-700 py-8 italic">

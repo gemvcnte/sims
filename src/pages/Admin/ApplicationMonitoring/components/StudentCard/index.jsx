@@ -23,8 +23,7 @@ export default function StudentCard({ user, userId }) {
         studentApplicationId: userId,
       });
 
-      console.log("Enrollment successful:", response.data);
-      showSuccessNotification("Enrolled Successfully");
+      showSuccessNotification("Student Enrolled Successfully");
       hideTheCard();
     } catch (error) {
       console.error("Error enrolling student:", error.message);

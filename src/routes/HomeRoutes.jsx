@@ -18,8 +18,6 @@ const HomeRoutes = () => {
         const role = decodedToken.role;
 
         setUserRole(role);
-
-        console.log(userRole);
       } catch (error) {
         console.error("Error decoding token:", error);
       }
