@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Step1, Step2, Step3, Header } from "./components";
 import config from "@config";
 import axios from "axios";
+import LoadingSpinner from "@utils/LoadingSpinner";
 import "./registration.css";
 
 export default function Registration() {
@@ -15,6 +16,8 @@ export default function Registration() {
     };
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
   const baseUrl = config.development.baseUrl;
   const registrationApi = `${baseUrl}/apply`;
 
@@ -24,7 +27,7 @@ export default function Registration() {
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
     if (step === 3) {
-      handleSubmit(data);
+      return handleSubmit(data);
     }
     setStep(step + 1);
   };
@@ -35,9 +38,8 @@ export default function Registration() {
   };
 
   const handleSubmit = async (data) => {
-    console.log(data);
-    console.log(baseUrl);
-    setFormData({});
+    setLoading(true);
+
     try {
       const response = await axios.post(registrationApi, data);
       if (response.status === 200) {
@@ -45,18 +47,18 @@ export default function Registration() {
           autoClose: 10000,
           pauseOnHover: true,
         });
-        setStep(1);
+        setLoading(false);
         setFormData({});
+        setStep(1);
       }
     } catch (error) {
       console.error("Error submitting data:", error);
     }
-
-    setStep(1);
   };
 
   return (
     <>
+      {loading && <LoadingSpinner />}
       <div className="fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center bg-white-400 md:hidden">
         <p>Registration Only Available on Desktop</p>
       </div>
