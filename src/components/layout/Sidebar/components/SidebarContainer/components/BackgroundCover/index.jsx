@@ -6,7 +6,7 @@ export default function BackgroundCover() {
 
   return (
     <div
-      className="absolute z-10 h-[100vh] w-[100vw] bg-black-400 opacity-30 md:hidden"
+      className="fixed z-10 h-[100vh] w-[100vw] bg-black-400 opacity-30 md:hidden"
       onClick={toggleSidebar}
     ></div>
   );
