@@ -65,3 +65,11 @@ Then delete the node_modules folder
 ```bash
 npm i
 ```
+
+Add the .env file
+
+Run start
+
+```bash
+npm start
+```
