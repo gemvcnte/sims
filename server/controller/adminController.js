@@ -152,19 +152,34 @@ const deleteAdmin = asyncHandler(async (req, res) => {
 
 const acceptStudentApplication = asyncHandler(async (req, res) => {
   try {
-    const applicationData = req.body;
+    const { studentApplicationId } = req.body;
 
-    const studentEnrolled = new studentEnrolled(applicationData);
+    // Find the application by ID
+    const originalStudentApplication = await StudentApplication.findById(
+      studentApplicationId
+    );
 
+    if (!originalStudentApplication) {
+      return res.status(404).json({ message: "Student Application not found" });
+    }
+
+    // Create a new object with an additional "password" field
+    const modifiedStudentApplication = {
+      ...originalStudentApplication.toObject(),
+      password: bcryptjs.hashSync(originalStudentApplication.birthDate, 10), // Replace 10 with your desired js salt rounds
+    };
+
+    // Save the modified object to the enrolledStudents collection
+    const studentEnrolled = new Student(modifiedStudentApplication);
     await studentEnrolled.save();
 
-    await StudentApplication.findByIdAndUpdate(applicationData._id, {
+    await StudentApplication.findByIdAndUpdate(originalStudentApplication._id, {
       status: "enrolled",
     });
 
     res.status(200).json({ message: "Student Enrolled" });
   } catch (error) {
-    return res.status(500).json({ message: `There is an error ${error}` });
+    return res.status(500).json({ message: `Error: ${error.message}` });
   }
 });
 
