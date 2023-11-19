@@ -18,6 +18,14 @@ git checkout branch-name
 
 Before pushing new code, it's essential to pull changes from the remote repository. Use the following commands:
 
+Use rebase as reconciliation strategy:
+
+```bash
+git config pull.rebase true
+```
+
+After configuring the strategy, run the following command to pull the changes:
+
 ```bash
 git pull origin branch-name
 ```
@@ -41,7 +49,7 @@ git commit -m "Your commit message"
 Push the changes to the remote repository:
 
 ```bash
-git push origin branch-name
+git push
 ```
 
 ## Server
