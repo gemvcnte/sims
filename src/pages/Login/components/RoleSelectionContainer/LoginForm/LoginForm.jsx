@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
   const baseUrl = config.development.baseUrl;
-  const apiUrl = `${baseUrl}/${role}/login`;
+  let apiUrl = `${baseUrl}/${role}/login`;
 
   const [loginData, setLoginData] = useState({
     role: role,
@@ -23,16 +23,10 @@ function LoginForm({ role, setSelectedRole }) {
 
     const isFormValid = FormValidator(loginData, 4);
 
-    // if (isFormValid) {
-    //   localStorage.setItem("userRole", loginData.role);
-    //   // setTimeout(() => {
-    //   navigate("/");
-    //   // }, 1000);
-    // }
-
     if (isFormValid) {
       try {
         const response = await axios.post(apiUrl, loginData);
+        console.log(apiUrl);
 
         if (response.status === 200) {
           console.log(response);
