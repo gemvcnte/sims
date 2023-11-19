@@ -13,6 +13,8 @@ const announcementSchema = mongoose.Schema({
     createdBy: {
         type: String,
         required: true,
+        // role: 'admin',
+        // enum: ['admin', 'teacher']
     },
 }, {timestamps: true})
 
