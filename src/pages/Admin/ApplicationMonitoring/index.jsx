@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { useSidebarContext } from "@contexts/SidebarContext.jsx";
 import axios from "axios";
-import StudentCard from "./components/StudentCard.jsx";
+import StudentCard from "./components/StudentCard";
 
 export default function ApplicationMonitoring() {
   const { toggleSidebar } = useSidebarContext();
@@ -41,7 +41,7 @@ export default function ApplicationMonitoring() {
 
       <main className="flex flex-col gap-4 p-4">
         {userData.map((user) => (
-          <StudentCard key={user._id} user={user} />
+          <StudentCard key={user._id} user={user} userId={user._id} />
         ))}
       </main>
     </section>
