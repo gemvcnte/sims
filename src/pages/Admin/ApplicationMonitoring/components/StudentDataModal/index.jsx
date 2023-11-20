@@ -32,6 +32,10 @@ const selectOptions = [
 export default function StudentDataModal({ application, onSave, onClose }) {
   const [editedApplication, setEditedApplication] = useState({
     ...application,
+    // Convert values to lowercase
+    track: application.track ? application.track.toLowerCase() : "",
+    strand: application.strand ? application.strand.toLowerCase() : "",
+    semester: application.semester ? application.semester.toLowerCase() : "",
   });
 
   const handleInputChange = (field, value) => {

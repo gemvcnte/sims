@@ -8,7 +8,7 @@ import StudentDataModal from "./components/StudentDataModal";
 export default function ApplicationMonitoring() {
   const { toggleSidebar } = useSidebarContext();
   const [pendingApplications, setPendingApplications] = useState([]);
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedApplication, setSelectedApplication] = useState({});
 
   useEffect(() => {
     const fetchPendingApplications = async () => {
@@ -17,6 +17,7 @@ export default function ApplicationMonitoring() {
           "http://localhost:5000/admin/getPending",
         );
         setPendingApplications(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching pending applications:", error.message);
       }
@@ -29,6 +30,10 @@ export default function ApplicationMonitoring() {
     setSelectedApplication(application);
     console.log(application);
   };
+
+  useEffect(() => {
+    console.log(selectedApplication);
+  }, [selectedApplication]);
 
   const handleSaveChanges = (editedApplication) => {
     setPendingApplications((prevApplications) => {
