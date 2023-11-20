@@ -39,7 +39,7 @@ app.use(express.json())
 
 // Apply @ school
 const studentApplicationRoute = require('./routes/studentApplicationRoute');
-app.use('/apply', studentApplicationRoute);
+app.use('/', studentApplicationRoute);
 
 // Admin routes
 const adminRoute = require('./routes/adminRoute');
