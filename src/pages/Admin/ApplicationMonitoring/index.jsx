@@ -30,10 +30,27 @@ export default function ApplicationMonitoring() {
     console.log(selectedApplication);
   };
 
+  const handleSaveChanges = (editedApplication) => {
+    // Handle saving changes to the backend or perform any necessary actions
+    console.log("Saving changes:", editedApplication);
+    // Close the modal
+    handleModalClose();
+  };
+
+  const handleModalClose = () => {
+    setSelectedApplication(null);
+  };
+
   return (
     <>
       <section className="w-full">
-        <StudentDataModal application={selectedApplication} />
+        {selectedApplication && (
+          <StudentDataModal
+            application={selectedApplication}
+            onSave={handleSaveChanges}
+            onClose={handleModalClose}
+          />
+        )}
         <header className="mx-4 flex justify-between border-b border-white-700 py-8 italic">
           <Icon
             icon="heroicons-outline:menu-alt-2"
