@@ -31,10 +31,15 @@ export default function ApplicationMonitoring() {
   };
 
   const handleSaveChanges = (editedApplication) => {
-    // Handle saving changes to the backend or perform any necessary actions
-    console.log("Saving changes:", editedApplication);
-    // Close the modal
-    handleModalClose();
+    setPendingApplications((prevApplications) => {
+      const updatedApplications = prevApplications.map((app) =>
+        app._id === editedApplication._id ? editedApplication : app,
+      );
+      return updatedApplications;
+    });
+
+    // Clear the selected application after saving changes
+    setSelectedApplication(null);
   };
 
   const handleModalClose = () => {

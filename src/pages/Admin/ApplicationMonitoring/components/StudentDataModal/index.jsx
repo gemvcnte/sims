@@ -12,10 +12,8 @@ export default function StudentDataModal({ application, onSave, onClose }) {
     });
   };
 
-  const handleSave = () => {
-    // Perform save action and pass the edited application to the parent component
+  const handleSaveChanges = () => {
     onSave && onSave(editedApplication);
-    // Close the modal
     onClose && onClose();
   };
 
@@ -33,13 +31,56 @@ export default function StudentDataModal({ application, onSave, onClose }) {
               onChange={(e) => handleInputChange("firstName", e.target.value)}
             />
           </div>
-          {/* Repeat similar blocks for other fields */}
+
+          <div className="mb-2">
+            <label htmlFor="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              value={editedApplication.lastName}
+              onChange={(e) => handleInputChange("lastName", e.target.value)}
+            />
+          </div>
+
+          <div className="mb-2">
+            <label htmlFor="middleName">Middle Name:</label>
+            <input
+              type="text"
+              id="middleName"
+              value={editedApplication.middleName}
+              onChange={(e) => handleInputChange("middleName", e.target.value)}
+            />
+          </div>
+
+          <div className="mb-2">
+            <label htmlFor="extensionName">Extension Name:</label>
+            <input
+              type="text"
+              id="extensionName"
+              value={editedApplication.extensionName}
+              onChange={(e) =>
+                handleInputChange("extensionName", e.target.value)
+              }
+            />
+          </div>
+
+          <div className="mb-2">
+            <label htmlFor="birthDate">Birth Date:</label>
+            <input
+              type="date"
+              id="birthDate"
+              value={editedApplication.birthDate}
+              onChange={(e) => handleInputChange("birthDate", e.target.value)}
+            />
+          </div>
+
+          {/* Add similar blocks for other fields */}
           {/* ... */}
 
           <div className="mt-4 flex justify-end">
             <button
               type="button"
-              onClick={handleSave}
+              onClick={handleSaveChanges}
               className="text-white rounded-md bg-blue-500 px-4 py-2"
             >
               Save
