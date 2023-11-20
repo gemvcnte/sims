@@ -283,6 +283,95 @@ export default function StudentDataModal({ application, onSave, onClose }) {
         </div>
       </div>
 
+      {/* STEP 3 */}
+      <div>
+        <div>
+          <div>
+            <label>LRN (Learner Reference Number)</label>
+            <input
+              type="number"
+              placeholder="Input Your LRN"
+              value={editedApplication.lrn}
+              className={` ${
+                editedApplication.lrn && "!border-blue-400 text-blue-400"
+              }`}
+              onChange={(e) => handleInputChange("lrn", e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="schoolYear">School Year</label>
+            <select
+              className={` ${
+                editedApplication.schoolYear &&
+                "!border-blue-400 bg-blue-400 text-white-400"
+              }`}
+              id="schoolYear"
+              value={editedApplication.schoolYear}
+              onChange={(e) => handleInputChange("schoolYear", e.target.value)}
+            >
+              <option value="">Select School Year</option>
+              <option value="2023-2024">2023-2024</option>
+              <option value="2024-2025">2024-2025</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="semester">Semester</label>
+            <select
+              className={`${
+                editedApplication.semester &&
+                "!border-blue-400 bg-blue-400 text-white-400"
+              }`}
+              id="semester"
+              value={editedApplication.semester}
+              onChange={(e) => handleInputChange("semester", e.target.value)}
+            >
+              <option value="">Select Semester</option>
+              <option value="first semester">1st Semester</option>
+              <option value="second semester">2nd Semester</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <label>Track</label>
+            <select
+              className={` ${
+                editedApplication.track &&
+                "!border-blue-400 bg-blue-400 text-white-400"
+              }`}
+              id="track"
+              value={editedApplication.track}
+              onChange={(e) => handleInputChange("track", e.target.value)}
+            >
+              <option value="">Select Track</option>
+              <option value="academic">Academic Track</option>
+              <option value="tvl">TVL Track</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="strand">Strand</label>
+            <select
+              className={` ${
+                editedApplication.strand &&
+                "!border-blue-400 bg-blue-400 text-white-400"
+              }`}
+              id="strand"
+              value={editedApplication.strand}
+              onChange={(e) => handleInputChange("strand", e.target.value)}
+            >
+              <option value="">Select Strand</option>
+              <option value="gas">GAS (Academic)</option>
+              <option value="humss">HUMSS (Academic)</option>
+              <option value="stem">STEM (Academic)</option>
+              <option value="ict">ICT (TVL)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div>
         <select
           name="guardianRelationship"
