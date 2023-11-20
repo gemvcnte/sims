@@ -3,28 +3,28 @@ import axios from "axios";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
 
-export default function StudentCard({ user, userId }) {
-  const endpoint = "http://localhost:5000/admin/enrollStudent";
-  const lastName = user.lastName.toLowerCase();
-  const firstName = user.firstName.toLowerCase();
+export default function StudentCard({ application, onClick }) {
+  const enrollmentEndpoint = "http://localhost:5000/admin/enrollStudent";
+  const lastName = application.lastName.toLowerCase();
+  const firstName = application.firstName.toLowerCase();
   const fullName = `${lastName.charAt(0).toUpperCase() + lastName.slice(1)}, ${
     firstName.charAt(0).toUpperCase() + firstName.slice(1)
   }`;
 
-  const [isHidden, setIsHidden] = useState(false);
+  const [isCardHidden, setIsCardHidden] = useState(false);
 
-  const hideTheCard = () => {
-    setIsHidden(true);
+  const hideCard = () => {
+    setIsCardHidden(true);
   };
 
   const handleEnroll = async () => {
     try {
-      const response = await axios.post(`${endpoint}`, {
-        studentApplicationId: userId,
+      const response = await axios.post(enrollmentEndpoint, {
+        studentApplicationId: application._id,
       });
 
       showSuccessNotification("Student Enrolled Successfully");
-      hideTheCard();
+      hideCard();
     } catch (error) {
       console.error("Error enrolling student:", error.message);
     }
@@ -35,12 +35,13 @@ export default function StudentCard({ user, userId }) {
       <ToastContainer />
       <div
         className={`${
-          isHidden ? "hidden" : "flex"
+          isCardHidden ? "hidden" : "flex"
         } w-full items-center justify-between rounded-2xl border border-white-700 bg-white-600 px-4 py-6`}
+        onClick={() => onClick && onClick(application)}
       >
         <h2 className="">{fullName}</h2>
         <div className="flex items-center gap-8">
-          <p>{user.status}</p>
+          <p>{application.status}</p>
           <button
             onClick={handleEnroll}
             className="rounded-full border border-black-400 px-4 py-1"
