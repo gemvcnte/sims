@@ -5,10 +5,10 @@ const generateAuthToken = require("../configs/auth");
 
 const studentLogin = asyncHandler(async (req, res) => {
   try {
-    const { lrn, birthDate } = req.body;
+    const { username, password } = req.body;
 
     // using the model/schema to directly query the database
-    const student = await Student.findOne({ lrn });
+    const student = await Student.findOne({ lrn: username });
 
     if (!student) {
       res.status(401).json({ message: "Invalid LRN or password." });
@@ -17,7 +17,7 @@ const studentLogin = asyncHandler(async (req, res) => {
 
     const hashedInputPassword = await bcryptjs.hash(birthDate, 10);
 
-    if (!(await bcryptjs.compare(hashedInputPassword, student.birthDate))) {
+    if (!(await bcryptjs.compare(password, student.password))) {
       res.status(401).json({ message: "Invalid LRN or password." });
       return;
     }
