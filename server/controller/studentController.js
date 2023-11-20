@@ -15,7 +15,7 @@ const studentLogin = asyncHandler(async (req, res) => {
       return;
     }
 
-    const hashedInputPassword = await bcryptjs.hash(birthDate, 10);
+    // const hashedInputPassword = await bcryptjs.hash(birthDate, 10);
 
     if (!(await bcryptjs.compare(password, student.password))) {
       res.status(401).json({ message: "Invalid LRN or password." });
