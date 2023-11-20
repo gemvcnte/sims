@@ -1,7 +1,7 @@
 const bcryptjs = require("bcryptjs");
-const  { Admin } = require('../models/AdminModel')
-const  { Student } = require('../models/StudentModel')
-const  { Teacher } = require('../models/TeacherModel')
+const  { Admin } = require('../models/AdminModel');
+const  { Student } = require('../models/StudentModel');
+const  { Teacher } = require('../models/TeacherModel');
 const  { StudentApplication } = require('../models/StudentApplicationModel')
 const { Announcement } = require("../models/Announcement");
 const generateAuthToken = require("../configs/auth");
