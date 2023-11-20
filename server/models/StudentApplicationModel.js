@@ -1,46 +1,47 @@
 const mongoose = require('mongoose')
 
-// Student Schema
-const studentSchema = new mongoose.Schema(
+
+const studentApplicationSchema = new mongoose.Schema(
     {
       firstName: {
         type: String,
         required: true,
-      },
-      middleName: {
-        type: String,
-        required: true,
+        uppercase: true,
       },
       lastName: {
         type: String,
         required: true,
+        uppercase: true,
+      },
+      middleName: {
+        type: String,
+        required: true,
+        uppercase: true,
       },
       extensionName: {
         type: String,
         required: true,
+        uppercase: true,
       },
       birthDate: {
         type: String,
         required: true,
+        uppercase: true,
       },
       gender: {
         type: String,
         required: true,
+        uppercase: true,
       },
-      lrn: {
+      currentAddress: {
         type: String,
         required: true,
-      },
-      schoolYear: {
-        type: String,
-        required: false,
-      },
-      semester: {
-        type: String,
+        uppercase: true,
       },
       emailAddress: {
         type: String,
         required: true,
+        trim: true,
         validate(value) {
           if (!value.match(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/)) {
             throw new Error("Email is not valid.");
@@ -50,78 +51,78 @@ const studentSchema = new mongoose.Schema(
       fatherName: {
         type: String,
         required: true,
+        uppercase: true,
       },
       fatherContactNumber: {
         type: String,
         required: true,
+        uppercase: true,
       },
       motherName: {
         type: String,
         required: true,
+        uppercase: true,
       },
       motherContactNumber: {
         type: String,
         required: true,
+        uppercase: true,
       },
       guardianName: {
         type: String,
         default: "none",
+        uppercase: true,
       },
       guardianContactNumber: {
         type: String,
         default: "none",
       },
-      guardianRelationship: {
+      guardianAddress: {
         type: String,
         default: "none",
+        uppercase: true,
       },
       lrn: {
         type: String,
         required: true,
       },
-      religion: {
-        type: String,
-        default: "null",
-      },
-      province: {
-        type: String,
-        default: "null",
-      },
-      city: {
-        type: String,
-        default: "null",
-      },
-      zipCode: {
+      schoolYear: {
         type: Number,
-        default: null,
+        required: true,
       },
-      barangay: {
+      semester: {
         type: String,
-        default: "null",
+        required: true,
+        uppercase: true,
       },
-      fourPs: {
-        type: Boolean,
-        default: null,
-      },
-  
-      role: {
+      track: {
         type: String,
-        default: "student",
-        enum: ["student", "teacher", "admin"],
+        required: true,
+        uppercase: true,
       },
-  
-      password: {
+      strand: {
         type: String,
+        required: true,
+        uppercase: true,
       },
+      registrationDate: String,
+      status: {
+        type: String,
+        default: "pending",
+        uppercase: true,
+      },
+      //if want to hash the password only remove the password attribute
+      // password: {
+      //     type: String,
+      //     required: true,
+      // }
     },
     { timestamps: true }
   );
-  
 
 
 
-    const Student = mongoose.model("studentEnrolled", studentSchema);
+const StudentApplication = mongoose.model("StudentApplication", studentApplicationSchema);
 
 
-
-    module.exports = {Student}
+module.exports = {StudentApplication}

@@ -1,4 +1,4 @@
-const { StudentApplication } = require("../models/userModel");
+const { StudentApplication } = require("../models/StudentApplicationModel");
 const asyncHandler = require("express-async-handler");
 const bcryptjs = require("bcryptjs");
 

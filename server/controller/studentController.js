@@ -1,4 +1,4 @@
-const { Student } = require("../models/userModel");
+const { Student } = require("../models/StudentModel");
 const bcryptjs = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");

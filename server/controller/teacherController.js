@@ -1,4 +1,4 @@
-const { Teacher } = require("../models/userModel");
+const { Teacher } = require("../models/TeacherModel");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
