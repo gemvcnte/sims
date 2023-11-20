@@ -27,7 +27,7 @@ export default function ApplicationMonitoring() {
 
   const handleCardClick = (application) => {
     setSelectedApplication(application);
-    console.log(selectedApplication);
+    console.log(application);
   };
 
   const handleSaveChanges = (editedApplication) => {
