@@ -183,6 +183,48 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
   }
 });
 
+
+const updateStudentApplication = asyncHandler(async (req,res) => {
+  try {
+    const {studentApplicationId, updatedData} = req.body
+
+
+    const studentApplication = await StudentApplication.findById(studentApplicationId)
+  
+  
+    if (!studentApplication) {
+      return res.status(400).json({message: `Student Application not found.`})
+    }
+  
+    //update the student application via with the provided data
+  
+    const updatedStudentData = await StudentApplication.findByIdAndUpdate(studentApplicationId, updatedData, {new: true})
+  
+
+    res.status(200).json({message: `Student Application has been updated.`})
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+const rejectStudentApplication = asyncHandler(async (req,res) => {
+  try {
+    const { studentApplicationId } = req.body
+
+    const studentApplication = await StudentApplication.findById(studentApplicationId)
+
+    if(!studentApplication) {
+      return res.status(400).json({message: `Student Application not found.`})
+    } 
+
+    await studentApplication.findByIdAndUpdate({ status: 'rejected'})
+    // await studentApplication.remove()
+    res.status(200).json({message: 'Student Application has been rejected.'})
+  } catch (error) {
+    return res.status(500).json({message: `${error}`})
+  }
+})
+
 // const createTeacher = asyncHandler(async (req, res) => {
 //     try {
 //         const teacherData = req.body;
@@ -330,6 +372,8 @@ module.exports = {
   updateAdmin,
   deleteAdmin,
   acceptStudentApplication,
+  updateStudentApplication,
+  rejectStudentApplication,
   createTeacher,
   updateTeacher,
   deleteTeacher,

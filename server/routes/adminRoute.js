@@ -18,6 +18,8 @@ router.get("/getAllStudents", adminController.getAllStudents);
 router.get("/getPending", adminController.getAllPending);
 
 router.post("/enrollStudent", adminController.acceptStudentApplication);
+router.patch("/updateApplication", adminController.updateStudentApplication);
+router.patch("/deleteApplication", adminController.rejectStudentApplication);
 
 router.post("/createAnnouncement", adminController.createAnnouncement);
 module.exports = router;
