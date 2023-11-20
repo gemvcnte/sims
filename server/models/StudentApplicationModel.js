@@ -111,6 +111,12 @@ const studentApplicationSchema = new mongoose.Schema(
         default: "pending",
         uppercase: true,
       },
+      userImage: {
+        type: String,
+        // need nalang lagyan ng image
+        default: ''
+      },
+  
       //if want to hash the password only remove the password attribute
       // password: {
       //     type: String,

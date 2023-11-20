@@ -113,6 +113,11 @@ const studentSchema = new mongoose.Schema(
       password: {
         type: String,
       },
+      userImage: {
+        type: String,
+        // need nalang lagyan ng image
+        default: ''
+      },  
     },
     { timestamps: true }
   );

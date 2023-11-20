@@ -29,6 +29,12 @@ const adminSchema = new mongoose.Schema(
         default: "admin",
         enum: ["student", "teacher", "admin"],
     },
+    userImage: {
+      type: String,
+      // need nalang lagyan ng image
+      default: ''
+    },
+
     },
     { timestamps: true }
 );
