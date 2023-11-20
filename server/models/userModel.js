@@ -334,16 +334,19 @@ const adminSchema = new mongoose.Schema(
       default: "admin",
       enum: ["student", "teacher", "admin"],
     },
-  },
+
+    userImage: {
+      type: String,
+      // need nalang lagyan ng image
+      default: ''
+    },
+},
   { timestamps: true }
 );
 
 const Student = mongoose.model("studentEnrolled", studentSchema);
 const Teacher = mongoose.model("Teacher", teacherSchema);
-const StudentApplication = mongoose.model(
-  "StudentApplication",
-  studentApplicationSchema
-);
+const StudentApplication = mongoose.model("StudentApplication", studentApplicationSchema);
 const Admin = mongoose.model("Admin", adminSchema);
 
 module.exports = { Student, Teacher, StudentApplication, Admin };
