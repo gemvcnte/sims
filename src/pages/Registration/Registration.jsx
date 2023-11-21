@@ -5,7 +5,7 @@ import { Step1, Step2, Step3, Header } from "./components";
 import axios from "axios";
 import LoadingSpinner from "@utils/LoadingSpinner";
 import "./registration.css";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { getBaseUrl } from "@utils/configUtils";
 
 export default function Registration() {
   useEffect(() => {
