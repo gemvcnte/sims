@@ -4,6 +4,6 @@ const studentApplicationController = require('../controller/studentApplicationCo
 
 
 // apply for admission
-router.post('/apply', studentApplicationController.applyStudent)
+router.post('/', studentApplicationController.applyStudent)
 
 module.exports = router;

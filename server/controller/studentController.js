@@ -72,4 +72,4 @@ const getStudentAnnouncements = asyncHandler(async (req, res) => {
 //     }
 // })
 
-module.exports = { studentLogin, getStudentDashboard, getSchedule, getAnnouncements };
+module.exports = { studentLogin, getStudentDashboard, getStudentSchedule, getStudentAnnouncements };

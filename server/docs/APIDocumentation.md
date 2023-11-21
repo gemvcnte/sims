@@ -78,3 +78,7 @@
   - **Method:** POST
   - **Description:** Accept a student application and enroll the student.
 
+- **Get Admin Dashboard:**
+  - **Endpoint:** `/admin/dashboard`
+  - **Method:** GET
+  - **Description:** Can access the admin dashboard
