@@ -4,51 +4,95 @@ import { useSidebarContext } from "@contexts/SidebarContext.jsx";
 import axios from "axios";
 import StudentCard from "./components/StudentCard";
 import StudentDataModal from "./components/StudentDataModal";
+import config from "@src/config";
 
-export default function ApplicationMonitoring() {
+const sendUpdateRequest = async (studentApplicationId, updatedData) => {
+  try {
+    const response = await axios.post(`${baseUrl}/admin/updateApplication`, {
+      studentApplicationId,
+      updatedData,
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const updateLocalApplicationState = (
+  studentApplicationId,
+  updatedApplication,
+) => {
+  setPendingApplications((previousApplications) => {
+    const updatedApplications = previousApplications.map((application) =>
+      application._id === studentApplicationId
+        ? updatedApplication
+        : application,
+    );
+    return updatedApplications;
+  });
+
+  setSelectedApplication(null);
+};
+
+const handleUpdateError = (error) => {
+  console.error("Error updating application:", error.message);
+};
+
+const fetchPendingApplications = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/admin/getPending");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching pending applications:", error.message);
+    return [];
+  }
+};
+
+const ApplicationMonitoring = () => {
+  const baseUrl = config.development.baseUrl;
+
   const { toggleSidebar } = useSidebarContext();
   const [pendingApplications, setPendingApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
-    const fetchPendingApplications = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/admin/getPending",
-        );
-        setPendingApplications(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.error("Error fetching pending applications:", error.message);
-      }
+    const loadPendingApplications = async () => {
+      const applications = await fetchPendingApplications();
+      setPendingApplications(applications);
     };
 
-    fetchPendingApplications();
+    loadPendingApplications();
   }, []);
 
   const handleCardClick = (application) => {
     setSelectedApplication(application);
-    console.log(application);
-  };
-
-  useEffect(() => {
-    console.log(selectedApplication);
-  }, [selectedApplication]);
-
-  const handleSaveChanges = (editedApplication) => {
-    setPendingApplications((prevApplications) => {
-      const updatedApplications = prevApplications.map((app) =>
-        app._id === editedApplication._id ? editedApplication : app,
-      );
-      return updatedApplications;
-    });
-
-    // Clear the selected application after saving changes
-    setSelectedApplication(null);
   };
 
   const handleModalClose = () => {
     setSelectedApplication(null);
+  };
+
+  const handleSaveChanges = async (editedApplication) => {
+    try {
+      const studentApplicationId = editedApplication._id;
+      const updateResponse = await sendUpdateRequest(
+        studentApplicationId,
+        editedApplication,
+      );
+      updateLocalApplicationState(
+        studentApplicationId,
+        editedApplication,
+        setPendingApplications,
+        setSelectedApplication,
+      );
+    } catch (error) {
+      handleUpdateError(error);
+    }
   };
 
   return (
@@ -85,4 +129,6 @@ export default function ApplicationMonitoring() {
       </section>
     </>
   );
-}
+};
+
+export default ApplicationMonitoring;
