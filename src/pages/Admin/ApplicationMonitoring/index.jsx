@@ -8,7 +8,7 @@ import StudentDataModal from "./components/StudentDataModal";
 export default function ApplicationMonitoring() {
   const { toggleSidebar } = useSidebarContext();
   const [pendingApplications, setPendingApplications] = useState([]);
-  const [selectedApplication, setSelectedApplication] = useState({});
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
     const fetchPendingApplications = async () => {
