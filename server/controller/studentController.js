@@ -56,13 +56,30 @@ const getStudentDashboard = asyncHandler(async (req, res) => {
 
 const getStudentSchedule = asyncHandler(async (req, res) => {
   try {
-  } catch (error) {}
+
+    const { _id } = req.body
+
+
+  } catch (error) {
+
+  }
 });
 
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
-  } catch (error) {}
+
+  } catch (error) {
+    
+  }
 });
+
+const getStudentProfile = asyncHandler(async (req,res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+})
 
 // const updateProfile = asyncHandler(async (req,res) => {
 //     try {
@@ -72,4 +89,10 @@ const getStudentAnnouncements = asyncHandler(async (req, res) => {
 //     }
 // })
 
-module.exports = { studentLogin, getStudentDashboard, getStudentSchedule, getStudentAnnouncements };
+module.exports = { 
+  studentLogin, 
+  getStudentDashboard, 
+  getStudentSchedule, 
+  getStudentAnnouncements,
+  getStudentProfile,
+};

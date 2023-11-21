@@ -54,7 +54,24 @@ const getTeacherDashboard = asyncHandler(async (req,res) => {
   }
 })
 
+
+const getTeacherSchedule = asyncHandler(async (req, res) => {
+  try {
+  } catch (error) {
+    
+  }
+})
+
+const postClassAnnouncement = asyncHandler (async (req,res) => {
+
+})
+
+
+
+
 module.exports = {
   teacherLogin,
   getTeacherDashboard,
+  getTeacherSchedule,
+  postClassAnnouncement,
 };
