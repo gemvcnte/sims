@@ -9,8 +9,10 @@ import {
   updateLocalApplicationState,
   handleUpdateError,
 } from "@utils/applicationMonitoringUtils";
+import { getBaseUrl } from "@src/utils/configUtils";
 
 export default function ApplicationMonitoring() {
+  const baseUrl = getBaseUrl();
   const { toggleSidebar } = useSidebarContext();
   const [pendingApplications, setPendingApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -18,9 +20,7 @@ export default function ApplicationMonitoring() {
   useEffect(() => {
     const fetchPendingApplications = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/admin/getPending",
-        );
+        const response = await axios.get(`${baseUrl}/admin/getPending`);
         setPendingApplications(response.data.data);
         console.log(response.data.data);
       } catch (error) {
