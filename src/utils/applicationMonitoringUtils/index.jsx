@@ -1,7 +1,7 @@
 import axios from "axios";
-import config from "@src/config";
+import { getBaseUrl } from "@src/utils/configUtils";
 
-const baseUrl = config.development.baseUrl;
+const baseUrl = getBaseUrl();
 
 export const sendUpdateRequest = async (studentApplicationId, updatedData) => {
   try {

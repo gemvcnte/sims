@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import FormValidator from "../../../../../utils/FormValidator";
 import axios from "axios";
 import notify from "../../../../../utils/BlankFieldNotification";
-import config from "../../../../../config";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
+import { getBaseUrl } from "@src/utils/configUtils";
 
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
-  const baseUrl = config.development.baseUrl;
+  const baseUrl = getBaseUrl();
   let apiUrl = `${baseUrl}/${role}/login`;
 
   const [loginData, setLoginData] = useState({

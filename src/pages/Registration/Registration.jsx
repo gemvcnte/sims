@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { Step1, Step2, Step3, Header } from "./components";
-import config from "@config";
 import axios from "axios";
 import LoadingSpinner from "@utils/LoadingSpinner";
 import "./registration.css";
+import { getBaseUrl } from "@src/utils/configUtils";
 
 export default function Registration() {
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Registration() {
 
   const [loading, setLoading] = useState(false);
 
-  const baseUrl = config.development.baseUrl;
+  const baseUrl = getBaseUrl();
   const registrationApi = `${baseUrl}/apply`;
 
   const [step, setStep] = useState(1);

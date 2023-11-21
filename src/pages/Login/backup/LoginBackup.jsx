@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import config from "../../../config";
+import { getBaseUrl } from "@src/utils/configUtils";
 import FormValidator from "../../../utils/FormValidator";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +13,7 @@ import notify from "../../../utils/BlankFieldNotification";
  * @src src/components/Login/Login.jsx
  */
 export default function Login() {
-  const baseUrl = config.development.baseUrl;
+  const baseUrl = getBaseUrl();
   const apiUrl = `${baseUrl}/login`;
 
   const [loginData, setLoginData] = useState({
