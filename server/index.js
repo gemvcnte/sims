@@ -10,6 +10,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const connectDb = require('./db/database')
 const dbConn = require('./db/dbConnection')
+const rateLimiter = require('./middleware/rate-limiter')
 
 connectDb()
 dotenv.config();
@@ -21,6 +22,7 @@ const port = process.env.PORT || 3000;
 // middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// app.use(rateLimiter)
 
 const corsOptions = {
     origin: '*',

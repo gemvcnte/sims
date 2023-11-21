@@ -37,17 +37,29 @@ const studentLogin = asyncHandler(async (req, res) => {
   }
 });
 
-const getDashboard = asyncHandler(async (req, res) => {
+const getStudentDashboard = asyncHandler(async (req, res) => {
+  try {
+
+    const { _id } = req.user
+
+    const studentDashboard = await Student.findById(_id)
+
+    if (!studentDashboard) {
+      res.status(404).json({message: 'Student dashboard not found.'})
+    }
+
+    res.status(200).json({message: `Student dashboard retrieved successfully.`})
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+});
+
+const getStudentSchedule = asyncHandler(async (req, res) => {
   try {
   } catch (error) {}
 });
 
-const getSchedule = asyncHandler(async (req, res) => {
-  try {
-  } catch (error) {}
-});
-
-const getAnnouncements = asyncHandler(async (req, res) => {
+const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
   } catch (error) {}
 });
@@ -60,4 +72,4 @@ const getAnnouncements = asyncHandler(async (req, res) => {
 //     }
 // })
 
-module.exports = { studentLogin, getDashboard, getSchedule, getAnnouncements };
+module.exports = { studentLogin, getStudentDashboard, getSchedule, getAnnouncements };

@@ -1,382 +1,403 @@
-const bcryptjs = require("bcryptjs");
-const  { Admin } = require('../models/AdminModel');
-const  { Student } = require('../models/StudentModel');
-const  { Teacher } = require('../models/TeacherModel');
-const  { StudentApplication } = require('../models/StudentApplicationModel');
-const { Announcement } = require("../models/Announcement");
-const generateAuthToken = require("../configs/auth");
-const dotenv = require("dotenv");
-const asyncHandler = require("express-async-handler");
+  const bcryptjs = require("bcryptjs");
+  const  { Admin } = require('../models/AdminModel');
+  const  { Student } = require('../models/StudentModel');
+  const  { Teacher } = require('../models/TeacherModel');
+  const  { StudentApplication } = require('../models/StudentApplicationModel');
+  const { Announcement } = require("../models/Announcement");
+  const generateAuthToken = require("../configs/auth");
+  const dotenv = require("dotenv");
+  const asyncHandler = require("express-async-handler");
 
-dotenv.config();
+  dotenv.config();
 
-// creating an admin
-const createAdmin = asyncHandler(async (req, res) => {
-  try {
-    const { name, username, password, idNumber, address } = req.body;
+  // creating an admin
+  const createAdmin = asyncHandler(async (req, res) => {
+    try {
+      const { name, username, password, idNumber, address } = req.body;
 
-    // Check if the admin already exists based on the username
-    const existingAdmin = await Admin.findOne({ username });
-    if (existingAdmin) {
-      return res
-        .status(400)
-        .json({ message: "Admin already exists with this username." });
+      // Check if the admin already exists based on the username
+      const existingAdmin = await Admin.findOne({ username });
+      if (existingAdmin) {
+        return res
+          .status(400)
+          .json({ message: "Admin already exists with this username." });
+      }
+
+      // Hash the password
+      const hashedPassword = await bcryptjs.hash(password, 10);
+
+      // Create a new admin with the hashed password
+      const admin = new Admin({
+        name,
+        username,
+        password: hashedPassword,
+        idNumber,
+        address,
+      });
+      await admin.save();
+
+      res.status(200).json({ message: "Admin created successfully." });
+    } catch (error) {
+      return res.status(500).json({ message: `There is an error ${error}` });
     }
+  });
 
-    // Hash the password
-    const hashedPassword = await bcryptjs.hash(password, 10);
+  const createTeacher = asyncHandler(async (req, res) => {
+    try {
+      const teacherData = req.body;
 
-    // Create a new admin with the hashed password
-    const admin = new Admin({
-      name,
-      username,
-      password: hashedPassword,
-      idNumber,
-      address,
-    });
-    await admin.save();
+      // Check if the teacher already exists based on the username
+      const existingTeacher = await Teacher.findOne({
+        username: teacherData.username,
+      });
+      if (existingTeacher) {
+        return res.status(400).json({ message: "Teacher already exists with this username." });
+      }
 
-    res.status(200).json({ message: "Admin created successfully." });
-  } catch (error) {
-    return res.status(500).json({ message: `There is an error ${error}` });
-  }
-});
+      // Hash the password
+      const hashedPassword = await bcryptjs.hash(teacherData.password, 10);
 
-const createTeacher = asyncHandler(async (req, res) => {
-  try {
-    const teacherData = req.body;
+      // Create a new teacher with the hashed password
+      const teacher = new Teacher({
+        firstName: teacherData.firstName,
+        middleName: teacherData.middleName,
+        lastName: teacherData.lastName,
+        currentAddress: teacherData.currentAddress,
+        birthDate: teacherData.birthDate,
+        gender: teacherData.gender,
+        emailAddress: teacherData.emailAddress,
+        username: teacherData.username,
+        password: hashedPassword,
+      });
 
-    // Check if the teacher already exists based on the username
-    const existingTeacher = await Teacher.findOne({
-      username: teacherData.username,
-    });
-    if (existingTeacher) {
-      return res
-        .status(400)
-        .json({ message: "Teacher already exists with this username." });
+      await teacher.save();
+
+      res.status(200).json({ message: "Teacher created successfully." });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
     }
+  });
 
-    // Hash the password
-    const hashedPassword = await bcryptjs.hash(teacherData.password, 10);
+  // logging in as an admin
+  const adminLogin = asyncHandler(async (req, res) => {
+    try {
+      const { username, password } = req.body;
 
-    // Create a new teacher with the hashed password
-    const teacher = new Teacher({
-      firstName: teacherData.firstName,
-      middleName: teacherData.middleName,
-      lastName: teacherData.lastName,
-      currentAddress: teacherData.currentAddress,
-      birthDate: teacherData.birthDate,
-      gender: teacherData.gender,
-      emailAddress: teacherData.emailAddress,
-      username: teacherData.username,
-      password: hashedPassword,
-    });
+      const admin = await Admin.findOne({ username });
 
-    await teacher.save();
+      if (!admin) {
+        return res.status(404).json({ message: "Admin not found" });
+      }
 
-    res.status(200).json({ message: "Teacher created successfully." });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+      // Compare the provided password with the hashed password in the database
+      const passwordMatch = await bcryptjs.compare(password, admin.password);
 
-// logging in as an admin
-const adminLogin = asyncHandler(async (req, res) => {
-  try {
-    const { username, password } = req.body;
+      if (!passwordMatch) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
 
-    const admin = await Admin.findOne({ username });
+      const tokenPayload = {
+        _id: admin.id,
+        username: admin.username,
+        role: "admin",
+      };
 
-    if (!admin) {
-      return res.status(404).json({ message: "Admin not found" });
+      const token = generateAuthToken(tokenPayload);
+
+      res.status(200).json({ message: "Admin login successful", token });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
     }
+  });
 
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcryptjs.compare(password, admin.password);
+  // updating admin
+  const updateAdmin = asyncHandler(async (req, res) => {
+    try {
+      const { username, password, ...updateData } = req.body;
 
-    if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid username or password" });
+      // hahanapin yung username tapos iupdate niya
+      const updatedAdmin = await Admin.findOneAndUpdate(
+        { username },
+        updateData,
+        { new: true }
+      );
+
+      // pede iupdate yung password kung pinrovide niya
+      if (password) {
+        updatedAdmin.password = password;
+        await updatedAdmin.save();
+      }
+
+      res.json({ message: "Admin updated successfully", admin: updatedAdmin });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
+  });
 
-    const tokenPayload = {
-      _id: admin.id,
-      username: admin.username,
-      role: "admin",
-    };
+  // delete admin
+  const deleteAdmin = asyncHandler(async (req, res) => {
+    try {
+      const { username } = req.body;
 
-    const token = generateAuthToken(tokenPayload);
+      await Admin.findOneAndDelete({ username });
 
-    res.status(200).json({ message: "Admin login successful", token });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
-
-// updating admin
-const updateAdmin = asyncHandler(async (req, res) => {
-  try {
-    const { username, password, ...updateData } = req.body;
-
-    // hahanapin yung username tapos iupdate niya
-    const updatedAdmin = await Admin.findOneAndUpdate(
-      { username },
-      updateData,
-      { new: true }
-    );
-
-    // pede iupdate yung password kung pinrovide niya
-    if (password) {
-      updatedAdmin.password = password;
-      await updatedAdmin.save();
+      return res.status(200).json({ message: "Admin deleted successfully" });
+    } catch (error) {
+      return res.status(500).json({ message: `There is an error ${error}` });
     }
+  });
 
-    res.json({ message: "Admin updated successfully", admin: updatedAdmin });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+  // get admin via object id on admin model
+  const getAdminDashboard = asyncHandler(async (req,res) => {
+    try {
+      const { _id } = req.user
 
-const deleteAdmin = asyncHandler(async (req, res) => {
-  try {
-    const { username } = req.body;
+      const adminDashboard = await Admin.findById(_id)
 
-    await Admin.findOneAndDelete({ username });
+      if(!adminDashboard) {
+        res.status(404).json({message: 'Dashboard for this admin is not found.'})
+      }
 
-    return res.status(200).json({ message: "Admin deleted successfully" });
-  } catch (error) {
-    return res.status(500).json({ message: `There is an error ${error}` });
-  }
-});
 
-const acceptStudentApplication = asyncHandler(async (req, res) => {
-  try {
-    const { studentApplicationId } = req.body;
-
-    // Find the application by ID
-    const originalStudentApplication = await StudentApplication.findById(
-      studentApplicationId
-    );
-
-    if (!originalStudentApplication) {
-      return res.status(404).json({ message: "Student Application not found" });
+      res.status(200).json({message: 'Admin Dashboard retrieved successfully.'})
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
     }
+  })
 
-    // Create a new object with an additional "password" field
-    const modifiedStudentApplication = {
-      ...originalStudentApplication.toObject(),
-      password: bcryptjs.hashSync(originalStudentApplication.birthDate, 10), // Replace 10 with your desired js salt rounds
-    };
+  const acceptStudentApplication = asyncHandler(async (req, res) => {
+    try {
+      const { studentApplicationId } = req.body;
 
-    // Save the modified object to the enrolledStudents collection
-    const studentEnrolled = new Student(modifiedStudentApplication);
-    await studentEnrolled.save();
+      // Find the application by ID
+      const originalStudentApplication = await StudentApplication.findById(
+        studentApplicationId
+      );
 
-    await StudentApplication.findByIdAndUpdate(originalStudentApplication._id, {
-      status: "enrolled",
-    });
+      if (!originalStudentApplication) {
+        return res.status(404).json({ message: "Student Application not found" });
+      }
 
-    res.status(200).json({ message: "Student Enrolled" });
-  } catch (error) {
-    return res.status(500).json({ message: `Error: ${error.message}` });
-  }
-});
+      // Create a new object with an additional "password" field
+      const modifiedStudentApplication = {
+        ...originalStudentApplication.toObject(),
+        password: bcryptjs.hashSync(originalStudentApplication.birthDate, 10), // Replace 10 with your desired js salt rounds
+      };
 
+      // Save the modified object to the enrolledStudents collection
+      const studentEnrolled = new Student(modifiedStudentApplication);
+      await studentEnrolled.save();
 
-const updateStudentApplication = asyncHandler(async (req,res) => {
-  try {
-    const {studentApplicationId, updatedData} = req.body
+      await StudentApplication.findByIdAndUpdate(originalStudentApplication._id, {
+        status: "enrolled",
+      });
 
-
-    const studentApplication = await StudentApplication.findById(studentApplicationId)
-  
-  
-    if (!studentApplication) {
-      return res.status(400).json({message: `Student Application not found.`})
+      res.status(200).json({ message: "Student Enrolled" });
+    } catch (error) {
+      return res.status(500).json({ message: `Error: ${error.message}` });
     }
-  
-    //update the student application via with the provided data
-  
-    const updatedStudentData = await StudentApplication.findByIdAndUpdate(studentApplicationId, updatedData, {new: true})
-  
+  });
 
-    res.status(200).json({message: `Student Application has been updated.`})
-  } catch (error) {
-    res.status(500).json({message: `${error}`})
-  }
-})
 
-const rejectStudentApplication = asyncHandler(async (req,res) => {
-  try {
-    const { studentApplicationId } = req.body
+  const updateStudentApplication = asyncHandler(async (req,res) => {
+    try {
+      const {studentApplicationId, updatedData} = req.body
 
-    const studentApplication = await StudentApplication.findById(studentApplicationId)
 
-    if(!studentApplication) {
-      return res.status(400).json({message: `Student Application not found.`})
-    } 
+      const studentApplication = await StudentApplication.findById(studentApplicationId)
+    
+    
+      if (!studentApplication) {
+        return res.status(400).json({message: `Student Application not found.`})
+      }
+    
+      //update the student application via with the provided data
+    
+      const updatedStudentData = await StudentApplication.findByIdAndUpdate(studentApplicationId, updatedData, {new: true})
+    
 
-    await studentApplication.findByIdAndUpdate({ status: 'rejected'})
-    // await studentApplication.remove()
-    res.status(200).json({message: 'Student Application has been rejected.'})
-  } catch (error) {
-    return res.status(500).json({message: `${error}`})
-  }
-})
+      res.status(200).json({message: `Student Application has been updated.`})
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+  })
 
-// const createTeacher = asyncHandler(async (req, res) => {
-//     try {
-//         const teacherData = req.body;
+  const rejectStudentApplication = asyncHandler(async (req,res) => {
+    try {
+      const { studentApplicationId } = req.body
 
-//         // Check if the teacher already exists based on the username
-//         const existingTeacher = await Teacher.findOne({ username: teacherData.username });
-//         if (existingTeacher) {
-//             return res.status(400).json({ message: 'Teacher already exists with this username.' });
-//         }
+      const studentApplication = await StudentApplication.findById(studentApplicationId)
 
-//         // Hash the password
-//         const hashedPassword = await bcryptjs.hash(teacherData.password, 10);
+      if(!studentApplication) {
+        return res.status(400).json({message: `Student Application not found.`})
+      } 
 
-//         // Create a new teacher with the hashed password
-//         const teacher = new Teacher({
-//             firstName: teacherData.firstName,
-//             middleName: teacherData.middleName,
-//             lastName: teacherData.lastName,
-//             currentAddress: teacherData.currentAddress,
-//             birthDate: teacherData.birthDate,
-//             gender: teacherData.gender,
-//             emailAddress: teacherData.emailAddress,
-//             username: teacherData.username,
-//             password: hashedPassword,
-//         });
+      await studentApplication.findByIdAndUpdate({ status: 'rejected'})
+      // await studentApplication.remove()
+      res.status(200).json({message: 'Student Application has been rejected.'})
+    } catch (error) {
+      return res.status(500).json({message: `${error}`})
+    }
+  })
 
-//         await teacher.save();
+  // const createTeacher = asyncHandler(async (req, res) => {
+  //     try {
+  //         const teacherData = req.body;
 
-//         res.status(200).json({ message: 'Teacher created successfully.' });
-//     } catch (error) {
-//         res.status(500).json({ message: `${error}` });
-//     }
-// });
+  //         // Check if the teacher already exists based on the username
+  //         const existingTeacher = await Teacher.findOne({ username: teacherData.username });
+  //         if (existingTeacher) {
+  //             return res.status(400).json({ message: 'Teacher already exists with this username.' });
+  //         }
 
-const updateTeacher = asyncHandler(async (req, res) => {
-  try {
-    const { username, password, ...updateData } = req.body;
+  //         // Hash the password
+  //         const hashedPassword = await bcryptjs.hash(teacherData.password, 10);
 
-    const updatedTeacher = await Teacher.findOneAndUpdate(
-      { username },
-      updateData,
-      { new: true }
-    );
+  //         // Create a new teacher with the hashed password
+  //         const teacher = new Teacher({
+  //             firstName: teacherData.firstName,
+  //             middleName: teacherData.middleName,
+  //             lastName: teacherData.lastName,
+  //             currentAddress: teacherData.currentAddress,
+  //             birthDate: teacherData.birthDate,
+  //             gender: teacherData.gender,
+  //             emailAddress: teacherData.emailAddress,
+  //             username: teacherData.username,
+  //             password: hashedPassword,
+  //         });
 
-    if (password) {
-      updatedTeacher.password = password;
-      await updatedTeacher.save();
+  //         await teacher.save();
+
+  //         res.status(200).json({ message: 'Teacher created successfully.' });
+  //     } catch (error) {
+  //         res.status(500).json({ message: `${error}` });
+  //     }
+  // });
+
+  const updateTeacher = asyncHandler(async (req, res) => {
+    try {
+      const { username, password, ...updateData } = req.body;
+
+      const updatedTeacher = await Teacher.findOneAndUpdate(
+        { username },
+        updateData,
+        { new: true }
+      );
+
+      if (password) {
+        updatedTeacher.password = password;
+        await updatedTeacher.save();
+
+        res.json({
+          message: "Teacher updated successfully.",
+          admin: updatedTeacher,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+
+  const deleteTeacher = asyncHandler(async (req, res) => {
+    try {
+      const { username } = req.body;
+
+      await Teacher.findOneAndDelete({ username });
+
+      res.status(200).json({ message: "Teacher has been delete successfully." });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+
+  const getAllStudents = asyncHandler(async (req, res) => {
+    try {
+      const findStudents = await Student.find();
 
       res.json({
-        message: "Teacher updated successfully.",
-        admin: updatedTeacher,
+        message: "All students data retrieved successfully",
+        data: findStudents,
       });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
     }
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+  });
 
-const deleteTeacher = asyncHandler(async (req, res) => {
-  try {
-    const { username } = req.body;
+  const getAllTeachers = asyncHandler(async (req, res) => {
+    try {
+      const findTeachers = await Teacher.find();
 
-    await Teacher.findOneAndDelete({ username });
+      res.status(200).json({
+        message: "The teachers data retrieved successfully",
+        data: findTeachers,
+      });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
 
-    res.status(200).json({ message: "Teacher has been delete successfully." });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+  const getAllPending = asyncHandler(async (req, res) => {
+    try {
+      const findPending = await StudentApplication.find({
+        status: "PENDING" || "pending",
+      });
 
-const getAllStudents = asyncHandler(async (req, res) => {
-  try {
-    const students = await Student.find();
+      res.status(200).json({
+        message: "Pending records retrieved successfully ",
+        data: findPending,
+      });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
 
-    res.json({
-      message: "All students data retrieved successfully",
-      data: students,
-    });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+  const createAnnouncement = asyncHandler(async (req, res) => {
+    try {
+      const { title, content } = req.body;
 
-const getAllTeachers = asyncHandler(async (req, res) => {
-  try {
-    const teachers = await Teacher.find();
+      const announcement = new Announcement({
+        title,
+        content,
+        // createdBy: req.user.username,
+      });
 
-    res.json({
-      message: "The teachers data retrieved successfully",
-      data: teachers,
-    });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+      await announcement.save();
 
-const getAllPending = asyncHandler(async (req, res) => {
-  try {
-    const findPending = await StudentApplication.find({
-      status: "PENDING" || "pending",
-    });
+      res.status(201).json({
+        message: "Announcement created successfully.",
+        data: announcement,
+      });
+      // const announcement =
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
 
-    res.json({
-      message: "Pending records retrieved successfully ",
-      data: findPending,
-    });
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
+  const updateAnnouncement = asyncHandler(async (req, res) => {
+    try {
+      const { title, content } = req.body;
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
 
-const createAnnouncement = asyncHandler(async (req, res) => {
-  try {
-    const { title, content } = req.body;
-
-    const announcement = new Announcement({
-      title,
-      content,
-      // createdBy: req.user.username,
-    });
-
-    await announcement.save();
-
-    res.status(201).json({
-      message: "Announcement created successfully.",
-      data: announcement,
-    });
-    // const announcement =
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
-
-const updateAnnouncement = asyncHandler(async (req, res) => {
-  try {
-    const { title, content } = req.body;
-  } catch (error) {
-    res.json({ message: `${error}` });
-  }
-});
-
-module.exports = {
-  createAdmin,
-  adminLogin,
-  updateAdmin,
-  deleteAdmin,
-  acceptStudentApplication,
-  updateStudentApplication,
-  rejectStudentApplication,
-  createTeacher,
-  updateTeacher,
-  deleteTeacher,
-  getAllStudents,
-  getAllTeachers,
-  getAllPending,
-  createAnnouncement,
-};
+  module.exports = {
+    createAdmin,
+    adminLogin,
+    updateAdmin,
+    deleteAdmin,
+    getAdminDashboard,
+    acceptStudentApplication,
+    updateStudentApplication,
+    rejectStudentApplication,
+    createTeacher,
+    updateTeacher,
+    deleteTeacher,
+    getAllStudents,
+    getAllTeachers,
+    getAllPending,
+    createAnnouncement,
+    updateAnnouncement,
+  };

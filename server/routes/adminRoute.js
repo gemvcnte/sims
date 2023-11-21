@@ -14,12 +14,14 @@ router.patch("/updateTeacher", adminController.updateTeacher);
 router.get("/getAllTeachers", adminController.getAllTeachers);
 router.delete("/deleteTeacher", adminController.deleteTeacher);
 
+router.get("/dashboard", adminController.getAdminDashboard);
 router.get("/getAllStudents", adminController.getAllStudents);
 router.get("/getPending", adminController.getAllPending);
 
 router.post("/enrollStudent", adminController.acceptStudentApplication);
+// router.post("/acceptApplication", adminController.acceptStudentApplication);
 router.patch("/updateApplication", adminController.updateStudentApplication);
-router.patch("/deleteApplication", adminController.rejectStudentApplication);
+router.patch("/rejectApplication", adminController.rejectStudentApplication);
 
 router.post("/createAnnouncement", adminController.createAnnouncement);
 module.exports = router;

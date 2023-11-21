@@ -37,6 +37,24 @@ const teacherLogin = asyncHandler(async (req, res) => {
   }
 });
 
+
+const getTeacherDashboard = asyncHandler(async (req,res) => {
+  try {
+    const { _id } = req.user
+
+    const teacherDashboard = await Teacher.findById(_id)
+
+    if (!teacherDashboard) {
+      res.status(404).json({message: 'Teacher dashboard not found'})
+    }
+
+    res.status(200).json({message: 'Teacher dashboard retrieved successfully'})
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
 module.exports = {
   teacherLogin,
+  getTeacherDashboard,
 };
