@@ -5,7 +5,7 @@ const baseUrl = config.development.baseUrl;
 
 export const sendUpdateRequest = async (studentApplicationId, updatedData) => {
   try {
-    const response = await axios.post(`${baseUrl}/admin/updateApplication`, {
+    const response = await axios.patch(`${baseUrl}/admin/updateApplication`, {
       studentApplicationId,
       updatedData,
     });
