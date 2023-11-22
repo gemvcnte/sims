@@ -61,33 +61,34 @@ export default function StudentDataModal({ application, onSave, onClose }) {
   return (
     <div className="fixed bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center justify-center bg-white-500 bg-opacity-75">
       <div>
-        <div>
-          <label>Last Name</label>
-          <InputField
-            type="text"
-            placeholder="Input Your Last Name"
-            value={editedApplication.lastName}
-            name="lastName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.lastName && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
-
-        <div>
-          <label>First Name</label>
-          <InputField
-            type="text"
-            placeholder="Input Your First Name"
-            value={editedApplication.firstName}
-            name="firstName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.firstName && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
+        <section>
+          <div>
+            <label>Last Name</label>
+            <InputField
+              type="text"
+              placeholder="Input Your Last Name"
+              value={editedApplication.lastName}
+              name="lastName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className={`${
+                editedApplication.lastName && "!border-blue-400 text-blue-400"
+              }`}
+            />
+          </div>
+          <div>
+            <label>First Name</label>
+            <InputField
+              type="text"
+              placeholder="Input Your First Name"
+              value={editedApplication.firstName}
+              name="firstName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className={`${
+                editedApplication.firstName && "!border-blue-400 text-blue-400"
+              }`}
+            />
+          </div>
+        </section>
 
         <div>
           <label>Middle Name</label>
