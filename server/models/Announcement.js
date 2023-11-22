@@ -10,12 +10,21 @@ const announcementSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    // author: {
+    //     type: String,
+    //     required: true,
+    // },
     createdBy: {
         type: String,
         required: true,
         // role: 'admin',
         // enum: ['admin', 'teacher']
     },
+    // updatedAt: {
+    //     type: String,
+    //     required: true,
+    // },
+
 }, {timestamps: true})
 
 

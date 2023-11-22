@@ -15,7 +15,7 @@
     try {
       const { name, username, password, idNumber, address } = req.body;
 
-      // Check if the admin already exists based on the username
+      // Check if the admin already exists based on th  e username
       const existingAdmin = await Admin.findOne({ username });
       if (existingAdmin) {
         return res

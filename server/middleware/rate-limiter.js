@@ -2,6 +2,7 @@ const rateLimit = require('express-rate-limit')
 const rateLimiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hrs to milliseconds
     message: "You have exceeded the 200 requests in 24 hrs limit!",
+    max: 1000,
     standardHeaders: true,
     legacyHeaders: false,
 });
@@ -20,7 +21,8 @@ const rateLimiterConfig = {
     },
     student:{
         ...rateLimiter,
-        max: 200, // 200 request limit
+        // max: 200, // 200 request limit
+        max: 10, // 200 request limit (testing)
         message: 'You have exceeded the 200 requests in 24hrs limit.' //message for the student
     }
 

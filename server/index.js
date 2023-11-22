@@ -55,18 +55,18 @@ app.use('/apply', studentApplicationRoute);
 
 // Admin routes
 const adminRoute = require('./routes/adminRoute');
-// app.use('/admin', authenticate, adminRateLimiter, adminRoute);
-app.use('/admin', adminRateLimiter, adminRoute);
+app.use('/admin', authenticate, adminRateLimiter, adminRoute);
+// app.use('/admin', adminRateLimiter, adminRoute);
 
 // Student routes
 const studentRoute = require('./routes/studentRoute');
-// app.use('/admin', authenticate, studentRateLimiter, adminRoute);
-app.use('/student', studentRateLimiter, studentRoute);
+app.use('/admin', authenticate, studentRateLimiter, adminRoute);
+// app.use('/student', studentRateLimiter, studentRoute);
 
 // Teacher routes
 const teacherRoute = require('./routes/teacherRoute');
-// app.use('/admin', authenticate, teacherRateLimiter, adminRoute);
-app.use('/teacher', teacherRateLimiter, teacherRoute);
+app.use('/admin', authenticate, teacherRateLimiter, adminRoute);
+// app.use('/teacher', teacherRateLimiter, teacherRoute);
 
 // Start the server
 app.listen(port, () => {
