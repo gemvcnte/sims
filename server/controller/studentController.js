@@ -1,4 +1,5 @@
 const { Student } = require("../models/StudentModel");
+const { Announcement } = require("../models/Announcement")
 const bcryptjs = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
@@ -75,19 +76,33 @@ const getStudentAnnouncements = asyncHandler(async (req, res) => {
 
 const getStudentProfile = asyncHandler(async (req,res) => {
   try {
+    const { _id } = req.user
     
+
+    const studentProfile = await Student.findById(_id)
+
+    if (!studentProfile) {
+      res.status(404).json({message: 'Student Profile not found.'})
+    }
+
+    res.status(200).json({message: 'Student profile has been retrieved.'})
   } catch (error) {
-    
+    res.status(500).json({message: `${error}`})
   }
 })
 
-// const updateProfile = asyncHandler(async (req,res) => {
-//     try {
+// const updateStudentProfile = asyncHandler(async (req,res) => {
+//   try {
+//     const {...updateData} = req.body
 
-//     } catch (error) {
 
-//     }
+//     const updateStudentProfile
+//   } catch (error) {
+    
+//   }
 // })
+
+
 
 module.exports = { 
   studentLogin, 

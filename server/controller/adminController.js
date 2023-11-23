@@ -184,7 +184,7 @@
         password: bcryptjs.hashSync(originalStudentApplication.birthDate, 10), // Replace 10 with your desired js salt rounds
       };
 
-      // Save the modified object to the enrolledStudents collection
+      // save yung modified object sa enrolledStudents collection
       const studentEnrolled = new Student(modifiedStudentApplication);
       await studentEnrolled.save();
 
@@ -311,6 +311,8 @@
     }
   });
 
+  
+
 
   const getAllStudents = asyncHandler(async (req, res) => {
     try {
@@ -338,6 +340,7 @@
     }
   });
 
+  // 
   const getAllPending = asyncHandler(async (req, res) => {
     try {
       const findPending = await StudentApplication.find({
@@ -353,6 +356,8 @@
     }
   });
 
+
+  // creating an announcement for the school 
   const createAnnouncement = asyncHandler(async (req, res) => {
     try {
       const { title, content } = req.body;
@@ -378,10 +383,32 @@
   const updateAnnouncement = asyncHandler(async (req, res) => {
     try {
       const { title, content } = req.body;
+
+      const updatedAnnouncement = await Announcement.findOneAndUpdate({title, content}, updateAnnouncement, {new: true});
+
+
+      res.status(200).json({message: 'Announcement has been successfully been updated.', data: updatedAnnouncement})
     } catch (error) {
       res.status(500).json({ message: `${error}` });
     }
   });
+
+  const deleteAnnouncement = asyncHandler(async (req,res) => {
+    try {
+      const { title } = req.body;
+
+
+    await Announcement.findOneAndDelete({title})
+
+
+    res.status(200).json({message: 'Announcement has been deleted'})
+
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+
+
+  })
 
   module.exports = {
     createAdmin,
@@ -400,4 +427,5 @@
     getAllPending,
     createAnnouncement,
     updateAnnouncement,
+    deleteAnnouncement,
   };

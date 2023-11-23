@@ -1,4 +1,5 @@
 const { Teacher } = require("../models/TeacherModel");
+const  { Announcement } = require('../models/Announcement')
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
@@ -57,13 +58,31 @@ const getTeacherDashboard = asyncHandler(async (req,res) => {
 
 const getTeacherSchedule = asyncHandler(async (req, res) => {
   try {
+    const { _id } = req.user
+
+    const teacherSchedule = await Teacher.findById(_id)
+
+
+    if (!teacherSchedule) {
+      res.status(404).json({message: 'Teacher Schedule not found.'})
+    } else if (teacherSchedule === null) {
+      res.status(204).json({message: 'Teacher schedule is empty'})
+    };
+
+    res.status(200).json({message: 'Teacher Schedule has been retrieved.'})
   } catch (error) {
-    
+    res.status(500).json({message: `${error}`})
   }
 })
 
 const postClassAnnouncement = asyncHandler (async (req,res) => {
+  try {
+    const { _id, announcementId } = req.body
 
+    
+  } catch (error) {
+    
+  }
 })
 
 

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { expressjwt } = require('express-jwt')
+// const expressjwt = require('express-jwt');
 const adminController = require("../controller/adminController");
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv');
+dotenv.config();
+
 // Admin routes for admin...
 router.post("/create", adminController.createAdmin);
 // router.post("/login", expressjwt({ secret: process.env.JWT_SECRET }), adminController.adminLogin);
@@ -22,11 +23,10 @@ router.get('/dashboard', adminController.getAdminDashboard);
 router.get("/getAllStudents", adminController.getAllStudents);
 router.get("/getPending", adminController.getAllPending);
 
-// router.post("/enrollStudent", adminController.acceptStudentApplication);
-// alternative to this ^
-// router.post("/acceptApplication", adminController.acceptStudentApplication);
+router.post("/enrollStudent", adminController.acceptStudentApplication);
 router.patch("/updateApplication", adminController.updateStudentApplication);
 router.patch("/rejectApplication", adminController.rejectStudentApplication);
 
 router.post("/createAnnouncement", adminController.createAnnouncement);
+
 module.exports = router;
