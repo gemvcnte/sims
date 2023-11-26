@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/ui/mode-toggle";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,8 +12,9 @@ export default function SidebarFooter() {
   };
 
   return (
-    <footer className="mb-8">
+    <footer className="mb-8 flex justify-between">
       <button onClick={handleLogout}>logout</button>
+      <ModeToggle />
     </footer>
   );
 }
