@@ -3,9 +3,11 @@ import axios from "axios";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
 import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
 export default function StudentCard({ application, onClick }) {
   const enrollmentEndpoint = "http://localhost:5000/admin/enrollStudent";
+  const rejectEndpoint = "http://localhost:5000/admin/deleteApplication";
   const lastName = application.lastName.toLowerCase();
   const firstName = application.firstName.toLowerCase();
   const fullName = `${lastName.charAt(0).toUpperCase() + lastName.slice(1)}, ${
@@ -31,10 +33,24 @@ export default function StudentCard({ application, onClick }) {
     }
   };
 
+  const handleReject = async () => {
+    try {
+      const response = await axios.patch(rejectEndpoint, {
+        studentApplicationId: application._id,
+      });
+      console.log(response);
+
+      showSuccessNotification("Application Rejected");
+      hideCard();
+    } catch (error) {
+      console.error("Error enrolling student:", error.message);
+    }
+  };
+
   return (
     <>
       <ToastContainer />
-      <div
+      <DialogTrigger
         className={`${
           isCardHidden ? "hidden" : "flex"
         } border-white-700 bg-white-600 w-full items-center justify-between rounded-2xl border px-4 py-6`}
@@ -43,12 +59,25 @@ export default function StudentCard({ application, onClick }) {
         <h2 className="font-bold">{fullName}</h2>
         <div className="flex items-center gap-8">
           <p className="text-xs text-muted-foreground">{application.status}</p>
-          <Button onClick={handleEnroll} variant="outline">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleReject();
+            }}
+            variant="outline"
+          >
             Reject
           </Button>
-          <Button onClick={handleEnroll}>Enroll</Button>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEnroll();
+            }}
+          >
+            Enroll
+          </Button>
         </div>
-      </div>
+      </DialogTrigger>
     </>
   );
 }

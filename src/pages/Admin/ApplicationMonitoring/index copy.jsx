@@ -10,7 +10,6 @@ import {
   handleUpdateError,
 } from "@utils/applicationMonitoringUtils";
 import { getBaseUrl } from "@src/utils/configUtils";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 
 export default function ApplicationMonitoring() {
   const baseUrl = getBaseUrl();
@@ -72,37 +71,36 @@ export default function ApplicationMonitoring() {
 
   return (
     <>
-      <Dialog onOpenChange={setSelectedApplication}>
-        <section className="w-full">
-          {selectedApplication && (
-            <StudentDataModal
-              application={selectedApplication}
-              onSave={handleSaveChanges}
-              onClose={handleModalClose}
+      <section className="w-full">
+        {selectedApplication && (
+          <StudentDataModal
+            application={selectedApplication}
+            onSave={handleSaveChanges}
+            onClose={handleModalClose}
+          />
+        )}
+        <header className="border-white-700 mx-4 flex justify-between border-b py-8 italic">
+          <Icon
+            icon="heroicons-outline:menu-alt-2"
+            width="24"
+            height="24"
+            className="cursor-pointer lg:hidden"
+            onClick={toggleSidebar}
+          />
+          <span>STUDENT APPLICATION MONITORING</span>
+          <span></span>
+        </header>
+
+        <main className="flex flex-col gap-4 p-4">
+          {sortedPendingApplications.map((application) => (
+            <StudentCard
+              key={application._id}
+              application={application}
+              onClick={() => handleCardClick(application)}
             />
-          )}
-          <header className="border-white-700 mx-4 flex justify-between border-b py-8 italic">
-            <Icon
-              icon="heroicons-outline:menu-alt-2"
-              width="24"
-              height="24"
-              className="cursor-pointer lg:hidden"
-              onClick={toggleSidebar}
-            />
-            <span>STUDENT APPLICATION MONITORING</span>
-            <span></span>
-          </header>
-          <main className="flex flex-col gap-4 p-4">
-            {sortedPendingApplications.map((application) => (
-              <StudentCard
-                key={application._id}
-                application={application}
-                onClick={() => handleCardClick(application)}
-              />
-            ))}
-          </main>
-        </section>
-      </Dialog>
+          ))}
+        </main>
+      </section>
     </>
   );
 }
