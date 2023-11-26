@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
+import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 
@@ -57,8 +58,11 @@ export default function StudentCard({ application, onClick }) {
         onClick={() => onClick && onClick(application)}
       >
         <h2 className="font-bold">{fullName}</h2>
-        <div className="flex items-center gap-8">
-          <p className="text-xs text-muted-foreground">{application.status}</p>
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8">
+          <span className="hidden items-center justify-center gap-2 text-xs text-muted-foreground sm:flex">
+            <Icon icon="lets-icons:status" />
+            <p>{application.status}</p>
+          </span>
           <Button
             onClick={(e) => {
               e.stopPropagation();
