@@ -31,6 +31,15 @@ export default function ApplicationMonitoring() {
     fetchPendingApplications();
   }, []);
 
+  const sortedPendingApplications = [...pendingApplications].sort((a, b) => {
+    const lastNameA = a.lastName.toLowerCase();
+    const lastNameB = b.lastName.toLowerCase();
+
+    if (lastNameA < lastNameB) return -1;
+    if (lastNameA > lastNameB) return 1;
+    return 0;
+  });
+
   const handleCardClick = (application) => {
     setSelectedApplication(application);
     console.log(application);
@@ -70,7 +79,7 @@ export default function ApplicationMonitoring() {
             onClose={handleModalClose}
           />
         )}
-        <header className="mx-4 flex justify-between border-b border-white-700 py-8 italic">
+        <header className="border-white-700 mx-4 flex justify-between border-b py-8 italic">
           <Icon
             icon="heroicons-outline:menu-alt-2"
             width="24"
@@ -83,7 +92,7 @@ export default function ApplicationMonitoring() {
         </header>
 
         <main className="flex flex-col gap-4 p-4">
-          {pendingApplications.map((application) => (
+          {sortedPendingApplications.map((application) => (
             <StudentCard
               key={application._id}
               application={application}
