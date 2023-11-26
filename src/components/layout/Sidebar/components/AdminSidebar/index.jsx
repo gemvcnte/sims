@@ -19,7 +19,9 @@ export default function AdminSidebar() {
   return (
     !isOnRegistrationPage && (
       <SidebarContainer>
-        <SidebarItem to="dashboard" icon="material-symbols:dashboard" />
+        <SidebarItem to="dashboard" icon="material-symbols:dashboard">
+          Dashboard
+        </SidebarItem>
 
         <StudentsDropdown />
         <TeachersDropdown />
@@ -29,12 +31,9 @@ export default function AdminSidebar() {
 
         <AnnouncementsDropdown />
 
-        <Link onClick={toggleSidebar}>
-          <Button variant="ghost" className="w-full justify-start">
-            <Icon icon="material-symbols:analytics-outline" className="mr-2" />
-            Analytics
-          </Button>
-        </Link>
+        <SidebarItem icon="material-symbols:analytics-outline">
+          Analytics
+        </SidebarItem>
       </SidebarContainer>
     )
   );
