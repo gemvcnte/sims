@@ -6,6 +6,10 @@ import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { TeachersDropdown } from "./TeachersDropdown";
 import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { ClassroomsDropdown } from "./ClassroomsDropdown";
+import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
+import SidebarItem from "./SidebarItem";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -15,15 +19,21 @@ export default function AdminSidebar() {
   return (
     !isOnRegistrationPage && (
       <SidebarContainer>
-        <Link to="dashboard" onClick={toggleSidebar}>
-          <Button variant="ghost" className="w-full justify-start">
-            <Icon icon="material-symbols:dashboard" className="mr-2" />
-            Dashboard
-          </Button>
-        </Link>
+        <SidebarItem to="dashboard" icon="material-symbols:dashboard">
+          Dashboard
+        </SidebarItem>
 
         <StudentsDropdown />
         <TeachersDropdown />
+        <ClassroomsDropdown />
+
+        <DropdownMenuSeparator />
+
+        <AnnouncementsDropdown />
+
+        <SidebarItem icon="material-symbols:analytics-outline">
+          Analytics
+        </SidebarItem>
       </SidebarContainer>
     )
   );

@@ -82,7 +82,7 @@ export default function ApplicationMonitoring() {
             />
           )}
           <Topbar>STUDENT APPLICATION MONITORING</Topbar>
-          <main className="flex flex-col gap-4 p-4">
+          <main className="flex flex-col gap-2 px-4 py-2">
             {sortedPendingApplications.map((application) => (
               <StudentCard
                 key={application._id}

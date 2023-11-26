@@ -57,7 +57,7 @@ export default function StudentCard({ application, onClick }) {
         } border-white-700 bg-white-600 w-full items-center justify-between rounded-2xl border px-4 py-6`}
         onClick={() => onClick && onClick(application)}
       >
-        <h2 className="font-bold">{fullName}</h2>
+        <h2 className="text-left font-bold">{fullName}</h2>
         <div className="flex items-center gap-2 sm:gap-4 lg:gap-8">
           <span className="hidden items-center justify-center gap-2 text-xs text-muted-foreground sm:flex">
             <Icon icon="lets-icons:status" />
