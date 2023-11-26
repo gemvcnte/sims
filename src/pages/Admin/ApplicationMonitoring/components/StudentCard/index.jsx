@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
+import { Button } from "@/components/ui/button";
 
 export default function StudentCard({ application, onClick }) {
   const enrollmentEndpoint = "http://localhost:5000/admin/enrollStudent";
@@ -36,24 +37,16 @@ export default function StudentCard({ application, onClick }) {
       <div
         className={`${
           isCardHidden ? "hidden" : "flex"
-        } w-full items-center justify-between rounded-2xl border border-white-700 bg-white-600 px-4 py-6`}
+        } border-white-700 bg-white-600 w-full items-center justify-between rounded-2xl border px-4 py-6`}
         onClick={() => onClick && onClick(application)}
       >
-        <h2 className="">{fullName}</h2>
+        <h2 className="font-bold">{fullName}</h2>
         <div className="flex items-center gap-8">
-          <p>{application.status}</p>
-          <button
-            onClick={handleEnroll}
-            className="rounded-full border border-black-400 px-4 py-1"
-          >
+          <p className="text-xs text-muted-foreground">{application.status}</p>
+          <Button onClick={handleEnroll} variant="outline">
             Reject
-          </button>
-          <button
-            onClick={handleEnroll}
-            className="rounded-full border border-black-400 bg-black-400 px-4 py-1 text-white-400"
-          >
-            Enroll
-          </button>
+          </Button>
+          <Button onClick={handleEnroll}>Enroll</Button>
         </div>
       </div>
     </>
