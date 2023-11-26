@@ -39,6 +39,7 @@ export default function Registration() {
 
   const handleSubmit = async (data) => {
     setLoading(true);
+    console.log(data);
 
     try {
       const response = await axios.post(registrationApi, data);
@@ -59,7 +60,7 @@ export default function Registration() {
   return (
     <>
       {loading && <LoadingSpinner />}
-      <div className="fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center bg-white-400 md:hidden">
+      <div className="bg-white-400 fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center md:hidden">
         <p>Registration Only Available on Desktop</p>
       </div>
       <ToastContainer />

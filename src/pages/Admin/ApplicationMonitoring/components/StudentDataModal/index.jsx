@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const InputField = ({
   type,
@@ -21,7 +33,7 @@ const InputField = ({
 
 const selectOptions = [
   { value: "", label: "Select Extension Name" },
-  { value: "Jr", label: "Jr" },
+  { value: "JR", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
   { value: "IV", label: "IV" },
@@ -59,141 +71,142 @@ export default function StudentDataModal({ application, onSave, onClose }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center justify-center bg-white-500 bg-opacity-75">
-      <div>
-        <div>
-          <label>Last Name</label>
-          <InputField
-            type="text"
-            placeholder="Input Your Last Name"
-            value={editedApplication.lastName}
-            name="lastName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.lastName && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
+    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
+      <form onSubmit={handleSaveChanges}>
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="lastName" className="text-right">
+              Last Name
+            </Label>
+            <Input
+              id="lastName"
+              type="text"
+              placeholder="Input Your Last Name"
+              defaultValue={editedApplication.lastName}
+              name="lastName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
 
-        <div>
-          <label>First Name</label>
-          <InputField
-            type="text"
-            placeholder="Input Your First Name"
-            value={editedApplication.firstName}
-            name="firstName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.firstName && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="firstName" className="text-right">
+              First Name
+            </Label>
+            <Input
+              id="firstName"
+              type="text"
+              placeholder="Input Your First Name"
+              defaultValue={editedApplication.firstName}
+              name="firstName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
 
-        <div>
-          <label>Middle Name</label>
-          <InputField
-            type="text"
-            placeholder="Input Your Middle Name"
-            value={editedApplication.middleName}
-            name="middleName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.middleName && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="middleName" className="text-right">
+              Middle Name
+            </Label>
+            <Input
+              id="middleName"
+              type="text"
+              placeholder="Input Your Middle Name"
+              defaultValue={editedApplication.middleName}
+              name="middleName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
 
-        <div>
-          <label>Extension Name </label>
-          <select
-            required
-            className={`${
-              editedApplication.extensionName &&
-              "!border-blue-400 bg-blue-400 text-white-400"
-            }`}
-            value={editedApplication.extensionName}
-            name="extensionName"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-          >
-            {selectOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="extensionName" className="text-right">
+              Extension Name
+            </Label>
+            <select
+              required
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              value={editedApplication.extensionName}
+              name="extensionName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            >
+              {selectOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <div>
-        <div>
-          <label>Birthdate</label>
-          <InputField
-            type="date"
-            placeholder="Input Your Birthdate (MM/DD/YY)"
-            value={editedApplication.birthDate}
-            name="birthDate"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className={`${
-              editedApplication.birthDate && "!border-blue-400 text-blue-400"
-            }`}
-          />
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="birthDate" className="text-right">
+              BirthDate
+            </Label>
+            <InputField
+              type="date"
+              placeholder="Input Your Birthdate (MM/DD/YY)"
+              value={editedApplication.birthDate}
+              name="birthDate"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+          </div>
 
-        <div>
-          <label>Gender</label>
-          <select
-            className={`${
-              editedApplication.gender &&
-              "!border-blue-400 bg-blue-400 text-white-400"
-            }`}
-            value={editedApplication.gender}
-            required
-            name="gender"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-          >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="gender" className="text-right">
+              Gender
+            </Label>
+            <select
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              value={editedApplication.gender}
+              required
+              name="gender"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            >
+              <option value="">Select Gender</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+            </select>
+          </div>
 
-        <div>
-          <label>Current Address</label>
-          <InputField
-            className={`${
-              editedApplication.currentAddress &&
-              "!border-blue-400 text-blue-400"
-            }`}
-            type="text"
-            placeholder="E.g., 123 Purok St, Barangay, Municipality"
-            value={editedApplication.currentAddress}
-            name="currentAddress"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-          />
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="currentAddress" className="text-right">
+              Current Address
+            </Label>
+            <InputField
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              type="text"
+              placeholder="E.g., 123 Purok St, Barangay, Municipality"
+              value={editedApplication.currentAddress}
+              name="currentAddress"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            />
+          </div>
 
-        <div>
-          <label>Email</label>
-          <InputField
-            className={`${
-              editedApplication.emailAddress && "!border-blue-400 text-blue-400"
-            }`}
-            type="email"
-            placeholder="Input Your Email"
-            value={editedApplication.emailAddress}
-            name="emailAddress"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-          />
-        </div>
-      </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
+            <InputField
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              type="email"
+              placeholder="Input Your Email"
+              value={editedApplication.emailAddress}
+              name="emailAddress"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            />
+          </div>
 
-      {/* Add similar blocks for other fields */}
-      {/* ... */}
-
-      <div>
-        <div>
-          <div>
-            <label>Father's Name (*)</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="fatherName" className="text-right">
+              Father's Name
+            </Label>
             <InputField
               required
               type="text"
@@ -201,14 +214,14 @@ export default function StudentDataModal({ application, onSave, onClose }) {
               value={editedApplication.fatherName}
               onChange={(e) => handleInputChange("fatherName", e.target.value)}
               name="fatherName"
-              o
-              className={`${
-                editedApplication.fatherName && "!border-blue-400 text-blue-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
-          <div>
-            <label>Mother's Name (*)</label>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="motherName" className="text-right">
+              Mother's Name
+            </Label>
             <InputField
               required
               type="text"
@@ -216,16 +229,14 @@ export default function StudentDataModal({ application, onSave, onClose }) {
               value={editedApplication.motherName}
               onChange={(e) => handleInputChange("motherName", e.target.value)}
               name="motherName"
-              className={`${
-                editedApplication.motherName && "!border-blue-400 text-blue-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
-        </div>
 
-        <div>
-          <div>
-            <label>Father's Co. Number (*)</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="FatherContactNumber" className="text-right">
+              Father's Tel. No.
+            </Label>
             <InputField
               required
               type="number"
@@ -235,14 +246,14 @@ export default function StudentDataModal({ application, onSave, onClose }) {
                 handleInputChange("fatherContactNumber", e.target.value)
               }
               name="fatherContactNumber"
-              className={`${
-                editedApplication.fatherContactNumber &&
-                "!border-blue-400 text-blue-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
-          <div>
-            <label>Mother's Co. Number (*)</label>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="motherContactNumber" className="text-right">
+              Mother's Tel. No.
+            </Label>
             <InputField
               required
               type="number"
@@ -252,64 +263,80 @@ export default function StudentDataModal({ application, onSave, onClose }) {
                 handleInputChange("motherContactNumber", e.target.value)
               }
               name="motherContactNumber"
-              className={`${
-                editedApplication.motherContactNumber &&
-                "!border-blue-400 text-blue-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
-        </div>
-      </div>
 
-      <div>
-        <div>
-          <label>Guardian's Name</label>
-          <InputField
-            type="text"
-            placeholder="Firstname Middlename Lastname"
-            value={editedApplication.guardianName}
-            onChange={(e) => handleInputChange("guardianName", e.target.value)}
-            name="guardianName"
-          />
-        </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="guardianName" className="text-right">
+              Guardian's Name
+            </Label>
+            <InputField
+              type="text"
+              placeholder="Firstname Middlename Lastname"
+              value={editedApplication.guardianName}
+              onChange={(e) =>
+                handleInputChange("guardianName", e.target.value)
+              }
+              name="guardianName"
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+          </div>
 
-        <div>
-          <label>Guardian's Co. Number</label>
-          <InputField
-            type="number"
-            placeholder="+639xxxxxxxxx"
-            value={editedApplication.guardianContactNumber}
-            onChange={(e) =>
-              handleInputChange("guardianContactNumber", e.target.value)
-            }
-            name="guardianContactNumber"
-          />
-        </div>
-      </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="guardianContactNumber" className="text-right">
+              Guardian's Tel. No.
+            </Label>
+            <InputField
+              type="number"
+              placeholder="+639xxxxxxxxx"
+              value={editedApplication.guardianContactNumber}
+              onChange={(e) =>
+                handleInputChange("guardianContactNumber", e.target.value)
+              }
+              name="guardianContactNumber"
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+          </div>
 
-      {/* STEP 3 */}
-      <div>
-        <div>
-          <div>
-            <label>LRN (Learner Reference Number)</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="guardianRelationship" className="text-right">
+              Guardian Relationship
+            </Label>
+            <select
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              name="guardianRelationship"
+              value={editedApplication.guardianRelationship}
+              onChange={(e) =>
+                handleInputChange("guardianRelationship", e.target.value)
+              }
+            >
+              <option value="">Relationship with Guardian</option>
+              <option value="Parent">Parent</option>
+              <option value="Relative">Relative</option>
+              <option value="Non-relative">Non-relative</option>
+            </select>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="lrn" className="text-right">
+              LRN
+            </Label>
             <input
               type="number"
               placeholder="Input Your LRN"
               value={editedApplication.lrn}
-              className={` ${
-                editedApplication.lrn && "!border-blue-400 text-blue-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               onChange={(e) => handleInputChange("lrn", e.target.value)}
             />
           </div>
 
-          <div>
-            <label htmlFor="schoolYear">School Year</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="schoolYear" className="text-right">
+              School Year
+            </Label>
             <select
-              className={` ${
-                editedApplication.schoolYear &&
-                "!border-blue-400 bg-blue-400 text-white-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="schoolYear"
               value={editedApplication.schoolYear}
               onChange={(e) => handleInputChange("schoolYear", e.target.value)}
@@ -320,13 +347,12 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="semester">Semester</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="semester" className="text-right">
+              Semester
+            </Label>
             <select
-              className={`${
-                editedApplication.semester &&
-                "!border-blue-400 bg-blue-400 text-white-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="semester"
               value={editedApplication.semester}
               onChange={(e) => handleInputChange("semester", e.target.value)}
@@ -336,16 +362,13 @@ export default function StudentDataModal({ application, onSave, onClose }) {
               <option value="second semester">2nd Semester</option>
             </select>
           </div>
-        </div>
 
-        <div>
-          <div>
-            <label>Track</label>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="track" className="text-right">
+              Track
+            </Label>
             <select
-              className={` ${
-                editedApplication.track &&
-                "!border-blue-400 bg-blue-400 text-white-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="track"
               value={editedApplication.track}
               onChange={(e) => handleInputChange("track", e.target.value)}
@@ -355,13 +378,14 @@ export default function StudentDataModal({ application, onSave, onClose }) {
               <option value="tvl">TVL Track</option>
             </select>
           </div>
-          <div className="form-group">
-            <label htmlFor="strand">Strand</label>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="strand" className="text-right">
+              Strand
+            </Label>
+
             <select
-              className={` ${
-                editedApplication.strand &&
-                "!border-blue-400 bg-blue-400 text-white-400"
-              }`}
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="strand"
               value={editedApplication.strand}
               onChange={(e) => handleInputChange("strand", e.target.value)}
@@ -374,39 +398,10 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             </select>
           </div>
         </div>
-      </div>
-
-      <div>
-        <select
-          name="guardianRelationship"
-          value={editedApplication.guardianRelationship}
-          onChange={(e) =>
-            handleInputChange("guardianRelationship", e.target.value)
-          }
-        >
-          <option value="">Relationship</option>
-          <option value="Parent">Parent</option>
-          <option value="Relative">Relative</option>
-          <option value="Non-relative">Non-relative</option>
-        </select>
-      </div>
-
-      <div>
-        <button
-          type="button"
-          onClick={handleSaveChanges}
-          className="text-white rounded-md bg-blue-500 px-4 py-2"
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          onClick={onClose}
-          className="text-white ml-2 rounded-md bg-gray-400 px-4 py-2"
-        >
-          Close
-        </button>
-      </div>
-    </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
   );
 }
