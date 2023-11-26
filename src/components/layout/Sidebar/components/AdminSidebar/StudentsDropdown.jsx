@@ -30,7 +30,11 @@ export function StudentsDropdown({}) {
             Students
           </span>
           <span>
-            <Icon icon="gridicons:dropdown" className="mr-2" />
+            {!isDropdownOpen ? (
+              <Icon icon="gridicons:dropdown" className="mr-2" />
+            ) : (
+              <Icon icon="gridicons:dropdown" className="mr-2" rotate={90} />
+            )}
           </span>
         </Button>
       </DropdownMenuTrigger>
