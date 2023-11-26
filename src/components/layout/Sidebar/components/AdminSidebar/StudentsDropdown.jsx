@@ -14,7 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 
 export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
