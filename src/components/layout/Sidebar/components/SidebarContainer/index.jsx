@@ -20,14 +20,14 @@ export default function SidebarContainer({ children }) {
       )}
 
       <aside
-        className={`sticky top-0 z-20 h-[100vh] w-[85vw] border-r border-white-700 bg-white-500 md:sticky md:max-w-[300px]  ${
+        className={`border-white-700 bg-white-500 sticky top-0 z-20 h-[100vh] w-[85vw] border-r md:sticky md:max-w-[300px]  ${
           !isSidebarOpen && "hidden"
         } lg:block`}
       >
         <div className="flex h-[100vh] flex-col justify-between px-4">
           <div>
             <SidebarHeader />
-            <main className="flex flex-col gap-4">{children}</main>
+            <main className="flex flex-col gap-2 py-2">{children}</main>
           </div>
 
           <SidebarFooter />
