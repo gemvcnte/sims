@@ -1,20 +1,23 @@
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Button } from "@/components/ui/button";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { SidebarFooterDropdown } from "./SidebarFooterDropdown";
 
 export default function SidebarFooter() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/");
-    window.location.reload();
-  };
-
   return (
-    <footer className="mb-8 flex justify-between">
-      <button onClick={handleLogout}>logout</button>
-      <ModeToggle />
-    </footer>
+    <Button
+      variant="ghost"
+      className="mb-8 flex items-center justify-between py-8"
+    >
+      <section className="flex items-center gap-2">
+        <div className="h-10 w-10 rounded-full bg-foreground"></div>
+        <div className="flex flex-col items-start justify-around">
+          <span>Firstname Lastname</span>
+          <span className="text-muted-foreground">role</span>
+        </div>
+      </section>
+      <section>
+        <SidebarFooterDropdown />
+      </section>
+    </Button>
   );
 }
