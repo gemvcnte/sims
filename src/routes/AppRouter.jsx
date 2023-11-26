@@ -4,16 +4,19 @@ import LoginRoutes from "./LoginRoutes";
 import RegistrationRoutes from "./RegistrationRoutes";
 import HomeRoutes from "./HomeRoutes";
 import { SidebarProvider } from "@src/contexts/SidebarContext.jsx";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const AppRouter = () => {
   return (
     <Router>
-      <SidebarProvider>
-        <RegistrationRoutes />
-        <Routes>
-          <Route path="*" element={<HomeRoutes />} />
-        </Routes>
-      </SidebarProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <SidebarProvider>
+          <RegistrationRoutes />
+          <Routes>
+            <Route path="*" element={<HomeRoutes />} />
+          </Routes>
+        </SidebarProvider>
+      </ThemeProvider>
     </Router>
   );
 };

@@ -2,29 +2,47 @@ import React, { useState } from "react";
 import axios from "axios";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
+import { Icon } from "@iconify/react";
+import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
-export default function StudentCard({ user, userId }) {
-  const endpoint = "http://localhost:5000/admin/enrollStudent";
-  const lastName = user.lastName.toLowerCase();
-  const firstName = user.firstName.toLowerCase();
+export default function StudentCard({ application, onClick }) {
+  const enrollmentEndpoint = "http://localhost:5000/admin/enrollStudent";
+  const rejectEndpoint = "http://localhost:5000/admin/deleteApplication";
+  const lastName = application.lastName.toLowerCase();
+  const firstName = application.firstName.toLowerCase();
   const fullName = `${lastName.charAt(0).toUpperCase() + lastName.slice(1)}, ${
     firstName.charAt(0).toUpperCase() + firstName.slice(1)
   }`;
 
-  const [isHidden, setIsHidden] = useState(false);
+  const [isCardHidden, setIsCardHidden] = useState(false);
 
-  const hideTheCard = () => {
-    setIsHidden(true);
+  const hideCard = () => {
+    setIsCardHidden(true);
   };
 
   const handleEnroll = async () => {
     try {
-      const response = await axios.post(`${endpoint}`, {
-        studentApplicationId: userId,
+      const response = await axios.post(enrollmentEndpoint, {
+        studentApplicationId: application._id,
       });
 
       showSuccessNotification("Student Enrolled Successfully");
-      hideTheCard();
+      hideCard();
+    } catch (error) {
+      console.error("Error enrolling student:", error.message);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      const response = await axios.patch(rejectEndpoint, {
+        studentApplicationId: application._id,
+      });
+      console.log(response);
+
+      showSuccessNotification("Application Rejected");
+      hideCard();
     } catch (error) {
       console.error("Error enrolling student:", error.message);
     }
@@ -33,28 +51,37 @@ export default function StudentCard({ user, userId }) {
   return (
     <>
       <ToastContainer />
-      <div
+      <DialogTrigger
         className={`${
-          isHidden ? "hidden" : "flex"
-        } w-full items-center justify-between rounded-2xl border border-white-700 bg-white-600 px-4 py-6`}
+          isCardHidden ? "hidden" : "flex"
+        } border-white-700 bg-white-600 w-full items-center justify-between rounded-2xl border px-4 py-6`}
+        onClick={() => onClick && onClick(application)}
       >
-        <h2 className="">{fullName}</h2>
-        <div className="flex items-center gap-8">
-          <p>{user.status}</p>
-          <button
-            onClick={handleEnroll}
-            className="rounded-full border border-black-400 px-4 py-1"
+        <h2 className="font-bold">{fullName}</h2>
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-8">
+          <span className="hidden items-center justify-center gap-2 text-xs text-muted-foreground sm:flex">
+            <Icon icon="lets-icons:status" />
+            <p>{application.status}</p>
+          </span>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleReject();
+            }}
+            variant="outline"
           >
             Reject
-          </button>
-          <button
-            onClick={handleEnroll}
-            className="rounded-full border border-black-400 bg-black-400 px-4 py-1 text-white-400"
+          </Button>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEnroll();
+            }}
           >
             Enroll
-          </button>
+          </Button>
         </div>
-      </div>
+      </DialogTrigger>
     </>
   );
 }

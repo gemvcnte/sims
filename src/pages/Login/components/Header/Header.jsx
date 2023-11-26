@@ -3,7 +3,7 @@ import logo from "../../../../assets/mrmnhs-logo.png";
 
 function Header() {
   return (
-    <header>
+    <header className="mt-8">
       <div className="flex flex-col items-center gap-2 pt-8 ">
         <img src={logo} alt="" className="max-w-[12rem]" />
         <h1 className="max-w-[80%] text-center sm:max-w-full">

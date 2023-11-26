@@ -15,7 +15,7 @@ function RoleSelectionButton({ role, hasBorder, onClick }) {
         width="24"
         height="24"
         rotate={1}
-        className="transform-gpu transition-transform duration-300 group-hover:translate-x-2 group-focus:translate-x-4"
+        className="transform-gpu text-black-400 transition-transform duration-300 group-hover:translate-x-2 group-focus:translate-x-4"
       />
     </button>
   );
