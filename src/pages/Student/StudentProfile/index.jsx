@@ -1,10 +1,15 @@
-import Topbar from "@/components/layout/Topbar";
 import React from "react";
+import Topbar from "@/components/layout/Topbar";
+import StudentProfileDisplayAndEditSection from "@/pages/Student/StudentProfile/components/StudentProfileDisplayAndEditSection";
 
-export default function StudentProfile() {
+const StudentProfile = () => {
   return (
     <main className="w-full">
-      <Topbar>PROFILE</Topbar>
+      <Topbar>STUDENT PROFILE</Topbar>
+
+      <StudentProfileDisplayAndEditSection />
     </main>
   );
-}
+};
+
+export default StudentProfile;
