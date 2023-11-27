@@ -1,43 +1,21 @@
 import React from "react";
-import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
 import useStudentProfile from "@/hooks/useStudentProfile";
+import { updateStudentProfileApi } from "@/utils/updateStudentProfileApi";
 
 const StudentProfileDisplayAndEditSection = () => {
   const { studentProfile, error } = useStudentProfile();
 
-  const updateProfile = async (updatedProfileData) => {
-    const baseUrl = getBaseUrl();
-    const authToken = localStorage.getItem("authToken");
-
-    try {
-      await axios.patch(
-        `${baseUrl}/student/profile/update`,
-        { updatedProfileData },
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        },
-      );
-
-      updateLocalProfileData(updatedProfileData);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-  };
-
-  const updateLocalProfileData = (updatedProfileData) => {
-    localStorage.setItem("studentProfile", JSON.stringify(updatedProfileData));
-  };
-
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = async () => {
     const updatedProfileData = {
       ...studentProfile,
       username: "newUsername",
     };
 
-    updateProfile(updatedProfileData);
+    try {
+      await updateStudentProfileApi(updatedProfileData);
+    } catch (error) {
+      console.error("Error in component:", error);
+    }
   };
 
   return (
