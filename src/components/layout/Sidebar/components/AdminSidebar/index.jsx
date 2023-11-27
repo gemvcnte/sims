@@ -9,7 +9,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ClassroomsDropdown } from "./ClassroomsDropdown";
 import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
-import SidebarItem from "./SidebarItem";
+import SidebarItem from "../SidebarContainer/components/SidebarItem";
 
 export default function AdminSidebar() {
   const location = useLocation();
