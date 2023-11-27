@@ -1,5 +1,4 @@
 import React from "react";
-import { useSidebarContext } from "@contexts/SidebarContext.jsx";
 import Topbar from "@/components/layout/Topbar";
 
 export default function AdminDashboard() {
