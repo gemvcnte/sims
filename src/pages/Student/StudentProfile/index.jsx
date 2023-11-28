@@ -1,6 +1,6 @@
 import React from "react";
 import Topbar from "@/components/layout/Topbar";
-import StudentProfileDisplayAndEditSection from "@/pages/Student/StudentProfile/components/StudentProfileDisplayAndEditSection";
+import { StudentProfileDisplayAndEditSection } from "./components";
 
 const StudentProfile = () => {
   return (
