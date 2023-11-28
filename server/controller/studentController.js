@@ -1,5 +1,5 @@
 const { Student } = require("../models/StudentModel");
-const { Announcement } = require("../models/Announcement")
+const { Announcement } = require("../models/Announcement");
 const bcryptjs = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
@@ -40,74 +40,66 @@ const studentLogin = asyncHandler(async (req, res) => {
 
 const getStudentDashboard = asyncHandler(async (req, res) => {
   try {
+    const { _id } = req.user;
 
-    const { _id } = req.user
-
-    const studentDashboard = await Student.findById(_id)
+    const studentDashboard = await Student.findById(_id);
 
     if (!studentDashboard) {
-      res.status(404).json({message: 'Student dashboard not found.'})
+      res.status(404).json({ message: "Student dashboard not found." });
     }
 
-    res.status(200).json({message: `Student dashboard retrieved successfully.`})
+    res
+      .status(200)
+      .json({ message: `Student dashboard retrieved successfully.` });
   } catch (error) {
-    res.status(500).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` });
   }
 });
 
 const getStudentSchedule = asyncHandler(async (req, res) => {
   try {
-
-    const { _id } = req.body
-
-
-  } catch (error) {
-
-  }
+    const { _id } = req.body;
+  } catch (error) {}
 });
 
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
-
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 });
 
-const getStudentProfile = asyncHandler(async (req,res) => {
+const getStudentProfile = asyncHandler(async (req, res) => {
   try {
-    const { _id } = req.user
-    
+    const { _id } = req.user;
 
-    const studentProfile = await Student.findById(_id)
+    const studentProfile = await Student.findById(_id);
 
     if (!studentProfile) {
-      res.status(404).json({message: 'Student Profile not found.'})
+      res.status(404).json({ message: "Student Profile not found." });
+    } else {
+      res.status(200).json({
+        message: "Student profile has been retrieved.",
+        studentProfile: studentProfile,
+      });
     }
-
-    res.status(200).json({message: 'Student profile has been retrieved.'})
   } catch (error) {
-    res.status(500).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 // const updateStudentProfile = asyncHandler(async (req,res) => {
 //   try {
 //     const {...updateData} = req.body
 
-
 //     const updateStudentProfile
 //   } catch (error) {
-    
+
 //   }
 // })
 
-
-
-module.exports = { 
-  studentLogin, 
-  getStudentDashboard, 
-  getStudentSchedule, 
+module.exports = {
+  studentLogin,
+  getStudentDashboard,
+  getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
 };
