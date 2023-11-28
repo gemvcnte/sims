@@ -1,15 +1,13 @@
-import { AdditionalInformationSection } from "./AdditionalInformationSection";
-import { ParentInformationSection } from "./ParentInformationSection";
-import { PersonalInformationSection } from "./PersonalInformationSection";
-import { AcademicInformationSection } from "./AcademicInformationSection";
 import React from "react";
-import useStudentProfile from "@/hooks/useStudentProfile";
-import { updateStudentProfileApi } from "@/utils/updateStudentProfileApi";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import extensionNameSelectOptions from "../extensionNameSelectOptions";
-import InputField from "../InputField";
+import {
+  PersonalInformationSection,
+  ParentInformationSection,
+  AcademicInformationSection,
+  AdditionalInformationSection,
+} from "./sections";
+import { updateStudentProfileApi } from "./helpers";
+import { useStudentProfile } from "./hooks";
 
 const StudentProfileDisplayAndEditSection = () => {
   const { studentProfile, error, setStudentProfile } = useStudentProfile();

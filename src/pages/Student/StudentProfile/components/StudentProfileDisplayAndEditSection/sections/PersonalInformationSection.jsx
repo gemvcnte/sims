@@ -1,8 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
-import extensionNameSelectOptions from "../extensionNameSelectOptions";
-import InputField from "../InputField";
+import { extensionNameSelectOptions, InputField } from "../common";
 
 export function PersonalInformationSection({
   studentProfile,

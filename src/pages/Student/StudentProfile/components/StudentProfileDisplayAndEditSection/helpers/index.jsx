@@ -1,0 +1,1 @@
+export { updateStudentProfileApi } from "./updateStudentProfileApi";

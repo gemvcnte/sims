@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import React from "react";
-import InputField from "../InputField";
+import { InputField } from "../common";
+
 export function AdditionalInformationSection({
   studentProfile,
   handleInputChange,
