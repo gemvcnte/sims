@@ -27,6 +27,10 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    currentAddress: {
+      type: String,
+      required: false,
+    },
     lrn: {
       type: String,
       required: true,
