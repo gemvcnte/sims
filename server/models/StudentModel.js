@@ -73,15 +73,15 @@ const studentSchema = new mongoose.Schema(
     },
     guardianName: {
       type: String,
-      default: "none",
+      default: "",
     },
     guardianContactNumber: {
       type: String,
-      default: "none",
+      default: "",
     },
     guardianRelationship: {
       type: String,
-      default: "none",
+      default: "",
     },
     lrn: {
       type: String,
@@ -89,15 +89,15 @@ const studentSchema = new mongoose.Schema(
     },
     religion: {
       type: String,
-      default: "null",
+      default: null,
     },
     province: {
       type: String,
-      default: "null",
+      default: null,
     },
     city: {
       type: String,
-      default: "null",
+      default: null,
     },
     zipCode: {
       type: Number,
@@ -105,7 +105,7 @@ const studentSchema = new mongoose.Schema(
     },
     barangay: {
       type: String,
-      default: "null",
+      default: null,
     },
     fourPs: {
       type: Boolean,
