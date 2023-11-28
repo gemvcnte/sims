@@ -9,7 +9,7 @@ export function PersonalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="academic-information-section mb-4 p-4 sm:flex">
+    <section className="academic-information-section p-4 sm:flex">
       <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
         <h1 className="font-normal">Personal Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
@@ -34,6 +34,7 @@ export function PersonalInformationSection({
             className="col-span-3"
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="firstName" className="text-right">
             First Name
@@ -48,6 +49,7 @@ export function PersonalInformationSection({
             className="col-span-3"
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="middleName" className="text-right">
             Middle Name
@@ -62,6 +64,7 @@ export function PersonalInformationSection({
             className="col-span-3"
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extensionName" className="text-right">
             Extension Name
@@ -80,6 +83,7 @@ export function PersonalInformationSection({
             ))}
           </select>
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="birthDate" className="text-right">
             BirthDate
@@ -92,6 +96,7 @@ export function PersonalInformationSection({
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="gender" className="text-right">
             Gender
@@ -108,6 +113,7 @@ export function PersonalInformationSection({
             <option value="FEMALE">Female</option>
           </select>
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="currentAddress" className="text-right">
             Current Address
@@ -120,6 +126,7 @@ export function PersonalInformationSection({
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email

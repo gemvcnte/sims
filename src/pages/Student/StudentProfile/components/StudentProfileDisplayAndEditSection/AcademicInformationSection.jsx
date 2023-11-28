@@ -7,7 +7,7 @@ export function AcademicInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="academic-information-section mb-4 p-4 sm:flex">
+    <section className="academic-information-section p-4 sm:flex">
       <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
         <h1 className="font-normal">Academic Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
@@ -29,6 +29,7 @@ export function AcademicInformationSection({
             onChange={(e) => handleInputChange("lrn", e.target.value)}
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="schoolYear" className="text-right">
             School Year
@@ -44,6 +45,7 @@ export function AcademicInformationSection({
             <option value="2024-2025">2024-2025</option>
           </select>
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="semester" className="text-right">
             Semester
@@ -59,6 +61,7 @@ export function AcademicInformationSection({
             <option value="SECOND SEMESTER">2nd Semester</option>
           </select>
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="track" className="text-right">
             Track
@@ -74,6 +77,7 @@ export function AcademicInformationSection({
             <option value="TVL">TVL Track</option>
           </select>
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="strand" className="text-right">
             Strand
