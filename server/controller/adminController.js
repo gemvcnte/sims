@@ -147,23 +147,6 @@
     }
   });
 
-  // get admin via object id on admin model
-  const getAdminDashboard = asyncHandler(async (req,res) => {
-    try {
-      const { _id } = req.user
-
-      const adminDashboard = await Admin.findById(_id)
-
-      if(!adminDashboard) {
-        res.status(404).json({message: 'Dashboard for this admin is not found.'})
-      }
-
-
-      res.status(200).json({message: 'Admin Dashboard retrieved successfully.'})
-    } catch (error) {
-      res.status(500).json({message: `${error}`})
-    }
-  })
 
   const acceptStudentApplication = asyncHandler(async (req, res) => {
     try {
