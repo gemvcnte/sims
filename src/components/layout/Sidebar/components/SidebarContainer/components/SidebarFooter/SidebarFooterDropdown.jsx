@@ -24,6 +24,7 @@ export function SidebarFooterDropdown({}) {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("studentProfile");
     navigate("/");
     window.location.reload();
   };
