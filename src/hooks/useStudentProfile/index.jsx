@@ -35,6 +35,7 @@ const useStudentProfile = () => {
         });
 
         const fetchedProfileData = response.data.studentProfile;
+        console.log(fetchedProfileData);
         setStudentProfile(fetchedProfileData);
 
         localStorage.setItem(
@@ -49,7 +50,7 @@ const useStudentProfile = () => {
     fetchStudentProfile();
   }, [baseUrl, authToken]);
 
-  return { studentProfile, error };
+  return { studentProfile, error, setStudentProfile };
 };
 
 export default useStudentProfile;
