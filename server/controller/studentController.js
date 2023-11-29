@@ -63,10 +63,66 @@ const getStudentProfile = asyncHandler(async (req, res) => {
         studentProfile: studentProfile,
       });
     }
+
+    res.status(200).json({
+      message: 'Student profile has been retrieved.',
+      studentProfile: studentProfile,
+    })
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+
+
+const requestResetPassword = asyncHandler(async(req,res) => {
+  try {
+    
+  const {lrn, email} = req.body
+
+
+
+  const student =   await Student.findById({ lrn })
+
+  const token = generateAuthToken
+
+  student.resetPasswordToken = token;
+  await student.save()
+
+
+  sendResetPasswordNotificationToAdmin(token, student)
+
+
+  res.status(200).json({message: 'Request has been delivered.'})
+
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+});
+
+
+// const requestResetCredential = asyncHandler(async(req,res) => {
+//   try {
+//     const {lrn} = req.body
+
+
+//     const student = await Student.findById({lrn})
+
+//     const token = generateAuthToken()
+
+//     student.resetCredentialToken = token;
+//     await student.save()
+
+//     res.status(200).json({message: 'Request for changing a credential has been sent.'})
+//   } catch (error) {
+//     res.status(500).json({message: `${error}`})
+//   }
+// })
+
+
+// const updateAdditionalInformation = asyncHandler(async(req,res) => {
+//   await
+// })
 
 // const updateStudentProfile = asyncHandler(async (req,res) => {
 //   try {
@@ -78,10 +134,12 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 //   }
 // })
 
-module.exports = {
-  studentLogin,
-  getStudentDashboard,
+
+
+module.exports = { 
+  studentLogin, 
   getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
+  requestResetPassword,
 };

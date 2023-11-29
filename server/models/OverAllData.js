@@ -2,10 +2,12 @@ const mongoose = require('mongoose')
 
 
 const overAllAnalyticsSchema = mongoose.Schema({
-    totalStudents: String,
-    totalTeachers: String,
-    totalSections: String,
-    totalStrands: String,
+    totalStudents: Number,
+    totalTeachers: Number,
+    totalSections: Number,
+    totalStrands: Number,
+    totalAdmins: Number,
+    totalApplications: Number,
 })
 
 

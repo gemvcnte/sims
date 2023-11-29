@@ -6,11 +6,6 @@ const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
-    //         // const validationError = validateRegistrationData(registrationData);
-
-    //         // if (validationError) {
-    //         // return res.status(400).json({ error: validationError });
-    //         // }
 
     const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 16);
 
@@ -27,34 +22,17 @@ const applyStudent = asyncHandler(async (req, res) => {
   }
 });
 
-// const applyStudent = asyncHandler(async(req, res) => {
-//     try {
-//         const registrationData = req.body;
 
-//         // Hash the birthDate field
-//         const hashedBirthDate = await bcryptjs.hash(registrationData.birthDate, 10);
-
-//         // Update the birthDate with the hashed value
-//         registrationData.birthDate = hashedBirthDate;
-
-//         // Set registrationDate to the current date
-//         registrationData.registrationDate = new Date();
-
-//         // Create a new StudentApplication instance
-//         const student = new StudentApplication(registrationData);
-
-//         // Save the student to the database
-//         const savedStudent = await student.save();
-
-//         // Respond with a success message and the saved student data
-//         res.json({ message: "Personal information saved", student: savedStudent });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: 'Failed to save personal information' + `${err}` });
-//     }
 // });
 
 module.exports = { applyStudent };
+
+
+    // const validationError = validateRegistrationData(registrationData);
+    // if (validationError) {
+    // return res.status(400).json({ error: validationError });
+    // }
+
 
 //const validateRegistrationData = (data) => {
 // const requiredFields = [
@@ -91,3 +69,32 @@ module.exports = { applyStudent };
 // registrationData.guardianContactNumber = 'none';
 // registrationData.guardianRelationship = 'none';
 // }
+
+
+
+
+// const applyStudent = asyncHandler(async(req, res) => {
+//     try {
+//         const registrationData = req.body;
+
+//         // Hash the birthDate field
+//         const hashedBirthDate = await bcryptjs.hash(registrationData.birthDate, 10);
+
+//         // Update the birthDate with the hashed value
+//         registrationData.birthDate = hashedBirthDate;
+
+//         // Set registrationDate to the current date
+//         registrationData.registrationDate = new Date();
+
+//         // Create a new StudentApplication instance
+//         const student = new StudentApplication(registrationData);
+
+//         // Save the student to the database
+//         const savedStudent = await student.save();
+
+//         // Respond with a success message and the saved student data
+//         res.json({ message: "Personal information saved", student: savedStudent });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Failed to save personal information' + `${err}` });
+//     }
