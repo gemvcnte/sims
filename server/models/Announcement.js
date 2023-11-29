@@ -1,4 +1,4 @@
-const mongoose =require('mongoose')
+const mongoose = require('mongoose')
 
 
 const announcementSchema = mongoose.Schema({
@@ -8,6 +8,10 @@ const announcementSchema = mongoose.Schema({
     },
     content: {
         type: String,
+        required: true,
+    },
+    duration: {
+        type: Number,
         required: true,
     },
     // author: {
@@ -20,6 +24,7 @@ const announcementSchema = mongoose.Schema({
         // role: 'admin',
         // enum: ['admin', 'teacher']
     },
+    createdAt: Date,
     // updatedAt: {
     //     type: String,
     //     required: true,
@@ -30,4 +35,4 @@ const announcementSchema = mongoose.Schema({
 
 const Announcement = mongoose.model('announcement', announcementSchema)
 
-module.exports = {Announcement}
+module.exports = { Announcement }

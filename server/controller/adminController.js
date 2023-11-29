@@ -3,7 +3,7 @@
   const  { Student } = require('../models/StudentModel');
   const  { Teacher } = require('../models/TeacherModel');
   const  { StudentApplication } = require('../models/StudentApplicationModel');
-  const { Announcement } = require("../models/Announcement");
+  const { Announcement } = require('../models/Announcement')
   const generateAuthToken = require("../configs/auth");
   const dotenv = require("dotenv");
   const asyncHandler = require("express-async-handler");
@@ -18,9 +18,7 @@
       // Check if the admin already exists based on th  e username
       const existingAdmin = await Admin.findOne({ username });
       if (existingAdmin) {
-        return res
-          .status(400)
-          .json({ message: "Admin already exists with this username." });
+        res.status(400).json({ message: "Admin already exists with this username." });
       }
 
       // Hash the password
@@ -42,6 +40,7 @@
     }
   });
 
+  // api to create a teacher
   const createTeacher = asyncHandler(async (req, res) => {
     try {
       const teacherData = req.body;
@@ -99,6 +98,7 @@
       const tokenPayload = {
         _id: admin.id,
         username: admin.username,
+        fullName: admin.firstName + lastName,
         role: "admin",
       };
 
@@ -139,7 +139,11 @@
     try {
       const { username } = req.body;
 
-      await Admin.findOneAndDelete({ username });
+      const admin = await Admin.findOneAndDelete({ username });
+
+      if (!admin) {
+        res.status(404).json({message: "There is no username chuchu"})
+      }
 
       return res.status(200).json({ message: "Admin deleted successfully" });
     } catch (error) {
@@ -184,7 +188,7 @@
 
   const updateStudentApplication = asyncHandler(async (req,res) => {
     try {
-      const {studentApplicationId, updatedData} = req.body
+      const { studentApplicationId, updatedData } = req.body
 
 
       const studentApplication = await StudentApplication.findById(studentApplicationId)
@@ -199,7 +203,10 @@
       const updatedStudentData = await StudentApplication.findByIdAndUpdate(studentApplicationId, updatedData, {new: true})
     
 
-      res.status(200).json({message: `Student Application has been updated.`})
+      res.status(200).json({
+        message: `Student Application has been updated.`,
+        data: updatedStudentData
+    })
     } catch (error) {
       res.status(500).json({message: `${error}`})
     }
@@ -222,6 +229,254 @@
       return res.status(500).json({message: `${error}`})
     }
   })
+
+
+  const updateTeacher = asyncHandler(async (req, res) => {
+    try {
+      const { username, password, ...updateData } = req.body;
+
+      const updatedTeacher = await Teacher.findOneAndUpdate(
+        { username },
+        updateData,
+        { new: true }
+      );
+
+      if (password) {
+        updatedTeacher.password = password;
+        await updatedTeacher.save();
+
+        res.json({
+          message: "Teacher updated successfully.",
+          admin: updatedTeacher,
+        });
+      }
+
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+
+  const deleteTeacher = asyncHandler(async (req, res) => {
+    try {
+      const { username } = req.body;
+
+      await Teacher.findOneAndDelete({ username });
+
+      res.status(200).json({ message: "Teacher has been delete successfully." });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+  const getAllTeachers = asyncHandler(async (req, res) => {
+    try {
+      const retrieveTeachers = await Teacher.find();
+
+      res.status(200).json({
+        message: "The teachers data retrieved successfully",
+        data: retrieveTeachers,
+      });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+const getSpecificTeacher = asyncHandler(async (req,res) => {
+  try {
+    const {_id} = req.params
+
+    const findTeacher = await Teacher.findById(_id)
+  
+    if (!findTeacher) {
+      res.status(404).json({message: 'There is no teacher with this ID.'})
+    }
+  
+    res.status(200).json({
+      message: 'Teacher has been found',
+      data: findTeacher
+    })
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+const getAllAdmins = asyncHandler(async (req,res) => {
+  try {
+    const retrieveAdmins = await Admin.find()
+
+    if (!retrieveAdmins) {
+      res.status(404).json({message: `There are nothing here`})
+    }
+
+    res.status(200).json({
+      message: "All Admins data retrieved successfully.",
+      data: retrieveAdmins
+    })
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+const getSpecificAdmin = asyncHandler(async (req,res) => {
+  try {
+    const {_id} = req.body
+
+    const findAdmin = await Admin.findById(_id)
+    res.status(200).json({
+      message: 'Admin retrieved successfully',
+      data: findAdmin,
+    })
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+  const getAllStudents = asyncHandler(async (req, res) => {
+    try {
+      const retrieveStudents = await Student.find();
+
+      res.json({
+        message: "All students data retrieved successfully",
+        data: retrieveStudents,
+      });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+  const getSpecificStudent = asyncHandler(async(req,res) => {
+    try {
+      const { lrn } = req.body
+
+      const retrieveSpecificStudent = await Student.findById(lrn);
+
+      if (!retrieveSpecificStudent) {
+        res.status(404).json({message: 'There is no Student with this LRN.'});
+      }
+
+      res.status(200).json({
+      message: 'Student retrieved successfully.',
+      data: retrieveSpecificStudent
+      })
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+  })
+
+  const getAllPending = asyncHandler(async (req, res) => {
+    try {
+      const findPending = await StudentApplication.find({
+        status: "PENDING" || "pending",
+      });
+
+      if (!findPending) {
+        res.status(404).json({message: 'There are no pending applications right now.'})
+      }
+
+      res.status(200).json({
+        message: "Pending records retrieved successfully. ",
+        data: findPending,
+      });
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+
+  // creating an announcement for the school 
+  const createSchoolAnnouncement = asyncHandler(async (req, res) => {
+    try {
+      const { title, content } = req.body;
+
+      const announcement = new Announcement({
+        title,
+        content,
+        // createdBy: req.user.username,
+      });
+
+      await announcement.save();
+
+      res.status(201).json({
+        message: "Announcement created successfully.",
+        data: announcement,
+      });
+      // const announcement =
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+  const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
+    try {
+      const { title, content } = req.body;
+
+      const updatedAnnouncement = await Announcement.findOneAndUpdate({title, content}, updateAnnouncement, {new: true});
+
+
+      res.status(200).json({message: 'Announcement has been successfully been updated.', data: updatedAnnouncement})
+    } catch (error) {
+      res.status(500).json({ message: `${error}` });
+    }
+  });
+
+  const deleteSchoolAnnouncement = asyncHandler(async (req,res) => {
+    try {
+      const { title } = req.body;
+
+
+    await Announcement.findOneAndDelete(title)
+
+
+    res.status(200).json({message: 'Announcement has been deleted'})
+
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+  })
+
+  const getAllSchoolAnnouncements = asyncHandler(async (req,res) => {
+    try {
+
+      const retrieveAnnouncements = await Announcement.find()
+
+      if(!retrieveAnnouncements) {
+        res.status(404).json({message: 'There are no announcements.'})
+      }
+
+      res.status(200).json({ message: 'All Announcement retrieved successfully.', data: retrieveAnnouncements})
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+  })
+
+  module.exports = {
+    getAllAdmins,
+    createAdmin,
+    adminLogin,
+    updateAdmin,
+    deleteAdmin,
+    getSpecificAdmin,
+    acceptStudentApplication,
+    updateStudentApplication,
+    rejectStudentApplication,
+    getSpecificStudent,
+    createTeacher,
+    updateTeacher,
+    deleteTeacher,
+    getAllStudents,
+    getAllTeachers,
+    getSpecificTeacher,
+    getAllPending,
+    createSchoolAnnouncement,
+    updateSchoolAnnouncement,
+    deleteSchoolAnnouncement,
+    getAllSchoolAnnouncements,
+  };
+
+
+
 
   // const createTeacher = asyncHandler(async (req, res) => {
   //     try {
@@ -256,159 +511,3 @@
   //         res.status(500).json({ message: `${error}` });
   //     }
   // });
-
-  const updateTeacher = asyncHandler(async (req, res) => {
-    try {
-      const { username, password, ...updateData } = req.body;
-
-      const updatedTeacher = await Teacher.findOneAndUpdate(
-        { username },
-        updateData,
-        { new: true }
-      );
-
-      if (password) {
-        updatedTeacher.password = password;
-        await updatedTeacher.save();
-
-        res.json({
-          message: "Teacher updated successfully.",
-          admin: updatedTeacher,
-        });
-      }
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-
-  const deleteTeacher = asyncHandler(async (req, res) => {
-    try {
-      const { username } = req.body;
-
-      await Teacher.findOneAndDelete({ username });
-
-      res.status(200).json({ message: "Teacher has been delete successfully." });
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-  
-
-
-  const getAllStudents = asyncHandler(async (req, res) => {
-    try {
-      const findStudents = await Student.find();
-
-      res.json({
-        message: "All students data retrieved successfully",
-        data: findStudents,
-      });
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-  const getAllTeachers = asyncHandler(async (req, res) => {
-    try {
-      const findTeachers = await Teacher.find();
-
-      res.status(200).json({
-        message: "The teachers data retrieved successfully",
-        data: findTeachers,
-      });
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-  // 
-  const getAllPending = asyncHandler(async (req, res) => {
-    try {
-      const findPending = await StudentApplication.find({
-        status: "PENDING" || "pending",
-      });
-
-      res.status(200).json({
-        message: "Pending records retrieved successfully ",
-        data: findPending,
-      });
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-
-  // creating an announcement for the school 
-  const createAnnouncement = asyncHandler(async (req, res) => {
-    try {
-      const { title, content } = req.body;
-
-      const announcement = new Announcement({
-        title,
-        content,
-        // createdBy: req.user.username,
-      });
-
-      await announcement.save();
-
-      res.status(201).json({
-        message: "Announcement created successfully.",
-        data: announcement,
-      });
-      // const announcement =
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-  const updateAnnouncement = asyncHandler(async (req, res) => {
-    try {
-      const { title, content } = req.body;
-
-      const updatedAnnouncement = await Announcement.findOneAndUpdate({title, content}, updateAnnouncement, {new: true});
-
-
-      res.status(200).json({message: 'Announcement has been successfully been updated.', data: updatedAnnouncement})
-    } catch (error) {
-      res.status(500).json({ message: `${error}` });
-    }
-  });
-
-  const deleteAnnouncement = asyncHandler(async (req,res) => {
-    try {
-      const { title } = req.body;
-
-
-    await Announcement.findOneAndDelete({title})
-
-
-    res.status(200).json({message: 'Announcement has been deleted'})
-
-    } catch (error) {
-      res.status(500).json({message: `${error}`})
-    }
-
-
-  })
-
-  module.exports = {
-    createAdmin,
-    adminLogin,
-    updateAdmin,
-    deleteAdmin,
-    getAdminDashboard,
-    acceptStudentApplication,
-    updateStudentApplication,
-    rejectStudentApplication,
-    createTeacher,
-    updateTeacher,
-    deleteTeacher,
-    getAllStudents,
-    getAllTeachers,
-    getAllPending,
-    createAnnouncement,
-    updateAnnouncement,
-    deleteAnnouncement,
-  };
