@@ -1,6 +1,4 @@
 test
-test
-test
 
 #Last name
 #First name
