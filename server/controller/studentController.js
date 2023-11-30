@@ -32,7 +32,7 @@ const studentLogin = asyncHandler(async (req, res) => {
 
     const token = generateAuthToken(tokenPayload);
 
-    res.json({ message: "Login Successfully", token });
+    res.status(200).json({ message: "Login Successfully", token });
   } catch (error) {
     console.error(`There is an error ${error}`);
     res.status(500).json({ message: "Login failed." });
@@ -47,7 +47,10 @@ const getStudentSchedule = asyncHandler(async (req, res) => {
 
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
-  } catch (error) {}
+
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
 });
 
 const getStudentProfile = asyncHandler(async (req, res) => {

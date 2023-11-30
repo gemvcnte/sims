@@ -60,7 +60,7 @@
       const teacher = new Teacher({
         firstName: teacherData.firstName,
         middleName: teacherData.middleName,
-        admin.lastName: teacherData.admin.lastName,
+        lastName: teacherData.lastName,
         currentAddress: teacherData.currentAddress,
         birthDate: teacherData.birthDate,
         gender: teacherData.gender,
