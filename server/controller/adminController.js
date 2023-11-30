@@ -60,7 +60,7 @@
       const teacher = new Teacher({
         firstName: teacherData.firstName,
         middleName: teacherData.middleName,
-        lastName: teacherData.lastName,
+        admin.lastName: teacherData.admin.lastName,
         currentAddress: teacherData.currentAddress,
         birthDate: teacherData.birthDate,
         gender: teacherData.gender,
@@ -98,7 +98,7 @@
       const tokenPayload = {
         _id: admin.id,
         username: admin.username,
-        fullName: admin.firstName + lastName,
+        fullName: `${admin.firstName} ${admin.lastName}`,
         role: "admin",
       };
 
@@ -495,7 +495,7 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
   //         const teacher = new Teacher({
   //             firstName: teacherData.firstName,
   //             middleName: teacherData.middleName,
-  //             lastName: teacherData.lastName,
+  //             admin.lastName: teacherData.admin.lastName,
   //             currentAddress: teacherData.currentAddress,
   //             birthDate: teacherData.birthDate,
   //             gender: teacherData.gender,

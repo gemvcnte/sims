@@ -26,6 +26,7 @@ const studentLogin = asyncHandler(async (req, res) => {
     const tokenPayload = {
       _id: student.id,
       username: student.username,
+      fullName: `${student.firstName} ${student.lastName}`,
       role: "student",
     };
 
@@ -90,7 +91,7 @@ const requestResetPassword = asyncHandler(async(req,res) => {
   await student.save()
 
 
-  sendResetPasswordNotificationToAdmin(token, student)
+  sendResetPasswordNotificationTostudent(token, student)
 
 
   res.status(200).json({message: 'Request has been delivered.'})
