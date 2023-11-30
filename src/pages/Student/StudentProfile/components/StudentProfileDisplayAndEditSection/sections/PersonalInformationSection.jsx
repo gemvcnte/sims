@@ -12,8 +12,8 @@ export function PersonalInformationSection({
       <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
         <h1 className="font-normal">Personal Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
-          The academic section provides a comprehensive overview of the
-          student's academic information.
+          The personal section provides a comprehensive overview of the
+          student's personal information.
         </p>
       </header>
 

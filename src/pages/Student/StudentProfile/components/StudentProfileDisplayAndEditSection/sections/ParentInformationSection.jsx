@@ -11,8 +11,8 @@ export function ParentInformationSection({
       <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
         <h1 className="font-normal">Parent/Guardian Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
-          The academic section provides a comprehensive overview of the
-          student's academic information.
+          The parent/guardian section provides a comprehensive overview of the
+          student's parent/guardian information.
         </p>
       </header>
 
