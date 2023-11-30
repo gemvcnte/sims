@@ -42,14 +42,14 @@ const studentLogin = asyncHandler(async (req, res) => {
 const getStudentSchedule = asyncHandler(async (req, res) => {
   try {
     const { _id } = req.body;
-  } catch (error) {}
+  } catch (error) { }
 });
 
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
 
   } catch (error) {
-    res.status(500).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` })
   }
 });
 
@@ -79,47 +79,46 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 
 
 
-const requestResetPassword = asyncHandler(async(req,res) => {
-  try {
-    
-  const {lrn, email} = req.body
-
-
-
-  const student =   await Student.findById({ lrn })
-
-  const token = generateAuthToken
-
-  student.resetPasswordToken = token;
-  await student.save()
-
-
-  sendResetPasswordNotificationTostudent(token, student)
-
-
-  res.status(200).json({message: 'Request has been delivered.'})
-
-  } catch (error) {
-    res.status(500).json({message: `${error}`})
-  }
-});
-
-
-// const requestResetCredential = asyncHandler(async(req,res) => {
+// const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
-//     const {lrn} = req.body
+
+//   const {lrn, email} = req.body
 
 
-//     const student = await Student.findById({lrn})
+
+//   const student =   await Student.findById({ lrn })
+
+//   const token = generateAuthToken
+
+//   student.resetPasswordToken = token;
+//   await student.save()
+
+
+//   sendResetPasswordNotificationTostudent(token, student)
+
+
+//   res.status(200).json({message: 'Request has been delivered.'})
+
+//   } catch (error) {
+//     res.status(500).json({message: `${error}`})
+//   }
+// });
+
+
+// const requestUpdateStudentProfile = asyncHandler(async (req, res) => {
+//   try {
+//     const { lrn } = req.body
+
+
+//     const student = await Student.findById({ lrn })
 
 //     const token = generateAuthToken()
-
 //     student.resetCredentialToken = token;
 //     await student.save()
 
-//     res.status(200).json({message: 'Request for changing a credential has been sent.'})
+//     res.status(200).json({ message: 'Request for changing a credential has been sent.' })
 //   } catch (error) {
-//     res.status(500).json({message: `${error}`})
+//     res.status(500).json({ message: `${error}` })
 //   }
 // })
 
@@ -140,10 +139,10 @@ const requestResetPassword = asyncHandler(async(req,res) => {
 
 
 
-module.exports = { 
-  studentLogin, 
+module.exports = {
+  studentLogin,
   getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
-  requestResetPassword,
+  requestUpdateStudentProfile,
 };
