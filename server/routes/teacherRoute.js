@@ -7,6 +7,7 @@ dotenv.config
 
 // router.post('/login', expressjwt({secret: process.env.JWT_SECRET}), teacherController.teacherLogin)
 router.post('/login', teacherController.teacherLogin)
+router.get('/profile', teacherController.getTeacherProfile)
 router.post('/announcement/classPost',teacherController.postClassAnnouncement)
 
 module.exports = router
