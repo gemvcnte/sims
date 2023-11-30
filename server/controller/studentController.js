@@ -62,7 +62,7 @@ const getStudentProfile = asyncHandler(async (req, res) => {
     if (!studentProfile) {
       res.status(404).json({ message: "Student Profile not found." });
     } 
-    
+
     res.status(200).json({
       message: 'Student profile has been retrieved.',
       studentProfile: studentProfile,
@@ -139,5 +139,5 @@ module.exports = {
   getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
-  requestUpdateStudentProfile,
+  // requestUpdateStudentProfile,
 };
