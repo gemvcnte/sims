@@ -408,6 +408,9 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
     }
   });
 
+
+  // UPDATE A SCHOOL ANNOUNCEMENT
+
   const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
     try {
       const { title, content } = req.body;
@@ -420,6 +423,10 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
       res.status(500).json({ message: `${error}` });
     }
   });
+
+
+    // DELETE SCHOOL ANNOUNCEMENTS
+
 
   const deleteSchoolAnnouncement = asyncHandler(async (req,res) => {
     try {
@@ -435,6 +442,9 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
       res.status(500).json({message: `${error}`})
     }
   })
+
+
+  // GET ALL SCHOOL ANNOUNCEMENTS
 
   const getAllSchoolAnnouncements = asyncHandler(async (req,res) => {
     try {
@@ -483,6 +493,7 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
     updateStudentApplication,
     rejectStudentApplication,
     getSpecificStudent,
+    
     createTeacher,
     updateTeacher,
     deleteTeacher,
