@@ -29,6 +29,46 @@ export function AdditionalInformationSection({
             name="religion"
           />
         </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="province" className="text-right">
+            Province
+          </Label>
+          <InputField
+            type="text"
+            placeholder='E.g. "Nueva Ecija"'
+            value={studentProfile?.province}
+            onChange={(e) => handleInputChange("province", e.target.value)}
+            name="province"
+          />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="barangay" className="text-right">
+            Barangay
+          </Label>
+          <InputField
+            type="text"
+            placeholder='E.g. "Pamaldan"'
+            value={studentProfile?.barangay}
+            onChange={(e) => handleInputChange("barangay", e.target.value)}
+            name="barangay"
+          />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="city" className="text-right">
+            City
+          </Label>
+          <InputField
+            type="text"
+            placeholder='E.g. "Cabanatuan City"'
+            value={studentProfile?.city}
+            onChange={(e) => handleInputChange("city", e.target.value)}
+            name="city"
+          />
+        </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="zipCode" className="text-right">
             ZIP Code
