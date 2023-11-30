@@ -7,7 +7,7 @@ const applyStudent = asyncHandler(async (req, res) => {
     const registrationData = req.body;
 
 
-    const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 16);
+    const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 12);
 
     registrationData.registrationDate = new Date();
     registrationData.password = hashedPassword;
@@ -17,8 +17,7 @@ const applyStudent = asyncHandler(async (req, res) => {
 
     res.json({ message: "Personal information saved", student: savedStudent });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to save personal information" + `${err}` });
+    res.status(500).json({message: `${err}` });
   }
 });
 
