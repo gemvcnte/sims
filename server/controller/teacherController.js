@@ -42,6 +42,26 @@ const teacherLogin = asyncHandler(async (req, res) => {
 });
 
 
+const getTeacherProfile = asyncHandler (async (req,res) => {
+  try {
+    const { _id } =req.user
+
+    const teacherProfile = await Teacher.findById({_id});
+
+    if(!teacherProfile) {
+      res.status(404).json({message: 'Teacher not found.'})
+    }
+
+    res.status(200).json({
+      message: 'Teacher found',
+      teacherData: teacherProfile
+})
+  } catch (error) {
+    res.status(500).json({message: `${error}`});
+  }
+})
+
+
 
 const getTeacherSchedule = asyncHandler(async (req, res) => {
   try {
@@ -101,5 +121,6 @@ const postClassAnnouncement = asyncHandler (async (req,res) => {
 module.exports = {
   teacherLogin,
   getTeacherSchedule,
+  getTeacherProfile,
   postClassAnnouncement,
 };
