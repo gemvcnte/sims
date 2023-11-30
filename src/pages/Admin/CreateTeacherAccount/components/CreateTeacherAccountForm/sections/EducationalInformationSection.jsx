@@ -42,8 +42,20 @@ export function EducationalInformationSection({
             onChange={(e) => handleInputChange("designation", e.target.value)}
           >
             <option value="">Select Designation</option>
-            <option value="2023-2024">2023-2024</option>
-            <option value="2024-2025">2024-2025</option>
+            <option value="TEACHER I">Teacher I</option>
+            <option value="TEACHER II">Teacher II</option>
+            <option value="TEACHER III">Teacher III</option>
+            <option value="MASTER TEACHER I">Master Teacher I</option>
+            <option value="MASTER TEACHER II">Master Teacher II</option>
+            <option value="MASTER TEACHER III">Master Teacher III</option>
+            <option value="PRINCIPAL I">Principal I</option>
+            <option value="PRINCIPAL II">Principal II</option>
+            <option value="PRINCIPAL III">Principal III</option>
+            <option value="HEAD TEACHER">Head Teacher </option>
+            <option value="DEPARTMENT HEAD">Department Head</option>
+            <option value="SCHOOL ADMINISTRATOR">School Administrator</option>
+            <option value="EDUCATION SUPERVISOR">Education Supervisor</option>
+            <option value="SCHOOL SUPERINTENDENT">School Superintendent</option>
           </select>
         </div>
 
@@ -78,8 +90,8 @@ export function EducationalInformationSection({
             }
           >
             <option value="">Select Highest Educational Attainment</option>
-            <option value="ACADEMIC">Academic Track</option>
-            <option value="TVL">TVL Track</option>
+            <option value="ACADEMIC">test</option>
+            <option value="TVL">test</option>
           </select>
         </div>
       </main>
