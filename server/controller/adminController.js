@@ -34,7 +34,7 @@
       });
       await admin.save();
 
-      res.status(200).json({ message: "Admin created successfully." });
+      res.status(201).json({ message: "Admin created successfully." });
     } catch (error) {
       return res.status(500).json({ message: `There is an error ${error}` });
     }
@@ -71,7 +71,7 @@
 
       await teacher.save();
 
-      res.status(200).json({ message: "Teacher created successfully." });
+      res.status(201).json({ message: "Teacher created successfully." });
     } catch (error) {
       res.status(500).json({ message: `${error}` });
     }
@@ -446,6 +446,27 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
       }
 
       res.status(200).json({ message: 'All Announcement retrieved successfully.', data: retrieveAnnouncements})
+    } catch (error) {
+      res.status(500).json({message: `${error}`})
+    }
+  })
+
+  const updateStudentProfile = asyncHandler(async (req,res) => {
+    try {
+      const { lrn } = req.body
+
+      const student = await Student.findByIdAndUpdate({lrn})
+
+      if(!student) {
+        res.status(404).json({message: 'The student that your about to edit is not enrolled yet.'})
+      } 
+
+      res.status(200).json({
+        message: 'Student information has been updated.',
+        data: student,
+    },
+    {new: true},
+    )
     } catch (error) {
       res.status(500).json({message: `${error}`})
     }
