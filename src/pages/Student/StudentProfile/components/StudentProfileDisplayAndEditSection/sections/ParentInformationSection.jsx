@@ -22,6 +22,7 @@ export function ParentInformationSection({
             Father's Name
           </Label>
           <InputField
+            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -36,6 +37,7 @@ export function ParentInformationSection({
             Mother's Name
           </Label>
           <InputField
+            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -50,6 +52,7 @@ export function ParentInformationSection({
             Father's Tel. No.
           </Label>
           <InputField
+            disabled
             required
             type="number"
             placeholder="+639xxxxxxxxx"
@@ -66,6 +69,7 @@ export function ParentInformationSection({
             Mother's Tel. No.
           </Label>
           <InputField
+            disabled
             required
             type="number"
             placeholder="+639xxxxxxxxx"
@@ -82,6 +86,7 @@ export function ParentInformationSection({
             Guardian's Name
           </Label>
           <InputField
+            disabled
             type="text"
             placeholder="Firstname Middlename Lastname"
             value={studentProfile?.guardianName}
@@ -95,6 +100,7 @@ export function ParentInformationSection({
             Guardian's Tel. No.
           </Label>
           <InputField
+            disabled
             type="number"
             placeholder="+639xxxxxxxxx"
             value={studentProfile?.guardianContactNumber}
@@ -110,6 +116,7 @@ export function ParentInformationSection({
             Guardian Relationship
           </Label>
           <select
+            disabled
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             name="guardianRelationship"
             value={studentProfile?.guardianRelationship}

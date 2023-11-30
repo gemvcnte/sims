@@ -39,6 +39,7 @@ export function PersonalInformationSection({
             First Name
           </Label>
           <Input
+            disabled
             id="firstName"
             type="text"
             placeholder="Input Your First Name"
@@ -54,6 +55,7 @@ export function PersonalInformationSection({
             Middle Name
           </Label>
           <Input
+            disabled
             id="middleName"
             type="text"
             placeholder="Input Your Middle Name"
@@ -69,6 +71,7 @@ export function PersonalInformationSection({
             Extension Name
           </Label>
           <select
+            disabled
             required
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             value={studentProfile?.extensionName}
@@ -88,6 +91,7 @@ export function PersonalInformationSection({
             BirthDate
           </Label>
           <InputField
+            disabled
             type="date"
             placeholder="Input Your Birthdate (MM/DD/YY)"
             value={studentProfile?.birthDate}
@@ -101,6 +105,7 @@ export function PersonalInformationSection({
             Gender
           </Label>
           <select
+            disabled
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             value={studentProfile?.gender}
             required
@@ -118,6 +123,7 @@ export function PersonalInformationSection({
             Current Address
           </Label>
           <InputField
+            disabled
             type="text"
             placeholder="E.g., 123 Purok St, Barangay, Municipality"
             value={studentProfile?.currentAddress}
@@ -131,6 +137,7 @@ export function PersonalInformationSection({
             Email
           </Label>
           <InputField
+            disabled
             type="email"
             placeholder="Input Your Email"
             value={studentProfile?.emailAddress}
