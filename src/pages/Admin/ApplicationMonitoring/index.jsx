@@ -28,7 +28,7 @@ export default function ApplicationMonitoring() {
         console.error("Error fetching pending applications:", error.message);
       }
     };
-
+    ``;
     fetchPendingApplications();
   }, []);
 

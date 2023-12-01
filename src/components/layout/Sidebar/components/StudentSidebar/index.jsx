@@ -24,7 +24,7 @@ export default function StudentSidebar() {
         Announcements
       </SidebarItem>
 
-      <SidebarItem to="" icon="teenyicons:user-outline">
+      <SidebarItem to="profile" icon="teenyicons:user-outline">
         Profile
       </SidebarItem>
     </SidebarContainer>

@@ -34,6 +34,10 @@ export default function AdminSidebar() {
         <SidebarItem icon="material-symbols:analytics-outline">
           Analytics
         </SidebarItem>
+
+        <SidebarItem to="profile" icon="teenyicons:user-outline">
+          Profile
+        </SidebarItem>
       </SidebarContainer>
     )
   );
