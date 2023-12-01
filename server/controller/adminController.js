@@ -465,7 +465,7 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
     try {
       const { lrn } = req.body
 
-      const student = await Student.findByIdAndUpdate({lrn})
+      const student = await Student.findByIdAndUpdate({lrn},{new: true})
 
       if(!student) {
         res.status(404).json({message: 'The student that your about to edit is not enrolled yet.'})
@@ -474,8 +474,7 @@ const getSpecificAdmin = asyncHandler(async (req,res) => {
       res.status(200).json({
         message: 'Student information has been updated.',
         data: student,
-    },
-    {new: true},
+      }
     )
     } catch (error) {
       res.status(500).json({message: `${error}`})
