@@ -5,10 +5,12 @@ import { ToastContainer } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import {
+  enrollApplicationEndpoint,
+  rejectApplicationEndpoint,
+} from "@/config/adminEndpoints";
 
 export default function StudentCard({ application, onClick }) {
-  const enrollmentEndpoint = "http://localhost:5000/admin/enrollStudent";
-  const rejectEndpoint = "http://localhost:5000/admin/deleteApplication";
   const lastName = application.lastName.toLowerCase();
   const firstName = application.firstName.toLowerCase();
   const fullName = `${lastName.charAt(0).toUpperCase() + lastName.slice(1)}, ${
@@ -23,7 +25,7 @@ export default function StudentCard({ application, onClick }) {
 
   const handleEnroll = async () => {
     try {
-      const response = await axios.post(enrollmentEndpoint, {
+      const response = await axios.post(enrollApplicationEndpoint, {
         studentApplicationId: application._id,
       });
 
@@ -36,7 +38,7 @@ export default function StudentCard({ application, onClick }) {
 
   const handleReject = async () => {
     try {
-      const response = await axios.patch(rejectEndpoint, {
+      const response = await axios.patch(rejectApplicationEndpoint, {
         studentApplicationId: application._id,
       });
       console.log(response);

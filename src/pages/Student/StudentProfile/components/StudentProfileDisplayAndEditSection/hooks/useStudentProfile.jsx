@@ -1,18 +1,15 @@
 // useStudentProfile.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { getStudentProfileEndpoint } from "@/config/studentEndpoints";
 
 const useStudentProfile = () => {
   const [studentProfile, setStudentProfile] = useState(null);
   const [error, setError] = useState(null);
-  const baseUrl = getBaseUrl();
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     const fetchStudentProfile = async () => {
-      const profileEndpoint = `${baseUrl}/student/profile`;
-
       const storedProfileData = JSON.parse(
         localStorage.getItem("studentProfile"),
       );
@@ -28,7 +25,7 @@ const useStudentProfile = () => {
       }
 
       try {
-        const response = await axios.get(profileEndpoint, {
+        const response = await axios.get(getStudentProfileEndpoint, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -48,7 +45,7 @@ const useStudentProfile = () => {
     };
 
     fetchStudentProfile();
-  }, [baseUrl, authToken]);
+  }, [getStudentProfileEndpoint, authToken]);
 
   return { studentProfile, error, setStudentProfile };
 };

@@ -1,18 +1,15 @@
 // useTeacherProfile.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { getAdminProfileEndpoint } from "@/config/adminEndpoints";
 
 const useTeacherProfile = () => {
   const [teacherProfile, setTeacherProfile] = useState(null);
   const [error, setError] = useState(null);
-  const baseUrl = getBaseUrl();
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
     const fetchTeacherProfile = async () => {
-      const profileEndpoint = `${baseUrl}/teacher/profile`;
-
       const storedProfileData = JSON.parse(
         localStorage.getItem("teacherProfile"),
       );
@@ -28,7 +25,7 @@ const useTeacherProfile = () => {
       }
 
       try {
-        const response = await axios.get(profileEndpoint, {
+        const response = await axios.get(getAdminProfileEndpoint, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -48,7 +45,7 @@ const useTeacherProfile = () => {
     };
 
     fetchTeacherProfile();
-  }, [baseUrl, authToken]);
+  }, [getAdminProfileEndpoint, authToken]);
 
   return { teacherProfile, error, setTeacherProfile };
 };

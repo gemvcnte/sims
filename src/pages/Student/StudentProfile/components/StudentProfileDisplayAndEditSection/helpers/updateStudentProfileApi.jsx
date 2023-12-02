@@ -1,13 +1,12 @@
 import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { updateStudentProfileEndpoint } from "@/config/studentEndpoints";
 
 export const updateStudentProfileApi = async (updatedProfileData) => {
-  const baseUrl = getBaseUrl();
   const authToken = localStorage.getItem("authToken");
 
   try {
     const response = await axios.patch(
-      `${baseUrl}/student/profile/update`,
+      updateStudentProfileEndpoint,
       { updatedProfileData },
       {
         headers: {

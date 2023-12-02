@@ -26,7 +26,6 @@ function LoginForm({ role, setSelectedRole }) {
     if (isFormValid) {
       try {
         const response = await axios.post(apiUrl, loginData);
-        console.log(apiUrl);
 
         if (response.status === 200) {
           console.log(response);
@@ -79,7 +78,7 @@ function LoginForm({ role, setSelectedRole }) {
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
             placeholder={`${role} Username`}
-            className="w-full rounded-md border-b border-white-700 p-3 placeholder-white-700 focus:border focus:border-blue-400 focus:outline-none"
+            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-blue-400 focus:outline-none"
           />
         </div>
 
@@ -106,12 +105,12 @@ function LoginForm({ role, setSelectedRole }) {
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
             placeholder={`${role} Password`}
-            className="w-full rounded-md border-b border-white-700 p-3 placeholder-white-700 focus:border focus:border-blue-400 focus:outline-none"
+            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-blue-400 focus:outline-none"
           />
         </div>
 
         <button
-          className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-blue-400 px-10 py-3 text-white-400 transition-all duration-300 hover:gap-8"
+          className="text-white-400 mt-4 flex items-center justify-center gap-2 rounded-2xl bg-blue-400 px-10 py-3 transition-all duration-300 hover:gap-8"
           type="submit"
         >
           Login

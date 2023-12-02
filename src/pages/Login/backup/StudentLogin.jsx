@@ -4,12 +4,9 @@ import FormValidator from "../../../utils/FormValidator";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import notify from "../../../utils/BlankFieldNotification";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { loginEndpoint } from "@/config/publicEndpoints";
 
 function StudentLogin() {
-  const baseUrl = getBaseUrl();
-  const apiUrl = `${baseUrl}/login`;
-
   const [loginData, setLoginData] = useState({
     username: "",
     password: "",
@@ -21,7 +18,7 @@ function StudentLogin() {
     if (isFormValid) {
       try {
         console.log(loginData);
-        const response = await axios.post(apiUrl, loginData);
+        const response = await axios.post(loginEndpoint, loginData);
 
         if (response.status === 200) {
           console.log("Student login successful");
