@@ -7,8 +7,8 @@ export function EducationalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="educational-information-section p-4 sm:flex">
-      <header className="mb-2 text-start md:max-w-[30%]">
+    <section className="educational-information-section gap-4 break-words p-4 sm:flex">
+      <header className="mb-2 text-center sm:max-w-[25%] sm:text-start md:max-w-[30%]">
         <h1 className="font-normal">Educational and Professional Details</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
           The educational section provides a comprehensive overview of the
@@ -19,7 +19,7 @@ export function EducationalInformationSection({
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="numOfYearsTeaching" className="text-right">
-            Number of Years Teaching
+            Teaching Year/s
           </Label>
           <InputField
             type="number"
@@ -60,8 +60,8 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="specialization" className="text-right">
-            Area of Specialization
+          <Label htmlFor="specialization" className="break-words text-right">
+            Specialization
           </Label>
           <select
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -79,7 +79,8 @@ export function EducationalInformationSection({
 
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="highestEducationalAttainment" className="text-right">
-            Highest Educational Attainment
+            Highest <span className="hidden sm:block">Educational</span>{" "}
+            Attainment
           </Label>
           <select
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
