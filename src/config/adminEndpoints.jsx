@@ -12,3 +12,6 @@ export const getPendingApplicationsEndpoint = `${baseUrl}/admin/getPending`;
 export const enrollApplicationEndpoint = `${baseUrl}/admin/enrollStudent`;
 export const rejectApplicationEndpoint = `${baseUrl}/admin/deleteApplication`;
 export const updateApplicationEndpoint = `${baseUrl}/admin/updateApplication`;
+
+// create teacher
+export const createTeacherEndpoint = `${baseUrl}/admin/createTeacher`;

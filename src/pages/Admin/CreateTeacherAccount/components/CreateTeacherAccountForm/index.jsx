@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   PersonalInformationSection,
@@ -6,11 +6,10 @@ import {
   AdditionalInformationSection,
   EmploymentInformationSection,
 } from "./sections";
-import { updateTeacherProfileApi } from "./helpers";
-import { useTeacherProfile } from "./hooks";
+import { createTeacherProfileApi } from "./helpers";
 
 const CreateTeacherAccountForm = () => {
-  const { teacherProfile, error, setTeacherProfile } = useTeacherProfile();
+  const [teacherProfile, setTeacherProfile] = useState();
 
   const handleInputChange = (field, value) => {
     setTeacherProfile({
@@ -19,10 +18,11 @@ const CreateTeacherAccountForm = () => {
     });
   };
 
-  const handleUpdateProfile = async () => {
-    const updatedProfileData = { ...teacherProfile };
+  const handleCreateTeacherAccount = async (e) => {
+    e.preventDefault();
+    console.log(teacherProfile);
     try {
-      await updateTeacherProfileApi(updatedProfileData);
+      await createTeacherProfileApi(teacherProfile);
     } catch (error) {
       console.error("Error in component:", error);
     }
@@ -31,7 +31,7 @@ const CreateTeacherAccountForm = () => {
   return (
     <form
       className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
-      onSubmit={handleUpdateProfile}
+      onSubmit={handleCreateTeacherAccount}
     >
       <EducationalInformationSection
         teacherProfile={teacherProfile}
