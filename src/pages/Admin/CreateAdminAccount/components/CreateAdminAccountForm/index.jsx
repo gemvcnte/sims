@@ -54,7 +54,7 @@ const CreateAdminAccountForm = () => {
       />
 
       <footer className="mb-4 p-4 text-right md:mb-8">
-        <Button type="submit">Save changes</Button>
+        <Button type="submit">Create Admin Account</Button>
       </footer>
     </form>
   );
