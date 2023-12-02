@@ -60,7 +60,7 @@ const adminSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      default: "teacher",
+      default: "admin",
       enum: ["student", "teacher", "admin"],
     },
     userImage: {
