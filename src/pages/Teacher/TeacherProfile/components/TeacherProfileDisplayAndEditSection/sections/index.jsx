@@ -1,4 +1,4 @@
-export { AcademicInformationSection } from "./AcademicInformationSection";
+export { EducationalInformationSection } from "./EducationalInformationSection";
 export { PersonalInformationSection } from "./PersonalInformationSection";
-export { ParentInformationSection } from "./ParentInformationSection";
 export { AdditionalInformationSection } from "./AdditionalInformationSection";
+export { EmploymentInformationSection } from "./EmploymentInformationSection";

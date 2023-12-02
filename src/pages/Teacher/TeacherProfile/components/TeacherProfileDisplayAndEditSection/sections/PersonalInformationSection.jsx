@@ -8,8 +8,8 @@ export function PersonalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="academic-information-section p-4 sm:flex">
-      <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
+    <section className="academic-information-section gap-4 p-4 sm:flex">
+      <header className="mb-2 text-center sm:max-w-[25%] sm:text-start md:max-w-[30%]">
         <h1 className="font-normal">Personal Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
           The personal section provides a comprehensive overview of the
@@ -23,7 +23,6 @@ export function PersonalInformationSection({
             Last Name
           </Label>
           <Input
-            disabled
             id="lastName"
             type="text"
             placeholder="Input Your Last Name"
@@ -39,7 +38,6 @@ export function PersonalInformationSection({
             First Name
           </Label>
           <Input
-            disabled
             id="firstName"
             type="text"
             placeholder="Input Your First Name"
@@ -55,7 +53,6 @@ export function PersonalInformationSection({
             Middle Name
           </Label>
           <Input
-            disabled
             id="middleName"
             type="text"
             placeholder="Input Your Middle Name"
@@ -71,9 +68,8 @@ export function PersonalInformationSection({
             Extension Name
           </Label>
           <select
-            disabled
             required
-            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             value={teacherProfile?.extensionName}
             name="extensionName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -91,7 +87,6 @@ export function PersonalInformationSection({
             BirthDate
           </Label>
           <InputField
-            disabled
             type="date"
             placeholder="Input Your Birthdate (MM/DD/YY)"
             value={teacherProfile?.birthDate}
@@ -105,8 +100,7 @@ export function PersonalInformationSection({
             Gender
           </Label>
           <select
-            disabled
-            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             value={teacherProfile?.gender}
             required
             name="gender"
@@ -123,7 +117,6 @@ export function PersonalInformationSection({
             Current Address
           </Label>
           <InputField
-            disabled
             type="text"
             placeholder="E.g., 123 Purok St, Barangay, Municipality"
             value={teacherProfile?.currentAddress}
@@ -137,7 +130,6 @@ export function PersonalInformationSection({
             Email
           </Label>
           <InputField
-            disabled
             type="email"
             placeholder="Input Your Email"
             value={teacherProfile?.emailAddress}

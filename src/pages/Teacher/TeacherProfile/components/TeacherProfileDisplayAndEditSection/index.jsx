@@ -2,9 +2,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   PersonalInformationSection,
-  ParentInformationSection,
-  AcademicInformationSection,
+  EducationalInformationSection,
   AdditionalInformationSection,
+  EmploymentInformationSection,
 } from "./sections";
 import { updateTeacherProfileApi } from "./helpers";
 import { useTeacherProfile } from "./hooks";
@@ -33,17 +33,17 @@ const TeacherProfileDisplayAndEditSection = () => {
       className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
       onSubmit={handleUpdateProfile}
     >
-      <AcademicInformationSection
+      <EducationalInformationSection
+        teacherProfile={teacherProfile}
+        handleInputChange={handleInputChange}
+      />
+
+      <EmploymentInformationSection
         teacherProfile={teacherProfile}
         handleInputChange={handleInputChange}
       />
 
       <PersonalInformationSection
-        teacherProfile={teacherProfile}
-        handleInputChange={handleInputChange}
-      />
-
-      <ParentInformationSection
         teacherProfile={teacherProfile}
         handleInputChange={handleInputChange}
       />
