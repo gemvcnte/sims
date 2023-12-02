@@ -1,1 +1,1 @@
-export { default as TeacherProfileDisplayAndEditSection } from "./TeacherProfileDisplayAndEditSection";
+export { default } from "./AdminProfileDisplayAndEditSection";
