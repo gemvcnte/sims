@@ -20,7 +20,7 @@ const CreateTeacherAccountForm = () => {
 
   const handleCreateTeacherAccount = async (e) => {
     e.preventDefault();
-    console.log(teacherProfile);
+    // console.log(teacherProfile);
     try {
       await createTeacherProfileApi(teacherProfile);
     } catch (error) {

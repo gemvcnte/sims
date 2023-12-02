@@ -8,8 +8,8 @@ export function PersonalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="academic-information-section p-4 sm:flex">
-      <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
+    <section className="academic-information-section gap-4 p-4 sm:flex">
+      <header className="mb-2 max-w-full text-center sm:max-w-[25%] sm:text-start md:max-w-[30%]">
         <h1 className="font-normal">Personal Information</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
           The personal section provides a comprehensive overview of the
@@ -21,6 +21,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="lastName" className="text-right">
             Last Name
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <Input
             required
@@ -37,6 +39,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="firstName" className="text-right">
             First Name
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <Input
             required
@@ -68,6 +72,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="extensionName" className="text-right">
             Extension Name
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <select
             required
@@ -87,6 +93,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="birthDate" className="text-right">
             BirthDate
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <InputField
             required={true}
@@ -101,6 +109,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="gender" className="text-right">
             Gender
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <select
             className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -131,6 +141,8 @@ export function PersonalInformationSection({
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
+            <br />
+            <span className="text-xs italic text-red-700">Required</span>
           </Label>
           <InputField
             required={true}

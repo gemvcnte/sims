@@ -8,7 +8,7 @@ export const createTeacherProfileApi = async (teacherProfileData) => {
       teacherProfileData,
     );
 
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.error("Error creating teacher profile:", error);
     throw error;
