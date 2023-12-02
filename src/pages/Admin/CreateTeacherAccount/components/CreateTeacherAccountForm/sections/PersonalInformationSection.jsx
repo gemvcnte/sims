@@ -23,6 +23,7 @@ export function PersonalInformationSection({
             Last Name
           </Label>
           <Input
+            required
             id="lastName"
             type="text"
             placeholder="Input Your Last Name"
@@ -38,6 +39,7 @@ export function PersonalInformationSection({
             First Name
           </Label>
           <Input
+            required
             id="firstName"
             type="text"
             placeholder="Input Your First Name"
@@ -87,6 +89,7 @@ export function PersonalInformationSection({
             BirthDate
           </Label>
           <InputField
+            required={true}
             type="date"
             placeholder="Input Your Birthdate (MM/DD/YY)"
             value={teacherProfile?.birthDate}
@@ -130,6 +133,7 @@ export function PersonalInformationSection({
             Email
           </Label>
           <InputField
+            required={true}
             type="email"
             placeholder="Input Your Email"
             value={teacherProfile?.emailAddress}
