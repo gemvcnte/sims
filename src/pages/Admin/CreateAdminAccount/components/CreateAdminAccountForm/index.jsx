@@ -6,7 +6,7 @@ import {
   AdditionalInformationSection,
   EmploymentInformationSection,
 } from "./sections";
-import { createTeacherProfileApi } from "./helpers";
+import { createAdminProfileApi } from "./helpers";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import showErrorNotification from "@utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
@@ -25,7 +25,7 @@ const CreateAdminAccountForm = () => {
     e.preventDefault();
     // console.log(teacherProfile);
     try {
-      const response = await createTeacherProfileApi(teacherProfile);
+      const response = await createAdminProfileApi(teacherProfile);
       if (response && response.status === 201) {
         showSuccessNotification(response.data.message);
       } else {

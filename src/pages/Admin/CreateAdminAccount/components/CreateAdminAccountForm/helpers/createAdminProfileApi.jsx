@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAdminEndpoint } from "@/config/adminEndpoints";
 
-export const createTeacherProfileApi = async (teacherProfileData) => {
+export const createAdminProfileApi = async (teacherProfileData) => {
   try {
     const response = await axios.post(createAdminEndpoint, teacherProfileData);
 

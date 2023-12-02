@@ -1,1 +1,1 @@
-export { createTeacherProfileApi } from "./createTeacherProfileApi";
+export { createAdminProfileApi } from "./createAdminProfileApi";
