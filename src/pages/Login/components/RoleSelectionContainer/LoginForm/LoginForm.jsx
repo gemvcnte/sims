@@ -4,10 +4,12 @@ import axios from "axios";
 import notify from "../../../../../utils/BlankFieldNotification";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
-import { loginEndpoint } from "@/config/publicEndpoints";
+import { getBaseUrl } from "@src/utils/configUtils";
 
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
+  const baseUrl = getBaseUrl();
+  let apiUrl = `${baseUrl}/${role}/login`;
 
   const [loginData, setLoginData] = useState({
     role: role,
@@ -23,8 +25,7 @@ function LoginForm({ role, setSelectedRole }) {
 
     if (isFormValid) {
       try {
-        const response = await axios.post(loginEndpoint, loginData);
-        console.log(apiUrl);
+        const response = await axios.post(apiUrl, loginData);
 
         if (response.status === 200) {
           console.log(response);
