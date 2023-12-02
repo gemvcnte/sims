@@ -8,7 +8,7 @@ export function EducationalInformationSection({
 }) {
   return (
     <section className="educational-information-section p-4 sm:flex">
-      <header className="mb-2 text-center md:max-w-[30%] md:text-start ">
+      <header className="mb-2 text-start md:max-w-[30%]">
         <h1 className="font-normal">Educational and Professional Details</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
           The educational section provides a comprehensive overview of the
