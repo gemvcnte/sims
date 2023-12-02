@@ -1,48 +1,98 @@
-const mongoose = require('mongoose')
-
+const mongoose = require("mongoose");
 
 const adminSchema = new mongoose.Schema(
-    {
-      lastName: {
-        type: String,
-        required: true,
-      },
-      firstName: {
-        type: String,
-        required: true,
-      },
-      username: {
-        type: String,
-        required: true,
-      },
-      password: {
-        type: String,
-        required: true,
-      },
-      idNumber: {
-        type: String,
-        required: true,
+  {
+    firstName: {
+      type: String,
+      required: true,
+      default: "",
+      uppercase: true,
     },
-    address: {
-        type: String,
-        required: true,
+    middleName: {
+      type: String,
+      // required: true,
+      default: "",
+      uppercase: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      default: "",
+      uppercase: true,
+    },
+    currentAddress: {
+      type: String,
+      // required: true,
+      default: "",
+      uppercase: true,
+    },
+    birthDate: {
+      type: String,
+      required: true,
+      default: "",
+      uppercase: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+      default: "",
+      uppercase: true,
+    },
+    username: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    emailAddress: {
+      type: String,
+      required: true,
+      validate(value) {
+        if (!value.match(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/)) {
+          throw new Error("Email is not valid.");
+        }
+      },
+      default: "",
+    },
+    password: {
+      type: String,
+      required: true,
     },
 
     role: {
-        type: String,
-        default: "admin",
-        enum: ["student", "teacher", "admin"],
+      type: String,
+      default: "teacher",
+      enum: ["student", "teacher", "admin"],
     },
     userImage: {
       type: String,
       // need nalang lagyan ng image
-      default: ''
+      default: "",
     },
-
+    designation: {
+      type: String,
     },
-    { timestamps: true }
+    numOfYearsTeaching: {
+      type: Number,
+    },
+    specialization: {
+      type: String,
+    },
+    highestEducationalAttainment: {
+      type: String,
+    },
+    tinNumber: {
+      type: Number,
+    },
+    gsisNumber: {
+      type: String,
+    },
+    plantillaNumber: {
+      type: String,
+    },
+  },
+  { timestamps: true }
 );
 
 const Admin = mongoose.model("Admin", adminSchema);
 
-module.exports = {Admin}
+module.exports = { Admin };

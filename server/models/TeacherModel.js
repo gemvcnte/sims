@@ -69,34 +69,27 @@ const teacherSchema = new mongoose.Schema(
       // need nalang lagyan ng image
       default: "",
     },
-    // designation: {
-    //   type: String,
-    //   required: true,
-    // },
-    // numOfYearsTeaching: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // specialization: {
-    //   type: String,
-    //   required: true,
-    // },
-    // highestEducationalAttainment: {
-    //   type: String,
-    //   required: true,
-    // },
-    // tinNumber: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // gsisNumber: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // plantillaNumber: {
-    //   type: Number,
-    //   required: true,
-    // },
+    designation: {
+      type: String,
+    },
+    numOfYearsTeaching: {
+      type: Number,
+    },
+    specialization: {
+      type: String,
+    },
+    highestEducationalAttainment: {
+      type: String,
+    },
+    tinNumber: {
+      type: Number,
+    },
+    gsisNumber: {
+      type: String,
+    },
+    plantillaNumber: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
