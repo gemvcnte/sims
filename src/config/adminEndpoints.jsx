@@ -13,5 +13,6 @@ export const enrollApplicationEndpoint = `${baseUrl}/admin/enrollStudent`;
 export const rejectApplicationEndpoint = `${baseUrl}/admin/deleteApplication`;
 export const updateApplicationEndpoint = `${baseUrl}/admin/updateApplication`;
 
-// create teacher
+// creating accounts
 export const createTeacherEndpoint = `${baseUrl}/admin/createTeacher`;
+export const createAdminEndpoint = `${baseUrl}/admin/create`;

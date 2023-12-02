@@ -10,6 +10,7 @@ import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ClassroomsDropdown } from "./ClassroomsDropdown";
 import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
 import SidebarItem from "../SidebarContainer/components/SidebarItem";
+import { AdminsDropdown } from "./AdminsDropdown";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -26,6 +27,7 @@ export default function AdminSidebar() {
         <StudentsDropdown />
         <TeachersDropdown />
         <ClassroomsDropdown />
+        <AdminsDropdown />
 
         <DropdownMenuSeparator />
 

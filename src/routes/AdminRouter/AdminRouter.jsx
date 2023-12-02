@@ -6,6 +6,7 @@ import AdminSidebar from "@components/layout/Sidebar/components/AdminSidebar";
 import ApplicationMonitoring from "@pages/Admin/ApplicationMonitoring";
 import CreateTeacherAccount from "@/pages/Admin/CreateTeacherAccount";
 import AdminProfile from "@/pages/Admin/AdminProfile";
+import CreateAdminAccount from "@/pages/Admin/CreateAdminAccount";
 
 export default function AdminRouter() {
   return (
@@ -26,6 +27,11 @@ export default function AdminRouter() {
           <Route
             path="/create-teacher-account"
             element={<CreateTeacherAccount />}
+          />
+
+          <Route
+            path="/create-admin-account"
+            element={<CreateAdminAccount />}
           />
         </Routes>
       </div>
