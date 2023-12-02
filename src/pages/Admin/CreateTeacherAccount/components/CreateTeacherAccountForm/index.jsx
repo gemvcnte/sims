@@ -7,6 +7,9 @@ import {
   EmploymentInformationSection,
 } from "./sections";
 import { createTeacherProfileApi } from "./helpers";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import { ToastContainer } from "react-toastify";
 
 const CreateTeacherAccountForm = () => {
   const [teacherProfile, setTeacherProfile] = useState();
@@ -22,41 +25,53 @@ const CreateTeacherAccountForm = () => {
     e.preventDefault();
     // console.log(teacherProfile);
     try {
-      await createTeacherProfileApi(teacherProfile);
+      const response = await createTeacherProfileApi(teacherProfile);
+      if (response && response.status === 201) {
+        showSuccessNotification(response.data.message);
+      } else {
+        showErrorNotification(response.data.message);
+      }
     } catch (error) {
-      console.error("Error in component:", error);
+      const errorMessage = error.response
+        ? error.response.data.message
+        : "An error occurred.";
+      console.error(errorMessage);
+      showErrorNotification(errorMessage);
     }
   };
 
   return (
-    <form
-      className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
-      onSubmit={handleCreateTeacherAccount}
-    >
-      <EducationalInformationSection
-        teacherProfile={teacherProfile}
-        handleInputChange={handleInputChange}
-      />
+    <>
+      <ToastContainer />
+      <form
+        className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
+        onSubmit={handleCreateTeacherAccount}
+      >
+        <EducationalInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
 
-      <EmploymentInformationSection
-        teacherProfile={teacherProfile}
-        handleInputChange={handleInputChange}
-      />
+        <EmploymentInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
 
-      <PersonalInformationSection
-        teacherProfile={teacherProfile}
-        handleInputChange={handleInputChange}
-      />
+        <PersonalInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
 
-      <AdditionalInformationSection
-        teacherProfile={teacherProfile}
-        handleInputChange={handleInputChange}
-      />
+        <AdditionalInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
 
-      <footer className="mb-4 p-4 text-right md:mb-8">
-        <Button type="submit">Save changes</Button>
-      </footer>
-    </form>
+        <footer className="mb-4 p-4 text-right md:mb-8">
+          <Button type="submit">Save changes</Button>
+        </footer>
+      </form>
+    </>
   );
 };
 
