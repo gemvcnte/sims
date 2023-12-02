@@ -46,7 +46,7 @@ export function AdminsDropdown({}) {
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link to="" onClick={handleDropdownClick}>
+          <Link to="create-admin-account" onClick={handleDropdownClick}>
             Create Admin Account
           </Link>
         </DropdownMenuItem>
