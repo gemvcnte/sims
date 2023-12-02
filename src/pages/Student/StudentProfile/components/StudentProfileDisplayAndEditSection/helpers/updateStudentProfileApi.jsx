@@ -1,5 +1,5 @@
 import axios from "axios";
-import { updateStudentProfileEndpoint } from "@/config/endpoints";
+import { updateStudentProfileEndpoint } from "@/config/studentEndpoints";
 
 export const updateStudentProfileApi = async (updatedProfileData) => {
   const authToken = localStorage.getItem("authToken");
