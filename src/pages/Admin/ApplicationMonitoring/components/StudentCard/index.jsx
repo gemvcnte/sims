@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import showSuccessNotification from "@utils/ShowSuccessNotification";
+import showSuccessNotification from "@utils/showSuccessNotification";
 import { ToastContainer } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
