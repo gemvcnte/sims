@@ -7,8 +7,8 @@ import {
   EmploymentInformationSection,
 } from "./sections";
 import { createTeacherProfileApi } from "./helpers";
-import showSuccessNotification from "@/utils/showSuccessNotification";
-import showErrorNotification from "@/utils/ShowErrorNotification";
+import showSuccessNotification from "@utils/ShowSuccessNotification";
+import showErrorNotification from "@utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
 
 const CreateAdminAccountForm = () => {
@@ -23,7 +23,6 @@ const CreateAdminAccountForm = () => {
 
   const handleCreateTeacherAccount = async (e) => {
     e.preventDefault();
-    showSuccessNotification("test");
     // console.log(teacherProfile);
     try {
       const response = await createTeacherProfileApi(teacherProfile);
@@ -33,7 +32,11 @@ const CreateAdminAccountForm = () => {
         showErrorNotification(response.data.message);
       }
     } catch (error) {
-      console.error("Error in component:", error);
+      const errorMessage = error.response
+        ? error.response.data.message
+        : "An error occurred.";
+      console.error(errorMessage);
+      showErrorNotification(errorMessage);
     }
   };
 
