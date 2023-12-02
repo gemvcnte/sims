@@ -13,32 +13,40 @@ dotenv.config();
 // creating an admin
 const createAdmin = asyncHandler(async (req, res) => {
   try {
-    const { name, username, password, idNumber, address } = req.body;
+    const adminData = req.body;
 
-    // Check if the admin already exists based on th  e username
-    const existingAdmin = await Admin.findOne({ username });
+    // Generate username by combining firstname and lastname
+    const username = (
+      adminData.firstName +
+      "." +
+      adminData.lastName
+    ).toLowerCase();
+
+    // Check if the admin already exists based on the username
+    const existingAdmin = await Admin.findOne({
+      username: username,
+    });
     if (existingAdmin) {
-      res
+      return res
         .status(400)
         .json({ message: "Admin already exists with this username." });
     }
 
     // Hash the password
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    const hashedPassword = await bcryptjs.hash(adminData.birthDate, 10);
 
-    // Create a new admin with the hashed password
+    // Create a new teacher with the hashed password
     const admin = new Admin({
-      name,
-      username,
+      ...adminData,
+      username: username,
       password: hashedPassword,
-      idNumber,
-      address,
     });
+
     await admin.save();
 
     res.status(201).json({ message: "Admin created successfully." });
   } catch (error) {
-    return res.status(500).json({ message: `There is an error ${error}` });
+    res.status(500).json({ message: `${error}` });
   }
 });
 
