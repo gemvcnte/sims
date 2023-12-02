@@ -1,14 +1,11 @@
 import axios from "axios";
-import { createTeacherEndpoint } from "@/config/adminEndpoints";
+import { createAdminEndpoint } from "@/config/adminEndpoints";
 
 export const createTeacherProfileApi = async (teacherProfileData) => {
   try {
-    const response = await axios.post(
-      createTeacherEndpoint,
-      teacherProfileData,
-    );
+    const response = await axios.post(createAdminEndpoint, teacherProfileData);
 
-    // console.log(response);
+    return response;
   } catch (error) {
     console.error("Error creating teacher profile:", error);
     throw error;

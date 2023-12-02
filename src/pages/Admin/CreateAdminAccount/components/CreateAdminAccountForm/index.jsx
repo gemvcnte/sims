@@ -7,6 +7,7 @@ import {
   EmploymentInformationSection,
 } from "./sections";
 import { createTeacherProfileApi } from "./helpers";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 
 const CreateAdminAccountForm = () => {
   const [teacherProfile, setTeacherProfile] = useState();
@@ -22,7 +23,15 @@ const CreateAdminAccountForm = () => {
     e.preventDefault();
     // console.log(teacherProfile);
     try {
-      await createTeacherProfileApi(teacherProfile);
+      const response = await createTeacherProfileApi(teacherProfile);
+      if (response && response.status === 201) {
+        showSuccessNotification(response.data.message);
+      } else {
+        console.log(
+          "Unexpected response status:",
+          response ? response.status : "undefined",
+        );
+      }
     } catch (error) {
       console.error("Error in component:", error);
     }
