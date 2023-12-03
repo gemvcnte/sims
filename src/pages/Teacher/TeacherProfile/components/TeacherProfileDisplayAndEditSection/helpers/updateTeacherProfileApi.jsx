@@ -19,7 +19,7 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
 
     updateLocalProfileData(updatedData);
 
-    return updatedData;
+    return response;
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;
