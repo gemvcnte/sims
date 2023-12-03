@@ -4,7 +4,7 @@ import React from "react";
 import { extensionNameSelectOptions, InputField } from "../common";
 
 export function PersonalInformationSection({
-  teacherProfile,
+  adminProfile,
   handleInputChange,
 }) {
   return (
@@ -26,10 +26,10 @@ export function PersonalInformationSection({
             id="lastName"
             type="text"
             placeholder="Input Your Last Name"
-            defaultValue={teacherProfile?.lastName}
+            defaultValue={adminProfile?.lastName}
             name="lastName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
@@ -41,10 +41,10 @@ export function PersonalInformationSection({
             id="firstName"
             type="text"
             placeholder="Input Your First Name"
-            defaultValue={teacherProfile?.firstName}
+            defaultValue={adminProfile?.firstName}
             name="firstName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
@@ -56,10 +56,10 @@ export function PersonalInformationSection({
             id="middleName"
             type="text"
             placeholder="Input Your Middle Name"
-            defaultValue={teacherProfile?.middleName}
+            defaultValue={adminProfile?.middleName}
             name="middleName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
@@ -70,7 +70,7 @@ export function PersonalInformationSection({
           <select
             required
             className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            value={teacherProfile?.extensionName}
+            value={adminProfile?.extensionName}
             name="extensionName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           >
@@ -89,7 +89,7 @@ export function PersonalInformationSection({
           <InputField
             type="date"
             placeholder="Input Your Birthdate (MM/DD/YY)"
-            value={teacherProfile?.birthDate}
+            value={adminProfile?.birthDate}
             name="birthDate"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           />
@@ -101,7 +101,7 @@ export function PersonalInformationSection({
           </Label>
           <select
             className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            value={teacherProfile?.gender}
+            value={adminProfile?.gender}
             required
             name="gender"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -119,7 +119,7 @@ export function PersonalInformationSection({
           <InputField
             type="text"
             placeholder="E.g., 123 Purok St, Barangay, Municipality"
-            value={teacherProfile?.currentAddress}
+            value={adminProfile?.currentAddress}
             name="currentAddress"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           />
@@ -132,7 +132,7 @@ export function PersonalInformationSection({
           <InputField
             type="email"
             placeholder="Input Your Email"
-            value={teacherProfile?.emailAddress}
+            value={adminProfile?.emailAddress}
             name="emailAddress"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
           />

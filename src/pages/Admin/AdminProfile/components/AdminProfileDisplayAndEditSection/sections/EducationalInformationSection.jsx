@@ -3,11 +3,11 @@ import React from "react";
 import { InputField } from "../common";
 
 export function EducationalInformationSection({
-  teacherProfile,
+  adminProfile,
   handleInputChange,
 }) {
   return (
-    <section className="educational-information-section gap-4 p-4 sm:flex">
+    <section className=" educational-information-section gap-4 break-words p-4 sm:flex">
       <header className="mb-2 text-center sm:max-w-[25%]  sm:text-start md:max-w-[30%] ">
         <h1 className="font-normal">Educational and Professional Details</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
@@ -24,7 +24,7 @@ export function EducationalInformationSection({
           <InputField
             type="number"
             placeholder="Enter Number of Years Teaching"
-            value={teacherProfile?.numOfYearsTeaching}
+            value={adminProfile?.numOfYearsTeaching}
             onChange={(e) =>
               handleInputChange("numOfYearsTeaching", e.target.value)
             }
@@ -38,7 +38,7 @@ export function EducationalInformationSection({
           <select
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="designation"
-            value={teacherProfile?.designation}
+            value={adminProfile?.designation}
             onChange={(e) => handleInputChange("designation", e.target.value)}
           >
             <option value="">Select Designation</option>
@@ -66,7 +66,7 @@ export function EducationalInformationSection({
           <select
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="specialization"
-            value={teacherProfile?.specialization}
+            value={adminProfile?.specialization}
             onChange={(e) =>
               handleInputChange("specialization", e.target.value)
             }
@@ -84,7 +84,7 @@ export function EducationalInformationSection({
           <select
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="highestEducationalAttainment"
-            value={teacherProfile?.highestEducationalAttainment}
+            value={adminProfile?.highestEducationalAttainment}
             onChange={(e) =>
               handleInputChange("highestEducationalAttainment", e.target.value)
             }

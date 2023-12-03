@@ -1,1 +1,1 @@
-export { updateTeacherProfileApi } from "./updateTeacherProfileApi";
+export { updateAdminProfileApi } from "./updateAdminProfileApi";

@@ -3,7 +3,7 @@ import React from "react";
 import { InputField } from "../common";
 
 export function AdditionalInformationSection({
-  teacherProfile,
+  adminProfile,
   handleInputChange,
 }) {
   return (
@@ -24,7 +24,7 @@ export function AdditionalInformationSection({
           <InputField
             type="text"
             placeholder="Religion"
-            value={teacherProfile?.religion}
+            value={adminProfile?.religion}
             onChange={(e) => handleInputChange("religion", e.target.value)}
             name="religion"
           />
@@ -37,7 +37,7 @@ export function AdditionalInformationSection({
           <InputField
             type="text"
             placeholder='E.g. "Nueva Ecija"'
-            value={teacherProfile?.province}
+            value={adminProfile?.province}
             onChange={(e) => handleInputChange("province", e.target.value)}
             name="province"
           />
@@ -50,7 +50,7 @@ export function AdditionalInformationSection({
           <InputField
             type="text"
             placeholder='E.g. "Pamaldan"'
-            value={teacherProfile?.barangay}
+            value={adminProfile?.barangay}
             onChange={(e) => handleInputChange("barangay", e.target.value)}
             name="barangay"
           />
@@ -63,7 +63,7 @@ export function AdditionalInformationSection({
           <InputField
             type="text"
             placeholder='E.g. "Cabanatuan City"'
-            value={teacherProfile?.city}
+            value={adminProfile?.city}
             onChange={(e) => handleInputChange("city", e.target.value)}
             name="city"
           />
@@ -76,7 +76,7 @@ export function AdditionalInformationSection({
           <InputField
             type="text"
             placeholder="ZIP Code"
-            value={teacherProfile?.zipCode}
+            value={adminProfile?.zipCode}
             onChange={(e) => handleInputChange("zipCode", e.target.value)}
             name="zipCode"
           />

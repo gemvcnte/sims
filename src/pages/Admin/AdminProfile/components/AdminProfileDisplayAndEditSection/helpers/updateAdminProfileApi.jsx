@@ -1,13 +1,13 @@
 import axios from "axios";
 import { updateAdminProfileEndpoint } from "@/config/adminEndpoints";
 
-export const updateTeacherProfileApi = async (updatedProfileData) => {
+export const updateAdminProfileApi = async (updatedProfileData) => {
   const authToken = localStorage.getItem("authToken");
 
   try {
     const response = await axios.patch(
       updateAdminProfileEndpoint,
-      { updatedProfileData },
+      updatedProfileData,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -15,11 +15,11 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
       },
     );
 
-    const updatedData = response.data;
+    const updatedData = response.data.adminData;
 
     updateLocalProfileData(updatedData);
 
-    return updatedData;
+    return response;
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;
@@ -27,5 +27,5 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
 };
 
 export const updateLocalProfileData = (updatedProfileData) => {
-  localStorage.setItem("teacherProfile", JSON.stringify(updatedProfileData));
+  localStorage.setItem("adminProfile", JSON.stringify(updatedProfileData));
 };

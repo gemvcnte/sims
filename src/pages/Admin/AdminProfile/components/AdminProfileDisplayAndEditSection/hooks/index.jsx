@@ -1,1 +1,1 @@
-export { default as useTeacherProfile } from "./useTeacherProfile";
+export { default as useAdminProfile } from "./useAdminProfile";
