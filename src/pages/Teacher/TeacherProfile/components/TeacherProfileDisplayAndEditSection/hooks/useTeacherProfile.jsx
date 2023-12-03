@@ -1,54 +1,55 @@
 // useTeacherProfile.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
+import { getTeacherProfileEndpoint } from "@/config/teacherEndpoints";
 
 const useTeacherProfile = () => {
-  const [teacherProfile, setTeacherProfile] = useState(null);
+  const [teacherProfile, setTeacherProfile] = useState({});
   const [error, setError] = useState(null);
-  const baseUrl = getBaseUrl();
   const authToken = localStorage.getItem("authToken");
 
-  useEffect(() => {
-    const fetchTeacherProfile = async () => {
-      const profileEndpoint = `${baseUrl}/teacher/profile`;
+  const loadStoredProfile = () => {
+    const storedProfileData = JSON.parse(
+      localStorage.getItem("teacherProfile"),
+    );
 
-      const storedProfileData = JSON.parse(
-        localStorage.getItem("teacherProfile"),
-      );
+    if (storedProfileData) {
+      setTeacherProfile(storedProfileData);
+      return true;
+    }
 
-      if (storedProfileData) {
-        setTeacherProfile(storedProfileData);
-        return;
-      }
+    return false;
+  };
 
-      if (!authToken) {
-        setError("JWT token not found in localStorage");
-        return;
-      }
+  const handleSuccess = (fetchedProfileData) => {
+    setTeacherProfile(fetchedProfileData);
+    localStorage.setItem("teacherProfile", JSON.stringify(fetchedProfileData));
+  };
 
-      try {
-        const response = await axios.get(profileEndpoint, {
+  const handleError = (errorMessage) => {
+    setError(errorMessage);
+  };
+
+  const fetchProfileData = async () => {
+    try {
+      if (!loadStoredProfile() && authToken) {
+        const response = await axios.get(getTeacherProfileEndpoint, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         });
 
-        const fetchedProfileData = response.data.teacherProfile;
-        console.log(fetchedProfileData);
-        setTeacherProfile(fetchedProfileData);
-
-        localStorage.setItem(
-          "teacherProfile",
-          JSON.stringify(fetchedProfileData),
-        );
-      } catch (error) {
-        setError(error.message);
+        const fetchedProfileData = response.data.teacherData;
+        handleSuccess(fetchedProfileData);
       }
-    };
+    } catch (error) {
+      handleError(error.message);
+    }
+  };
 
-    fetchTeacherProfile();
-  }, [baseUrl, authToken]);
+  useEffect(() => {
+    fetchProfileData();
+  }, [getTeacherProfileEndpoint, authToken]);
 
   return { teacherProfile, error, setTeacherProfile };
 };

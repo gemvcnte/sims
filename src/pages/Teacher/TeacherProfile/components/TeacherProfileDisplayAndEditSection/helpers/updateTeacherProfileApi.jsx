@@ -7,7 +7,7 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
   try {
     const response = await axios.patch(
       updateTeacherProfileEndpoint,
-      { updatedProfileData },
+      updatedProfileData,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -15,11 +15,11 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
       },
     );
 
-    const updatedData = response.data;
+    const updatedData = response.data.teacherData;
 
     updateLocalProfileData(updatedData);
 
-    return updatedData;
+    return response;
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;

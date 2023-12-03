@@ -47,6 +47,11 @@ const CreateAdminAccountForm = () => {
         className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
         onSubmit={handleCreateTeacherAccount}
       >
+        <PersonalInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
+
         <EducationalInformationSection
           teacherProfile={teacherProfile}
           handleInputChange={handleInputChange}
@@ -57,15 +62,11 @@ const CreateAdminAccountForm = () => {
           handleInputChange={handleInputChange}
         />
 
-        <PersonalInformationSection
+        {/* hidden because the teacherModel and adminModel doesnt include additional information yet */}
+        {/* <AdditionalInformationSection
           teacherProfile={teacherProfile}
           handleInputChange={handleInputChange}
-        />
-
-        <AdditionalInformationSection
-          teacherProfile={teacherProfile}
-          handleInputChange={handleInputChange}
-        />
+        /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
           <Button type="submit">Create Admin Account</Button>

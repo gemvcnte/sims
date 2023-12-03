@@ -48,10 +48,11 @@ const AdminProfileDisplayAndEditSection = () => {
         handleInputChange={handleInputChange}
       />
 
-      <AdditionalInformationSection
+      {/* hidden because the teacherModel and adminModel doesnt include additional information yet */}
+      {/* <AdditionalInformationSection
         teacherProfile={teacherProfile}
         handleInputChange={handleInputChange}
-      />
+      /> */}
 
       <footer className="mb-4 p-4 text-right md:mb-8">
         <Button type="submit">Save changes</Button>
