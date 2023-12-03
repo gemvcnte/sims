@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controller/adminController");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const verifyToken = require("../middleware/verifyToken");
 dotenv.config();
 
 // Admin routes for admin...
@@ -24,7 +25,6 @@ router.get("/getAllStudents", adminController.getAllStudents);
 router.get("/getPending", adminController.getAllPending);
 router.get("/getSpecificStudent", adminController.getSpecificStudent);
 
-
 // StudentApplication routes for admin
 router.post("/enrollStudent", adminController.acceptStudentApplication);
 router.patch("/updateApplication", adminController.updateStudentApplication);
@@ -33,5 +33,13 @@ router.patch("/rejectApplication", adminController.rejectStudentApplication);
 router.post("/createAnnouncement", adminController.createSchoolAnnouncement);
 router.patch("/updateAnnouncement", adminController.updateSchoolAnnouncement);
 router.delete("/deleteAnnouncement", adminController.deleteSchoolAnnouncement);
+
+// Admin Profile
+router.get("/profile", verifyToken, adminController.getAdminProfile);
+router.patch(
+  "/profile/update",
+  verifyToken,
+  adminController.updateAdminProfile
+);
 
 module.exports = router;

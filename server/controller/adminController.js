@@ -147,6 +147,41 @@ const updateAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+// update profile
+const updateAdminProfile = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const updatedProfileData = req.body;
+
+    // Check if the user making the request matches the user ID in the updatedProfileData
+    if (_id !== updatedProfileData._id) {
+      return res.status(403).json({
+        message:
+          "Forbidden: You do not have permission to update this profile.",
+      });
+    }
+
+    // Find the admin by their user ID and update their profile
+    const adminProfile = await Admin.findByIdAndUpdate(
+      _id,
+      updatedProfileData,
+      { new: true }
+    );
+
+    // Check if the admin exists
+    if (!adminProfile) {
+      return res.status(404).json({ message: "Admin not found." });
+    }
+
+    res.status(200).json({
+      message: "Admin profile updated successfully.",
+      adminData: adminProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
 // delete admin
 const deleteAdmin = asyncHandler(async (req, res) => {
   try {
@@ -349,6 +384,25 @@ const getSpecificAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+const getAdminProfile = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    const adminProfile = await Admin.findById({ _id });
+
+    if (!adminProfile) {
+      res.status(404).json({ message: "Admin not found." });
+    }
+
+    res.status(200).json({
+      message: "Admin found",
+      adminData: adminProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
 const getAllStudents = asyncHandler(async (req, res) => {
   try {
     const retrieveStudents = await Student.find();
@@ -505,8 +559,10 @@ module.exports = {
   createAdmin,
   adminLogin,
   updateAdmin,
+  updateAdminProfile,
   deleteAdmin,
   getSpecificAdmin,
+  getAdminProfile,
   acceptStudentApplication,
   updateStudentApplication,
   rejectStudentApplication,
