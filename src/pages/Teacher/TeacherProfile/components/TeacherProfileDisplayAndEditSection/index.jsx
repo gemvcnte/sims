@@ -17,10 +17,13 @@ const TeacherProfileDisplayAndEditSection = () => {
       ...teacherProfile,
       [field]: value,
     });
+    console.log(teacherProfile);
   };
 
-  const handleUpdateProfile = async () => {
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
     const updatedProfileData = { ...teacherProfile };
+    console.log(updatedProfileData);
     try {
       await updateTeacherProfileApi(updatedProfileData);
     } catch (error) {
