@@ -21,6 +21,10 @@ const teacherSchema = new mongoose.Schema(
       default: "",
       uppercase: true,
     },
+    extensionName: {
+      type: String,
+      required: true,
+    },
     currentAddress: {
       type: String,
       // required: true,
