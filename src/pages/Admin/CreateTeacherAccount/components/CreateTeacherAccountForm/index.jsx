@@ -47,17 +47,17 @@ const CreateTeacherAccountForm = () => {
         className="mt-4 flex flex-col gap-4 px-8 md:mt-8 md:gap-8 lg:mt-12 lg:gap-12"
         onSubmit={handleCreateTeacherAccount}
       >
+        <PersonalInformationSection
+          teacherProfile={teacherProfile}
+          handleInputChange={handleInputChange}
+        />
+
         <EducationalInformationSection
           teacherProfile={teacherProfile}
           handleInputChange={handleInputChange}
         />
 
         <EmploymentInformationSection
-          teacherProfile={teacherProfile}
-          handleInputChange={handleInputChange}
-        />
-
-        <PersonalInformationSection
           teacherProfile={teacherProfile}
           handleInputChange={handleInputChange}
         />
