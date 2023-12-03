@@ -9,5 +9,10 @@ dotenv.config;
 router.post("/login", teacherController.teacherLogin);
 router.get("/profile", verifyToken, teacherController.getTeacherProfile);
 router.post("/announcement/classPost", teacherController.postClassAnnouncement);
+router.patch(
+  "/profile/update",
+  verifyToken,
+  teacherController.updateTeacherProfile
+);
 
 module.exports = router;
