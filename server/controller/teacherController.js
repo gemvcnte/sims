@@ -1,10 +1,8 @@
 const { Teacher } = require("../models/TeacherModel");
-const  { Announcement } = require('../models/Announcement')
+const { Announcement } = require("../models/Announcement");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
-
-
 
 const teacherLogin = asyncHandler(async (req, res) => {
   try {
@@ -41,63 +39,87 @@ const teacherLogin = asyncHandler(async (req, res) => {
   }
 });
 
-
-const getTeacherProfile = asyncHandler (async (req,res) => {
+const getTeacherProfile = asyncHandler(async (req, res) => {
   try {
-    const { _id } =req.user
+    const { _id } = req.user;
 
-    const teacherProfile = await Teacher.findById({_id});
+    const teacherProfile = await Teacher.findById({ _id });
 
-    if(!teacherProfile) {
-      res.status(404).json({message: 'Teacher not found.'})
+    if (!teacherProfile) {
+      res.status(404).json({ message: "Teacher not found." });
     }
 
     res.status(200).json({
-      message: 'Teacher found',
-      teacherData: teacherProfile
-})
+      message: "Teacher found",
+      teacherData: teacherProfile,
+    });
   } catch (error) {
-    res.status(500).json({message: `${error}`});
+    res.status(500).json({ message: `${error}` });
   }
-})
+});
 
+const updateTeacherProfile = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const updatedProfileData = req.body;
 
+    // Check if the user making the request matches the user ID in the updatedProfileData
+    if (_id !== updatedProfileData._id) {
+      return res.status(403).json({
+        message:
+          "Forbidden: You do not have permission to update this profile.",
+      });
+    }
+
+    // Find the teacher by their user ID and update their profile
+    const teacherProfile = await Teacher.findByIdAndUpdate(
+      _id,
+      updatedProfileData,
+      { new: true }
+    );
+
+    // Check if the teacher exists
+    if (!teacherProfile) {
+      return res.status(404).json({ message: "Teacher not found." });
+    }
+
+    res.status(200).json({
+      message: "Teacher profile updated successfully.",
+      teacherData: teacherProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
 
 const getTeacherSchedule = asyncHandler(async (req, res) => {
   try {
-    const { _id } = req.user
+    const { _id } = req.user;
 
-    const teacherSchedule = await Teacher.findById(_id)
-
+    const teacherSchedule = await Teacher.findById(_id);
 
     if (!teacherSchedule) {
-      res.status(404).json({message: 'Teacher Schedule not found.'})
+      res.status(404).json({ message: "Teacher Schedule not found." });
     } else if (teacherSchedule === null) {
-      res.status(204).json({message: 'Teacher schedule is empty'})
-    };
+      res.status(204).json({ message: "Teacher schedule is empty" });
+    }
 
-    res.status(200).json({message: 'Teacher Schedule has been retrieved.'})
+    res.status(200).json({ message: "Teacher Schedule has been retrieved." });
   } catch (error) {
-    res.status(500).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` });
   }
-})
+});
 
-const postClassAnnouncement = asyncHandler (async (req,res) => {
+const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { announcementId } = req.body
-
-    
-  } catch (error) {
-    
-  }
-})
+    const { announcementId } = req.body;
+  } catch (error) {}
+});
 
 // const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
-    
+
 //   const {username, email} = req.body
-
-
 
 //   const teacher =   await Teacher.findById({ username, email })
 
@@ -106,9 +128,7 @@ const postClassAnnouncement = asyncHandler (async (req,res) => {
 //   teacher.resetPasswordToken = token;
 //   await teacher.save()
 
-
 //   sendResetPasswordNotificationToAdmin(token, teacher)
-
 
 //   res.status(200).json({message: 'Request has been delivered.'})
 
@@ -117,10 +137,10 @@ const postClassAnnouncement = asyncHandler (async (req,res) => {
 //   }
 // });
 
-
 module.exports = {
   teacherLogin,
   getTeacherSchedule,
   getTeacherProfile,
+  updateTeacherProfile,
   postClassAnnouncement,
 };

@@ -1,13 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const teacherController = require('../controller/teacherController')
-const dotenv = require('dotenv')
-dotenv.config
-
+const express = require("express");
+const router = express.Router();
+const teacherController = require("../controller/teacherController");
+const dotenv = require("dotenv");
+const verifyToken = require("../middleware/verifyToken");
+dotenv.config;
 
 // router.post('/login', expressjwt({secret: process.env.JWT_SECRET}), teacherController.teacherLogin)
-router.post('/login', teacherController.teacherLogin)
-router.get('/profile', teacherController.getTeacherProfile)
-router.post('/announcement/classPost',teacherController.postClassAnnouncement)
+router.post("/login", teacherController.teacherLogin);
+router.get("/profile", verifyToken, teacherController.getTeacherProfile);
+router.post("/announcement/classPost", teacherController.postClassAnnouncement);
+router.patch(
+  "/profile/update",
+  verifyToken,
+  teacherController.updateTeacherProfile
+);
 
-module.exports = router
+module.exports = router;
