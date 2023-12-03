@@ -7,7 +7,7 @@ export const updateAdminProfileApi = async (updatedProfileData) => {
   try {
     const response = await axios.patch(
       updateAdminProfileEndpoint,
-      { updatedProfileData },
+      updatedProfileData,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -15,11 +15,11 @@ export const updateAdminProfileApi = async (updatedProfileData) => {
       },
     );
 
-    const updatedData = response.data;
+    const updatedData = response.data.adminData;
 
     updateLocalProfileData(updatedData);
 
-    return updatedData;
+    return response;
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;
