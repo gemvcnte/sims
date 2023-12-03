@@ -24,7 +24,7 @@ export function EmploymentInformationSection({
           <InputField
             type="number"
             placeholder="Enter Your TIN number"
-            value={teacherProfile?.tin}
+            value={teacherProfile?.tinNumber}
             onChange={(e) => handleInputChange("tin", e.target.value)}
           />
         </div>
