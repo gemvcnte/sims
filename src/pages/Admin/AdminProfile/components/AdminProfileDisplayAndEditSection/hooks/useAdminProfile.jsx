@@ -1,21 +1,21 @@
-// useTeacherProfile.js
+// useAdminProfile.js
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getAdminProfileEndpoint } from "@/config/adminEndpoints";
 
-const useTeacherProfile = () => {
-  const [teacherProfile, setTeacherProfile] = useState(null);
+const useAdminProfile = () => {
+  const [adminProfile, setAdminProfile] = useState(null);
   const [error, setError] = useState(null);
   const authToken = localStorage.getItem("authToken");
 
   useEffect(() => {
-    const fetchTeacherProfile = async () => {
+    const fetchAdminProfile = async () => {
       const storedProfileData = JSON.parse(
-        localStorage.getItem("teacherProfile"),
+        localStorage.getItem("adminProfile"),
       );
 
       if (storedProfileData) {
-        setTeacherProfile(storedProfileData);
+        setAdminProfile(storedProfileData);
         return;
       }
 
@@ -31,12 +31,12 @@ const useTeacherProfile = () => {
           },
         });
 
-        const fetchedProfileData = response.data.teacherProfile;
+        const fetchedProfileData = response.data.adminData;
         console.log(fetchedProfileData);
-        setTeacherProfile(fetchedProfileData);
+        setAdminProfile(fetchedProfileData);
 
         localStorage.setItem(
-          "teacherProfile",
+          "adminProfile",
           JSON.stringify(fetchedProfileData),
         );
       } catch (error) {
@@ -44,10 +44,10 @@ const useTeacherProfile = () => {
       }
     };
 
-    fetchTeacherProfile();
+    fetchAdminProfile();
   }, [getAdminProfileEndpoint, authToken]);
 
-  return { teacherProfile, error, setTeacherProfile };
+  return { adminProfile, error, setAdminProfile };
 };
 
-export default useTeacherProfile;
+export default useAdminProfile;

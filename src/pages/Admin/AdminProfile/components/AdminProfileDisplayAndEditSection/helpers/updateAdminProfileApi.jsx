@@ -1,7 +1,7 @@
 import axios from "axios";
 import { updateAdminProfileEndpoint } from "@/config/adminEndpoints";
 
-export const updateTeacherProfileApi = async (updatedProfileData) => {
+export const updateAdminProfileApi = async (updatedProfileData) => {
   const authToken = localStorage.getItem("authToken");
 
   try {
@@ -27,5 +27,5 @@ export const updateTeacherProfileApi = async (updatedProfileData) => {
 };
 
 export const updateLocalProfileData = (updatedProfileData) => {
-  localStorage.setItem("teacherProfile", JSON.stringify(updatedProfileData));
+  localStorage.setItem("adminProfile", JSON.stringify(updatedProfileData));
 };

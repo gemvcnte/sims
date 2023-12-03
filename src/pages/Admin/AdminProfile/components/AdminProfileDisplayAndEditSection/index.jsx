@@ -6,23 +6,23 @@ import {
   AdditionalInformationSection,
   EmploymentInformationSection,
 } from "./sections";
-import { updateTeacherProfileApi } from "./helpers";
-import { useTeacherProfile } from "./hooks";
+import { updateAdminProfileApi } from "./helpers";
+import { useAdminProfile } from "./hooks";
 
 const AdminProfileDisplayAndEditSection = () => {
-  const { teacherProfile, error, setTeacherProfile } = useTeacherProfile();
+  const { adminProfile, error, setAdminProfile } = useAdminProfile();
 
   const handleInputChange = (field, value) => {
-    setTeacherProfile({
-      ...teacherProfile,
+    setAdminProfile({
+      ...adminProfile,
       [field]: value,
     });
   };
 
   const handleUpdateProfile = async () => {
-    const updatedProfileData = { ...teacherProfile };
+    const updatedProfileData = { ...adminProfile };
     try {
-      await updateTeacherProfileApi(updatedProfileData);
+      await updateAdminProfileApi(updatedProfileData);
     } catch (error) {
       console.error("Error in component:", error);
     }
@@ -34,23 +34,23 @@ const AdminProfileDisplayAndEditSection = () => {
       onSubmit={handleUpdateProfile}
     >
       <EducationalInformationSection
-        teacherProfile={teacherProfile}
+        adminProfile={adminProfile}
         handleInputChange={handleInputChange}
       />
 
       <EmploymentInformationSection
-        teacherProfile={teacherProfile}
+        adminProfile={adminProfile}
         handleInputChange={handleInputChange}
       />
 
       <PersonalInformationSection
-        teacherProfile={teacherProfile}
+        adminProfile={adminProfile}
         handleInputChange={handleInputChange}
       />
 
       {/* hidden because the teacherModel and adminModel doesnt include additional information yet */}
       {/* <AdditionalInformationSection
-        teacherProfile={teacherProfile}
+        adminProfile={adminProfile}
         handleInputChange={handleInputChange}
       /> */}
 
