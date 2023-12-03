@@ -7,7 +7,7 @@ export function EducationalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className="educational-information-section gap-4 p-4 sm:flex">
+    <section className=" educational-information-section gap-4 break-words p-4 sm:flex">
       <header className="mb-2 text-center sm:max-w-[25%]  sm:text-start md:max-w-[30%] ">
         <h1 className="font-normal">Educational and Professional Details</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
