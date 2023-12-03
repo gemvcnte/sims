@@ -10,7 +10,6 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const connectDb = require('./db/database')
 const dbConn = require('./db/dbConnection')
-// const expressJWT = require('express-jwt')
 const getRateLimiter = require('./middleware/rate-limiter')
 
 
@@ -24,7 +23,6 @@ const port = process.env.PORT || 3000;
 // middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// const authenticate = expressJWT({secret: })
 // app.use(rateLimiter)
 
 const corsOptions = {
@@ -54,17 +52,14 @@ app.use('/apply', studentApplicationRoute);
 
 // Admin routes
 const adminRoute = require('./routes/adminRoute');
-// app.use('/admin', authenticate, adminRateLimiter, adminRoute);
 app.use('/admin', adminRateLimiter, adminRoute);
 
 // Student routes
 const studentRoute = require('./routes/studentRoute');
-// app.use('/student', authenticate, studentRateLimiter, studentRoute);
 app.use('/student', studentRateLimiter, studentRoute);
 
 // Teacher routes
 const teacherRoute = require('./routes/teacherRoute');
-// app.use('/teacher', authenticate, teacherRateLimiter, teacherRoute);
 app.use('/teacher', teacherRateLimiter, teacherRoute);
 
 // Start the server
