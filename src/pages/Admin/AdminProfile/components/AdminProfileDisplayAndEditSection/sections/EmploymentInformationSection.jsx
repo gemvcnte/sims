@@ -3,7 +3,7 @@ import React from "react";
 import { InputField } from "../common";
 
 export function EmploymentInformationSection({
-  teacherProfile,
+  adminProfile,
   handleInputChange,
 }) {
   return (
@@ -24,8 +24,8 @@ export function EmploymentInformationSection({
           <InputField
             type="number"
             placeholder="Enter Your TIN number"
-            value={teacherProfile?.tinNumber}
-            onChange={(e) => handleInputChange("tinNumber", e.target.value)}
+            value={adminProfile?.tinNumber}
+            onChange={(e) => handleInputChange("tinNu", e.target.value)}
           />
         </div>
 
@@ -35,7 +35,7 @@ export function EmploymentInformationSection({
           </Label>
           <InputField
             placeholder="Enter Your GSIS BP"
-            value={teacherProfile?.gsisNumber}
+            value={adminProfile?.gsisNumber}
             onChange={(e) => handleInputChange("gsisNumber", e.target.value)}
           />
         </div>
@@ -46,7 +46,7 @@ export function EmploymentInformationSection({
           </Label>
           <InputField
             placeholder="Enter Your Plantilla Number"
-            value={teacherProfile?.plantillaNumber}
+            value={adminProfile?.plantillaNumber}
             onChange={(e) =>
               handleInputChange("plantillaNumber", e.target.value)
             }
