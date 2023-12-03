@@ -29,7 +29,7 @@ export function PersonalInformationSection({
             defaultValue={adminProfile?.lastName}
             name="lastName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
@@ -44,7 +44,7 @@ export function PersonalInformationSection({
             defaultValue={adminProfile?.firstName}
             name="firstName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
@@ -59,7 +59,7 @@ export function PersonalInformationSection({
             defaultValue={adminProfile?.middleName}
             name="middleName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="col-span-3"
+            className="col-span-3 uppercase"
           />
         </div>
 
