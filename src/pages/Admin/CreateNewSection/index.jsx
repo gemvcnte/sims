@@ -11,38 +11,48 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SelectAdviserCombobox from "./SelectAdviserCombobox";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import { ToastContainer } from "react-toastify";
 
 export default function CreateNewSection({ onClose }) {
+  const handleCreateSectionButton = () => {
+    // showSuccessNotification("Section Created Successfully");
+    onClose();
+  };
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Create a New Section</DialogTitle>
-        <DialogDescription>
-          Make changes to your profile here. Click save when you're done.
-        </DialogDescription>
-      </DialogHeader>
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Name
-          </Label>
-          <Input
-            id="name"
-            placeholder="Enter Section Name"
-            defaultValue=""
-            className="col-span-3"
-          />
+    <>
+      <ToastContainer />
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a New Section</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="Enter Section Name"
+              defaultValue=""
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Adviser
+            </Label>
+            <SelectAdviserCombobox />
+          </div>
         </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Adviser
-          </Label>
-          <SelectAdviserCombobox />
-        </div>
-      </div>
-      <DialogFooter>
-        <Button onClick={onClose}>Create Section</Button>
-      </DialogFooter>
-    </DialogContent>
+        <DialogFooter>
+          <Button onClick={handleCreateSectionButton}>Create Section</Button>
+        </DialogFooter>
+      </DialogContent>
+    </>
   );
 }
