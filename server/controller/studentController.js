@@ -42,14 +42,13 @@ const studentLogin = asyncHandler(async (req, res) => {
 const getStudentSchedule = asyncHandler(async (req, res) => {
   try {
     const { _id } = req.body;
-  } catch (error) { }
+  } catch (error) {}
 });
 
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
-
   } catch (error) {
-    res.status(500).json({ message: `${error}` })
+    res.status(500).json({ message: `${error}` });
   }
 });
 
@@ -61,25 +60,21 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 
     if (!studentProfile) {
       res.status(404).json({ message: "Student Profile not found." });
-    } 
+    }
 
     res.status(200).json({
-      message: 'Student profile has been retrieved.',
+      message: "Student profile has been retrieved.",
       studentProfile: studentProfile,
-    })
+    });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
 });
 
-
-
 // const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
 
 //   const {lrn, email} = req.body
-
-
 
 //   const student =   await Student.findById({ lrn })
 
@@ -88,9 +83,7 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 //   student.resetPasswordToken = token;
 //   await student.save()
 
-
 //   sendResetPasswordNotificationTostudent(token, student)
-
 
 //   res.status(200).json({message: 'Request has been delivered.'})
 
@@ -99,11 +92,9 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 //   }
 // });
 
-
 // const requestUpdateStudentProfile = asyncHandler(async (req, res) => {
 //   try {
 //     const { lrn } = req.body
-
 
 //     const student = await Student.findById({ lrn })
 
@@ -117,27 +108,44 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 //   }
 // })
 
-
 // const updateAdditionalInformation = asyncHandler(async(req,res) => {
 //   await
 // })
 
-// const updateStudentProfile = asyncHandler(async (req,res) => {
-//   try {
-//     const {...updateData} = req.body
+const updateStudentProfile = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const updatedProfileData = req.body;
 
-//     const updateStudentProfile
-//   } catch (error) {
+    // Check if the user making the request matches the user ID in the updatedProfileData
+    if (_id !== updatedProfileData._id) {
+      return res.status(403).json({
+        message:
+          "Forbidden: You do not have permission to update this profile.",
+      });
+    }
 
-//   }
-// })
+    // Find the student by their user ID and update their profile
+    const studentProfile = await Student.findByIdAndUpdate(
+      _id,
+      updatedProfileData,
+      { new: true }
+    );
 
-
+    res.status(200).json({
+      message: "Student profile updated successfully.",
+      studentData: studentProfile,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
 
 module.exports = {
   studentLogin,
   getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
+  updateStudentProfile,
   // requestUpdateStudentProfile,
 };

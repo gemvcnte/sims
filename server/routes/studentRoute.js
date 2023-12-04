@@ -8,7 +8,11 @@ dotenv.config();
 // router.post('/login', expressjwt({secret: process.env.JWT_SECRET}), studentController.studentLogin)
 router.post("/login", studentController.studentLogin);
 router.get("/profile", verifyToken, studentController.getStudentProfile);
-// router.patch('/profile/update', studentController.updateStudentProfile) // (eto lang MUNA)
+router.patch(
+  "/profile/update",
+  verifyToken,
+  studentController.updateStudentProfile
+);
 // router.get('/scheduling', studentController.getSchedule)
 // router.get('/school-announcements', studentController.getAnnouncements)
 // router.get('/profile', studentController.updateProfile)
