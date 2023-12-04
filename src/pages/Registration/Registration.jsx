@@ -4,8 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { Step1, Step2, Step3, Header } from "./components";
 import axios from "axios";
 import LoadingSpinner from "@utils/LoadingSpinner";
+import { registrationEndpoint } from "@/config/adminEndpoints";
 import "./registration.css";
-import { getBaseUrl } from "@utils/configUtils";
 
 export default function Registration() {
   useEffect(() => {
@@ -17,9 +17,6 @@ export default function Registration() {
   }, []);
 
   const [loading, setLoading] = useState(false);
-
-  const baseUrl = getBaseUrl();
-  const registrationApi = `${baseUrl}/apply`;
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
@@ -42,7 +39,7 @@ export default function Registration() {
     console.log(data);
 
     try {
-      const response = await axios.post(registrationApi, data);
+      const response = await axios.post(registrationEndpoint, data);
       if (response.status === 200) {
         toast.success("Data submitted successfully", {
           autoClose: 10000,

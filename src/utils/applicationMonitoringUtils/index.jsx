@@ -1,11 +1,9 @@
 import axios from "axios";
-import { getBaseUrl } from "@src/utils/configUtils";
-
-const baseUrl = getBaseUrl();
+import { updateApplicationEndpoint } from "@/config/adminEndpoints";
 
 export const sendUpdateRequest = async (studentApplicationId, updatedData) => {
   try {
-    const response = await axios.patch(`${baseUrl}/admin/updateApplication`, {
+    const response = await axios.patch(updateApplicationEndpoint, {
       studentApplicationId,
       updatedData,
     });

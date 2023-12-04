@@ -1,0 +1,1 @@
+export { updateAdminProfileApi } from "./updateAdminProfileApi";

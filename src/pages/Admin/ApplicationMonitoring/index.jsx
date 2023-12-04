@@ -8,12 +8,11 @@ import {
   updateLocalApplicationState,
   handleUpdateError,
 } from "@utils/applicationMonitoringUtils";
-import { getBaseUrl } from "@src/utils/configUtils";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import Topbar from "@/components/layout/Topbar";
+import { getPendingApplicationsEndpoint } from "@/config/adminEndpoints";
 
 export default function ApplicationMonitoring() {
-  const baseUrl = getBaseUrl();
   const { toggleSidebar } = useSidebarContext();
   const [pendingApplications, setPendingApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -21,14 +20,14 @@ export default function ApplicationMonitoring() {
   useEffect(() => {
     const fetchPendingApplications = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/admin/getPending`);
+        const response = await axios.get(getPendingApplicationsEndpoint);
         setPendingApplications(response.data.data);
         console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching pending applications:", error.message);
       }
     };
-
+    ``;
     fetchPendingApplications();
   }, []);
 

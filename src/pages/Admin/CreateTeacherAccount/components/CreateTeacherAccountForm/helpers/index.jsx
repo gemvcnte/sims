@@ -1,0 +1,1 @@
+export { createTeacherProfileApi } from "./createTeacherProfileApi";
