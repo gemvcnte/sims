@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import SelectAdviserCombobox from "./SelectAdviserCombobox";
 
 export default function CreateNewSection({ onClose }) {
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>Create a New Section</DialogTitle>
         <DialogDescription>
           Make changes to your profile here. Click save when you're done.
         </DialogDescription>
@@ -25,21 +26,22 @@ export default function CreateNewSection({ onClose }) {
           <Label htmlFor="name" className="text-right">
             Name
           </Label>
-          <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Username
-          </Label>
           <Input
-            id="username"
-            defaultValue="@peduarte"
+            id="name"
+            placeholder="Enter Section Name"
+            defaultValue=""
             className="col-span-3"
           />
         </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="username" className="text-right">
+            Adviser
+          </Label>
+          <SelectAdviserCombobox />
+        </div>
       </div>
       <DialogFooter>
-        <Button onClick={onClose}>Save changes</Button>
+        <Button onClick={onClose}>Create Section</Button>
       </DialogFooter>
     </DialogContent>
   );
