@@ -28,11 +28,9 @@ const StudentProfileDisplayAndEditSection = () => {
     try {
       const response = await updateStudentProfileApi(updatedProfileData);
 
-      if (response && response.status === 200) {
-        showSuccessNotification(response.data.message);
-      } else {
-        showErrorNotification(response.data.message);
-      }
+      response.status === 200
+        ? showSuccessNotification(response.data.message)
+        : showErrorNotification(response.data.message);
     } catch (error) {
       console.error("Error in component:", error);
     }
