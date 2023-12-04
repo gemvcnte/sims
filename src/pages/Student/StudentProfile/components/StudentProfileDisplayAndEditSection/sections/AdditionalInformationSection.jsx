@@ -74,7 +74,7 @@ export function AdditionalInformationSection({
             ZIP Code
           </Label>
           <InputField
-            type="text"
+            type="number"
             placeholder="ZIP Code"
             value={studentProfile?.zipCode}
             onChange={(e) => handleInputChange("zipCode", e.target.value)}
