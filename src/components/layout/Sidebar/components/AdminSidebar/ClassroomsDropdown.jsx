@@ -12,13 +12,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import CreateNewSection from "@/pages/Admin/CreateNewSection";
+
 export function ClassroomsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     toggleSidebar();
+  };
+
+  const handleDialogClick = () => {
+    setIsDialogOpen(!isDialogOpen);
   };
 
   return (
@@ -44,16 +52,21 @@ export function ClassroomsDropdown({}) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
+          <Link onClick={handleDropdownClick}>View Sections</Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Section Schedule</Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>Create a New Section</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>Update a Section</Link>
-        </DropdownMenuItem>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger>
+            <DropdownMenuItem>
+              <Link onClick={handleDialogClick}>Create a New Section</Link>
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <CreateNewSection onClose={handleDialogClick} />
+        </Dialog>
       </DropdownMenuContent>
     </DropdownMenu>
   );
