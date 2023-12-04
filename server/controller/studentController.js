@@ -112,7 +112,6 @@ const getStudentProfile = asyncHandler(async (req, res) => {
 //   await
 // })
 
-// Find the student by their user ID and update their profile
 const updateStudentProfile = asyncHandler(async (req, res) => {
   try {
     const { _id } = req.user;
@@ -126,37 +125,18 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
       });
     }
 
-    // Fetch the original student profile before the update
-    const originalStudentProfile = await Student.findById(_id);
-
-    // Check if the student exists
-    if (!originalStudentProfile) {
-      return res.status(404).json({ message: "Student not found." });
-    }
-
-    // Update the student profile
-    await Student.findByIdAndUpdate(_id, updatedProfileData, { new: true });
-
-    // Fetch the updated student profile after the update
-    const updatedStudentProfile = await Student.findById(_id);
-
-    // Check if the student profiles are the same
-    const isProfileChanged = !originalStudentProfile.equals(
-      updatedStudentProfile
+    // Find the student by their user ID and update their profile
+    const studentProfile = await Student.findByIdAndUpdate(
+      _id,
+      updatedProfileData,
+      { new: true }
     );
-
-    if (!isProfileChanged) {
-      return res
-        .status(400)
-        .json({ message: "Please change something before saving." });
-    }
 
     res.status(200).json({
       message: "Student profile updated successfully.",
-      studentData: updatedStudentProfile,
+      studentData: studentProfile,
     });
   } catch (error) {
-    console.error("Error updating student profile:", error);
     res.status(500).json({ message: `${error}` });
   }
 });
