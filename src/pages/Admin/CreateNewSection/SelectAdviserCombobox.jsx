@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import axios from "axios";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,28 +20,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "gem vicente",
-    label: "Gem Vicente",
-  },
-  {
-    value: "railey murillo",
-    label: "Railey Murillo",
-  },
-  {
-    value: "nathaniel silvino",
-    label: "Nathaniel Silvino",
-  },
-  {
-    value: "john paulo gabornes",
-    label: "John Paulo Gabornes",
-  },
-];
-
-export default function SelectAdviserCombobox() {
+export default function SelectAdviserCombobox({ onSelectTeacher }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+
+  const [teacherData, setTeacherData] = React.useState([]);
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/admin/getAllTeachers",
+        );
+        setTeacherData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching teacher data:", error);
+      }
+    };
+
+    fetchTeachers();
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -51,7 +51,8 @@ export default function SelectAdviserCombobox() {
           className="col-span-3 flex h-10  w-full justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? teacherData.find((teacher) => teacher.username === value)
+                ?.fullName
             : "Select teacher..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -59,24 +60,25 @@ export default function SelectAdviserCombobox() {
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Search teacher..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandEmpty>No teacher found.</CommandEmpty>
           <CommandGroup>
-            {frameworks.map((framework) => (
+            {teacherData.map((teacher) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
+                key={teacher.username}
+                value={teacher.username}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
+                  onSelectTeacher(teacher);
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0",
+                    value === teacher.username ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {framework.label}
+                {teacher.fullName}
               </CommandItem>
             ))}
           </CommandGroup>

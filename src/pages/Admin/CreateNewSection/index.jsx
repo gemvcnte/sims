@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,9 +16,28 @@ import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
 
 export default function CreateNewSection({ onClose }) {
+  const [sectionName, setSectionName] = useState("");
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
+  const [selectedStrand, setSelectedStrand] = useState("");
+
   const handleCreateSectionButton = () => {
-    // showSuccessNotification("Section Created Successfully");
+    const sectionObject = {
+      sectionName,
+      adviser: selectedTeacher ? selectedTeacher.username : "",
+      gradeLevel: selectedGradeLevel,
+      strand: selectedStrand,
+    };
+
+    // Call your API or perform any necessary action with the sectionObject
+    console.log(sectionObject);
+
+    setSectionName("");
+    setSelectedGradeLevel(null);
+    setSelectedStrand("");
+
     onClose();
+    // showSuccessNotification("Section Created Successfully");
   };
 
   return (
@@ -31,24 +51,57 @@ export default function CreateNewSection({ onClose }) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          <div className="flex justify-end gap-4">
+            <select
+              className="col-span-3 flex h-10  rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              value={selectedGradeLevel || ""}
+              required
+              name="gradeLevel"
+              onChange={(e) => setSelectedGradeLevel(parseInt(e.target.value))}
+            >
+              <option value="">Grade Level</option>
+              <option value={11}>GRADE 11</option>
+              <option value={12}>GRADE 12</option>
+            </select>
+
+            <select
+              className="col-span-3 flex h-10 rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              value={selectedStrand}
+              required
+              name="strand"
+              onChange={(e) => setSelectedStrand(e.target.value)}
+            >
+              <option value="">Strand</option>
+              <option value="ABM">ABM</option>
+              <option value="STEM">STEM</option>
+              <option value="HUMSS">HUMSS</option>
+              <option value="GAS">GAS</option>
+              <option value="TVL-ICT">TVL-ICT</option>
+            </select>
+          </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
             <Input
+              required
               id="name"
               placeholder="Enter Section Name"
-              defaultValue=""
+              value={sectionName}
+              onChange={(e) => setSectionName(e.target.value)}
               className="col-span-3"
             />
           </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
               Adviser
             </Label>
-            <SelectAdviserCombobox />
+            <SelectAdviserCombobox onSelectTeacher={setSelectedTeacher} />
           </div>
         </div>
+
         <DialogFooter>
           <Button onClick={handleCreateSectionButton}>Create Section</Button>
         </DialogFooter>
