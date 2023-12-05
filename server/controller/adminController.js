@@ -3,6 +3,7 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
+const { Classroom } = require('../models/ClassroomModel')
 const { Announcement } = require("../models/Announcement");
 const generateAuthToken = require("../configs/auth");
 const dotenv = require("dotenv");
@@ -141,7 +142,7 @@ const updateAdmin = asyncHandler(async (req, res) => {
       await updatedAdmin.save();
     }
 
-    res.json({ message: "Admin updated successfully", admin: updatedAdmin });
+    res.status(200).json({ message: "Admin updated successfully", admin: updatedAdmin });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -190,10 +191,10 @@ const deleteAdmin = asyncHandler(async (req, res) => {
     const admin = await Admin.findOneAndDelete({ username });
 
     if (!admin) {
-      res.status(404).json({ message: "There is no username chuchu" });
+      return res.status(404).json({ message: "There is no username chuchu" });
     }
 
-    return res.status(200).json({ message: "Admin deleted successfully" });
+    return res.status(202).json({ message: "Admin deleted successfully" });
   } catch (error) {
     return res.status(500).json({ message: `There is an error ${error}` });
   }
@@ -299,7 +300,7 @@ const updateTeacher = asyncHandler(async (req, res) => {
       updatedTeacher.password = password;
       await updatedTeacher.save();
 
-      res.json({
+      return res.status(200).json({
         message: "Teacher updated successfully.",
         admin: updatedTeacher,
       });
@@ -315,7 +316,7 @@ const deleteTeacher = asyncHandler(async (req, res) => {
 
     await Teacher.findOneAndDelete({ username });
 
-    res.status(200).json({ message: "Teacher has been delete successfully." });
+    res.status(202).json({ message: "Teacher has been delete successfully." });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
@@ -407,7 +408,11 @@ const getAllStudents = asyncHandler(async (req, res) => {
   try {
     const retrieveStudents = await Student.find();
 
-    res.json({
+    if (!retrieveStudents) {
+      res.status(404).json({message: 'There is nothing here.'})
+    }
+
+    res.status(200).json({
       message: "All students data retrieved successfully",
       data: retrieveStudents,
     });
@@ -420,7 +425,7 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
     const { lrn } = req.body;
 
-    const retrieveSpecificStudent = await Student.findById(lrn);
+    const retrieveSpecificStudent = await Student.findById({lrn});
 
     if (!retrieveSpecificStudent) {
       res.status(404).json({ message: "There is no Student with this LRN." });
@@ -455,6 +460,110 @@ const getAllPending = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+
+const createClassroom = asyncHandler(async (req, res) => {
+  try {
+    const { sectionName, gradeLevel, adviser, strand } = req.body;
+
+    const existingClass = await Classroom.findOne({ sectionName, adviser });
+
+    if (existingClass) {
+      return res.status(400).json({ message: 'A class with this name has already been created.' });
+    }
+
+    const classroom = new Classroom({
+      sectionName,
+      gradeLevel,
+      adviser,
+      strand,
+    });
+
+    await classroom.save();
+
+    return res.status(201).json({ message: 'Class has been created' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+const getSpecificClass = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const findClass = await Classroom.findOne({ sectionName: id });
+
+    if (!findClass) {
+      return res.status(404).json({ message: 'Class not found.' });
+    }
+
+    return res.status(200).json({
+      message: 'Class found',
+      data: findClass,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+const getAllClasses = asyncHandler(async(req,res) => {
+  try {
+    const retrieveClasses = await Classroom.find()
+
+    if (!retrieveClasses) {
+      return res.status(404).json({message: 'There are nothing here.'})
+    }
+
+    return res.status(200).json({
+      message: 'Classes has been found',
+      data: retrieveClasses,
+  })
+  } catch (error) {
+    return res.status(500).json({message: `${error}`})
+  }
+})
+
+const updateClassroom = asyncHandler(async (req, res) => {
+  try {
+    const { sectionName, adviser, strand } = req.body;
+
+    const updatedClass = await Classroom.findOneAndUpdate(
+      { sectionName },
+      { adviser, strand },
+      { new: true } 
+    );
+
+    if (!updatedClass) {
+      return res.status(404).json({ message: 'Class not found.' });
+    }
+
+    return res.status(200).json({
+      message: 'Class updated successfully',
+      data: updatedClass,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+const deleteClassroom = asyncHandler(async(req,res) => {
+  try {
+    const { sectionName } = req.body
+
+    const deletedSection = await Classroom.findOneAndDelete({sectionName})
+
+    if (!deletedSection) {
+      return res.status(404).json({message: 'There are no classroom with this section name.'})
+    } 
+
+      return res.status(202).json({message: "Classroom has been deleted."})
+    
+
+  } catch (error) {
+    return res.status(500).json({message: ''})
+  }
+})
 
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
@@ -508,7 +617,7 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
 
     await Announcement.findOneAndDelete(title);
 
-    res.status(200).json({ message: "Announcement has been deleted" });
+    res.status(202).json({ message: "Announcement has been deleted" });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
@@ -567,7 +676,6 @@ module.exports = {
   updateStudentApplication,
   rejectStudentApplication,
   getSpecificStudent,
-
   createTeacher,
   updateTeacher,
   deleteTeacher,
@@ -579,6 +687,11 @@ module.exports = {
   updateSchoolAnnouncement,
   deleteSchoolAnnouncement,
   getAllSchoolAnnouncements,
+  createClassroom,
+  getAllClasses,
+  getSpecificClass,
+  updateClassroom,
+  deleteClassroom
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
