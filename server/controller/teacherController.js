@@ -1,4 +1,6 @@
 const { Teacher } = require("../models/TeacherModel");
+const { Student }= require("../models/StudentModel")
+const { Classroom }= require("../models/ClassroomModel")
 const { Announcement } = require("../models/Announcement");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
@@ -116,6 +118,51 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
   } catch (error) {}
 });
 
+
+
+const assignStudentToClass = asyncHandler(async (req, res) => {
+  try {
+    const { studentName, sectionName } = req.body;
+    const [firstName, lastName] = studentName.split(' ');
+
+    console.log('Attempting to assign student:', { firstName, lastName, sectionName });
+
+    const existingClassroom = await Classroom.findOne({ sectionName });
+
+    if (!existingClassroom) {
+      return res.status(404).json({ message: 'Class not found.' });
+    }
+
+
+    const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName);
+
+    if (existingStudent) {
+      return res.status(400).json({ message: 'Student is already assigned to this class.' });
+    }
+
+
+    const studentRecord = await Student.findOne({ firstName, lastName });
+
+    if (!studentRecord) {
+      return res.status(404).json({ message: 'Student not found in enrolled records.' });
+    }
+
+    existingClassroom.students.push({ firstName, lastName });
+
+    await existingClassroom.save();
+
+    return res.status(200).json({ message: 'Student has been assigned to this class' });
+  } catch (error) {
+    console.error('Error in assignStudentToClass:', error);
+    return res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
+
+
+
 // const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
 
@@ -143,4 +190,5 @@ module.exports = {
   getTeacherProfile,
   updateTeacherProfile,
   postClassAnnouncement,
+  assignStudentToClass,
 };
