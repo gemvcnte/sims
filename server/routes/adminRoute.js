@@ -42,4 +42,10 @@ router.patch(
   adminController.updateAdminProfile
 );
 
+router.post("/class/create", adminController.createClassroom)
+router.get("/class/getAll", adminController.getAllClasses)
+router.get("/class/:id", adminController.getSpecificClass)
+router.patch("/class/update", adminController.getSpecificClass)
+router.delete("/class/delete", adminController.deleteClassroom)
+
 module.exports = router;

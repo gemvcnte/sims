@@ -1,11 +1,10 @@
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
 
+const scheduleSchema = mongoose.Schema({
+    
+})
 
-// const schedulingSchema = mongoose.Schema({
+const Schedule = mongoose.model('schedule', )
 
-// })
-
-// const Schedule = mongoose.model("Schedule", schedulingSchema)
-
-// module.exports = { Schedule }
+module.exports = {Schedule}
