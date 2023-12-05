@@ -429,9 +429,9 @@ const getAllStudents = asyncHandler(async (req, res) => {
 
 const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
-    const { lrn } = req.body;
+    const { id } = req.params;  
 
-    const retrieveSpecificStudent = await Student.findById({lrn});
+    const retrieveSpecificStudent = await Student.findById({lrn: id});
 
     if (!retrieveSpecificStudent) {
       res.status(404).json({ message: "There is no Student with this LRN." });
@@ -445,6 +445,41 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+const getAllApproved = asyncHandler(async (req,res) => {
+  try {
+    const findApproved = await StudentApplication.find({status: "APPROVED" || "approved"})
+
+    if (!findApproved) {
+      return res.status(404).json({message: 'There are no approved applications right now.'})
+    }
+
+    return res.status(200).json({
+      message: 'Approved records retrieved successfully.', 
+      data: findApproved
+    })
+    
+  } catch (error) {
+    return res.status(500).json({message: `${error}`})
+  }
+})
+
+const getAllRejected = asyncHandler(async (req,res) => {
+  try {
+    const findRejected = await StudentApplication.find({status: "REJECTED" || "rejected"})
+
+    if (!findRejected) {
+      return res.status(404).json({message: 'There are no rejected applications as of now.'})
+    }
+
+    return res.status(200).json({
+      message: 'Rejected records retrieved successfully.', 
+      data: findRejected,
+    })
+  } catch (error) {
+    return res.status(500).json({message: `${error}`})
+  }
+})
 
 const getAllPending = asyncHandler(async (req, res) => {
   try {
@@ -688,7 +723,9 @@ module.exports = {
   getAllStudents,
   getAllTeachers,
   getSpecificTeacher,
+  getAllApproved,
   getAllPending,
+  getAllRejected,
   createSchoolAnnouncement,
   updateSchoolAnnouncement,
   deleteSchoolAnnouncement,

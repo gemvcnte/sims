@@ -25,6 +25,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1",
     "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.2",
     "simple-update-notifier": "^2.0.0",
     "validation": "^0.0.1"
   }

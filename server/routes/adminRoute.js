@@ -22,8 +22,10 @@ router.delete("/deleteTeacher", adminController.deleteTeacher);
 
 // Student routes for admin
 router.get("/getAllStudents", adminController.getAllStudents);
-router.get("/getPending", adminController.getAllPending);
-router.get("/getSpecificStudent", adminController.getSpecificStudent);
+router.get("/getPending", adminController.getAllPending); // /pending
+router.get("/getApproved", adminController.getAllApproved); // /approved
+router.get("/getRejected", adminController.getAllRejected); // /rejected
+router.get("/getSpecificStudent", adminController.getSpecificStudent); // /getID/:id
 
 // StudentApplication routes for admin
 router.post("/enrollStudent", adminController.acceptStudentApplication);
