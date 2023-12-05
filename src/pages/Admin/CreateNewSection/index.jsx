@@ -31,7 +31,10 @@ export default function CreateNewSection({ onClose }) {
       strand: selectedStrand,
     };
 
-    console.log(sectionDetails);
+    if (!selectedTeacher) {
+      showErrorNotification("Please select a teacher.");
+      return;
+    }
 
     const result = await createSectionApi(sectionDetails);
 
