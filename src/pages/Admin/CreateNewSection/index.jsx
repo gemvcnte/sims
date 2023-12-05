@@ -51,8 +51,8 @@ export default function CreateNewSection({ onClose }) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create a New Section</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+          <DialogDescription className="md:max-w-[80%]">
+            Add a new section by providing the required details below.
           </DialogDescription>
         </DialogHeader>
         <form className="grid gap-4 py-4" onSubmit={handleCreateSectionButton}>
