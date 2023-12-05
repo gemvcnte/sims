@@ -27,6 +27,31 @@ const classroomSchema = mongoose.Schema(
             required: true,
             uppercase: true,
         },
+
+        students: [{
+            firstName: {
+                type: String,
+                required: true,
+            },
+            lastName: {
+                type: String,
+                required: true,
+            },
+    }],
+        subjectTeachers: [{
+            firstName: {
+                type: String,
+                required: true,
+            },
+            lastName: {
+                type: String,
+                required: true,
+            },
+            subject: {
+                type: String,
+                required: true,
+            },
+        }],
     //     subjects: [
     //         {
     //             subjectName: {
@@ -43,6 +68,8 @@ const classroomSchema = mongoose.Schema(
 },
     { timestamps: true }
 );
+
+classroomSchema.index({'students.firstName': 1, 'students.lastName': 1})
 
 const Classroom = mongoose.model('Classroom', classroomSchema);
 
