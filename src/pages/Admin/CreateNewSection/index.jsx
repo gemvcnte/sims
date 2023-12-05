@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import SelectAdviserCombobox from "./SelectAdviserCombobox";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { createSectionApi } from "./helpers";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function CreateNewSection({ onClose }) {
   const [sectionName, setSectionName] = useState("");
@@ -30,6 +31,8 @@ export default function CreateNewSection({ onClose }) {
       strand: selectedStrand,
     };
 
+    console.log(sectionDetails);
+
     const result = await createSectionApi(sectionDetails);
 
     result.success
@@ -38,7 +41,7 @@ export default function CreateNewSection({ onClose }) {
         setSelectedGradeLevel(null),
         setSelectedStrand(""),
         onClose())
-      : console.error(result.message);
+      : showErrorNotification(result.message);
   };
 
   return (

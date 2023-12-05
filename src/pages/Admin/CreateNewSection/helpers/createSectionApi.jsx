@@ -14,10 +14,10 @@ const createSectionApi = async (sectionDetails) => {
       };
     }
   } catch (error) {
-    console.error("Error creating section:", error);
+    console.error("Error creating section:", error.message);
     return {
       success: false,
-      message: "Error creating section. Please try again.",
+      message: error.response.data.message,
     };
   }
 };
