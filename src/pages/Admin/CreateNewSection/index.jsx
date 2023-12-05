@@ -15,7 +15,7 @@ import SelectAdviserCombobox from "./SelectAdviserCombobox";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { ToastContainer } from "react-toastify";
 
-export default function CreateNewSection({ onClose, showToast }) {
+export default function CreateNewSection({ onClose }) {
   const [sectionName, setSectionName] = useState("");
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
@@ -37,8 +37,7 @@ export default function CreateNewSection({ onClose, showToast }) {
     setSelectedStrand("");
 
     onClose();
-    showToast();
-    // showSuccessNotification("Section Created Successfully");
+    showSuccessNotification("Section Created Successfully");
   };
 
   return (

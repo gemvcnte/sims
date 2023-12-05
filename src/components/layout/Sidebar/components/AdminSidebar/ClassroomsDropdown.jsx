@@ -30,10 +30,6 @@ export function ClassroomsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  const showToast = () => {
-    showSuccessNotification("Section Created Successfully");
-  };
-
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
@@ -70,7 +66,7 @@ export function ClassroomsDropdown({}) {
               <Link onClick={handleDialogClick}>Create a New Section</Link>
             </DropdownMenuItem>
           </DialogTrigger>
-          <CreateNewSection onClose={handleDialogClick} showToast={showToast} />
+          <CreateNewSection onClose={handleDialogClick} />
         </Dialog>
       </DropdownMenuContent>
     </DropdownMenu>
