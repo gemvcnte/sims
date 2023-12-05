@@ -11,9 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectAdviserCombobox from "./SelectAdviserCombobox";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { createSectionApi } from "./helpers";
+import { createSectionApi, SelectAdviserCombobox } from "./helpers";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function CreateNewSection({ onClose }) {
@@ -31,6 +30,7 @@ export default function CreateNewSection({ onClose }) {
       strand: selectedStrand,
     };
 
+    console.log(sectionDetails);
     if (!selectedTeacher) {
       showErrorNotification("Please select a teacher.");
       return;
