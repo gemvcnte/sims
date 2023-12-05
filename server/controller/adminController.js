@@ -326,9 +326,15 @@ const getAllTeachers = asyncHandler(async (req, res) => {
   try {
     const retrieveTeachers = await Teacher.find();
 
+    // Map the retrieved data to create a new array with the desired fields
+    const modifiedData = retrieveTeachers.map((teacher) => ({
+      username: teacher.username,
+      fullName: `${teacher.firstName} ${teacher.lastName}`,
+    }));
+
     res.status(200).json({
       message: "The teachers data retrieved successfully",
-      data: retrieveTeachers,
+      data: modifiedData,
     });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
