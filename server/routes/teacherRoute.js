@@ -14,5 +14,6 @@ router.patch(
   verifyToken,
   teacherController.updateTeacherProfile
 );
+router.patch("/class/assignStudent", teacherController.assignStudentToClass)
 
 module.exports = router;
