@@ -44,6 +44,7 @@ router.patch(
   adminController.updateAdminProfile
 );
 
+// Class functions
 router.post("/class/create", adminController.createClassroom)
 router.get("/class/getAll", adminController.getAllClasses)
 router.get("/class/:id", adminController.getSpecificClass)
