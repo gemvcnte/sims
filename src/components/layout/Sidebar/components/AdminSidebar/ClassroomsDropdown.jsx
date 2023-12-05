@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CreateNewSection from "@/pages/Admin/CreateNewSection";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export function ClassroomsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -27,6 +28,10 @@ export function ClassroomsDropdown({}) {
 
   const handleDialogClick = () => {
     setIsDialogOpen(!isDialogOpen);
+  };
+
+  const showToast = () => {
+    showSuccessNotification("Section Created Successfully");
   };
 
   return (
@@ -65,7 +70,7 @@ export function ClassroomsDropdown({}) {
               <Link onClick={handleDialogClick}>Create a New Section</Link>
             </DropdownMenuItem>
           </DialogTrigger>
-          <CreateNewSection onClose={handleDialogClick} />
+          <CreateNewSection onClose={handleDialogClick} showToast={showToast} />
         </Dialog>
       </DropdownMenuContent>
     </DropdownMenu>
