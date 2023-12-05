@@ -30,19 +30,15 @@ export default function CreateNewSection({ onClose }) {
       strand: selectedStrand,
     };
 
-    console.log(sectionDetails);
-
     const result = await createSectionApi(sectionDetails);
 
-    if (result.success) {
-      showSuccessNotification(result.message);
-      setSectionName("");
-      setSelectedGradeLevel(null);
-      setSelectedStrand("");
-      onClose();
-    } else {
-      console.error(result.message);
-    }
+    result.success
+      ? (showSuccessNotification(result.message),
+        setSectionName(""),
+        setSelectedGradeLevel(null),
+        setSelectedStrand(""),
+        onClose())
+      : console.error(result.message);
   };
 
   return (
