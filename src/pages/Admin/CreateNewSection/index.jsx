@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SelectAdviserCombobox from "./SelectAdviserCombobox";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import axios from "axios";
+import { createSectionApi } from "./helpers";
 
 export default function CreateNewSection({ onClose }) {
   const [sectionName, setSectionName] = useState("");
@@ -32,26 +32,16 @@ export default function CreateNewSection({ onClose }) {
 
     console.log(sectionDetails);
 
-    try {
-      // Make an HTTP POST request to the backend endpoint
-      const response = await axios.post(
-        "http://localhost:5000/admin/class/create",
-        sectionDetails,
-      );
+    const result = await createSectionApi(sectionDetails);
 
-      if (response.status === 201) {
-        showSuccessNotification(response.data.message);
-        setSectionName("");
-        setSelectedGradeLevel(null);
-        setSelectedStrand("");
-        onClose();
-      } else {
-        console.error("Failed to create section. Status:", response.status);
-        // Handle other status codes or errors here
-      }
-    } catch (error) {
-      console.error("Error creating section:", error);
-      // Handle network errors or other exceptions here
+    if (result.success) {
+      showSuccessNotification(result.message);
+      setSectionName("");
+      setSelectedGradeLevel(null);
+      setSelectedStrand("");
+      onClose();
+    } else {
+      console.error(result.message);
     }
   };
 
