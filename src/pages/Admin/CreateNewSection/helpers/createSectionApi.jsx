@@ -1,11 +1,9 @@
+import { createClassEndpoint } from "@/config/adminEndpoints";
 import axios from "axios";
 
 const createSectionApi = async (sectionDetails) => {
   try {
-    const response = await axios.post(
-      "http://localhost:5000/admin/class/create",
-      sectionDetails,
-    );
+    const response = await axios.post(createClassEndpoint, sectionDetails);
 
     if (response.status === 201) {
       return { success: true, message: response.data.message };
