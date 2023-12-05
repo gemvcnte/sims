@@ -683,26 +683,59 @@ const getAllSchoolAnnouncements = asyncHandler(async (req, res) => {
   }
 });
 
-const updateStudentProfile = asyncHandler(async (req, res) => {
+const assignTeacherToClass = asyncHandler(async(req,res) => {
   try {
-    const { lrn } = req.body;
+    const { teacherName, sectionName, subject  } = req.body
 
-    const student = await Student.findByIdAndUpdate({ lrn }, { new: true });
+    const [firstName, lastName] = teacherName.split(' ')
 
-    if (!student) {
-      res.status(404).json({
-        message: "The student that your about to edit is not enrolled yet.",
-      });
+
+    const existingClassroom = await Classroom.findOne({ sectionName })
+
+    // const existingTeacher = existingClassroom.subjectTeachers.find((teacher) => teacher.firstName === firstName && teacher.lastName === lastName)
+
+    if (existingTeacher) {
+      return res.status(400).json({message: 'Teacher is already been assigned to this class.'})
     }
 
-    res.status(200).json({
-      message: "Student information has been updated.",
-      data: student,
-    });
+    const teacherRecord = await Teacher.findOne({firstName, lastName})
+
+    if (!teacherRecord) {
+      return res.status(404).json({message: 'Teacher not found in the teacher records.'})
+    }
+
+    existingClassroom.subjectTeachers.push({firstName, lastName, subject})
+
+    await existingClassroom.save()
+
+    return res.status(200).json({message: 'Teacher has been assigned.'})
+    
+
   } catch (error) {
-    res.status(500).json({ message: `${error}` });
+    return res.status(500).json({message: `${error}`})
   }
-});
+})
+
+// const updateStudentProfile = asyncHandler(async (req, res) => {
+//   try {
+//     const { lrn } = req.body;
+
+//     const student = await Student.findByIdAndUpdate({ lrn }, { new: true });
+
+//     if (!student) {
+//       res.status(404).json({
+//         message: "The student that your about to edit is not enrolled yet.",
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "Student information has been updated.",
+//       data: student,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: `${error}` });
+//   }
+// });
 
 module.exports = {
   getAllAdmins,
@@ -734,7 +767,7 @@ module.exports = {
   getAllClasses,
   getSpecificClass,
   updateClassroom,
-  deleteClassroom
+  deleteClassroom,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
