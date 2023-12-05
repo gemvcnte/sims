@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SelectAdviserCombobox from "./SelectAdviserCombobox";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 export default function CreateNewSection({ onClose }) {
   const [sectionName, setSectionName] = useState("");
@@ -21,23 +21,38 @@ export default function CreateNewSection({ onClose }) {
   const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
   const [selectedStrand, setSelectedStrand] = useState("");
 
-  const handleCreateSectionButton = () => {
-    const sectionObject = {
-      sectionName,
+  const handleCreateSectionButton = async (e) => {
+    e.preventDefault();
+    const sectionDetails = {
+      sectionName: sectionName,
       adviser: selectedTeacher ? selectedTeacher.username : "",
       gradeLevel: selectedGradeLevel,
       strand: selectedStrand,
     };
 
-    // Call your API or perform any necessary action with the sectionObject
-    console.log(sectionObject);
+    console.log(sectionDetails);
 
-    setSectionName("");
-    setSelectedGradeLevel(null);
-    setSelectedStrand("");
+    try {
+      // Make an HTTP POST request to the backend endpoint
+      const response = await axios.post(
+        "http://localhost:5000/admin/class/create",
+        sectionDetails,
+      );
 
-    onClose();
-    showSuccessNotification("Section Created Successfully");
+      if (response.status === 201) {
+        showSuccessNotification(response.data.message);
+        setSectionName("");
+        setSelectedGradeLevel(null);
+        setSelectedStrand("");
+        onClose();
+      } else {
+        console.error("Failed to create section. Status:", response.status);
+        // Handle other status codes or errors here
+      }
+    } catch (error) {
+      console.error("Error creating section:", error);
+      // Handle network errors or other exceptions here
+    }
   };
 
   return (
@@ -49,7 +64,7 @@ export default function CreateNewSection({ onClose }) {
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <form className="grid gap-4 py-4" onSubmit={handleCreateSectionButton}>
           <div className="flex justify-end gap-4">
             <select
               className="col-span-3 flex h-10  rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -99,11 +114,11 @@ export default function CreateNewSection({ onClose }) {
             </Label>
             <SelectAdviserCombobox onSelectTeacher={setSelectedTeacher} />
           </div>
-        </div>
 
-        <DialogFooter>
-          <Button onClick={handleCreateSectionButton}>Create Section</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="submit">Create Section</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </>
   );
