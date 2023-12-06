@@ -35,7 +35,7 @@ router.patch("/updateApplication", verifyToken, adminController.updateStudentApp
 router.patch("/rejectApplication", verifyToken, adminController.rejectStudentApplication);
 
 router.post("/createAnnouncement", verifyToken, adminController.createSchoolAnnouncement);
-router.patch("/updateAnnouncement", vadminController.updateSchoolAnnouncement);
+router.patch("/updateAnnouncement", adminController.updateSchoolAnnouncement);
 router.delete("/deleteAnnouncement", verifyToken, adminController.deleteSchoolAnnouncement);
 
 // Admin Profile
