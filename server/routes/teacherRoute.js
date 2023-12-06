@@ -15,5 +15,8 @@ router.patch(
   teacherController.updateTeacherProfile
 );
 router.patch("/class/assignStudent", verifyToken, teacherController.assignStudentToClass)
+router.delete("/class/remove-student", verifyToken, teacherController.removeStudentToClass)
+
+
 
 module.exports = router;
