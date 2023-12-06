@@ -16,8 +16,8 @@ const createAdmin = asyncHandler(async (req, res) => {
   try {
     const adminData = req.body;
 
-    const cleanedFirstName = adminData.firstName.replace(/\s/g, '')
-    const cleanedLastName = adminData.lastName.replace(/\s/g, '')
+    const cleanedFirstName = adminData.firstName.replace(/\s/g, "")
+    const cleanedLastName = adminData.lastName.replace(/\s/g, "")
 
     // Generate username by combining firstname and lastname
     const username = (
