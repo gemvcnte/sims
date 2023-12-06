@@ -3,7 +3,7 @@ import React from "react";
 
 export default function SectionAnalytics() {
   return (
-    <header className="flex flex-wrap gap-4 p-4 sm:flex-nowrap">
+    <header className="flex flex-wrap gap-4 px-4 pt-4 sm:flex-nowrap">
       <Card className="basis-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total Sections</CardTitle>

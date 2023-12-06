@@ -7,7 +7,7 @@ export default function Topbar({ children }) {
   const { toggleSidebar } = useSidebarContext();
 
   return (
-    <header className="border-white-700 sticky top-0 mx-4 flex items-center justify-between border-b bg-background py-6 italic">
+    <header className="border-white-700 sticky top-0 z-50 mx-4 flex items-center justify-between border-b bg-background py-6 italic">
       <Icon
         icon="heroicons-outline:menu-alt-2"
         width="24"
