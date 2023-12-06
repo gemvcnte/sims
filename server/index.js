@@ -52,7 +52,7 @@ app.use('/apply', studentApplicationRoute);
 
 // Admin routes
 const adminRoute = require('./routes/adminRoute');
-app.use('/admin', adminRateLimiter, adminRoute);
+app.use('/admin',  adminRateLimiter, adminRoute);
 
 // Student routes
 const studentRoute = require('./routes/studentRoute');

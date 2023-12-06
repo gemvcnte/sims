@@ -16,12 +16,20 @@ const createAdmin = asyncHandler(async (req, res) => {
   try {
     const adminData = req.body;
 
+    const cleanedFirstName = adminData.firstName.replace(/\s/g, '')
+    const cleanedLastName = adminData.lastName.replace(/\s/g, '')
+
     // Generate username by combining firstname and lastname
     const username = (
-      adminData.firstName +
+      cleanedFirstName +
       "." +
-      adminData.lastName
+      cleanedLastName
     ).toLowerCase();
+    // const username = (
+    //   adminData.firstName +
+    //   "." +
+    //   adminData.lastName
+    // ).toLowerCase();
 
     // Check if the admin already exists based on the username
     const existingAdmin = await Admin.findOne({
@@ -98,7 +106,7 @@ const createTeacher = asyncHandler(async (req, res) => {
     // Remove spaces from the firstName
     const cleanedFirstName = teacherData.firstName.replace(/\s/g, '');
 
-    const cleanedLastName = teacherData.lastName.replaceI(/\s/g, '')
+    const cleanedLastName = teacherData.lastName.replace(/\s/g, '')
 
     // Generate username by combining cleaned firstName and lastName
     const username = (
