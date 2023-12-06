@@ -120,6 +120,8 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
 
 
 
+
+
 const assignStudentToClass = asyncHandler(async (req, res) => {
   try {
     const { studentName, sectionName } = req.body;
@@ -132,7 +134,6 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
     if (!existingClassroom) {
       return res.status(404).json({ message: 'Class not found.' });
     }
-
 
     const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName);
 
@@ -157,9 +158,6 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: `${error}` });
   }
 });
-
-
-
 
 
 

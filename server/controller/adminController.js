@@ -481,26 +481,53 @@ const getAllRejected = asyncHandler(async (req,res) => {
   }
 })
 
+// const getAllPending = asyncHandler(async (req, res) => {
+//   try {
+//     const findPending = await StudentApplication.find({
+//       status: "PENDING" || "pending",
+//     });
+
+//     if (!findPending) {
+//       res
+//         .status(404)
+//         .json({ message: "There are no pending applications right now." });
+//     }
+
+//     res.status(200).json({
+//       message: "Pending records retrieved successfully. ",
+//       data: findPending,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: `${error}` });
+//   }
+// });
+
 const getAllPending = asyncHandler(async (req, res) => {
   try {
     const findPending = await StudentApplication.find({
       status: "PENDING" || "pending",
     });
 
-    if (!findPending) {
-      res
-        .status(404)
-        .json({ message: "There are no pending applications right now." });
+    if (!findPending || findPending.length === 0) {
+      // Return an empty array if no pending applications are found
+      return res.status(404).json({ message: "There are no pending applications right now." });
     }
 
-    res.status(200).json({
-      message: "Pending records retrieved successfully. ",
-      data: findPending,
-    });
+    if (req.headers.accept === 'application/json') {
+      // JSON response for API request
+      return res.status(200).json({
+        message: "Pending records retrieved successfully.",
+        data: findPending,
+      });
+    } else {
+      // Render HTML page or redirect to a relevant page for non-API request
+      return res.render('admin-pending', { pendingData: findPending });
+    }
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
 });
+
 
 
 const createClassroom = asyncHandler(async (req, res) => {
