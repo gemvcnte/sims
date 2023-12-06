@@ -52,13 +52,55 @@ const createAdmin = asyncHandler(async (req, res) => {
 });
 
 // api to create a teacher
+// const createTeacher = asyncHandler(async (req, res) => {
+//   try {
+//     const teacherData = req.body;
+
+//     // Generate username by combining firstname and lastname
+//     const username = (
+//       teacherData.firstName +
+//       "." +
+//       teacherData.lastName
+//     ).toLowerCase();
+
+//     // Check if the teacher already exists based on the username
+//     const existingTeacher = await Teacher.findOne({
+//       username: username,
+//     });
+//     if (existingTeacher) {
+//       return res
+//         .status(400)
+//         .json({ message: "Teacher already exists with this username." });
+//     }
+
+//     // Hash the password
+//     const hashedPassword = await bcryptjs.hash(teacherData.birthDate, 10);
+
+//     // Create a new teacher with the hashed password
+//     const teacher = new Teacher({
+//       ...teacherData,
+//       username: username,
+//       password: hashedPassword,
+//     });
+
+//     await teacher.save();
+
+//     res.status(201).json({ message: "Teacher created successfully." });
+//   } catch (error) {
+//     res.status(500).json({ message: `${error}` });
+//   }
+// });
+
 const createTeacher = asyncHandler(async (req, res) => {
   try {
     const teacherData = req.body;
 
-    // Generate username by combining firstname and lastname
+    // Remove spaces from the firstName
+    const cleanedFirstName = teacherData.firstName.replace(/\s/g, '');
+
+    // Generate username by combining cleaned firstName and lastName
     const username = (
-      teacherData.firstName +
+      cleanedFirstName +
       "." +
       teacherData.lastName
     ).toLowerCase();
@@ -90,6 +132,7 @@ const createTeacher = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
 
 // logging in as an admin
 const adminLogin = asyncHandler(async (req, res) => {
