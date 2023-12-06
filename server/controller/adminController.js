@@ -3,7 +3,7 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
-const { Classroom } = require('../models/ClassroomModel')
+const { Classroom } = require("../models/ClassroomModel");
 const { Announcement } = require("../models/Announcement");
 const generateAuthToken = require("../configs/auth");
 const dotenv = require("dotenv");
@@ -104,16 +104,12 @@ const createTeacher = asyncHandler(async (req, res) => {
     const teacherData = req.body;
 
     // Remove spaces from the firstName
-    const cleanedFirstName = teacherData.firstName.replace(/\s/g, '');
+    const cleanedFirstName = teacherData.firstName.replace(/\s/g, "");
 
-    const cleanedLastName = teacherData.lastName.replace(/\s/g, '')
+    const cleanedLastName = teacherData.lastName.replace(/\s/g, "");
 
     // Generate username by combining cleaned firstName and lastName
-    const username = (
-      cleanedFirstName +
-      "." +
-      cleanedLastName
-    ).toLowerCase();
+    const username = (cleanedFirstName + "." + cleanedLastName).toLowerCase();
 
     //before
     // const username = (
@@ -149,7 +145,6 @@ const createTeacher = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
-
 
 // logging in as an admin
 const adminLogin = asyncHandler(async (req, res) => {
@@ -202,7 +197,9 @@ const updateAdmin = asyncHandler(async (req, res) => {
       await updatedAdmin.save();
     }
 
-    res.status(200).json({ message: "Admin updated successfully", admin: updatedAdmin });
+    res
+      .status(200)
+      .json({ message: "Admin updated successfully", admin: updatedAdmin });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -475,7 +472,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
     const retrieveStudents = await Student.find();
 
     if (!retrieveStudents) {
-      res.status(404).json({ message: 'There is nothing here.' })
+      res.status(404).json({ message: "There is nothing here." });
     }
 
     res.status(200).json({
@@ -508,38 +505,45 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
 
 const getAllApproved = asyncHandler(async (req, res) => {
   try {
-    const findApproved = await StudentApplication.find({ status: "APPROVED" || "approved" })
+    const findApproved = await StudentApplication.find({
+      status: "APPROVED" || "approved",
+    });
 
     if (!findApproved) {
-      return res.status(404).json({ message: 'There are no approved applications right now.' })
+      return res
+        .status(404)
+        .json({ message: "There are no approved applications right now." });
     }
 
     return res.status(200).json({
-      message: 'Approved records retrieved successfully.',
-      data: findApproved
-    })
-
+      message: "Approved records retrieved successfully.",
+      data: findApproved,
+    });
   } catch (error) {
-    return res.status(500).json({ message: `${error}` })
+    return res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 const getAllRejected = asyncHandler(async (req, res) => {
   try {
-    const findRejected = await StudentApplication.find({ status: "REJECTED" || "rejected" })
+    const findRejected = await StudentApplication.find({
+      status: "REJECTED" || "rejected",
+    });
 
     if (!findRejected) {
-      return res.status(404).json({ message: 'There are no rejected applications as of now.' })
+      return res
+        .status(404)
+        .json({ message: "There are no rejected applications as of now." });
     }
 
     return res.status(200).json({
-      message: 'Rejected records retrieved successfully.',
+      message: "Rejected records retrieved successfully.",
       data: findRejected,
-    })
+    });
   } catch (error) {
-    return res.status(500).json({ message: `${error}` })
+    return res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 const getAllPending = asyncHandler(async (req, res) => {
   try {
@@ -586,8 +590,6 @@ const getAllPending = asyncHandler(async (req, res) => {
 //   }
 // });
 
-
-
 const createClassroom = asyncHandler(async (req, res) => {
   try {
     const { sectionName, gradeLevel, adviser, strand } = req.body;
@@ -595,7 +597,9 @@ const createClassroom = asyncHandler(async (req, res) => {
     const existingClass = await Classroom.findOne({ sectionName, adviser });
 
     if (existingClass) {
-      return res.status(400).json({ message: 'A class with this name has already been created.' });
+      return res
+        .status(400)
+        .json({ message: "A class with this name has already been created." });
     }
 
     const classroom = new Classroom({
@@ -607,7 +611,7 @@ const createClassroom = asyncHandler(async (req, res) => {
 
     await classroom.save();
 
-    return res.status(201).json({ message: 'Class has been created' });
+    return res.status(201).json({ message: "Class has been created" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -620,11 +624,11 @@ const getSpecificClass = asyncHandler(async (req, res) => {
     const findClass = await Classroom.findOne({ sectionName: id });
 
     if (!findClass) {
-      return res.status(404).json({ message: 'Class not found.' });
+      return res.status(404).json({ message: "Class not found." });
     }
 
     return res.status(200).json({
-      message: 'Class found',
+      message: "Class found",
       data: findClass,
     });
   } catch (error) {
@@ -632,23 +636,22 @@ const getSpecificClass = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getAllClasses = asyncHandler(async (req, res) => {
   try {
-    const retrieveClasses = await Classroom.find()
+    const retrieveClasses = await Classroom.find();
 
     if (!retrieveClasses) {
-      return res.status(404).json({ message: 'There are nothing here.' })
+      return res.status(404).json({ message: "There are nothing here." });
     }
 
     return res.status(200).json({
-      message: 'Classes has been found',
+      message: "Classes has been found",
       data: retrieveClasses,
-    })
+    });
   } catch (error) {
-    return res.status(500).json({ message: `${error}` })
+    return res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 const updateClassroom = asyncHandler(async (req, res) => {
   try {
@@ -661,11 +664,11 @@ const updateClassroom = asyncHandler(async (req, res) => {
     );
 
     if (!updatedClass) {
-      return res.status(404).json({ message: 'Class not found.' });
+      return res.status(404).json({ message: "Class not found." });
     }
 
     return res.status(200).json({
-      message: 'Class updated successfully',
+      message: "Class updated successfully",
       data: updatedClass,
     });
   } catch (error) {
@@ -675,21 +678,21 @@ const updateClassroom = asyncHandler(async (req, res) => {
 
 const deleteClassroom = asyncHandler(async (req, res) => {
   try {
-    const { sectionName } = req.body
+    const { sectionName } = req.body;
 
-    const deletedSection = await Classroom.findOneAndDelete({ sectionName })
+    const deletedSection = await Classroom.findOneAndDelete({ sectionName });
 
     if (!deletedSection) {
-      return res.status(404).json({ message: 'There are no classroom with this section name.' })
+      return res
+        .status(404)
+        .json({ message: "There are no classroom with this section name." });
     }
 
-    return res.status(202).json({ message: "Classroom has been deleted." })
-
-
+    return res.status(202).json({ message: "Classroom has been deleted." });
   } catch (error) {
-    return res.status(500).json({ message: '' })
+    return res.status(500).json({ message: "" });
   }
-})
+});
 
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
@@ -770,36 +773,37 @@ const getAllSchoolAnnouncements = asyncHandler(async (req, res) => {
 
 const assignTeacherToClass = asyncHandler(async (req, res) => {
   try {
-    const { teacherName, sectionName, subject } = req.body
+    const { teacherName, sectionName, subject } = req.body;
 
-    const [firstName, lastName] = teacherName.split(' ')
+    const [firstName, lastName] = teacherName.split(" ");
 
-
-    const existingClassroom = await Classroom.findOne({ sectionName })
+    const existingClassroom = await Classroom.findOne({ sectionName });
 
     // const existingTeacher = existingClassroom.subjectTeachers.find((teacher) => teacher.firstName === firstName && teacher.lastName === lastName)
 
     if (existingTeacher) {
-      return res.status(400).json({ message: 'Teacher is already been assigned to this class.' })
+      return res
+        .status(400)
+        .json({ message: "Teacher is already been assigned to this class." });
     }
 
-    const teacherRecord = await Teacher.findOne({ firstName, lastName })
+    const teacherRecord = await Teacher.findOne({ firstName, lastName });
 
     if (!teacherRecord) {
-      return res.status(404).json({ message: 'Teacher not found in the teacher records.' })
+      return res
+        .status(404)
+        .json({ message: "Teacher not found in the teacher records." });
     }
 
-    existingClassroom.subjectTeachers.push({ firstName, lastName, subject })
+    existingClassroom.subjectTeachers.push({ firstName, lastName, subject });
 
-    await existingClassroom.save()
+    await existingClassroom.save();
 
-    return res.status(200).json({ message: 'Teacher has been assigned.' })
-
-
+    return res.status(200).json({ message: "Teacher has been assigned." });
   } catch (error) {
-    return res.status(500).json({ message: `${error}` })
+    return res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 // const updateStudentProfile = asyncHandler(async (req, res) => {
 //   try {
