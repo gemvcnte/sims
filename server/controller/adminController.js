@@ -415,7 +415,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
     const retrieveStudents = await Student.find();
 
     if (!retrieveStudents) {
-      res.status(404).json({message: 'There is nothing here.'})
+      res.status(404).json({ message: 'There is nothing here.' })
     }
 
     res.status(200).json({
@@ -429,9 +429,9 @@ const getAllStudents = asyncHandler(async (req, res) => {
 
 const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;  
+    const { id } = req.params;
 
-    const retrieveSpecificStudent = await Student.findById({lrn: id});
+    const retrieveSpecificStudent = await Student.findById({ lrn: id });
 
     if (!retrieveSpecificStudent) {
       res.status(404).json({ message: "There is no Student with this LRN." });
@@ -446,40 +446,59 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
   }
 });
 
-const getAllApproved = asyncHandler(async (req,res) => {
+const getAllApproved = asyncHandler(async (req, res) => {
   try {
-    const findApproved = await StudentApplication.find({status: "APPROVED" || "approved"})
+    const findApproved = await StudentApplication.find({ status: "APPROVED" || "approved" })
 
     if (!findApproved) {
-      return res.status(404).json({message: 'There are no approved applications right now.'})
+      return res.status(404).json({ message: 'There are no approved applications right now.' })
     }
 
     return res.status(200).json({
-      message: 'Approved records retrieved successfully.', 
+      message: 'Approved records retrieved successfully.',
       data: findApproved
     })
-    
+
   } catch (error) {
-    return res.status(500).json({message: `${error}`})
+    return res.status(500).json({ message: `${error}` })
   }
 })
 
-const getAllRejected = asyncHandler(async (req,res) => {
+const getAllRejected = asyncHandler(async (req, res) => {
   try {
-    const findRejected = await StudentApplication.find({status: "REJECTED" || "rejected"})
+    const findRejected = await StudentApplication.find({ status: "REJECTED" || "rejected" })
 
     if (!findRejected) {
-      return res.status(404).json({message: 'There are no rejected applications as of now.'})
+      return res.status(404).json({ message: 'There are no rejected applications as of now.' })
     }
 
     return res.status(200).json({
-      message: 'Rejected records retrieved successfully.', 
+      message: 'Rejected records retrieved successfully.',
       data: findRejected,
     })
   } catch (error) {
-    return res.status(500).json({message: `${error}`})
+    return res.status(500).json({ message: `${error}` })
   }
 })
+
+const getAllPending = asyncHandler(async (req, res) => {
+  try {
+    const findPending = await StudentApplication.find({
+      status: "PENDING" || "pending",
+    });
+    if (!findPending) {
+      res
+        .status(404)
+        .json({ message: "There are no pending applications right now." });
+    }
+    res.status(200).json({
+      message: "Pending records retrieved successfully. ",
+      data: findPending,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
 
 // const getAllPending = asyncHandler(async (req, res) => {
 //   try {
@@ -487,46 +506,25 @@ const getAllRejected = asyncHandler(async (req,res) => {
 //       status: "PENDING" || "pending",
 //     });
 
-//     if (!findPending) {
-//       res
-//         .status(404)
-//         .json({ message: "There are no pending applications right now." });
+//     if (!findPending || findPending.length === 0) {
+//       // Return an empty array if no pending applications are found
+//       return res.status(404).json({ message: "There are no pending applications right now." });
 //     }
 
-//     res.status(200).json({
-//       message: "Pending records retrieved successfully. ",
-//       data: findPending,
-//     });
+//     if (req.headers.accept === 'application/json') {
+//       // JSON response for API request
+//       return res.status(200).json({
+//         message: "Pending records retrieved successfully.",
+//         data: findPending,
+//       });
+//     } else {
+//       // Render HTML page or redirect to a relevant page for non-API request
+//       return res.render('admin-pending', { pendingData: findPending });
+//     }
 //   } catch (error) {
 //     res.status(500).json({ message: `${error}` });
 //   }
 // });
-
-const getAllPending = asyncHandler(async (req, res) => {
-  try {
-    const findPending = await StudentApplication.find({
-      status: "PENDING" || "pending",
-    });
-
-    if (!findPending || findPending.length === 0) {
-      // Return an empty array if no pending applications are found
-      return res.status(404).json({ message: "There are no pending applications right now." });
-    }
-
-    if (req.headers.accept === 'application/json') {
-      // JSON response for API request
-      return res.status(200).json({
-        message: "Pending records retrieved successfully.",
-        data: findPending,
-      });
-    } else {
-      // Render HTML page or redirect to a relevant page for non-API request
-      return res.render('admin-pending', { pendingData: findPending });
-    }
-  } catch (error) {
-    res.status(500).json({ message: `${error}` });
-  }
-});
 
 
 
@@ -575,20 +573,20 @@ const getSpecificClass = asyncHandler(async (req, res) => {
 });
 
 
-const getAllClasses = asyncHandler(async(req,res) => {
+const getAllClasses = asyncHandler(async (req, res) => {
   try {
     const retrieveClasses = await Classroom.find()
 
     if (!retrieveClasses) {
-      return res.status(404).json({message: 'There are nothing here.'})
+      return res.status(404).json({ message: 'There are nothing here.' })
     }
 
     return res.status(200).json({
       message: 'Classes has been found',
       data: retrieveClasses,
-  })
+    })
   } catch (error) {
-    return res.status(500).json({message: `${error}`})
+    return res.status(500).json({ message: `${error}` })
   }
 })
 
@@ -599,7 +597,7 @@ const updateClassroom = asyncHandler(async (req, res) => {
     const updatedClass = await Classroom.findOneAndUpdate(
       { sectionName },
       { adviser, strand },
-      { new: true } 
+      { new: true }
     );
 
     if (!updatedClass) {
@@ -615,21 +613,21 @@ const updateClassroom = asyncHandler(async (req, res) => {
   }
 });
 
-const deleteClassroom = asyncHandler(async(req,res) => {
+const deleteClassroom = asyncHandler(async (req, res) => {
   try {
     const { sectionName } = req.body
 
-    const deletedSection = await Classroom.findOneAndDelete({sectionName})
+    const deletedSection = await Classroom.findOneAndDelete({ sectionName })
 
     if (!deletedSection) {
-      return res.status(404).json({message: 'There are no classroom with this section name.'})
-    } 
+      return res.status(404).json({ message: 'There are no classroom with this section name.' })
+    }
 
-      return res.status(202).json({message: "Classroom has been deleted."})
-    
+    return res.status(202).json({ message: "Classroom has been deleted." })
+
 
   } catch (error) {
-    return res.status(500).json({message: ''})
+    return res.status(500).json({ message: '' })
   }
 })
 
@@ -710,9 +708,9 @@ const getAllSchoolAnnouncements = asyncHandler(async (req, res) => {
   }
 });
 
-const assignTeacherToClass = asyncHandler(async(req,res) => {
+const assignTeacherToClass = asyncHandler(async (req, res) => {
   try {
-    const { teacherName, sectionName, subject  } = req.body
+    const { teacherName, sectionName, subject } = req.body
 
     const [firstName, lastName] = teacherName.split(' ')
 
@@ -722,24 +720,24 @@ const assignTeacherToClass = asyncHandler(async(req,res) => {
     // const existingTeacher = existingClassroom.subjectTeachers.find((teacher) => teacher.firstName === firstName && teacher.lastName === lastName)
 
     if (existingTeacher) {
-      return res.status(400).json({message: 'Teacher is already been assigned to this class.'})
+      return res.status(400).json({ message: 'Teacher is already been assigned to this class.' })
     }
 
-    const teacherRecord = await Teacher.findOne({firstName, lastName})
+    const teacherRecord = await Teacher.findOne({ firstName, lastName })
 
     if (!teacherRecord) {
-      return res.status(404).json({message: 'Teacher not found in the teacher records.'})
+      return res.status(404).json({ message: 'Teacher not found in the teacher records.' })
     }
 
-    existingClassroom.subjectTeachers.push({firstName, lastName, subject})
+    existingClassroom.subjectTeachers.push({ firstName, lastName, subject })
 
     await existingClassroom.save()
 
-    return res.status(200).json({message: 'Teacher has been assigned.'})
-    
+    return res.status(200).json({ message: 'Teacher has been assigned.' })
+
 
   } catch (error) {
-    return res.status(500).json({message: `${error}`})
+    return res.status(500).json({ message: `${error}` })
   }
 })
 
