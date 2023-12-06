@@ -98,12 +98,21 @@ const createTeacher = asyncHandler(async (req, res) => {
     // Remove spaces from the firstName
     const cleanedFirstName = teacherData.firstName.replace(/\s/g, '');
 
+    const cleanedLastName = teacherData.lastName.replaceI(/\s/g, '')
+
     // Generate username by combining cleaned firstName and lastName
     const username = (
       cleanedFirstName +
       "." +
-      teacherData.lastName
+      cleanedLastName
     ).toLowerCase();
+
+    //before
+    // const username = (
+    //   teacherData.firstName +
+    //   "." +
+    //   teacherData.lastName
+    // ).toLowerCase();
 
     // Check if the teacher already exists based on the username
     const existingTeacher = await Teacher.findOne({
