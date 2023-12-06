@@ -3,10 +3,10 @@ import React from "react";
 
 export default function SectionAnalytics() {
   return (
-    <header className="flex flex-wrap gap-4 p-4">
-      <Card>
+    <header className="flex flex-wrap gap-4 p-4 sm:flex-nowrap">
+      <Card className="basis-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Sections</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -21,16 +21,16 @@ export default function SectionAnalytics() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">$45,231.89</div>
+          <div className="text-2xl font-bold">+45,231</div>
           <p className="text-xs text-muted-foreground">
             +20.1% from last month
           </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="basis-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Sections</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -45,16 +45,16 @@ export default function SectionAnalytics() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">$45,231.89</div>
+          <div className="text-2xl font-bold">+45,231</div>
           <p className="text-xs text-muted-foreground">
             +20.1% from last month
           </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="basis-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Sections</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ export default function SectionAnalytics() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">$45,231.89</div>
+          <div className="text-2xl font-bold">+45,231</div>
           <p className="text-xs text-muted-foreground">
             +20.1% from last month
           </p>
