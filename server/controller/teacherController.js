@@ -12,6 +12,8 @@ const teacherLogin = asyncHandler(async (req, res) => {
 
     // find yung teacher base sa uname
     const teacher = await Teacher.findOne({ username });
+    router.delete("/class/remove-student", verifyToken)
+
 
     // check if the teacher exists
     if (!teacher) {
@@ -160,6 +162,37 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
 });
 
 
+const removeStudentToClass = asyncHandler(async(req,res) => {
+  try {
+    const { studentName, sectionName } = req.body;
+
+    const [firstName, lastName] = studentName.split(' ');
+
+
+    const existingClassroom = await Classroom.findOne({sectionName})
+
+
+    if (!existingClassroom) {
+      res.status(404).json({message: 'Class not found.'})
+    }
+
+
+    const studentIndex = existingClassroom.students.findIndex((student) => student.firstName === firstName && student.lastName === lastName);
+
+
+    if (studentIndex === -1) {
+      res.status(404).json({message: 'Student not found in this class.'})
+    }
+
+    await existingClassroom.splice(studentIndex, 1)
+
+
+    res.status(200).json({message: 'Student has been removed successfully.'})
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
 
 // const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
@@ -189,4 +222,5 @@ module.exports = {
   updateTeacherProfile,
   postClassAnnouncement,
   assignStudentToClass,
+  removeStudentToClass
 };
