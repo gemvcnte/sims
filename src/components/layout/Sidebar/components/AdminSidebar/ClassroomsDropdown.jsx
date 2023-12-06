@@ -53,7 +53,9 @@ export function ClassroomsDropdown({}) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>View Sections</Link>
+          <Link onClick={handleDropdownClick} to="sections">
+            View Sections
+          </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
