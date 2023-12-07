@@ -12,7 +12,7 @@ import {
 
 export default function SelectDemo() {
   return (
-    <main className="sticky top-[90px] z-50 flex gap-4 bg-background p-4">
+    <main className="z-50 flex gap-4 bg-background p-4">
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="School Year" />
