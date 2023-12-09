@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const announcementSchema = mongoose.Schema({
+const adminAnnouncementSchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -14,15 +14,14 @@ const announcementSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    // author: {
-    //     type: String,
-    //     required: true,
-    // },
     createdBy: {
         type: String,
         required: true,
-        // role: 'admin',
-        // enum: ['admin', 'teacher']
+        enum: ['admin', 'teacher']
+    },
+    typeOfAnnouncement: {
+        type: String,
+        enum: ['holiday', 'exam', 'event', 'classCancelation',],
     },
     createdAt: Date,
     // updatedAt: {
@@ -33,6 +32,6 @@ const announcementSchema = mongoose.Schema({
 }, {timestamps: true})
 
 
-const Announcement = mongoose.model('announcement', announcementSchema)
+const Announcement = mongoose.model('announcement', adminAnnouncementSchema)
 
 module.exports = { Announcement }
