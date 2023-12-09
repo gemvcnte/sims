@@ -1,95 +1,111 @@
-Questionnaire
+# Questionnaire
 
-For school login and application for school
+## 1. Login and Registration:
 
-- Logging into the system is a straightforward and secure procedure.
+1.1 Logging into the system is a straightforward and secure procedure.
 
-- The enrollment application process is simple and user-friendly.
+1.2 The Student enrollment/registration application process is simple and user-friendly.
 
-- I can easily recover my account if I forget my password.
+1.3 The login page is visually appealing and sets the tone for a positive user experience.
 
-- The system includes detailed instructions for the application and login procedures.
+1.4 I can easily recover my account if I forget my password.
 
-- The login page is visually appealing and sets the tone for a positive user experience.
+(optional: 1.5 The automated generation of username and default password is efficient.)
 
-2. User Management Function:
+(optional: 1.6 The login process provides clear feedback on errors or missing information.)
 
-Creating and managing user accounts is a simple process, (especially for students and teachers.)
+## 2. User Management:
 
-The system makes it simple to assign and modify user roles and permissions.
+2.1 The admin interface for creating new accounts is intuitive and straightforward.
 
-Deactivating or modifying user accounts is simple and time-saving.
+2.2 Modifying account information (e.g., update information, password reset) is easily accomplished.
 
-Administrators and teachers can access detailed information from user profiles.
+2.3 The system effectively prevents unauthorized access to user management features.
 
-Notifications for user account-related actions are timely and aid in management efficiency.
+(optional: 2.4 Admins find it easy to search and filter user accounts for management purposes.)
 
-3. Management of Profiles:
+(optional: 2.5 User management contributes positively to the overall system security.)
 
-Users have the ability to easily update and manage their profile information.
+(optional: 2.6 Admins can efficiently manage accounts for students, teachers, and other admins.)
 
-Individual profiles can be customized using personalization options.
+## 3. Profile Management:
 
-The profile interface clearly displays educational history and qualifications.
+3.1 Users can easily locate and update their additional information in the profile section.
 
-(Uploading and updating profile pictures is a quick and easy process.)
+3.2 The restrictions on modifying personal and academic information for student accounts are clear and appropriate.
 
-The profile interface displays relevant information in a clear and organized manner.
+3.3 The system effectively safeguards sensitive user information during profile modifications.
 
-4. Dashboard function
+3.4 The profile interface displays relevant information in a clear and organized manner.
 
-Upon login, the dashboard provides a comprehensive overview of key information.
+(optional: 3.5 The profile management feature encourages users to keep their information up to date.)
 
-The dashboard's navigation is simple and tailored to the needs of administrators and teachers.
+(optional: 3.6 Overall, the profile management feature contributes to a personalized user experience.)
 
-Admin dashboards provide decision-making access to critical data and analytics.
+## 4. Class Scheduling:
 
-Teacher dashboards display pertinent data about classes, students, and grading.
+4.1 Admins can effortlessly create new classes and assign advisers.
 
-On the dashboard, schedules, grades, and announcements are easily accessible for quick reference.
+4.2 Teachers find it convenient to add subjects, subject teachers, and students to their classes.
 
-5. Scheduling (Class) Functionality:
+4.3 The system ensures that teachers have appropriate access and control over their assigned classes.
 
-Administrators and teachers will find the class scheduling interface simple to use.
-Class schedules for the semester are easily accessible and well-organized.
+(optional: 4.4 Changes to the class schedule are communicated clearly and promptly.)
 
-Notifications for upcoming classes, events, and changes are sent out on a regular basis.
+(optional: 4.5 The scheduling feature effectively handles the arrangement of class schedules.)
 
-Managing classroom availability is simple and straightforward.
+(optional: 4.6 The class scheduling feature facilitates efficient organization and management.)
 
-Changes to the class schedule are communicated clearly and promptly.
+## 5. Announcement:
 
-6. Announcement Function:
+5.1 Announcements are presented in a clear and easy-to-read format.
 
-Administrators and teachers can find information in the announcement section.
+5.2 Users can easily find information in the announcement section.
 
-There is quick access to relevant announcements based on roles (admin, teacher).
+5.3 Teachers find it straightforward to create and post subject-specific announcements.
 
-The ability to make multimedia announcements improves communication.
+5.4 Admins can easily create global announcements for school-wide events.
 
-Announcements are presented in a clear and easy-to-read format.
+5.5 The global announcement effectively notifies users on the login page of the system.
 
-Feedback and questions about announcements can be handled quickly.
+(optional: 5.6 Overall, the announcement feature contributes to effective communication within the system.)
 
-7. Grading System Function:
+(optional: 5.7 Feedback and questions about announcements can be handled quickly. _di sure if maiimplement yung feedback on announcements_)
 
-For administrators and teachers, entering grades for assignments and exams is a simple process.
+## 6. Grading Feature:
 
-The grading interface is intended to make grading more efficient and accurate.
-Teachers can view and manage student grades and feedback with ease.
+6.1 The grading system provides a user-friendly interface for teachers and administrators to encode grades.
 
-There are user-friendly customization options for grading scales and criteria.
+6.2 Teachers and administrators find it easy to navigate and input grades for different subjects.
 
-The grading process is more efficient because grade calculation and weighting are transparent.
+6.3 Students can easily view their grades through the system.
 
-8. Analytics Function:
+(optional: 6.4 Teachers and administrators can easily track and monitor the grading progress for their assigned students.)
 
-The analytics feature provides valuable insights into various aspects of the system to administrators.
+(optional: 6.5 The system provides clear guidelines on the grading scale and criteria.)
 
-Admin users have access to comprehensive analytics to help them make decisions.
+(optional: 6.5 The grading system feature supports efficient and accurate grade management.)
 
-Teachers can use analytics to track student progress and identify areas for improvement.
+## 7. Dashboard:
 
-Data visualizations and charts help administrators and teachers understand data better.
+7.1 Users find the dashboard informative and visually appealing.
 
-Analytics reports can be customized to focus on specific parameters or timeframes.
+7.2 The dashboard effectively displays announcements relevant to the user.
+
+7.3 Users appreciate the inclusion of schedules on their respective dashboards.
+
+7.4 The percentage completion of profile information is prominently and clearly displayed.
+
+7.5 The dashboard feature enhances the user's overall system experience.
+
+## 8. Analytics:
+
+8.1 The analytics feature provides valuable insights into user activities and system performance.
+
+8.2 Admins can easily generate reports based on the analytics.
+
+8.3 Admins find the analytics feature helpful in identifying areas for system improvement.
+
+8.4 The analytics feature contributes to informed decision-making by the admins.
+
+(optional: 8.5 The system effectively tracks and presents trends in user engagement.)
