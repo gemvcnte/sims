@@ -10,6 +10,8 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const connectDb = require('./db/database')
 const dbConn = require('./db/dbConnection')
+const helmet = require('helmet')
+const morgan = require('morgan')
 const getRateLimiter = require('./middleware/rate-limiter')
 
 
@@ -23,6 +25,7 @@ const port = process.env.PORT || 3000;
 // middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(morgan('tiny'))
 // app.use(rateLimiter)
 
 const corsOptions = {
