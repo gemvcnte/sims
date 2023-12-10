@@ -23,8 +23,8 @@ import {
 
 export default function SectionCard({ sectionName, adviser, totalStudents }) {
   return (
-    <Card>
-      <CardHeader>
+    <Card className="">
+      <CardHeader className="pb-0">
         <CardTitle className="flex justify-between">
           <span className="uppercase">{sectionName}</span>
           <span className="hidden text-lg font-normal text-muted-foreground sm:block">
@@ -33,8 +33,6 @@ export default function SectionCard({ sectionName, adviser, totalStudents }) {
         </CardTitle>
         <CardDescription>
           <span className="sm:hidden">{totalStudents} Students</span>
-          <br />
-          View this section by clicking this card.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">

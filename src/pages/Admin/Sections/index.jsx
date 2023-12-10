@@ -21,7 +21,7 @@ export default function Sections() {
       <SectionAnalytics />
       <SectionFilter />
 
-      <section className="flex flex-col gap-4 p-4">
+      <section className="flex flex-col gap-4 px-4">
         {sections.map((section) => (
           <SectionCard
             key={section._id}
