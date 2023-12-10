@@ -116,7 +116,10 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { announcementId } = req.body;
+    const { title, content } = req.body;
+
+    
+
   } catch (error) {}
 });
 
