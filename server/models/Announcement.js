@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const adminAnnouncementSchema = mongoose.Schema({
+const announcementSchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -13,17 +13,20 @@ const adminAnnouncementSchema = mongoose.Schema({
     duration: {
         type: Number,
         required: true,
+        validate: {
+            validator: (value) => value > 0,
+            message: 'Duration must be a positive number.',
+        },
     },
     createdBy: {
         type: String,
         required: true,
-        enum: ['admin', 'teacher']
+        enum: ['admin', 'teacher', 'unknown']
     },
     typeOfAnnouncement: {
         type: String,
         enum: ['holiday', 'exam', 'event', 'classCancelation',],
     },
-    createdAt: Date,
     // updatedAt: {
     //     type: String,
     //     required: true,
@@ -32,6 +35,6 @@ const adminAnnouncementSchema = mongoose.Schema({
 }, {timestamps: true})
 
 
-const Announcement = mongoose.model('announcement', adminAnnouncementSchema)
+const Announcement = mongoose.model('announcement', announcementSchema)
 
 module.exports = { Announcement }
