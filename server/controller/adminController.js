@@ -3,8 +3,10 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
+const nodeMailer = require('nodemailer')
 const { Classroom } = require("../models/ClassroomModel");
 const { Announcement } = require("../models/Announcement");
+const { transporter } = require('../mailer')
 const generateAuthToken = require("../configs/auth");
 const dotenv = require("dotenv");
 const asyncHandler = require("express-async-handler");
@@ -672,21 +674,48 @@ const deleteClassroom = asyncHandler(async (req, res) => {
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, typeOfAnnouncement, duration } = req.body;
+
+    const createdBy = req.user && req.user.username ? req.user.username : 'unknown';
 
     const announcement = new Announcement({
       title,
       content,
-      // createdBy: req.user.username,
+      createdBy,
+      typeOfAnnouncement,
+      duration,
     });
+
+    const studentEmails = await Student.find({}).distinct('emailAddress');
+    const teacherEmails = await Teacher.find({}).distinct('emailAddress');
+    const adminEmails = await Admin.find({}).distinct('emailAddress');
+
+    const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
+
+    const mailOptions = {
+      from: 'gemvicente6@gmail.com',
+      subject: `New School Announcement: ${typeOfAnnouncement || 'General'}`,
+      text: `Title: ${title}\nContent: ${content}`,
+    };
+
+    for (const email of allEmails) {
+      mailOptions.to = email;
+    
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${email}`);
+      } catch (error) {
+        console.error(`Error sending email to ${email}: ${error}`);
+      }
+    }
+    
 
     await announcement.save();
 
     res.status(201).json({
-      message: "Announcement created successfully.",
+      message: 'Announcement created successfully.',
       data: announcement,
     });
-    // const announcement =
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
