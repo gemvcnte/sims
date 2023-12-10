@@ -16,3 +16,6 @@ export const updateApplicationEndpoint = `${baseUrl}/admin/updateApplication`;
 // creating accounts
 export const createTeacherEndpoint = `${baseUrl}/admin/createTeacher`;
 export const createAdminEndpoint = `${baseUrl}/admin/create`;
+
+// class
+export const createClassEndpoint = `${baseUrl}/admin/class/create`;
