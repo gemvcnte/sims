@@ -13,9 +13,17 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }) {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem(storageKey) || defaultTheme,
-  );
+  const [theme, setTheme] = useState(() => {
+    const isDefaultPath =
+      window.location.pathname === "/" ||
+      window.location.pathname === "/registration";
+
+    const initialTheme = isDefaultPath
+      ? "light"
+      : localStorage.getItem(storageKey) || defaultTheme;
+
+    return initialTheme;
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
