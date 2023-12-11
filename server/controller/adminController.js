@@ -725,13 +725,41 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
 
 const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, typeOfAnnouncement } = req.body;
+
+    const updatedBy = req.user && req.user.username 
+    
 
     const updatedAnnouncement = await Announcement.findOneAndUpdate(
       { title, content },
       updateAnnouncement,
       { new: true }
     );
+
+    const studentEmails = await Student.find({}).distinct('emailAddress');
+    const teacherEmails = await Teacher.find({}).distinct('emailAddress');
+    const adminEmails = await Admin.find({}).distinct('emailAddress');
+
+
+    const allEmails = [...studentEmails, ...teacherEmails, ... adminEmails];
+
+    const mailOptions = {
+      from: 'gemvicente6@gmail.com',
+      subject: `New School Announcement ${typeOfAnnouncement || 'General'}`,
+      text: `Title: ${title}\nContent: ${content}` 
+    }
+
+
+    for (const email of allEmails) {
+      mailOptions.to = email;
+
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${email}`)
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
     res.status(200).json({
       message: "Announcement has been successfully been updated.",
@@ -748,7 +776,12 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title } = req.body;
 
-    await Announcement.findOneAndDelete(title);
+    const deletedAnnouncement = await Announcement.findOneAndDelete(title);
+
+
+    if (!deletedAnnouncement) {
+      return res.status(404).json({message: 'There is no announcement with that title.'})
+    }
 
     res.status(202).json({ message: "Announcement has been deleted" });
   } catch (error) {
