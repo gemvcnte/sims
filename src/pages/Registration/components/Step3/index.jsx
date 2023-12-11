@@ -60,7 +60,7 @@ function Step3({ fullFormData, onBack, onNext }) {
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.schoolYear &&
-                  "text-white-400 !border-blue-400 bg-blue-400"
+                  "!border-blue-400 bg-blue-400 text-white"
                 }`}
                 id="schoolYear"
                 value={academicData.schoolYear}
@@ -79,7 +79,7 @@ function Step3({ fullFormData, onBack, onNext }) {
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.semester &&
-                  "text-white-400 !border-blue-400 bg-blue-400"
+                  "!border-blue-400 bg-blue-400 text-white"
                 }`}
                 id="semester"
                 value={academicData.semester}
@@ -98,7 +98,7 @@ function Step3({ fullFormData, onBack, onNext }) {
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.track &&
-                  "text-white-400 !border-blue-400 bg-blue-400"
+                  "!border-blue-400 bg-blue-400 text-white"
                 }`}
                 id="track"
                 value={academicData.track}
@@ -114,7 +114,7 @@ function Step3({ fullFormData, onBack, onNext }) {
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.strand &&
-                  "text-white-400 !border-blue-400 bg-blue-400"
+                  "!border-blue-400 bg-blue-400 text-white"
                 }`}
                 id="strand"
                 value={academicData.strand}
