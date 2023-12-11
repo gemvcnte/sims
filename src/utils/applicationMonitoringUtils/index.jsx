@@ -1,12 +1,17 @@
 import axios from "axios";
 import { updateApplicationEndpoint } from "@/config/adminEndpoints";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export const sendUpdateRequest = async (studentApplicationId, updatedData) => {
   try {
-    const response = await axios.patch(updateApplicationEndpoint, {
-      studentApplicationId,
-      updatedData,
-    });
+    const response = await axios.patch(
+      updateApplicationEndpoint,
+      {
+        studentApplicationId,
+        updatedData,
+      },
+      getAuthHeaders(),
+    );
 
     if (response.status === 200) {
       return response.data;

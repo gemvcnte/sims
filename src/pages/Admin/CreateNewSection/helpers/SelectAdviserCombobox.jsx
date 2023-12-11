@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export default function SelectAdviserCombobox({ onSelectTeacher }) {
   const [open, setOpen] = React.useState(false);
@@ -31,6 +32,7 @@ export default function SelectAdviserCombobox({ onSelectTeacher }) {
       try {
         const response = await axios.get(
           "http://localhost:5000/admin/getAllTeachers",
+          getAuthHeaders(),
         );
         setTeacherData(response.data.data);
       } catch (error) {
