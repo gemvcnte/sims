@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header({ step }) {
   return (
-    <header className=" flex justify-between bg-white">
+    <header className=" flex justify-between bg-slate-50">
       <div
         className={`flex w-full items-center justify-center gap-2 bg-blue-400 px-2 py-2 ${
           step === 1 ? "rounded-br-full rounded-tr-full" : ""

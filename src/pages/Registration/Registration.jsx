@@ -57,13 +57,13 @@ export default function Registration() {
   return (
     <>
       {loading && <LoadingSpinner />}
-      <div className="bg-white-400 fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center md:hidden">
+      <div className="fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center bg-slate-50 md:hidden">
         <p>Registration Only Available on Desktop</p>
       </div>
       <ToastContainer />
       <Header step={step} />
 
-      <main>
+      <main className="bg-slate-50">
         {step === 1 && <Step1 onNext={handleNext} fullFormData={formData} />}
         {step === 2 && (
           <Step2 onNext={handleNext} onBack={handleBack} formData={formData} />
