@@ -6,6 +6,7 @@ import axios from "axios";
 import LoadingSpinner from "@utils/LoadingSpinner";
 import { registrationEndpoint } from "@/config/adminEndpoints";
 import "./registration.css";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export default function Registration() {
   useEffect(() => {
@@ -39,7 +40,11 @@ export default function Registration() {
     console.log(data);
 
     try {
-      const response = await axios.post(registrationEndpoint, data);
+      const response = await axios.post(
+        registrationEndpoint,
+        data,
+        getAuthHeaders(),
+      );
       if (response.status === 200) {
         toast.success("Data submitted successfully", {
           autoClose: 10000,

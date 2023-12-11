@@ -121,10 +121,11 @@ function Step3({ fullFormData, onBack, onNext }) {
                 onChange={(e) => handleFieldChange("strand", e.target.value)}
               >
                 <option value="">Select Strand</option>
-                <option value="gas">GAS (Academic)</option>
                 <option value="humss">HUMSS (Academic)</option>
+                <option value="abm">ABM (Academic)</option>
                 <option value="stem">STEM (Academic)</option>
                 <option value="ict">ICT (TVL)</option>
+                <option value="he">HE (TVL)</option>
               </select>
             </div>
           </div>
