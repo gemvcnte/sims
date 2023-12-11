@@ -9,6 +9,7 @@ import {
   enrollApplicationEndpoint,
   rejectApplicationEndpoint,
 } from "@/config/adminEndpoints";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export default function StudentCard({ application, onClick }) {
   const lastName = application.lastName.toLowerCase();
@@ -25,9 +26,11 @@ export default function StudentCard({ application, onClick }) {
 
   const handleEnroll = async () => {
     try {
-      const response = await axios.post(enrollApplicationEndpoint, {
-        studentApplicationId: application._id,
-      });
+      const response = await axios.post(
+        enrollApplicationEndpoint,
+        { studentApplicationId: application._id },
+        getAuthHeaders(),
+      );
 
       showSuccessNotification("Student Enrolled Successfully");
       hideCard();
@@ -38,9 +41,11 @@ export default function StudentCard({ application, onClick }) {
 
   const handleReject = async () => {
     try {
-      const response = await axios.patch(rejectApplicationEndpoint, {
-        studentApplicationId: application._id,
-      });
+      const response = await axios.patch(
+        rejectApplicationEndpoint,
+        { studentApplicationId: application._id },
+        getAuthHeaders(),
+      );
       console.log(response);
 
       showSuccessNotification("Application Rejected");
