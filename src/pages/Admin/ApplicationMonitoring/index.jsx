@@ -20,7 +20,14 @@ export default function ApplicationMonitoring() {
   useEffect(() => {
     const fetchPendingApplications = async () => {
       try {
-        const response = await axios.get(getPendingApplicationsEndpoint);
+        const authToken = localStorage.getItem("authToken");
+
+        const response = await axios.get(getPendingApplicationsEndpoint, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
         setPendingApplications(response.data.data);
         console.log(response.data.data);
       } catch (error) {
