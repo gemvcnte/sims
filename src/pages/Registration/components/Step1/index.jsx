@@ -20,7 +20,7 @@ const InputField = ({
     value={value}
     name={name}
     onChange={onChange}
-    className={`rounded-lg border border-white-700 p-2 focus:border-blue-400 focus:outline-none focus:ring-2 
+    className={`border-white-700 rounded-lg border p-2 focus:border-blue-400 focus:outline-none focus:ring-2 
     focus:ring-blue-400 ${className}`}
   />
 );
@@ -119,9 +119,9 @@ function Step1({ onNext, fullFormData }) {
             <label>Extension Name </label>
             <select
               required
-              className={`rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+              className={`border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                 formData.extensionName &&
-                "!border-blue-400 bg-blue-400 text-white-400"
+                "!border-blue-400 bg-blue-400 text-white"
               }`}
               value={formData.extensionName}
               name="extensionName"
@@ -154,8 +154,8 @@ function Step1({ onNext, fullFormData }) {
           <div className="flex flex-col">
             <label>Gender</label>
             <select
-              className={`rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                formData.gender && "!border-blue-400 bg-blue-400 text-white-400"
+              className={`border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                formData.gender && "!border-blue-400 bg-blue-400 text-white"
               }`}
               value={formData.gender}
               required
@@ -199,7 +199,7 @@ function Step1({ onNext, fullFormData }) {
           <div className="flex items-end justify-end ">
             <button
               type="submit"
-              className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white-400 transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+              className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
             >
               Next Step
               <Icon

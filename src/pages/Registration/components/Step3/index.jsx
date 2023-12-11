@@ -48,7 +48,7 @@ function Step3({ fullFormData, onBack, onNext }) {
                 type="number"
                 placeholder="Input Your LRN"
                 value={academicData.lrn}
-                className={`rounded-lg border border-white-700 p-2 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`border-white-700 rounded-lg border p-2 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.lrn && "!border-blue-400 text-blue-400"
                 }`}
                 onChange={(e) => handleFieldChange("lrn", e.target.value)}
@@ -58,9 +58,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             <div className="w flex flex-col items-start">
               <label htmlFor="schoolYear">School Year</label>
               <select
-                className={`w-full rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.schoolYear &&
-                  "!border-blue-400 bg-blue-400 text-white-400"
+                  "text-white-400 !border-blue-400 bg-blue-400"
                 }`}
                 id="schoolYear"
                 value={academicData.schoolYear}
@@ -77,9 +77,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             <div className="w flex flex-col items-start">
               <label htmlFor="semester">Semester</label>
               <select
-                className={`w-full rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.semester &&
-                  "!border-blue-400 bg-blue-400 text-white-400"
+                  "text-white-400 !border-blue-400 bg-blue-400"
                 }`}
                 id="semester"
                 value={academicData.semester}
@@ -96,9 +96,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             <div className="w flex flex-col items-start">
               <label>Track</label>
               <select
-                className={`w-full rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.track &&
-                  "!border-blue-400 bg-blue-400 text-white-400"
+                  "text-white-400 !border-blue-400 bg-blue-400"
                 }`}
                 id="track"
                 value={academicData.track}
@@ -112,9 +112,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             <div className="form-group">
               <label htmlFor="strand">Strand</label>
               <select
-                className={`w-full rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.strand &&
-                  "!border-blue-400 bg-blue-400 text-white-400"
+                  "text-white-400 !border-blue-400 bg-blue-400"
                 }`}
                 id="strand"
                 value={academicData.strand}
@@ -134,13 +134,13 @@ function Step3({ fullFormData, onBack, onNext }) {
           <button
             onClick={() => onBack(academicData)}
             type="submit"
-            className="rounded-lg border border-white-700 px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
+            className="border-white-700 rounded-lg border px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
           >
             Back
           </button>
           <button
             type="submit"
-            className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white-400 transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+            className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
           >
             Next Step
             <Icon

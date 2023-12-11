@@ -14,7 +14,7 @@ const InputField = ({
   className,
 }) => (
   <input
-    className={`rounded-lg border border-white-700 p-2 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
+    className={`border-white-700 rounded-lg border p-2 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${className}`}
     type={type}
     placeholder={placeholder}
     value={value}
@@ -167,7 +167,7 @@ function Step2({ onNext, onBack, formData }) {
 
         <div className="mt-4">
           <select
-            className="rounded-lg border border-white-700 p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             name="guardianRelationship"
             value={parentData.guardianRelationship}
             onChange={(e) =>
@@ -185,13 +185,13 @@ function Step2({ onNext, onBack, formData }) {
           <button
             onClick={() => onBack(parentData)}
             type="submit"
-            className="rounded-lg  border border-white-700 px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
+            className="border-white-700  rounded-lg border px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
           >
             Back
           </button>
           <button
             type="submit"
-            className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white-400 transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+            className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
           >
             Next Step
             <Icon
