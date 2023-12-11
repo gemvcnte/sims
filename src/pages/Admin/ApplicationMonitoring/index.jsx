@@ -11,6 +11,7 @@ import {
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import Topbar from "@/components/layout/Topbar";
 import { getPendingApplicationsEndpoint } from "@/config/adminEndpoints";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export default function ApplicationMonitoring() {
   const { toggleSidebar } = useSidebarContext();
@@ -20,13 +21,10 @@ export default function ApplicationMonitoring() {
   useEffect(() => {
     const fetchPendingApplications = async () => {
       try {
-        const authToken = localStorage.getItem("authToken");
-
-        const response = await axios.get(getPendingApplicationsEndpoint, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const response = await axios.get(
+          getPendingApplicationsEndpoint,
+          getAuthHeaders(),
+        );
 
         setPendingApplications(response.data.data);
         console.log(response.data.data);
