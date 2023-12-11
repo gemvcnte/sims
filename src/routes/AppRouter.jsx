@@ -5,10 +5,12 @@ import RegistrationRoutes from "./RegistrationRoutes";
 import HomeRoutes from "./HomeRoutes";
 import { SidebarProvider } from "@src/contexts/SidebarContext.jsx";
 import { ThemeProvider } from "@/components/theme-provider";
+import AutoLogout from "@/utils/AutoLogout";
 
 const AppRouter = () => {
   return (
     <Router>
+      <AutoLogout />
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <SidebarProvider>
           <RegistrationRoutes />
