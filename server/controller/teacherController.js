@@ -12,8 +12,6 @@ const teacherLogin = asyncHandler(async (req, res) => {
 
     // find yung teacher base sa uname
     const teacher = await Teacher.findOne({ username });
-    router.delete("/class/remove-student", verifyToken)
-
 
     // check if the teacher exists
     if (!teacher) {
