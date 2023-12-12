@@ -2,9 +2,11 @@ const { Teacher } = require("../models/TeacherModel");
 const { Student }= require("../models/StudentModel")
 const { Classroom }= require("../models/ClassroomModel")
 const { Announcement } = require("../models/Announcement");
+const { Schedule } = require("../models/ScheduleModel")
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
+const { assign } = require("nodemailer/lib/shared");
 
 const teacherLogin = asyncHandler(async (req, res) => {
   try {
@@ -100,11 +102,8 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 
     const teacherSchedule = await Teacher.findById(_id);
 
-    if (!teacherSchedule) {
-      res.status(404).json({ message: "Teacher Schedule not found." });
-    } else if (teacherSchedule === null) {
-      res.status(204).json({ message: "Teacher schedule is empty" });
-    }
+
+    const schedule = await Schedule.find()
 
     res.status(200).json({ message: "Teacher Schedule has been retrieved." });
   } catch (error) {
@@ -112,6 +111,33 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
   }
 });
 
+
+const getAssignedClass = asyncHandler(async (req,res) =>  {
+try {
+  const { id } = req.body
+
+  const assignedTeacher = await Teacher.findOne(id);
+
+  if (!assignedTeacher) {
+    res.status(404).json({message: 'Teacher not found.'})
+  } else if (assignedTeacher === !Classroom) {
+    res.status(400).json({message: 'There is no teacher with this username'})
+  }
+
+  const assignedClasses = await Classroom.find({
+    'subjectTeachers.firstName': assignedTeacher.firstName,
+    'subjectTeachers.lastName': assignedTeacher.lastName,
+    'subjectTeachers.subject': assignedTeacher.subject,
+  })
+
+  res.status(200).json({message: 'Assigned Classes retrieved successfully',
+assignedClasses})
+} catch (error) {
+  res.status(500).json({message: `There is an error ${error}`})
+}
+})
+
+// Teacher Post Class Announcement
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement, duration } = req.body;
@@ -125,19 +151,39 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
       createdBy,
       typeOfAnnouncement,
       duration,
-    })
+    });
 
 
-    const studentOnClassroom = await Classroom.find({}) 
+    const studentEmailsOnClassroom = await Classroom.find({students}).distinct('emailAddress');
 
+    const studentEmails = [...studentEmailsOnClassroom];
+
+    const mailOptions = {
+      from: 'gemvicente6@gmail.com',
+      subject: `New Class Announcement ${typeOfAnnouncement}`,
+      text: `Title: ${title}\nContent: ${content}` 
+    }
+
+    for (const email of studentEmails) {
+      mailOptions.to = email;
+    }
+
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`Email has been sent to ${email}`);
+    } catch (error) {
+      console.error(`Error sending email to ${email} ${error}`)
+    }
+
+    await announcement.save();
+
+    res.status(201).json({message: 'Announcement created successfully.'})
     
 
   } catch (error) {
     res.status(500).json({message: `There is an error: ${error}`})
   }
 });
-
-
 
 
 
@@ -183,7 +229,7 @@ const removeStudentToClass = asyncHandler(async(req,res) => {
   try {
     const { studentName, sectionName } = req.body;
 
-    const [firstName, lastName] = studentName.split(' ');
+    const [firstName, lastName] = studentName.split(' ') || studentName.split('');
 
 
     const existingClassroom = await Classroom.findOne({sectionName})

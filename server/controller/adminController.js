@@ -693,7 +693,7 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
     const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
 
     const mailOptions = {
-      from: 'gemvicente6@gmail.com',
+      from: 'mrmnhs.simsannouncement@gmail.com',
       subject: `New School Announcement: ${typeOfAnnouncement || 'General'}`,
       text: `Title: ${title}\nContent: ${content}`,
     };
@@ -732,7 +732,7 @@ const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
 
     const updatedAnnouncement = await Announcement.findOneAndUpdate(
       { title, content },
-      updateAnnouncement,
+      updatedAnnouncement,
       { new: true }
     );
 
@@ -744,11 +744,10 @@ const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
     const allEmails = [...studentEmails, ...teacherEmails, ... adminEmails];
 
     const mailOptions = {
-      from: 'gemvicente6@gmail.com',
-      subject: `New School Announcement ${typeOfAnnouncement || 'General'}`,
+      from: 'mrmnhs.simsannouncement@gmail.com',
+      subject: `School Announcement ${typeOfAnnouncement || 'General'}`,
       text: `Title: ${title}\nContent: ${content}` 
     }
-
 
     for (const email of allEmails) {
       mailOptions.to = email;
