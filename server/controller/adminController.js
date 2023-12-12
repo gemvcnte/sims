@@ -676,7 +676,7 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement, duration } = req.body;
 
-    const createdBy = req.user && req.user.username ? req.user.username : 'unknown';
+    const createdBy = req.user && req.user.username ? req.user.username : 'Admin';
 
     const announcement = new Announcement({
       title,
@@ -695,12 +695,25 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
     const mailOptions = {
       from: 'mrmnhs.simsannouncement@gmail.com',
       subject: `New School Announcement: ${typeOfAnnouncement || 'General'}`,
-      text: `Title: ${title}\nContent: ${content}`,
+      // Use HTML content for the email body
+      html: `
+        <html>
+        <head>
+        </head>
+          <body>
+            <h2>${title}</h2>
+            <p>${content}</p>
+            <p>Created By: ${createdBy}</p>
+            <p>Type of Announcement: ${typeOfAnnouncement || 'General'}</p>
+            <p>Duration: ${duration}</p>
+          </body>
+        </html>
+      `,
     };
 
     for (const email of allEmails) {
       mailOptions.to = email;
-    
+
       try {
         await transporter.sendMail(mailOptions);
         console.log(`Email sent successfully to ${email}`);
@@ -708,7 +721,6 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
         console.error(`Error sending email to ${email}: ${error}`);
       }
     }
-    
 
     await announcement.save();
 
@@ -721,13 +733,14 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   }
 });
 
+
 // UPDATE A SCHOOL ANNOUNCEMENT
 
 const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement } = req.body;
 
-    const updatedBy = req.user && req.user.username 
+    const updatedBy = req.user && req.user.username ? req.user.username : 'Admin'
     
 
     const updatedAnnouncement = await Announcement.findOneAndUpdate(
@@ -787,6 +800,21 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+
+const createFacultyAnnouncement = asyncHandler(async(req,res) => {
+  try {
+    
+
+    try {
+      
+    } catch (error) {
+      
+    }
+  } catch (error) {
+    
+  }  
+})
 
 // GET ALL SCHOOL ANNOUNCEMENTS
 

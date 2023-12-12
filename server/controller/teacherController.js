@@ -6,7 +6,7 @@ const { Schedule } = require("../models/ScheduleModel")
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
-const { assign } = require("nodemailer/lib/shared");
+
 
 const teacherLogin = asyncHandler(async (req, res) => {
   try {
@@ -120,7 +120,7 @@ try {
 
   if (!assignedTeacher) {
     res.status(404).json({message: 'Teacher not found.'})
-  } else if (assignedTeacher === !Classroom) {
+  } else if (!assignedTeacher.subjectTeachers || assignedTeacher.subjectTeacher || assignedTeacher.adviser) {
     res.status(400).json({message: 'There is no teacher with this username'})
   }
 
@@ -131,7 +131,8 @@ try {
   })
 
   res.status(200).json({message: 'Assigned Classes retrieved successfully',
-assignedClasses})
+  data: assignedClasses
+})
 } catch (error) {
   res.status(500).json({message: `There is an error ${error}`})
 }

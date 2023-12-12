@@ -50,7 +50,7 @@ router.patch(
 
 router.post(
   "/createAnnouncement",
-  verifyToken,
+  // verifyToken,
   adminController.createSchoolAnnouncement
 );
 router.patch("/updateAnnouncement", adminController.updateSchoolAnnouncement);
