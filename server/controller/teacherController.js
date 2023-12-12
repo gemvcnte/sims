@@ -10,7 +10,7 @@ const teacherLogin = asyncHandler(async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // find yung teacher base sa uname
+    // finding teacher base sa uname
     const teacher = await Teacher.findOne({ username });
 
     // check if the teacher exists
