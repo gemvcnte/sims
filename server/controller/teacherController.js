@@ -114,12 +114,27 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement } = req.body;
-    
+    const { title, content, typeOfAnnouncement, duration } = req.body;
+
+
+    const createdBy = req.user && req.user.username ? req.user.username : `Teacher ${username}`
+
+    const announcement = new Announcement({
+      title,
+      content,
+      createdBy,
+      typeOfAnnouncement,
+      duration,
+    })
+
+
+    const studentOnClassroom = await Classroom.find({}) 
 
     
 
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({message: `There is an error: ${error}`})
+  }
 });
 
 
@@ -129,7 +144,7 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
 const assignStudentToClass = asyncHandler(async (req, res) => {
   try {
     const { studentName, sectionName } = req.body;
-    const [firstName, lastName] = studentName.split(' ');
+    const [firstName, lastName, emailAddress] = studentName.split(' ');
 
     console.log('Attempting to assign student:', { firstName, lastName, sectionName });
 
@@ -139,20 +154,20 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: 'Class not found.' });
     }
 
-    const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName);
+    const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
 
     if (existingStudent) {
       return res.status(400).json({ message: 'Student is already assigned to this class.' });
     }
 
 
-    const studentRecord = await Student.findOne({ firstName, lastName });
+    const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
 
     if (!studentRecord) {
       return res.status(404).json({ message: 'Student not found in enrolled records.' });
     }
 
-    existingClassroom.students.push({ firstName, lastName });
+    existingClassroom.students.push({ firstName, lastName, emailAddress });
 
     await existingClassroom.save();
 
@@ -194,7 +209,6 @@ const removeStudentToClass = asyncHandler(async(req,res) => {
     res.status(500).json({message: `${error}`})
   }
 })
-
 
 // const requestResetPassword = asyncHandler(async(req,res) => {
 //   try {
