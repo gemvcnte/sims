@@ -347,6 +347,8 @@ module.exports = {
   getTeacherProfile,
   updateTeacherProfile,
   postClassAnnouncement,
+  updateClassAnnouncement,
+  deleteClassAnnouncement,
   assignStudentToClass,
   removeStudentToClass
 };
