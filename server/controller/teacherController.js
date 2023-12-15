@@ -186,6 +186,61 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
   }
 });
 
+const updateClassAnnouncement = asyncHandler(async(req,res) => {
+  try {
+    const { title, content, typeOfAnnouncement, duration } = req.body;
+
+    const updatedAnnouncement = await Announcement({
+      title,
+      content,
+      typeOfAnnouncement,
+      duration,
+    })
+
+
+    const studentEmails = await Student.find({}).distinct('emailAddress');
+
+
+
+    const mailOptions = {
+      from: 'mrmnhs.simsannouncement@gmail.com',
+      subject: `School Announcement ${typeOfAnnouncement || 'Important Announcement'}`,
+      text: `Title ${title}\nContent: ${content}`
+      
+    }
+    for (const email of studentEmails) {
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${email}`)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    await announcement.save()
+    res.status(200).json({message: "Class Announcement has been updated"})
+
+  } catch (error) {
+    res.status(500).json({message: 'There is an error', error})
+  }
+})
+
+const deleteClassAnnouncement = asyncHandler(async(req,res) => {
+  try {
+    const { title } = req.body
+
+    const deletedAnnouncement = await Announcement(title)
+
+    if(!deletedAnnouncement) {
+      res.status(404).json({message: 'There is no announcement with that title'})
+
+      res.status(202).json({message: ''})
+    }
+  } catch (error) {
+    res.status(500).json({message: `${error}`});
+  }
+})
+
 
 
 const assignStudentToClass = asyncHandler(async (req, res) => {
@@ -224,6 +279,14 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: `${error}` });
   }
 });
+
+const updateStudentToClass = asyncHandler(req,res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+}
 
 
 const removeStudentToClass = asyncHandler(async(req,res) => {
