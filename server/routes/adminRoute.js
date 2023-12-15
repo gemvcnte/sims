@@ -49,16 +49,18 @@ router.patch(
 );
 
 router.post(
-  "/createAnnouncement",
-  // verifyToken,
+  "/announcement/create-school-announcement",
+  verifyToken,
   adminController.createSchoolAnnouncement
-);
-router.patch("/updateAnnouncement", adminController.updateSchoolAnnouncement);
+);// or /announcement/createSchoolAnnouncement
+router.patch("/announcement/update-school-announcement", adminController.updateSchoolAnnouncement);
+
+// or /announcement/updateSchoolAnnouncement
 router.delete(
-  "/deleteAnnouncement",
+  "/announcement/delete-school-announcement",
   verifyToken,
   adminController.deleteSchoolAnnouncement
-);
+); // or /announcement/deleteSchoolAnnouncement
 
 // Admin Profile
 router.get("/profile", verifyToken, adminController.getAdminProfile);
@@ -74,5 +76,10 @@ router.get("/class/getAll", verifyToken, adminController.getAllClasses);
 router.get("/class/:id", verifyToken, adminController.getSpecificClass);
 router.patch("/class/update", verifyToken, adminController.getSpecificClass);
 router.delete("/class/delete", verifyToken, adminController.deleteClassroom);
+
+
+router.post("/announcement/create-faculty-announcement")
+router.patch("/announcement/update-faculty-announcement")
+router.delete("/announcement/delete-faculty-announcement")
 
 module.exports = router;

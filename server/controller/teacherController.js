@@ -280,13 +280,26 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
   }
 });
 
-const updateStudentToClass = asyncHandler(req,res) => {
-  try {
-    
-  } catch (error) {
-    
+const updateStudentToClass = asyncHandler(async(req,res) => {
+  const {studentName, sectionName} = req.body;
+
+  const [firstName, lastName, emailAddress] = req.body
+
+  const existingClassroom = await Classroom.findOneAndUpdate({sectionName})
+
+  if (!existingClassroom) {
+    res.status(404).json({message: 'No Classroom found.'})
   }
-}
+
+  // if )
+
+  const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
+
+
+  await existingClassroom.save();
+
+  res.status(200).json({message: 'Student on this class has been updated. '})
+}) 
 
 
 const removeStudentToClass = asyncHandler(async(req,res) => {
