@@ -12,45 +12,45 @@ router.patch("/updateAdmin", verifyToken, adminController.updateAdmin);
 router.delete("/deleteAdmin", verifyToken, adminController.deleteAdmin);
 
 // Teacher routes for admin...
-router.post("/createTeacher", verifyToken, adminController.createTeacher);
-router.patch("/updateTeacher", verifyToken, adminController.updateTeacher);
-router.get("/getAllTeachers", verifyToken, adminController.getAllTeachers);
-router.delete("/deleteTeacher", verifyToken, adminController.deleteTeacher);
+router.post("/create-teacher", verifyToken, adminController.createTeacher); // /createTeacher
+router.patch("/update-teacher", verifyToken, adminController.updateTeacher); // /updateTeacher
+router.get("/get-all-teachers", verifyToken, adminController.getAllTeachers); // /getAllTeachers
+router.delete("/delete-teacher", verifyToken, adminController.deleteTeacher); // /deleteTeacher
 
 // reference only ⬇
 // router.get('/dashboard', adminController.getAdminDashboard);
 
 // Student routes for admin
-router.get("/getAllStudents", verifyToken, adminController.getAllStudents);
-router.get("/getPending", verifyToken, adminController.getAllPending); // /pending
-router.get("/getApproved", verifyToken, adminController.getAllApproved); // /approved
-router.get("/getRejected", verifyToken, adminController.getAllRejected); // /rejected
+router.get("/get-all-students", verifyToken, adminController.getAllStudents); // /getAllStudents
+router.get("/get-pending", verifyToken, adminController.getAllPending); // /pending
+router.get("/get-approved", verifyToken, adminController.getAllApproved); // /approved
+router.get("/get-rejected", verifyToken, adminController.getAllRejected); // /rejected
 router.get(
-  "/getSpecificStudent",
+  "/get-specific-student",
   verifyToken,
   adminController.getSpecificStudent
 ); // /getID/:id
 
 // StudentApplication routes for admin
 router.post(
-  "/enrollStudent",
+  "/enroll-student",
   verifyToken,
   adminController.acceptStudentApplication
 );
 router.patch(
-  "/updateApplication",
+  "/update-application",
   verifyToken,
   adminController.updateStudentApplication
 );
 router.patch(
-  "/rejectApplication",
+  "/reject-application",
   verifyToken,
   adminController.rejectStudentApplication
 );
 
 router.post(
   "/announcement/create-school-announcement",
-  verifyToken,
+  // verifyToken,
   adminController.createSchoolAnnouncement
 );// or /announcement/createSchoolAnnouncement
 router.patch("/announcement/update-school-announcement", adminController.updateSchoolAnnouncement);
@@ -77,9 +77,9 @@ router.get("/class/:id", verifyToken, adminController.getSpecificClass);
 router.patch("/class/update", verifyToken, adminController.getSpecificClass);
 router.delete("/class/delete", verifyToken, adminController.deleteClassroom);
 
-
-router.post("/announcement/create-faculty-announcement")
-router.patch("/announcement/update-faculty-announcement")
-router.delete("/announcement/delete-faculty-announcement")
+// faculty announcement
+// router.post("/announcement/create-faculty-announcement")
+// router.patch("/announcement/update-faculty-announcement")
+// router.delete("/announcement/delete-faculty-announcement")
 
 module.exports = router;

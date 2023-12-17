@@ -677,7 +677,7 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement, duration } = req.body;
 
-    const createdBy = req.user && req.user.username ? req.user.username : 'Admin';
+    const createdBy = req.user && req.user.username ? req.user.username : 'admin';
 
     const announcement = new Announcement({
       title,
@@ -686,6 +686,8 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
       typeOfAnnouncement,
       duration,
     });
+
+    await Announcement.insertMany([announcement]);
 
     const studentEmails = await Student.find({}).distinct('emailAddress');
     const teacherEmails = await Teacher.find({}).distinct('emailAddress');
@@ -712,18 +714,22 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
       `,
     };
 
-    for (const email of allEmails) {
-      mailOptions.to = email;
 
-      try {
-        await transporter.sendMail(mailOptions);
-        console.log(`Email sent successfully to ${email}`);
-      } catch (error) {
-        console.error(`Error sending email to ${email}: ${error}`);
-      }
-    }
+    await Promise.all(
+      allEmails.map(async (email) => {
+        try {
+          const personalizedMailOptions = {
+            ...mailOptions,
+            to: email,
+          };
 
-    await announcement.save();
+          await transporter.sendMail(personalizedMailOptions);
+          console.log(`Email sent successfully to ${email}`);
+        } catch (error) {
+          console.error(`Error sending email to ${email}, ${error}`)
+        }
+      })
+    )
 
     res.status(201).json({
       message: 'Announcement created successfully.',
@@ -802,7 +808,7 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
   }
 });
 
-
+//post faculty announcement only
 const createFacultyAnnouncement = asyncHandler(async(req,res) => {
   try {
     const { title, content, typeOfAnnouncement, duration
@@ -810,9 +816,14 @@ const createFacultyAnnouncement = asyncHandler(async(req,res) => {
 
 
     const facultyAnnouncement = new Announcement({
-      title, content, typeOfAnnouncement, duration,
+      title, 
+      content, 
+      createdBy,
+      typeOfAnnouncement, 
+      duration,
     });
 
+    await Announcement.insertMany([facultyAnnouncement])
 
     const teacherEmails = await Teacher.find({}).distinct('emailAddress');
 
@@ -822,20 +833,23 @@ const createFacultyAnnouncement = asyncHandler(async(req,res) => {
       content: {generateEmailTemplate}
 
     }
+    
 
-    for (const email of teacherEmails) {
-      mailOptions.to = email;
-    }
+    await Promise.all(
+      teacherEmails.map(async(email) => {
+        try {
+          const personalizedMailOptions = {
+            ...mailOptions,
+            to: email,
+          }
 
-    try {
-      await transporter.sendMail(mailOptions)
-      console.log(`Email has been sent successfully to all faculty personnel's ${email}`)
-    } catch (error) {
-      console.error(error)
-    }
-
-
-    await facultyAnnouncement.save()
+          await transporter.sendMail(personalizedMailOptions)
+          console.log(`Email has been sent successfully to all faculty personnel's ${email}`)
+        } catch (error) {
+          console.error(`Error sending email to ${email}, ${error}`)
+        }
+      })
+    )
 
     res.status(201).json({message: 
       'Announcement created successfully.',
@@ -843,12 +857,11 @@ const createFacultyAnnouncement = asyncHandler(async(req,res) => {
   
   })
   } catch (error) {
-    res.status(500).json({message: `${error
-    }`})
+    res.status(500).json({message: `${error}`})
   }  
 })
 
-
+// update faculty announcement only
 const updateFacultyAnnouncement = asyncHandler(async(res,req) => {
   try {
     const { title, content, typeOfAnnouncement, duration} = req.body
@@ -894,7 +907,7 @@ const updateFacultyAnnouncement = asyncHandler(async(res,req) => {
   }
 })
 
-
+// delete faculty announcement
 const deleteFacultyAnnouncement = asyncHandler(async(req,res) => {
   try {
     const { title } = req.body
@@ -911,7 +924,7 @@ const deleteFacultyAnnouncement = asyncHandler(async(req,res) => {
   } catch (error) {
     res.status(500).json({message: `${error}`})
   }
-})
+});
 // GET ALL SCHOOL ANNOUNCEMENTS
 
 const getAllSchoolAnnouncements = asyncHandler(async (req, res) => {
@@ -1023,6 +1036,7 @@ module.exports = {
   getSpecificClass,
   updateClassroom,
   deleteClassroom,
+  assignTeacherToClass,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

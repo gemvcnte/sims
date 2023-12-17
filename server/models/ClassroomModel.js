@@ -55,6 +55,10 @@ const classroomSchema = mongoose.Schema(
                 type: String,
                 required: true,
             },
+            emailAddress: {
+                type: String,
+                required: true,
+            }
         }],
     //     subjects: [
     //         {

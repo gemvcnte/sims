@@ -15,7 +15,7 @@ const announcementSchema = mongoose.Schema({
         required: true,
         validate: {
             validator: (value) => value > 0,
-            message: 'Duration must be a positive number.',
+            message: 'Duration must be greater number than 0.',
         },
     },
     createdBy: {
@@ -25,7 +25,7 @@ const announcementSchema = mongoose.Schema({
     },
     typeOfAnnouncement: {
         type: String,
-        enum: ['holiday', 'exam', 'school Event', 'school Assessment', 'classCancellation',].toUpper,
+        enum: ['Holiday', 'Exam', 'School Event', 'School Assessment', 'Class Cancellation',]
     },
     // updatedAt: {
     //     type: String,

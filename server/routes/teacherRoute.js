@@ -3,16 +3,20 @@ const router = express.Router();
 const teacherController = require("../controller/teacherController");
 const dotenv = require("dotenv");
 const verifyToken = require("../middleware/verifyToken");
+const { verify } = require("jsonwebtoken");
 dotenv.config;
 
 // router.post('/login', expressjwt({secret: process.env.JWT_SECRET}), teacherController.teacherLogin)
 router.post("/login", teacherController.teacherLogin);
 router.get("/profile", verifyToken, teacherController.getTeacherProfile);
 router.post(
-  "/announcement/classPost",
+  "/announcement/create-class-announcement",
   verifyToken,
   teacherController.postClassAnnouncement
 );
+router.patch("/announcement/update-class-announcement", verifyToken, teacherController.updateClassAnnouncement);
+
+router.delete("/announcement/delete-class-announcement", verifyToken, teacherController.deleteClassAnnouncement)
 router.patch(
   "/profile/update",
   verifyToken,
@@ -23,6 +27,8 @@ router.patch(
   verifyToken,
   teacherController.assignStudentToClass
 );
+
+router.patch("/class/update-assigned-student", verifyToken, teacherController.updateAssignedStudentToClass)
 router.delete(
   "/class/remove-student",
   verifyToken,
