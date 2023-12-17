@@ -13,7 +13,7 @@ import {
 import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import CreateNewSection from "@/pages/Admin/CreateAnnouncementModal";
+import CreateAnnouncementModal from "@/pages/Admin/CreateAnnouncementModal";
 
 export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -58,7 +58,7 @@ export function AnnouncementsDropdown({}) {
               <Link onClick={handleDialogClick}>Create a New Announcement</Link>
             </DropdownMenuItem>
           </DialogTrigger>
-          <CreateNewSection onClose={handleDialogClick} />
+          <CreateAnnouncementModal onClose={handleDialogClick} />
         </Dialog>
 
         <DropdownMenuItem>

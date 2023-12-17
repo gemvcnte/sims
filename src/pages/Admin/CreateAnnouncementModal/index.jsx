@@ -11,41 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { createSectionApi, SelectAdviserCombobox } from "./helpers";
-import showErrorNotification from "@/utils/ShowErrorNotification";
+import { CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
-export default function CreateNewSection({ onClose }) {
-  const [sectionName, setSectionName] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
-  const [selectedStrand, setSelectedStrand] = useState("");
-
-  const handleCreateSectionButton = async (e) => {
-    e.preventDefault();
-    const sectionDetails = {
-      sectionName: sectionName,
-      adviser: selectedTeacher ? selectedTeacher.username : "",
-      gradeLevel: selectedGradeLevel,
-      strand: selectedStrand,
-    };
-
-    if (!selectedTeacher) {
-      showErrorNotification("Please select a teacher.");
-      return;
-    }
-
-    const result = await createSectionApi(sectionDetails);
-
-    result.success
-      ? (showSuccessNotification(result.message),
-        setSectionName(""),
-        setSelectedGradeLevel(null),
-        setSelectedStrand(""),
-        onClose())
-      : showErrorNotification(result.message);
-  };
-
+export default function CreateAnnouncementModal({ onClose }) {
   return (
     <>
       <DialogContent className="sm:max-w-[425px]">
@@ -55,56 +31,54 @@ export default function CreateNewSection({ onClose }) {
             Add a new section by providing the required details below.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" onSubmit={handleCreateSectionButton}>
-          <div className="flex justify-end gap-4">
-            <select
-              className="col-span-3 flex h-10  rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              value={selectedGradeLevel || ""}
-              required
-              name="gradeLevel"
-              onChange={(e) => setSelectedGradeLevel(parseInt(e.target.value))}
-            >
-              <option value="">Grade Level</option>
-              <option value={11}>GRADE 11</option>
-              <option value={12}>GRADE 12</option>
-            </select>
-
-            <select
-              className="col-span-3 flex h-10 rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              value={selectedStrand}
-              required
-              name="strand"
-              onChange={(e) => setSelectedStrand(e.target.value)}
-            >
-              <option value="">Strand</option>
-              <option value="ABM">ABM</option>
-              <option value="STEM">STEM</option>
-              <option value="HUMSS">HUMSS</option>
-              <option value="TVL-ICT">TVL-ICT</option>
-              <option value="TVL-HE">TVL-HE</option>
-            </select>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              required
-              id="name"
-              placeholder="Enter Section Name"
-              value={sectionName}
-              onChange={(e) => setSectionName(e.target.value)}
-              className="col-span-3"
-            />
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Adviser
-            </Label>
-            <SelectAdviserCombobox onSelectTeacher={setSelectedTeacher} />
-          </div>
+        <form className="grid gap-4 py-4" onSubmit={() => onClose()}>
+          <CardContent className="grid gap-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="area">Area</Label>
+                <Select defaultValue="billing">
+                  <SelectTrigger id="area">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="team">Team</SelectItem>
+                    <SelectItem value="billing">Billing</SelectItem>
+                    <SelectItem value="account">Account</SelectItem>
+                    <SelectItem value="deployments">Deployments</SelectItem>
+                    <SelectItem value="support">Support</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="security-level">Security Level</Label>
+                <Select defaultValue="2">
+                  <SelectTrigger
+                    id="security-level"
+                    className="line-clamp-1 w-[160px] truncate"
+                  >
+                    <SelectValue placeholder="Select level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">Severity 1 (Highest)</SelectItem>
+                    <SelectItem value="2">Severity 2</SelectItem>
+                    <SelectItem value="3">Severity 3</SelectItem>
+                    <SelectItem value="4">Severity 4 (Lowest)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="subject">Subject</Label>
+              <Input id="subject" placeholder="I need help with..." />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Please include all information relevant to your issue."
+              />
+            </div>
+          </CardContent>
 
           <DialogFooter>
             <Button type="submit">Create Section</Button>
