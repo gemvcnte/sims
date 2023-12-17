@@ -61,13 +61,13 @@ function LoginForm({ role, setSelectedRole }) {
               <Icon
                 icon="teenyicons:user-outline"
                 width="20"
-                className="text-blue-400"
+                className="text-primary"
               />
             ) : (
               <Icon
                 icon="teenyicons:user-solid"
                 width="20"
-                className="text-blue-400"
+                className="text-primary"
               />
             )}
           </span>
@@ -78,7 +78,7 @@ function LoginForm({ role, setSelectedRole }) {
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
             placeholder={`${role} Username`}
-            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-blue-400 focus:outline-none"
+            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
         </div>
 
@@ -87,13 +87,13 @@ function LoginForm({ role, setSelectedRole }) {
             {!loginData.password ? (
               <Icon
                 icon="teenyicons:lock-outline"
-                className="text-blue-400"
+                className="text-primary"
                 width="20"
               />
             ) : (
               <Icon
                 icon="teenyicons:lock-solid"
-                className="text-blue-400"
+                className="text-primary"
                 width="20"
               />
             )}
@@ -105,12 +105,12 @@ function LoginForm({ role, setSelectedRole }) {
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
             placeholder={`${role} Password`}
-            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-blue-400 focus:outline-none"
+            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
         </div>
 
         <button
-          className="text-white-400 mt-4 flex items-center justify-center gap-2 rounded-2xl bg-blue-400 px-10 py-3 transition-all duration-300 hover:gap-8"
+          className="text-white-400 mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 transition-all duration-300 hover:gap-8"
           type="submit"
         >
           Login
