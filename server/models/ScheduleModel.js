@@ -11,6 +11,10 @@ const scheduleSchema = mongoose.Schema({
         enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
         required: true,
     },
+    room: {
+        type: String,
+        required: true
+    },
     startTime: {
         type: String,
         required: true,
