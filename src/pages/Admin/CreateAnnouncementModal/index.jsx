@@ -12,70 +12,81 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function CreateAnnouncementModal({ onClose }) {
+  const [typeOfAnnouncement, setTypeOfAnnouncement] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const resetAnnouncementData = () => {
+    setTypeOfAnnouncement("");
+    setTitle("");
+    setContent("");
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const announcementData = {
+      typeOfAnnouncement,
+      title,
+      content,
+    };
+
+    console.log(announcementData);
+
+    resetAnnouncementData();
+    onClose();
+  };
+
   return (
     <>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create a New Section</DialogTitle>
+          <DialogTitle>Create a New Announcement</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
-            Add a new section by providing the required details below.
+            Add a new announcement by providing the required details below.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" onSubmit={() => onClose()}>
-          <CardContent className="grid gap-6">
+        <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+          <CardContent className="grid gap-6 px-0">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="area">Area</Label>
-                <Select defaultValue="billing">
-                  <SelectTrigger id="area">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="team">Team</SelectItem>
-                    <SelectItem value="billing">Billing</SelectItem>
-                    <SelectItem value="account">Account</SelectItem>
-                    <SelectItem value="deployments">Deployments</SelectItem>
-                    <SelectItem value="support">Support</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="security-level">Security Level</Label>
-                <Select defaultValue="2">
-                  <SelectTrigger
-                    id="security-level"
-                    className="line-clamp-1 w-[160px] truncate"
-                  >
-                    <SelectValue placeholder="Select level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">Severity 1 (Highest)</SelectItem>
-                    <SelectItem value="2">Severity 2</SelectItem>
-                    <SelectItem value="3">Severity 3</SelectItem>
-                    <SelectItem value="4">Severity 4 (Lowest)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="typeOfAnnouncement">Announcement Type</Label>
+                <select
+                  className="col-span-3 flex h-10 rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="typeOfAnnouncement"
+                  value={typeOfAnnouncement}
+                  onChange={(e) => setTypeOfAnnouncement(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>
+                    Type
+                  </option>
+                  <option value="Holiday">Holiday</option>
+                  <option value="Exam">Exam</option>
+                  <option value="School Event">Event</option>
+                </select>
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" placeholder="I need help with..." />
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter announcement title..."
+                required
+              />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="content">Content</Label>
               <Textarea
-                id="description"
-                placeholder="Please include all information relevant to your issue."
+                id="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Enter announcement content..."
               />
             </div>
           </CardContent>

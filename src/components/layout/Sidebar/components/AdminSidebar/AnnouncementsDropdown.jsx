@@ -26,7 +26,7 @@ export function AnnouncementsDropdown({}) {
   };
 
   const handleDialogClick = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     setIsDialogOpen(!isDialogOpen);
   };
 
