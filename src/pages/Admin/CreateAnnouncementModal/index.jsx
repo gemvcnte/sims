@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import axios from "axios";
+import { createAnnouncementApi } from "./helpers";
 
 export default function CreateAnnouncementModal({ onClose }) {
   const [typeOfAnnouncement, setTypeOfAnnouncement] = useState("");
@@ -26,19 +26,23 @@ export default function CreateAnnouncementModal({ onClose }) {
     setContent("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const announcementData = {
-      typeOfAnnouncement,
-      title,
-      content,
-    };
+    try {
+      const announcementData = {
+        typeOfAnnouncement,
+        title,
+        content,
+      };
 
-    console.log(announcementData);
+      await createAnnouncementApi(announcementData);
 
-    resetAnnouncementData();
-    onClose();
+      resetAnnouncementData();
+      onClose();
+    } catch (error) {
+      console.error("Error handling submit:", error);
+    }
   };
 
   return (
@@ -88,6 +92,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="Enter announcement content..."
+                required
               />
             </div>
           </CardContent>
