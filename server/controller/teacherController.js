@@ -6,6 +6,7 @@ const { Schedule } = require("../models/ScheduleModel")
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
+const { transporter } = require("../mailer");
 
 // 
 const teacherLogin = asyncHandler(async (req, res) => {
@@ -117,24 +118,30 @@ const getAssignedClass = asyncHandler(async (req, res) => {
   try {
     const { id } = req.body
 
-    const assignedTeacher = await Teacher.findOne(id);
+    const assignedTeacher = await Teacher.findOne({ id: username });
 
     if (!assignedTeacher) {
       res.status(404).json({ message: 'Teacher not found.' })
-    } else if (!assignedTeacher.subjectTeachers || assignedTeacher.subjectTeacher || assignedTeacher.adviser) {
-      res.status(400).json({ message: 'There is no teacher with this username' })
+    } else if (!assignedTeacher.subjectTeachers && assignedTeacher.subjectTeacher && assignedTeacher.adviser) {
+      res.status(400).json({ message: 'The teacher is not assigned to any classes.' })
+    } else {
+
+      const assignedClasses = await Classroom.find({
+        $or: [
+          {
+            'subjectTeachers.firstName': assignedTeacher.firstName,
+            'subjectTeachers.lastName': assignedTeacher.lastName,
+            'subjectTeachers.subject': assignedTeacher.subject,
+          }],
+      })
+      res.status(200).json({
+        message: 'Assigned Classes retrieved successfully',
+        data: assignedClasses
+      })
+
     }
 
-    const assignedClasses = await Classroom.find({
-      'subjectTeachers.firstName': assignedTeacher.firstName,
-      'subjectTeachers.lastName': assignedTeacher.lastName,
-      'subjectTeachers.subject': assignedTeacher.subject,
-    })
 
-    res.status(200).json({
-      message: 'Assigned Classes retrieved successfully',
-      data: assignedClasses
-    })
   } catch (error) {
     res.status(500).json({ message: `There is an error Internal server error. Please try again later.` })
   }
@@ -146,7 +153,7 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
     const { title, content, typeOfAnnouncement, duration } = req.body;
 
 
-    const createdBy = req.user && req.user.username ? req.user.username : `Teacher`
+    const createdBy = req.user && req.user.username ? req.user.username : `Teacher ${username}`
 
     const announcement = new Announcement({
       title,
@@ -157,7 +164,7 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
     });
 
 
-    const studentEmailsOnClassroom = await Classroom.find({ students }).distinct('emailAddress');
+    const studentEmailsOnClassroom = await Classroom.find(students).distinct('emailAddress');
 
     const studentEmails = [...studentEmailsOnClassroom];
 
@@ -167,24 +174,29 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
       text: `Title: ${title}\nContent: ${content}`
     }
 
-    for (const email of studentEmails) {
+    await Promise.all(
+    studentEmails.map(async (email) => {
       try {
-        mailOptions.to = email;
-        await transporter.sendMail(mailOptions);
+        const personalizedMailOptions = {
+          ...mailOptions,
+          to: email
+        };
+    
+        await transporter.sendMail(personalizedMailOptions);
         console.log(`Email has been sent to ${email}`);
       } catch (error) {
-        console.error(`Error sending email to ${email} Internal server error. Please try again later.`)
-    }
-  }
+        console.error(`${error}`)
+      }
+  })
+)
+  await announcement.save()
 
-    await announcement.save();
-
-    res.status(201).json({ message: 'Announcement created successfully.' })
+res.status(201).json({ message: 'Announcement created successfully.' })
 
 
   } catch (error) {
-    res.status(500).json({ message: `There is an error: Internal server error. Please try again later.` })
-  }
+  res.status(500).json({ message: `There is an error: Internal server error. Please try again later.` })
+}
 });
 
 const updateClassAnnouncement = asyncHandler(async (req, res) => {
@@ -219,14 +231,13 @@ const updateClassAnnouncement = asyncHandler(async (req, res) => {
     }
 
     await updatedAnnouncement.save()
-    
+
     res.status(200).json({ message: "Class Announcement has been updated." })
 
   } catch (error) {
     res.status(500).json({ message: 'There is an error', error });
   };
 })
-
 
 
 const deleteClassAnnouncement = asyncHandler(async (req, res) => {
@@ -244,7 +255,6 @@ const deleteClassAnnouncement = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `Internal server error. Please try again later.` });
   }
 })
-
 
 
 const assignStudentToClass = asyncHandler(async (req, res) => {
@@ -283,6 +293,7 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
   }
 });
 
+
 const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
   try {
     const { studentName, sectionName } = req.body;
@@ -296,37 +307,34 @@ const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
       res.status(404).json({ message: 'Classroom not found. Please check the section name properly.' })
     }
 
-
     const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
 
     if (!existingStudent) {
-      res.status(404).json({message: 'Student not found. Please check the credentials properly.'})
+      res.status(404).json({ message: 'Student not found. Please check the credentials properly.' })
     }
 
-    const studentRecord = await Student.findOne({firstName, lastName, emailAddress });
+    const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
 
     if (!studentRecord) {
-      res.status(404).json({message: 'Student not found in enrolled records.'})
+      res.status(404).json({ message: 'Student not found in enrolled records.' })
     }
 
     const updatedStudent = await Classroom.findOneAndUpdate({
       firstName,
       lastName,
       emailAddress
-    }, {new: true})
+    }, { new: true })
 
-    const updatedClassroom = await Classroom.findOneAndUpdate({sectionName, 'students.firstName': firstName, 'students.lastName': lastName, 'students.emailAddress': emailAddress},
-    { $set: {'students.$': updatedStudent}},
-    { new: true},
+    const updatedClassroom = await Classroom.findOneAndUpdate({ sectionName, 'students.firstName': firstName, 'students.lastName': lastName, 'students.emailAddress': emailAddress },
+      { $set: { 'students.$': updatedStudent } },
+      { new: true },
     )
 
-
-    res.status(200).json({message: 'Student on this class has been updated successfully.', updatedStudent, updatedClassroom})
+    res.status(200).json({ message: 'Student on this class has been updated successfully.', updatedStudent, updatedClassroom })
   } catch (error) {
     res.status(500).json({ message: 'Internal server error. Please try again later.' })
   }
 })
-
 
 const removeStudentToClass = asyncHandler(async (req, res) => {
   try {
@@ -358,27 +366,6 @@ const removeStudentToClass = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `Internal server error. Please try again later.` })
   }
 })
-
-// const requestResetPassword = asyncHandler(async(req,res) => {
-//   try {
-
-//   const {username, email} = req.body
-
-//   const teacher =   await Teacher.findById({ username, email })
-
-//   const token = generateAuthToken
-
-//   teacher.resetPasswordToken = token;
-//   await teacher.save()
-
-//   sendResetPasswordNotificationToAdmin(token, teacher)
-
-//   res.status(200).json({message: 'Request has been delivered.'})
-
-//   } catch (error) {
-//     res.status(500).json({message: `Internal server error. Please try again later.`})
-//   }
-// });
 
 module.exports = {
   teacherLogin,

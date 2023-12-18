@@ -23,10 +23,10 @@ router.patch(
   teacherController.updateTeacherProfile
 );
 router.patch(
-  "/class/assignStudent",
-  verifyToken,
+  "/class/assign-student",
+  // verifyToken,
   teacherController.assignStudentToClass
-);
+); // /class/assignStudent
 
 router.patch("/class/update-assigned-student", verifyToken, teacherController.updateAssignedStudentToClass)
 router.delete(
