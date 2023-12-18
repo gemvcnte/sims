@@ -141,11 +141,35 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const getAssignedClass = asyncHandler(async (req, res) => {
+  try {
+    const { firstName, lastName, emailAddress } = req.body;
+
+    const assignedClasses = await Classroom.find({
+      'students.firstName': firstName,
+      'students.lastName': lastName,
+      'students.emailAddress': emailAddress,
+    });
+
+    if (!assignedClasses || assignedClasses.length === 0) {
+      res.status(400).json({ message: 'Student is not assigned to any classes.' });
+    } else {
+      res.status(200).json({
+        message: 'Assigned Classes retrieved successfully',
+        data: assignedClasses,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+  }
+});
+
 module.exports = {
   studentLogin,
   getStudentSchedule,
   getStudentAnnouncements,
   getStudentProfile,
   updateStudentProfile,
+  getAssignedClass,
   // requestUpdateStudentProfile,
 };
