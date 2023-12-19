@@ -63,7 +63,7 @@ const getTeacherProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const getStudentEnrolled = asyncHandler(async (req, res) => {
+const getEnrolledStudents = asyncHandler(async (req, res) => {
   try {
     const findStudents = await Student.find({}, 'firstName lastName emailAddress');
 
@@ -384,5 +384,5 @@ module.exports = {
   updateAssignedStudentToClass,
   removeStudentToClass,
   getAssignedClasses,
-  getStudentEnrolled,
+  getEnrolledStudents,
 };
