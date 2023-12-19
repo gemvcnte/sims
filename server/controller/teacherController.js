@@ -116,7 +116,7 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 // Teacher Post Class Announcement on the specific
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement, duration } = req.body;
+    const { title, content, typeOfAnnouncement, } = req.body;
 
 
     const createdBy = req.user && req.user.username ? req.user.username : `Teacher ${username}`
@@ -126,7 +126,7 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
       content,
       createdBy,
       typeOfAnnouncement,
-      duration,
+    
     });
 
 
@@ -167,7 +167,7 @@ res.status(201).json({ message: 'Announcement created successfully.' })
 
 const updateClassAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement, duration } = req.body;
+    const { title, content, typeOfAnnouncement, } = req.body;
 
 
     const { teacherName, teacherEmail } = req.user
@@ -176,7 +176,7 @@ const updateClassAnnouncement = asyncHandler(async (req, res) => {
       title,
       content,
       typeOfAnnouncement,
-      duration,
+    
     })
 
     const studentEmails = await Student.find({}).distinct('emailAddress');

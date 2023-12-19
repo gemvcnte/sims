@@ -675,7 +675,7 @@ const deleteClassroom = asyncHandler(async (req, res) => {
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement, duration } = req.body;
+    const { title, content, typeOfAnnouncement, } = req.body;
 
     const createdBy = req.user && req.user.username ? req.user.username : 'admin';
 
@@ -684,7 +684,6 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
       content,
       createdBy,
       typeOfAnnouncement,
-      duration,
     });
 
     await Announcement.insertMany([announcement]);
@@ -708,7 +707,6 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
             <p>${content}</p>
             <p>Created By: ${createdBy}</p>
             <p>Type of Announcement: ${typeOfAnnouncement || 'Important Announcement'}</p>
-            <p>Duration: ${duration}</p>
           </body>
         </html>
       `,
@@ -811,7 +809,7 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
 //post faculty announcement only
 const createFacultyAnnouncement = asyncHandler(async(req,res) => {
   try {
-    const { title, content, typeOfAnnouncement, duration
+    const { title, content, typeOfAnnouncement,
     } = req.body;
 
 
@@ -820,7 +818,6 @@ const createFacultyAnnouncement = asyncHandler(async(req,res) => {
       content, 
       createdBy,
       typeOfAnnouncement, 
-      duration,
     });
 
     await Announcement.insertMany([facultyAnnouncement])
@@ -864,7 +861,7 @@ const createFacultyAnnouncement = asyncHandler(async(req,res) => {
 // update faculty announcement only
 const updateFacultyAnnouncement = asyncHandler(async(res,req) => {
   try {
-    const { title, content, typeOfAnnouncement, duration} = req.body
+    const { title, content, typeOfAnnouncement,} = req.body
 
 
     const updatedAnnouncement = await Announcement.findOneAndUpdate({title, content},
