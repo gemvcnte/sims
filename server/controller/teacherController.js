@@ -63,6 +63,21 @@ const getTeacherProfile = asyncHandler(async (req, res) => {
   }
 });
 
+const getStudentEnrolled = asyncHandler(async (req, res) => {
+  try {
+    const findStudents = await Student.find({}, 'firstName lastName emailAddress');
+
+    if (!findStudents.length) {
+      res.status(404).json({ message: "There are no students enrolled." });
+    } else {
+      res.status(200).json({ message: 'Students found.', data: findStudents });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+  }
+});
+
+
 //
 const updateTeacherProfile = asyncHandler(async (req, res) => {
   try {
@@ -70,7 +85,7 @@ const updateTeacherProfile = asyncHandler(async (req, res) => {
     const updatedProfileData = req.body;
 
     // Check if the user making the request matches the user ID in the updatedProfileData
-    if (_id !== updatedProfileData._id43) {
+    if (_id !== updatedProfileData._id) {
       res.status(403).json({
         message:
           "Forbidden: You do not have permission to update this profile.",
@@ -117,8 +132,6 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement, } = req.body;
-
-
     const createdBy = req.user && req.user.username ? req.user.username : `Teacher ${username}`
 
     const announcement = new Announcement({
@@ -128,7 +141,6 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
       typeOfAnnouncement,
     
     });
-
 
     const studentEmailsOnClassroom = await Classroom.find(students).distinct('emailAddress');
 
@@ -157,7 +169,7 @@ const postClassAnnouncement = asyncHandler(async (req, res) => {
 )
   await announcement.save()
 
-res.status(201).json({ message: 'Announcement created successfully.' })
+  res.status(201).json({ message: 'Announcement created successfully.' })
 
 
   } catch (error) {
@@ -372,4 +384,5 @@ module.exports = {
   updateAssignedStudentToClass,
   removeStudentToClass,
   getAssignedClasses,
+  getStudentEnrolled,
 };
