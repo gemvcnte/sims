@@ -334,31 +334,27 @@ const removeStudentToClass = asyncHandler(async (req, res) => {
 
 const getAssignedClasses = asyncHandler(async (req, res) => {
   try {
-    const { username } = req.body; // Assuming `id` is the username of the teacher
+    const { 
+      adviser, 
+      // subjectTeachers 
+    } = req.body;
 
-    const assignedTeacher = await Teacher.findOne({ id: username });
+    const assignedClasses = await Classroom.find({
+      $or: [
+        { adviser: adviser },
+        // { subjectTeachers: subjectTeachers },
+        { 'subjectTeachers.emailAddress': adviser }, // Assuming emailAddress is unique
+      ],
+    });
 
-    if (!assignedTeacher) {
-      res.status(404).json({ message: 'Teacher not found.' });
-    } else if (!assignedTeacher.subjectTeachers || assignedTeacher.subjectTeacher.length === 0 || !assignedTeacher.adviser || assignedTeacher) {
-      res.status(400).json({ message: 'The teacher is not assigned to any classes.' });
-    } else {
-      const assignedClasses = await Classroom.find({
-        $or: [
-          {
-            'adviser.adviser': assignedTeacher.adviser,
-            'subjectTeachers.firstName': assignedTeacher.firstName,
-            'subjectTeachers.lastName': assignedTeacher.lastName,
-            'subjectTeachers.subject': assignedTeacher.subject,
-          },
-        ],
-      });
-
-      res.status(200).json({
-        message: 'Assigned Classes retrieved successfully',
-        data: assignedClasses,
-      });
+    if (!assignedClasses || assignedClasses.length === 0) {
+      return res.status(404).json({ message: 'Teacher not found or not assigned to any classes.' });
     }
+
+    return res.status(200).json({
+      message: 'Assigned Classes retrieved successfully',
+      data: assignedClasses,
+    });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error. Please try again later.' });
   }
