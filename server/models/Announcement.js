@@ -10,14 +10,14 @@ const announcementSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    duration: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: (value) => value > 0,
-            message: 'Duration must be greater number than 0.',
-        },
-    },
+    // duration: {
+    //     type: Number,
+    //     required: true,
+    //     validate: {
+    //         validator: (value) => value > 0,
+    //         message: 'Duration must be greater number than 0.',
+    //     },
+    // },
     createdBy: {
         type: String,
         required: true,
