@@ -34,7 +34,14 @@ router.delete(
   verifyToken,
   teacherController.removeStudentToClass
 );
-router.get('/class/getAssignedClasses', verifyToken, teacherController.getAssignedClasses);
+router.get('/class/getAssignedClasses', 
+// verifyToken, 
+teacherController.getAssignedClasses);
+
+router.get('/getStudents', 
+// verifyToken,
+teacherController.getEnrolledStudents
+)
 
 
 module.exports = router;
