@@ -1,5 +1,6 @@
 const { Student } = require("../models/StudentModel");
 const { Announcement } = require("../models/Announcement");
+const { Classroom } = require("../models/ClassroomModel");
 const bcryptjs = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
@@ -143,12 +144,16 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
 
 const getAssignedClass = asyncHandler(async (req, res) => {
   try {
-    const { firstName, lastName, emailAddress } = req.body;
+    const { 
+      firstName, 
+      lastName, 
+      // emailAddress 
+    } = req.body;
 
     const assignedClasses = await Classroom.find({
       'students.firstName': firstName,
       'students.lastName': lastName,
-      'students.emailAddress': emailAddress,
+      // 'students.emailAddress': emailAddress,
     });
 
     if (!assignedClasses || assignedClasses.length === 0) {
@@ -160,7 +165,7 @@ const getAssignedClass = asyncHandler(async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+    res.status(500).json({ message: `Internal server error. Please try again later. ${error}`  });
   }
 });
 

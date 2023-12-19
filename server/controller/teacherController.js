@@ -113,39 +113,6 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
   }
 });
 
-
-const getAssignedClasses = asyncHandler(async (req, res) => {
-  try {
-    const { id } = req.body; // Assuming `id` is the username of the teacher
-
-    const assignedTeacher = await Teacher.findOne({ username: id });
-
-    if (!assignedTeacher) {
-      res.status(404).json({ message: 'Teacher not found.' });
-    } else if (!assignedTeacher.subjectTeachers || assignedTeacher.subjectTeachers.length === 0) {
-      res.status(400).json({ message: 'The teacher is not assigned to any classes.' });
-    } else {
-      const assignedClasses = await Classroom.find({
-        $or: [
-          {
-            'subjectTeachers.firstName': assignedTeacher.firstName,
-            'subjectTeachers.lastName': assignedTeacher.lastName,
-            'subjectTeachers.subject': assignedTeacher.subject,
-          },
-        ],
-      });
-
-      res.status(200).json({
-        message: 'Assigned Classes retrieved successfully',
-        data: assignedClasses,
-      });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error. Please try again later.' });
-  }
-});
-
-
 // Teacher Post Class Announcement on the specific
 const postClassAnnouncement = asyncHandler(async (req, res) => {
   try {
@@ -255,13 +222,12 @@ const deleteClassAnnouncement = asyncHandler(async (req, res) => {
   }
 })
 
-
 const assignStudentToClass = asyncHandler(async (req, res) => {
   try {
     const { studentName, sectionName } = req.body;
     const [firstName, lastName, emailAddress] = studentName.split(' ');
 
-    console.log('Attempting to assign student:', { firstName, lastName, sectionName });
+    console.log('Attempting to assign student:', { firstName, lastName, emailAddress, sectionName });
 
     const existingClassroom = await Classroom.findOne({ sectionName });
 
@@ -281,16 +247,17 @@ const assignStudentToClass = asyncHandler(async (req, res) => {
       res.status(404).json({ message: 'Student not found in enrolled records.' });
     }
 
-    existingClassroom.students.push({ firstName, lastName, emailAddress });
+    existingClassroom.students.push({ firstName, lastName, emailAddress }); 
 
     await existingClassroom.save();
 
     res.status(200).json({ message: 'Student has been assigned to this class' });
   } catch (error) {
     console.error('Error in assignStudentToClass:', error);
-    res.status(500).json({ message: `Internal server error. Please try again later.` });
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
   }
 });
+
 
 
 const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
@@ -335,12 +302,11 @@ const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
   }
 })
 
+
 const removeStudentToClass = asyncHandler(async (req, res) => {
   try {
     const { studentName, sectionName } = req.body;
-
-    const [firstName, lastName] = studentName.split(' ') || studentName.split('');
-
+    const [firstName, lastName] = studentName.split(' ') || studentName.split('')
 
     const existingClassroom = await Classroom.findOne({ sectionName })
 
@@ -365,6 +331,38 @@ const removeStudentToClass = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `Internal server error. Please try again later.` })
   }
 })
+
+const getAssignedClasses = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.body; // Assuming `id` is the username of the teacher
+
+    const assignedTeacher = await Teacher.findOne({ id: username });
+
+    if (!assignedTeacher) {
+      res.status(404).json({ message: 'Teacher not found.' });
+    } else if (!assignedTeacher.subjectTeachers || assignedTeacher.subjectTeacher.length === 0 || !assignedTeacher.adviser || assignedTeacher) {
+      res.status(400).json({ message: 'The teacher is not assigned to any classes.' });
+    } else {
+      const assignedClasses = await Classroom.find({
+        $or: [
+          {
+            'adviser.adviser': assignedTeacher.adviser,
+            'subjectTeachers.firstName': assignedTeacher.firstName,
+            'subjectTeachers.lastName': assignedTeacher.lastName,
+            'subjectTeachers.subject': assignedTeacher.subject,
+          },
+        ],
+      });
+
+      res.status(200).json({
+        message: 'Assigned Classes retrieved successfully',
+        data: assignedClasses,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+  }
+});
 
 module.exports = {
   teacherLogin,
