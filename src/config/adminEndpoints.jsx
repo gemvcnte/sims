@@ -8,13 +8,13 @@ export const updateAdminProfileEndpoint = `${baseUrl}/admin/profile/update`;
 export const registrationEndpoint = `${baseUrl}/apply`;
 
 // application monitoring
-export const getPendingApplicationsEndpoint = `${baseUrl}/admin/getPending`;
-export const enrollApplicationEndpoint = `${baseUrl}/admin/enrollStudent`;
-export const rejectApplicationEndpoint = `${baseUrl}/admin/rejectApplication`;
-export const updateApplicationEndpoint = `${baseUrl}/admin/updateApplication`;
+export const getPendingApplicationsEndpoint = `${baseUrl}/admin/get-pending`;
+export const enrollApplicationEndpoint = `${baseUrl}/admin/enroll-student`;
+export const rejectApplicationEndpoint = `${baseUrl}/admin/reject-application`;
+export const updateApplicationEndpoint = `${baseUrl}/admin/update-application`;
 
 // creating accounts
-export const createTeacherEndpoint = `${baseUrl}/admin/createTeacher`;
+export const createTeacherEndpoint = `${baseUrl}/admin/create-teacher`;
 export const createAdminEndpoint = `${baseUrl}/admin/create`;
 
 // class
