@@ -19,3 +19,4 @@ export const createAdminEndpoint = `${baseUrl}/admin/create`;
 
 // class
 export const createClassEndpoint = `${baseUrl}/admin/class/create`;
+export const getClassesEndpoint = `${baseUrl}/admin/class/getAll`;
