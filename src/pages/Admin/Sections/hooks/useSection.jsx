@@ -1,3 +1,5 @@
+import { getClassesEndpoint } from "@/config/adminEndpoints";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 import { useEffect, useState } from "react";
 
 export default function useSection() {
@@ -9,14 +11,7 @@ export default function useSection() {
   useEffect(() => {
     const fetchSections = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/admin/class/getAll",
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          },
-        );
+        const response = await fetch(getClassesEndpoint, getAuthHeaders());
         const data = await response.json();
 
         if (response.ok) {
