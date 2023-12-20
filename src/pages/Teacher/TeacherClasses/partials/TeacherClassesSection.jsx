@@ -1,5 +1,6 @@
 import React from "react";
 import { useAssignedClasses } from "../hooks";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function TeacherClassesSection() {
   const { assignedClasses, loading, error } = useAssignedClasses();
