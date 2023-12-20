@@ -14,7 +14,7 @@ export default function TeacherSidebar() {
         Schedule
       </SidebarItem>
 
-      <SidebarItem to="" icon="mdi:google-classroom">
+      <SidebarItem to="/classes" icon="mdi:google-classroom">
         Classes
       </SidebarItem>
 
