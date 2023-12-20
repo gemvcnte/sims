@@ -57,9 +57,10 @@ function LoginForm({ role, setSelectedRole }) {
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
         {/* <button
           onClick={() => setSelectedRole(null)}
-          className="mb-4 flex gap-2 rounded-lg p-2 "
+          className="flex justify-end gap-2 rounded-lg text-primary"
         >
           <Icon icon="majesticons:arrow-up" width="24" height="24" rotate={3} />
+          <span>back</span>
         </button> */}
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
