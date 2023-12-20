@@ -5,6 +5,8 @@ import notify from "../../../../../utils/BlankFieldNotification";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { getBaseUrl } from "@src/utils/configUtils";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import { ToastContainer } from "react-toastify";
 
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
@@ -19,7 +21,6 @@ function LoginForm({ role, setSelectedRole }) {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log(loginData);
 
     const isFormValid = FormValidator(loginData, 4);
 
@@ -28,8 +29,6 @@ function LoginForm({ role, setSelectedRole }) {
         const response = await axios.post(apiUrl, loginData);
 
         if (response.status === 200) {
-          console.log(response);
-
           const token = response.data.token;
           localStorage.setItem("authToken", token);
           navigate("/");
@@ -38,7 +37,7 @@ function LoginForm({ role, setSelectedRole }) {
           console.log("Login failed");
         }
       } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.response.data.message);
       }
     } else {
       notify();
@@ -54,14 +53,15 @@ function LoginForm({ role, setSelectedRole }) {
 
   return (
     <>
+      <ToastContainer />
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
-        {/* <button
+        <button
           onClick={() => setSelectedRole(null)}
           className="flex justify-end gap-2 rounded-lg text-primary"
         >
           <Icon icon="majesticons:arrow-up" width="24" height="24" rotate={3} />
           <span>back</span>
-        </button> */}
+        </button>
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
             {!loginData.username ? (
