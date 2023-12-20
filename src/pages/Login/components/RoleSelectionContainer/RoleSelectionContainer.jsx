@@ -10,7 +10,7 @@ function RoleSelectionContainer() {
   };
 
   return (
-    <main className="px-8">
+    <main className="-mt-8 px-8">
       {!selectedRole && (
         <section className="mx-auto mt-12 flex max-w-[350px] flex-col gap-4 rounded-lg p-4">
           <RoleSelectionButton

@@ -5,6 +5,8 @@ import notify from "../../../../../utils/BlankFieldNotification";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { getBaseUrl } from "@src/utils/configUtils";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import { ToastContainer } from "react-toastify";
 
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
@@ -19,7 +21,6 @@ function LoginForm({ role, setSelectedRole }) {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log(loginData);
 
     const isFormValid = FormValidator(loginData, 4);
 
@@ -28,8 +29,6 @@ function LoginForm({ role, setSelectedRole }) {
         const response = await axios.post(apiUrl, loginData);
 
         if (response.status === 200) {
-          console.log(response);
-
           const token = response.data.token;
           localStorage.setItem("authToken", token);
           navigate("/");
@@ -38,7 +37,7 @@ function LoginForm({ role, setSelectedRole }) {
           console.log("Login failed");
         }
       } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.response.data.message);
       }
     } else {
       notify();
@@ -54,7 +53,15 @@ function LoginForm({ role, setSelectedRole }) {
 
   return (
     <>
+      <ToastContainer />
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
+        <button
+          onClick={() => setSelectedRole(null)}
+          className="flex justify-end gap-2 rounded-lg text-sm text-[#9FA9B9]"
+        >
+          <Icon icon="majesticons:arrow-up" width="20" height="20" rotate={3} />
+          <span>back</span>
+        </button>
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
             {!loginData.username ? (
@@ -109,8 +116,8 @@ function LoginForm({ role, setSelectedRole }) {
           />
         </div>
 
-        <button
-          className="text-white-400 mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 transition-all duration-300 hover:gap-8"
+       <button
+          className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
           type="submit"
         >
           Login
