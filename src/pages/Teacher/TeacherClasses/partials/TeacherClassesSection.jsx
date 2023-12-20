@@ -1,6 +1,6 @@
 import React from "react";
 import { useAssignedClasses } from "../hooks";
-import showErrorNotification from "@/utils/ShowErrorNotification";
+import TeacherClassCard from "./TeacherClassCard";
 
 export default function TeacherClassesSection() {
   const { assignedClasses, loading, error } = useAssignedClasses();
@@ -14,22 +14,15 @@ export default function TeacherClassesSection() {
   }
 
   return (
-    <section>
-      <ul>
+    <section className="px-4">
+      <div className="flex flex-col gap-4">
         {assignedClasses.map((assignedClass) => (
-          <li key={assignedClass._id}>
-            <strong>{assignedClass.sectionName}</strong> - Grade
-            {assignedClass.gradeLevel}
-            <ul>
-              {assignedClass.students.map((student) => (
-                <li key={student._id}>
-                  {student.firstName} {student.lastName}
-                </li>
-              ))}
-            </ul>
-          </li>
+          <TeacherClassCard
+            sectionName={assignedClass.sectionName}
+            key={assignedClass._id}
+          />
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

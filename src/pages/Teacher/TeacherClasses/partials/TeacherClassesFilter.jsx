@@ -14,7 +14,7 @@ export default function TeacherClassesFilter() {
     <main className="p-4">
       <Select>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Filter" />
+          <SelectValue placeholder="All" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
