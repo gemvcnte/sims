@@ -15,6 +15,7 @@ export default function TeacherRouter() {
           <Route path="/" element={<Teacher />} />
           <Route path="/dashboard" element={<TeacherDashboard />} />
           <Route path="/profile" element={<TeacherProfile />} />
+          <Route path="/classes" element={<TeacherProfile />} />
         </Routes>
       </div>
     </>
