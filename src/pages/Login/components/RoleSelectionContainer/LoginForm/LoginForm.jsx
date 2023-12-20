@@ -54,14 +54,14 @@ function LoginForm({ role, setSelectedRole }) {
   return (
     <>
       <ToastContainer />
+      <button
+        onClick={() => setSelectedRole(null)}
+        className="flex justify-end gap-2 rounded-lg text-sm text-[#9FA9B9]"
+      >
+        <Icon icon="majesticons:arrow-up" width="20" height="20" rotate={3} />
+        <span>back</span>
+      </button>
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
-        <button
-          onClick={() => setSelectedRole(null)}
-          className="flex justify-end gap-2 rounded-lg text-sm text-[#9FA9B9]"
-        >
-          <Icon icon="majesticons:arrow-up" width="20" height="20" rotate={3} />
-          <span>back</span>
-        </button>
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
             {!loginData.username ? (
@@ -116,7 +116,7 @@ function LoginForm({ role, setSelectedRole }) {
           />
         </div>
 
-       <button
+        <button
           className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
           type="submit"
         >
