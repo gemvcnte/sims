@@ -55,6 +55,12 @@ function LoginForm({ role, setSelectedRole }) {
   return (
     <>
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
+        {/* <button
+          onClick={() => setSelectedRole(null)}
+          className="mb-4 flex gap-2 rounded-lg p-2 "
+        >
+          <Icon icon="majesticons:arrow-up" width="24" height="24" rotate={3} />
+        </button> */}
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
             {!loginData.username ? (
@@ -110,7 +116,7 @@ function LoginForm({ role, setSelectedRole }) {
         </div>
 
         <button
-          className="text-white-400 mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 transition-all duration-300 hover:gap-8"
+          className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
           type="submit"
         >
           Login
