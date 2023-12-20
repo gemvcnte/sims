@@ -12,13 +12,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
 
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import CreateAnnouncementModal from "@/pages/Admin/CreateAnnouncementModal";
+
 export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     toggleSidebar();
+  };
+
+  const handleDialogClick = (event) => {
+    // event.preventDefault();
+    setIsDialogOpen(!isDialogOpen);
   };
 
   return (
@@ -43,9 +52,14 @@ export function AnnouncementsDropdown({}) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>Create a New Announcement</Link>
-        </DropdownMenuItem>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger>
+            <DropdownMenuItem>
+              <Link onClick={handleDialogClick}>Create a New Announcement</Link>
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <CreateAnnouncementModal onClose={handleDialogClick} />
+        </Dialog>
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Announcements</Link>
