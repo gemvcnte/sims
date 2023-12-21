@@ -385,11 +385,20 @@ const deleteTeacher = asyncHandler(async (req, res) => {
 const getAllTeachers = asyncHandler(async (req, res) => {
   try {
     const retrieveTeachers = await Teacher.find();
+    const retrieveAdminTeachers = await Admin.find();
 
+    const allTeachers = [...retrieveTeachers, ...retrieveAdminTeachers];
+
+    // sort alphabetical
+    allTeachers.sort((a,b) => {
+      const fullNameTeacher = `${a.lastName}, ${a.firstName}, ${a.middleName}`;
+      const fullNameAdmin = `${b.lastName}, ${b.firstName}, ${b.middleName}`;
+      return fullNameTeacher.localeCompare(fullNameAdmin);
+    })
     // Map the retrieved data to create a new array with the desired fields
-    const modifiedData = retrieveTeachers.map((teacher) => ({
+    const modifiedData = allTeachers.map((teacher) => ({
       username: teacher.username,
-      fullName: `${teacher.firstName} ${teacher.lastName}`,
+      fullName: `${teacher.lastName}, ${teacher.firstName}, ${teacher.middleName}`,
     }));
 
     res.status(200).json({
