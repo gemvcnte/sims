@@ -4,13 +4,12 @@ import axios from "axios";
 import notify from "../../../../../utils/BlankFieldNotification";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
-import { getBaseUrl } from "@src/utils/configUtils";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
 
 function LoginForm({ role, setSelectedRole }) {
   const navigate = useNavigate();
-  const baseUrl = getBaseUrl();
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
   let apiUrl = `${baseUrl}/${role}/login`;
 
   const [loginData, setLoginData] = useState({
