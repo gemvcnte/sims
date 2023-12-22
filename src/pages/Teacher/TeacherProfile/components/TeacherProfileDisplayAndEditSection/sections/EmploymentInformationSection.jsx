@@ -18,7 +18,7 @@ export function EmploymentInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="tin" className="text-right">
+          <Label htmlFor="tin" className="text-right text-xs sm:text-sm">
             TIN
           </Label>
           <InputField
@@ -30,7 +30,7 @@ export function EmploymentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="gsisNumber" className="text-right">
+          <Label htmlFor="gsisNumber" className="text-right text-xs sm:text-sm">
             GSIS BP
           </Label>
           <InputField
@@ -41,7 +41,10 @@ export function EmploymentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="plantillaNumber" className="text-right">
+          <Label
+            htmlFor="plantillaNumber"
+            className="text-right text-xs sm:text-sm"
+          >
             Plantilla Number
           </Label>
           <InputField
