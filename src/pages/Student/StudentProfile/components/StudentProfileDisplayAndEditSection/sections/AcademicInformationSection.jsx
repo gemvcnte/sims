@@ -18,7 +18,7 @@ export function AcademicInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="lrn" className="text-right">
+          <Label htmlFor="lrn" className="text-right text-xs sm:text-sm">
             LRN
           </Label>
           <InputField
@@ -31,7 +31,7 @@ export function AcademicInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="schoolYear" className="text-right">
+          <Label htmlFor="schoolYear" className="text-right text-xs sm:text-sm">
             School Year
           </Label>
           <select
@@ -48,7 +48,7 @@ export function AcademicInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="semester" className="text-right">
+          <Label htmlFor="semester" className="text-right text-xs sm:text-sm">
             Semester
           </Label>
           <select
@@ -65,7 +65,7 @@ export function AcademicInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="track" className="text-right">
+          <Label htmlFor="track" className="text-right text-xs sm:text-sm">
             Track
           </Label>
           <select
@@ -82,7 +82,7 @@ export function AcademicInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="strand" className="text-right">
+          <Label htmlFor="strand" className="text-right text-xs sm:text-sm">
             Strand
           </Label>
           <select

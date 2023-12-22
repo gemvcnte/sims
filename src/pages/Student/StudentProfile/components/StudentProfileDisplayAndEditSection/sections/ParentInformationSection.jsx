@@ -18,7 +18,7 @@ export function ParentInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="fatherName" className="text-right">
+          <Label htmlFor="fatherName" className="text-right text-xs sm:text-sm">
             Father's Name
           </Label>
           <InputField
@@ -33,7 +33,7 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="motherName" className="text-right">
+          <Label htmlFor="motherName" className="text-right text-xs sm:text-sm">
             Mother's Name
           </Label>
           <InputField
@@ -48,7 +48,10 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="FatherContactNumber" className="text-right">
+          <Label
+            htmlFor="FatherContactNumber"
+            className="text-right text-xs sm:text-sm"
+          >
             Father's Tel. No.
           </Label>
           <InputField
@@ -65,7 +68,10 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="motherContactNumber" className="text-right">
+          <Label
+            htmlFor="motherContactNumber"
+            className="text-right text-xs sm:text-sm"
+          >
             Mother's Tel. No.
           </Label>
           <InputField
@@ -82,7 +88,10 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="guardianName" className="text-right">
+          <Label
+            htmlFor="guardianName"
+            className="text-right text-xs sm:text-sm"
+          >
             Guardian's Name
           </Label>
           <InputField
@@ -95,7 +104,10 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="guardianContactNumber" className="text-right">
+          <Label
+            htmlFor="guardianContactNumber"
+            className="text-right text-xs sm:text-sm"
+          >
             Guardian's Tel. No.
           </Label>
           <InputField
@@ -110,7 +122,10 @@ export function ParentInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="guardianRelationship" className="text-right">
+          <Label
+            htmlFor="guardianRelationship"
+            className="text-right text-xs sm:text-sm"
+          >
             Guardian Relationship
           </Label>
           <select
