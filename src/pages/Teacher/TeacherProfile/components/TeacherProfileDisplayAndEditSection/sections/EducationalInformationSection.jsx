@@ -7,7 +7,7 @@ export function EducationalInformationSection({
   handleInputChange,
 }) {
   return (
-    <section className=" educational-information-section gap-4 break-words p-4 sm:flex">
+    <section className="educational-information-section gap-4 break-words py-4 sm:flex">
       <header className="mb-2 text-center sm:max-w-[25%]  sm:text-start md:max-w-[30%] ">
         <h1 className="font-normal">Educational and Professional Details</h1>
         <p className="hidden text-sm font-thin text-muted-foreground sm:block">
@@ -18,7 +18,10 @@ export function EducationalInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="numOfYearsTeaching" className="text-right">
+          <Label
+            htmlFor="numOfYearsTeaching"
+            className="text-right text-xs sm:text-sm"
+          >
             Teaching Year/s
           </Label>
           <InputField
@@ -32,7 +35,10 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="designation" className="text-right">
+          <Label
+            htmlFor="designation"
+            className="text-right text-xs sm:text-sm"
+          >
             Designation
           </Label>
           <select
@@ -60,7 +66,10 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="specialization" className="text-right">
+          <Label
+            htmlFor="specialization"
+            className="text-right text-xs sm:text-sm"
+          >
             Specialization
           </Label>
           <select
@@ -78,8 +87,11 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="highestEducationalAttainment" className="text-right">
-            Highest <span className="hidden sm:block">Educational</span>{" "}
+          <Label
+            htmlFor="highestEducationalAttainment"
+            className="text-right text-xs sm:text-sm"
+          >
+            Highest <span className="hidden sm:block">Educational</span>
             Attainment
           </Label>
           <select
