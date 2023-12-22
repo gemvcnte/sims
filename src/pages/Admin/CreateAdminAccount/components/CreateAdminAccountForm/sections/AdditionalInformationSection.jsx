@@ -18,7 +18,7 @@ export function AdditionalInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="religion" className="text-right">
+          <Label htmlFor="religion" className="text-right text-xs sm:text-sm">
             Religion
           </Label>
           <InputField
@@ -31,7 +31,7 @@ export function AdditionalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="province" className="text-right">
+          <Label htmlFor="province" className="text-right text-xs sm:text-sm">
             Province
           </Label>
           <InputField
@@ -44,7 +44,7 @@ export function AdditionalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="barangay" className="text-right">
+          <Label htmlFor="barangay" className="text-right text-xs sm:text-sm">
             Barangay
           </Label>
           <InputField
@@ -57,7 +57,7 @@ export function AdditionalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="city" className="text-right">
+          <Label htmlFor="city" className="text-right text-xs sm:text-sm">
             City
           </Label>
           <InputField
@@ -70,7 +70,7 @@ export function AdditionalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="zipCode" className="text-right">
+          <Label htmlFor="zipCode" className="text-right text-xs sm:text-sm">
             ZIP Code
           </Label>
           <InputField

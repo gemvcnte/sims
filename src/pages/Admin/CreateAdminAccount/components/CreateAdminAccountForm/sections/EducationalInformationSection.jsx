@@ -18,7 +18,10 @@ export function EducationalInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="numOfYearsTeaching" className="text-right">
+          <Label
+            htmlFor="numOfYearsTeaching"
+            className="text-right text-xs sm:text-sm"
+          >
             Teaching Year/s
           </Label>
           <InputField
@@ -32,7 +35,10 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="designation" className="text-right">
+          <Label
+            htmlFor="designation"
+            className="text-right text-xs sm:text-sm"
+          >
             Designation
           </Label>
           <select
@@ -60,7 +66,10 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="specialization" className="break-words text-right">
+          <Label
+            htmlFor="specialization"
+            className="break-words text-right text-xs sm:text-sm"
+          >
             Specialization
           </Label>
           <select
@@ -78,7 +87,7 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="highestEducationalAttainment" className="text-right">
+          <Label htmlFor="highestEducationalAttainment" className="text-right text-xs sm:text-sm">
             Highest <span className="hidden sm:block">Educational</span>{" "}
             Attainment
           </Label>
