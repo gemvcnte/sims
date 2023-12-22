@@ -19,7 +19,7 @@ export function PersonalInformationSection({
 
       <main className="flex w-full flex-col gap-4">
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="lastName" className="text-right">
+          <Label htmlFor="lastName" className="text-right text-xs sm:text-sm">
             Last Name
           </Label>
           <Input
@@ -34,7 +34,7 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="firstName" className="text-right">
+          <Label htmlFor="firstName" className="text-right text-xs sm:text-sm">
             First Name
           </Label>
           <Input
@@ -49,7 +49,7 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="middleName" className="text-right">
+          <Label htmlFor="middleName" className="text-right text-xs sm:text-sm">
             Middle Name
           </Label>
           <Input
@@ -64,7 +64,10 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="extensionName" className="text-right">
+          <Label
+            htmlFor="extensionName"
+            className="text-right text-xs sm:text-sm"
+          >
             Extension Name
           </Label>
           <select
@@ -83,7 +86,7 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="birthDate" className="text-right">
+          <Label htmlFor="birthDate" className="text-right text-xs sm:text-sm">
             BirthDate
           </Label>
           <InputField
@@ -96,7 +99,7 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="gender" className="text-right">
+          <Label htmlFor="gender" className="text-right text-xs sm:text-sm">
             Gender
           </Label>
           <select
@@ -113,7 +116,10 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="currentAddress" className="text-right">
+          <Label
+            htmlFor="currentAddress"
+            className="text-right text-xs sm:text-sm"
+          >
             Current Address
           </Label>
           <InputField
@@ -126,7 +132,7 @@ export function PersonalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="email" className="text-right">
+          <Label htmlFor="email" className="text-right text-xs sm:text-sm">
             Email
           </Label>
           <InputField
