@@ -23,8 +23,11 @@ export default function TeacherClassesTable() {
         <TableCaption></TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Section Name</TableHead>
+            <TableHead>
+              <span className="hidden sm:inline-block">Section</span> Name
+            </TableHead>
             <TableHead>Adviser</TableHead>
+            <TableHead className="hidden sm:table-cell">Students</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
@@ -36,12 +39,15 @@ export default function TeacherClassesTable() {
             >
               <TableCell className="uppercase">{section.sectionName}</TableCell>
               <TableCell>{section.adviser}</TableCell>
-              <TableCell className="flex items-center gap-2">
-                View Section
+              <TableCell className="hidden sm:table-cell">
+                {section.students.length}
+              </TableCell>
+              <TableCell className="inline-block">
+                View <span className="hidden sm:inline-block">Section</span>
                 <Icon
                   icon="octicon:arrow-down-24"
                   rotate={3}
-                  className="-rotate-45 transform transition-all group-hover:rotate-45"
+                  className="inline-block -rotate-45 transform transition-all group-hover:rotate-45"
                 />
               </TableCell>
             </TableRow>
