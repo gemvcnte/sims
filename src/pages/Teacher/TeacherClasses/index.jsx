@@ -2,6 +2,7 @@ import React from "react";
 import Topbar from "@/components/layout/Topbar";
 import TeacherClassesSection from "./partials/TeacherClassesSection";
 import TeacherClassesFilter from "./partials/TeacherClassesFilter";
+import TeacherClassesTable from "./partials/TeacherClassesTable";
 
 const TeacherClasses = () => {
   return (
@@ -10,6 +11,7 @@ const TeacherClasses = () => {
 
       <TeacherClassesFilter />
       <TeacherClassesSection />
+      <TeacherClassesTable />
     </main>
   );
 };
