@@ -1,18 +1,22 @@
+// TeacherClasses.js
 import React from "react";
 import Topbar from "@/components/layout/Topbar";
-import TeacherClassesSection from "./partials/TeacherClassesSection";
 import TeacherClassesFilter from "./partials/TeacherClassesFilter";
 import TeacherClassesTable from "./partials/TeacherClassesTable";
+import { AssignedClassesProvider } from "./contexts/AssignedClassesContext";
+import { FilteredClassesProvider } from "./contexts/FilteredClassesContext";
 
 const TeacherClasses = () => {
   return (
-    <main className="w-full">
-      <Topbar>CLASSES</Topbar>
-
-      <TeacherClassesFilter />
-      {/* <TeacherClassesSection /> */}
-      <TeacherClassesTable />
-    </main>
+    <AssignedClassesProvider>
+      <FilteredClassesProvider>
+        <main className="w-full">
+          <Topbar>CLASSES</Topbar>
+          <TeacherClassesFilter />
+          <TeacherClassesTable />
+        </main>
+      </FilteredClassesProvider>
+    </AssignedClassesProvider>
   );
 };
 

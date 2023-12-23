@@ -1,3 +1,5 @@
+// TeacherClassesTable.js
+import React from "react";
 import {
   Table,
   TableBody,
@@ -9,20 +11,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
-import { useAssignedClasses } from "../hooks";
+import { useFilteredClassesContext } from "../contexts/FilteredClassesContext";
 
 export default function TeacherClassesTable() {
-  const { assignedClasses, loading, error } = useAssignedClasses();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  const sectionsData = assignedClasses;
+  const { filterSections } = useFilteredClassesContext();
+  const filteredClasses = filterSections();
 
   return (
     <main className="px-4">
@@ -36,7 +29,7 @@ export default function TeacherClassesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sectionsData.map((section) => (
+          {filteredClasses.map((section) => (
             <TableRow
               key={section._id}
               className="group transition-all duration-700 hover:cursor-pointer"
