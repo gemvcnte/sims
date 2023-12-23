@@ -1,31 +1,48 @@
 import React from "react";
-
 import { cn } from "@/lib/utils";
+import { useClassNav } from "../contexts/ClassNavContext";
 
 function ClassNav({ className, ...props }) {
+  const { selectedTab, setTab } = useClassNav();
+
+  console.log(selectedTab);
+
+  const handleTabClick = (tab) => {
+    setTab(tab);
+  };
+
   return (
     <nav
-      className={cn("flex items-center space-x-4 p-4 lg:space-x-6", className)}
+      className={cn("flex items-center space-x-4 px-4 lg:space-x-6", className)}
       {...props}
     >
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium transition-colors hover:text-primary"
+      <p
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+          selectedTab === "students" &&
+          "border-b-2 border-foreground !text-foreground"
+        }`}
+        onClick={() => handleTabClick("students")}
       >
         Students
-      </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+      </p>
+      <p
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+          selectedTab === "subjects" &&
+          "border-b-2 border-foreground !text-foreground"
+        }`}
+        onClick={() => handleTabClick("subjects")}
       >
         Subjects
-      </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+      </p>
+      <p
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+          selectedTab === "schedule" &&
+          "border-b-2 border-foreground !text-foreground"
+        }`}
+        onClick={() => handleTabClick("schedule")}
       >
         Schedule
-      </a>
+      </p>
     </nav>
   );
 }

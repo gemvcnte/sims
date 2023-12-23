@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClassNav from "./partials/ClassNav";
+import { ClassNavProvider } from "./contexts/ClassNavContext";
 
 export default function TeacherSpecificClass() {
   const { id } = useParams();
@@ -32,8 +33,11 @@ export default function TeacherSpecificClass() {
       <Topbar>
         <span className="uppercase">{classDetails.sectionName}</span>
       </Topbar>
-      <ClassNav />
-      <p>specific class</p>
+
+      <ClassNavProvider>
+        <ClassNav />
+        <p className="p-4">specific class</p>
+      </ClassNavProvider>
     </main>
   );
 }
