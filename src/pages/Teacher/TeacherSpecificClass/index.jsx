@@ -3,7 +3,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ClassNav from "./partials/ClassNav";
-import { ClassNavProvider } from "./contexts/ClassNavContext";
+import { ClassNavProvider, useClassNav } from "./contexts/ClassNavContext";
+import StudentsTable from "./partials/StudentsTable";
+import TableController from "./partials/TableController";
 
 export default function TeacherSpecificClass() {
   const { id } = useParams();
@@ -28,6 +30,8 @@ export default function TeacherSpecificClass() {
     return <p>Loading...</p>;
   }
 
+  console.log(classDetails);
+
   return (
     <main className="w-full">
       <Topbar>
@@ -36,7 +40,7 @@ export default function TeacherSpecificClass() {
 
       <ClassNavProvider>
         <ClassNav />
-        <p className="p-4">specific class</p>
+        <TableController classDetails={classDetails} />
       </ClassNavProvider>
     </main>
   );
