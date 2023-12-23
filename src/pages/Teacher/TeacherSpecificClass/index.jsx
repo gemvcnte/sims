@@ -6,27 +6,14 @@ import ClassNav from "./partials/ClassNav";
 import { ClassNavProvider, useClassNav } from "./contexts/ClassNavContext";
 import StudentsTable from "./partials/StudentsTable";
 import TableController from "./partials/TableController";
+import useClassDetails from "./hooks/useClassDetails";
+import Header from "./partials/Header";
 
 export default function TeacherSpecificClass() {
   const { id } = useParams();
-  const [classDetails, setClassDetails] = useState(null);
+  const { classDetails, loading } = useClassDetails(id);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/teacher/class/get-specific-class/${id}`,
-        );
-        setClassDetails(response.data.data);
-      } catch (error) {
-        console.error("Error fetching class details:", error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (!classDetails) {
+  if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -39,7 +26,7 @@ export default function TeacherSpecificClass() {
       </Topbar>
 
       <ClassNavProvider>
-        <ClassNav />
+        <Header />
         <TableController classDetails={classDetails} />
       </ClassNavProvider>
     </main>

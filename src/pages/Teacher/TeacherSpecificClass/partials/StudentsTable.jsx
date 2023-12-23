@@ -16,7 +16,9 @@ export default function StudentsTable({ classDetails }) {
   return (
     <main className="p-4">
       <Table>
-        <TableCaption></TableCaption>
+        <TableCaption>
+          {classDetails.students.length == 0 && "No Students Found"}
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Lastname</TableHead>
@@ -33,7 +35,7 @@ export default function StudentsTable({ classDetails }) {
               <TableCell className="uppercase">{student.lastName}</TableCell>
               <TableCell>{student.firstName}</TableCell>
               <TableCell className="inline-block">
-                View Student Info
+                View <span className="hidden sm:inline">Student</span> Profile
                 <Icon
                   icon="octicon:arrow-down-24"
                   rotate={3}
