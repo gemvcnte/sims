@@ -12,6 +12,9 @@ const generateAuthToken = (user) => {
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
   );
+
+  res.cookie('authToken', token, {httpOnly: true, secure: true, sameSite: 'none'});
+  
   return token;
 };
 
