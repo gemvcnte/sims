@@ -12,10 +12,16 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { useFilteredClassesContext } from "../contexts/FilteredClassesContext";
+import { useNavigate } from "react-router-dom";
 
 export default function TeacherClassesTable() {
   const { filterSections } = useFilteredClassesContext();
   const filteredClasses = filterSections();
+  const navigate = useNavigate();
+
+  const navigateToClass = (classId) => {
+    navigate(`/class/${classId}`);
+  };
 
   return (
     <main className="px-4">
@@ -36,6 +42,7 @@ export default function TeacherClassesTable() {
             <TableRow
               key={section._id}
               className="group transition-all duration-700 hover:cursor-pointer"
+              onClick={() => navigateToClass(section._id)}
             >
               <TableCell className="uppercase">{section.sectionName}</TableCell>
               <TableCell>{section.adviser}</TableCell>

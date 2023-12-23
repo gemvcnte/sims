@@ -5,7 +5,6 @@ import TeacherClassesFilter from "./partials/TeacherClassesFilter";
 import TeacherClassesTable from "./partials/TeacherClassesTable";
 import { AssignedClassesProvider } from "./contexts/AssignedClassesContext";
 import { FilteredClassesProvider } from "./contexts/FilteredClassesContext";
-import ClassNav from "./partials/ClassNav";
 
 const TeacherClasses = () => {
   return (
@@ -14,7 +13,6 @@ const TeacherClasses = () => {
         <main className="w-full">
           <Topbar>CLASSES</Topbar>
           <TeacherClassesFilter />
-          <ClassNav />
           <TeacherClassesTable />
         </main>
       </FilteredClassesProvider>
