@@ -9,37 +9,23 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
-
-const sectionsData = [
-  {
-    _id: "6582fa9eb4e1c7d90680b4e8",
-    sectionName: "12-ninja",
-    gradeLevel: 12,
-    adviser: "joshuagem.vicente",
-    strand: "STEM",
-    students: [],
-    subjectTeachers: [],
-    createdAt: "2023-12-20T14:30:54.316Z",
-    updatedAt: "2023-12-20T14:30:54.316Z",
-    __v: 0,
-  },
-  {
-    _id: "6582fd93b4e1c7d90680b51a",
-    sectionName: "12-pacific",
-    gradeLevel: 12,
-    adviser: "joshuagem.vicente",
-    strand: "TVL-ICT",
-    students: [],
-    subjectTeachers: [],
-    createdAt: "2023-12-20T14:43:31.569Z",
-    updatedAt: "2023-12-20T14:43:31.569Z",
-    __v: 0,
-  },
-];
+import { useAssignedClasses } from "../hooks";
 
 export default function TeacherClassesTable() {
+  const { assignedClasses, loading, error } = useAssignedClasses();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const sectionsData = assignedClasses;
+
   return (
-    <main className="mt-4 px-4">
+    <main className="px-4">
       <Table>
         <TableCaption></TableCaption>
         <TableHeader>

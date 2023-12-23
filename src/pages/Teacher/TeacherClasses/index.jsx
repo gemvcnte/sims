@@ -10,7 +10,7 @@ const TeacherClasses = () => {
       <Topbar>CLASSES</Topbar>
 
       <TeacherClassesFilter />
-      <TeacherClassesSection />
+      {/* <TeacherClassesSection /> */}
       <TeacherClassesTable />
     </main>
   );
