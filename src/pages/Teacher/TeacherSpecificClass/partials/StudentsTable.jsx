@@ -13,8 +13,10 @@ import { Icon } from "@iconify/react";
 import fetchStudentsApi from "../helpers/fetchStudentsApi";
 import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 import { Button } from "@/components/ui/button";
+import { jwtDecode } from "jwt-decode";
 
 export default function StudentsTable({ classDetails }) {
+  console.log(classDetails);
   const [allStudents, setAllStudents] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
@@ -64,14 +66,32 @@ export default function StudentsTable({ classDetails }) {
     }
   };
 
+  const isClassAdviser = () => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      const loggedInUsername = decodedToken.username;
+      const adviserUsername = classDetails.adviser;
+
+      return loggedInUsername === adviserUsername;
+    }
+  };
+
   return (
     <main className="p-4">
-      <div className="mb-4 flex gap-4">
-        <Button variant="outline" onClick={() => setIsEditing((prev) => !prev)}>
-          {isEditing ? "Cancel Editing" : "Edit Students"}
-        </Button>
-        {isEditing && <Button onClick={handleSaveChanges}>Save Changes</Button>}
-      </div>
+      {isClassAdviser() && (
+        <div className="mb-4 flex gap-4">
+          <Button
+            variant="outline"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
+            {isEditing ? "Cancel Editing" : "Edit Students"}
+          </Button>
+          {isEditing && (
+            <Button onClick={handleSaveChanges}>Save Changes</Button>
+          )}
+        </div>
+      )}
 
       <Table>
         {classDetails.students.length === 0 && !isEditing ? (
