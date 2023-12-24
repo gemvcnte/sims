@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableFooter,
+  TableHead,
+  TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
-import axios from "axios";
 import fetchStudentsApi from "../helpers/fetchStudentsApi";
 import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
+import { Button } from "@/components/ui/button";
 
 export default function StudentsTable({ classDetails }) {
   const [allStudents, setAllStudents] = useState([]);
@@ -63,12 +66,26 @@ export default function StudentsTable({ classDetails }) {
 
   return (
     <main className="p-4">
-      <button onClick={() => setIsEditing((prev) => !prev)}>
-        {isEditing ? "Cancel Editing" : "Edit Students"}
-      </button>
-      {isEditing && <button onClick={handleSaveChanges}>Save Changes</button>}
+      <div className="mb-4 flex gap-4">
+        <Button variant="outline" onClick={() => setIsEditing((prev) => !prev)}>
+          {isEditing ? "Cancel Editing" : "Edit Students"}
+        </Button>
+        {isEditing && <Button onClick={handleSaveChanges}>Save Changes</Button>}
+      </div>
 
       <Table>
+        {classDetails.students.length === 0 && !isEditing ? (
+          <TableCaption className="pb-4">No Students Found</TableCaption>
+        ) : null}
+
+        <TableHeader>
+          <TableRow>
+            {isEditing && <TableHead></TableHead>}
+            <TableHead>Lastname</TableHead>
+            <TableHead>Firstname</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
         <TableBody>
           {allStudents.map((student) => (
             <TableRow
