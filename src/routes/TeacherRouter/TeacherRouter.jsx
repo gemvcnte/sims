@@ -4,6 +4,8 @@ import TeacherDashboard from "@pages/Teacher/TeacherDashboard";
 import Teacher from "@pages/Teacher";
 import TeacherSidebar from "@components/layout/Sidebar/components/TeacherSidebar";
 import TeacherProfile from "@/pages/Teacher/TeacherProfile";
+import TeacherClasses from "@/pages/Teacher/TeacherClasses";
+import TeacherSpecificClass from "@/pages/Teacher/TeacherSpecificClass";
 
 export default function TeacherRouter() {
   return (
@@ -15,6 +17,8 @@ export default function TeacherRouter() {
           <Route path="/" element={<Teacher />} />
           <Route path="/dashboard" element={<TeacherDashboard />} />
           <Route path="/profile" element={<TeacherProfile />} />
+          <Route path="/classes" element={<TeacherClasses />} />
+          <Route path="/class/:id" element={<TeacherSpecificClass />} />
         </Routes>
       </div>
     </>
