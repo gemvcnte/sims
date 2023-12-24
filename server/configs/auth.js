@@ -13,8 +13,14 @@ const generateAuthToken = (user) => {
     { expiresIn: "1h" }
   );
 
-  res.cookie('authToken', token, {httpOnly: true, secure: true, sameSite: 'none'});
-  
+  // comment out muna habang wala pa frontend
+
+  // res.cookie("authToken", token, {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: "none",
+  // });
+
   return token;
 };
 
