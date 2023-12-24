@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import { jwtDecode } from "jwt-decode";
 import fetchStudentsApi from "../helpers/fetchStudentsApi";
 import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
+import { isClassAdviser } from "../helpers/isClassAdviser";
 
 export default function StudentsTable() {
   const classDetailsContext = useClassDetails();
@@ -74,21 +74,7 @@ export default function StudentsTable() {
     }
   };
 
-  const isClassAdviser = () => {
-    const authToken = localStorage.getItem("authToken");
-
-    if (authToken && classDetails) {
-      const decodedToken = jwtDecode(authToken);
-      const loggedInUsername = decodedToken.username;
-      const adviserUsername = classDetails.adviser;
-
-      return loggedInUsername === adviserUsername;
-    }
-
-    return false;
-  };
-
-  const isAdviser = isClassAdviser();
+  const isAdviser = isClassAdviser(classDetails);
 
   return (
     <main className="p-4">
