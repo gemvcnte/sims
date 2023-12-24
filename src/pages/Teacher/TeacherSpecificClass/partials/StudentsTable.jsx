@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import axios from "axios";
+import fetchStudentsApi from "../helpers/fetchStudentsApi";
+import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 
 export default function StudentsTable({ classDetails }) {
   const [allStudents, setAllStudents] = useState([]);
@@ -15,26 +17,21 @@ export default function StudentsTable({ classDetails }) {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
-    const fetchAllStudents = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/teacher/getStudents",
+    const fetchData = async () => {
+      if (isEditing) {
+        await fetchStudentsApi(setAllStudents);
+        setSelectedStudents(
+          classDetails.students.map((student) => student.emailAddress),
         );
-        setAllStudents(response.data.data);
-      } catch (error) {
-        console.error("Error fetching all students:", error);
+      } else {
+        setAllStudents(classDetails.students);
+        setSelectedStudents(
+          classDetails.students.map((student) => student._id),
+        );
       }
     };
 
-    if (isEditing) {
-      fetchAllStudents();
-      setSelectedStudents(
-        classDetails.students.map((student) => student.emailAddress),
-      );
-    } else {
-      setAllStudents(classDetails.students);
-      setSelectedStudents(classDetails.students.map((student) => student._id));
-    }
+    fetchData();
   }, [isEditing, classDetails]);
 
   const handleAddStudent = (studentEmail) => {
@@ -55,13 +52,7 @@ export default function StudentsTable({ classDetails }) {
 
   const handleSaveChanges = async () => {
     try {
-      await axios.post(
-        "http://localhost:5000/teacher/update-students-in-class",
-        {
-          classId: classDetails._id,
-          studentEmails: selectedStudents,
-        },
-      );
+      await updateStudentsInClassApi(classDetails._id, selectedStudents);
 
       setSelectedStudents([]);
       setIsEditing(false);
