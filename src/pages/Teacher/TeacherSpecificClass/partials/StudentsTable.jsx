@@ -15,6 +15,7 @@ import fetchStudentsApi from "../helpers/fetchStudentsApi";
 import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { isClassAdviser } from "../helpers/isClassAdviser";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export default function StudentsTable() {
   const classDetailsContext = useClassDetails();
@@ -65,6 +66,8 @@ export default function StudentsTable() {
     try {
       if (classDetails) {
         await updateStudentsInClassApi(classDetails._id, selectedStudents);
+
+        showSuccessNotification("Updated Successfully");
         fetchClassDetails();
         setSelectedStudents([]);
         setIsEditing(false);
