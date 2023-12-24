@@ -10,29 +10,36 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
-import fetchStudentsApi from "../helpers/fetchStudentsApi";
-import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 import { Button } from "@/components/ui/button";
 import { jwtDecode } from "jwt-decode";
+import fetchStudentsApi from "../helpers/fetchStudentsApi";
+import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
+import { useClassDetails } from "../contexts/ClassDetailsContext";
 
-export default function StudentsTable({ classDetails }) {
-  console.log(classDetails);
+export default function StudentsTable() {
+  const classDetailsContext = useClassDetails();
+  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+
   const [allStudents, setAllStudents] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (isEditing) {
-        await fetchStudentsApi(setAllStudents);
-        setSelectedStudents(
-          classDetails.students.map((student) => student.emailAddress),
-        );
-      } else {
-        setAllStudents(classDetails.students);
-        setSelectedStudents(
-          classDetails.students.map((student) => student._id),
-        );
+      try {
+        if (classDetails && isEditing) {
+          await fetchStudentsApi(setAllStudents);
+          setSelectedStudents(
+            classDetails.students.map((student) => student.emailAddress),
+          );
+        } else if (classDetails) {
+          setAllStudents(classDetails.students);
+          setSelectedStudents(
+            classDetails.students.map((student) => student._id),
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -51,16 +58,17 @@ export default function StudentsTable({ classDetails }) {
       updatedSelectedStudents.push(studentEmail);
     }
 
-    console.log(updatedSelectedStudents);
     setSelectedStudents(updatedSelectedStudents);
   };
 
   const handleSaveChanges = async () => {
     try {
-      await updateStudentsInClassApi(classDetails._id, selectedStudents);
-
-      setSelectedStudents([]);
-      setIsEditing(false);
+      if (classDetails) {
+        await updateStudentsInClassApi(classDetails._id, selectedStudents);
+        fetchClassDetails();
+        setSelectedStudents([]);
+        setIsEditing(false);
+      }
     } catch (error) {
       console.error("Error updating students in class:", error);
     }
@@ -68,18 +76,23 @@ export default function StudentsTable({ classDetails }) {
 
   const isClassAdviser = () => {
     const authToken = localStorage.getItem("authToken");
-    if (authToken) {
+
+    if (authToken && classDetails) {
       const decodedToken = jwtDecode(authToken);
       const loggedInUsername = decodedToken.username;
       const adviserUsername = classDetails.adviser;
 
       return loggedInUsername === adviserUsername;
     }
+
+    return false;
   };
+
+  const isAdviser = isClassAdviser();
 
   return (
     <main className="p-4">
-      {isClassAdviser() && (
+      {isAdviser && (
         <div className="mb-4 flex gap-4">
           <Button
             variant="outline"
@@ -94,9 +107,9 @@ export default function StudentsTable({ classDetails }) {
       )}
 
       <Table>
-        {classDetails.students.length === 0 && !isEditing ? (
+        {classDetails?.students.length === 0 && !isEditing && (
           <TableCaption className="pb-4">No Students Found</TableCaption>
-        ) : null}
+        )}
 
         <TableHeader>
           <TableRow>

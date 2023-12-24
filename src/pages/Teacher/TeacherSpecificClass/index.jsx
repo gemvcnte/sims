@@ -6,29 +6,23 @@ import ClassNav from "./partials/ClassNav";
 import { ClassNavProvider, useClassNav } from "./contexts/ClassNavContext";
 import StudentsTable from "./partials/StudentsTable";
 import TableController from "./partials/TableController";
-import useClassDetails from "./hooks/useClassDetails";
 import Header from "./partials/Header";
+import { ClassDetailsProvider } from "./contexts/ClassDetailsContext";
+import ClassName from "./partials/ClassName";
 
 export default function TeacherSpecificClass() {
-  const { id } = useParams();
-  const { classDetails, loading } = useClassDetails(id);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  console.log(classDetails);
-
   return (
-    <main className="w-full">
-      <Topbar>
-        <span className="uppercase">{classDetails.sectionName}</span>
-      </Topbar>
+    <ClassDetailsProvider>
+      <main className="w-full">
+        <Topbar>
+          <ClassName />
+        </Topbar>
 
-      <ClassNavProvider>
-        <Header />
-        <TableController classDetails={classDetails} />
-      </ClassNavProvider>
-    </main>
+        <ClassNavProvider>
+          <Header />
+          <TableController />
+        </ClassNavProvider>
+      </main>
+    </ClassDetailsProvider>
   );
 }
