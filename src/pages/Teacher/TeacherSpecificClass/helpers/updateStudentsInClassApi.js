@@ -1,3 +1,4 @@
+import getAuthHeaders from "@/utils/getAuthHeaders";
 import axios from "axios";
 
 const updateStudentsInClassApi = async (classId, studentEmails) => {
@@ -8,6 +9,7 @@ const updateStudentsInClassApi = async (classId, studentEmails) => {
         classId,
         studentEmails,
       },
+      getAuthHeaders(),
     );
 
     return response;

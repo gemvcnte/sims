@@ -5,4 +5,4 @@ export const getTeacherProfileEndpoint = `${baseUrl}/teacher/profile`;
 export const updateTeacherProfileEndpoint = `${baseUrl}/teacher/profile/update`;
 
 // class
-export const getTeacherAssignedClasses = `${baseUrl}/teacher/class/getAssignedClasses`;
+export const getTeacherAssignedClassesEndpoint = `${baseUrl}/teacher/class/getAssignedClasses`;

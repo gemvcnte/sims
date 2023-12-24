@@ -1,6 +1,6 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { getTeacherAssignedClasses } from "@/config/teacherEndpoints";
+import { getTeacherAssignedClassesEndpoint } from "@/config/teacherEndpoints";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 
 export default async function getTeacherAssignedClassesApi() {
@@ -12,9 +12,9 @@ export default async function getTeacherAssignedClassesApi() {
     adviser: username,
   };
 
-  const response = await axios.get(getTeacherAssignedClasses, {
+  const response = await axios.get(getTeacherAssignedClassesEndpoint, {
     params: queryParams,
-    headers: getAuthHeaders(),
+    ...getAuthHeaders(),
   });
 
   return response.data.data || [];
