@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import RoleSelectionContainer from "./components/RoleSelectionContainer";
 import Header from "./components/Header";
 import AnnouncementsModal from "./components/AnnouncementsModal";
+import useAnnouncements from "./hooks/useAnnouncements";
 
 function Login() {
   useEffect(() => {
@@ -12,26 +13,9 @@ function Login() {
     };
   }, []);
 
-  const [announcements, setAnnouncements] = useState([]);
-
-  // Fetch announcements from your API endpoint
-  useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/announcement");
-        const data = await response.json();
-        setAnnouncements(data.data); // Assuming data is structured as in your server response
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      }
-    };
-
-    fetchAnnouncements();
-  }, []);
-
   return (
     <>
-      <AnnouncementsModal announcements={announcements} />
+      <AnnouncementsModal />
 
       <Header />
       <RoleSelectionContainer />
