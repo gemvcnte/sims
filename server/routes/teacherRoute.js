@@ -71,4 +71,5 @@ router.patch(
   teacherController.updateStudentsInClass
 );
 
+router.get("/class/get-specific-student/:id", verifyToken, teacherController.getSpecificStudent);
 module.exports = router;
