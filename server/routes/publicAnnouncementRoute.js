@@ -6,6 +6,10 @@ router.get("/", async (req, res) => {
   try {
     const publicAnnouncements = await Announcement.find();
 
+    if (!publicAnnouncements) {
+      res.status(404).json({message: 'No Announcements for today.'});
+    }
+
     res.status(200).json({
       message: "Public Announcements retrieved successfully",
       data: publicAnnouncements,
