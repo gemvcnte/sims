@@ -14,34 +14,61 @@ router.post(
   verifyToken,
   teacherController.postClassAnnouncement
 );
-router.patch("/announcement/update-class-announcement", verifyToken, teacherController.updateClassAnnouncement);
+router.patch(
+  "/announcement/update-class-announcement",
+  verifyToken,
+  teacherController.updateClassAnnouncement
+);
 
-router.delete("/announcement/delete-class-announcement", verifyToken, teacherController.deleteClassAnnouncement)
+router.delete(
+  "/announcement/delete-class-announcement",
+  verifyToken,
+  teacherController.deleteClassAnnouncement
+);
 router.patch(
   "/profile/update",
   verifyToken,
   teacherController.updateTeacherProfile
 );
-router.patch(
-  "/class/assign-student",
-  // verifyToken,
-  teacherController.assignStudentToClass
-); // /class/assignStudent
 
-router.patch("/class/update-assigned-student", verifyToken, teacherController.updateAssignedStudentToClass)
-router.delete(
-  "/class/remove-student",
+// router.patch(
+//   "/class/assign-student",
+//   // verifyToken,
+//   teacherController.assignStudentToClass
+// ); // /class/assignStudent
+
+// router.patch(
+//   "/class/update-assigned-student",
+//   verifyToken,
+//   teacherController.updateAssignedStudentToClass
+// );
+
+// router.delete(
+//   "/class/remove-student",
+//   verifyToken,
+//   teacherController.removeStudentToClass
+// );
+
+router.get(
+  "/class/getAssignedClasses",
   verifyToken,
-  teacherController.removeStudentToClass
+  teacherController.getAssignedClasses
 );
-router.get('/class/getAssignedClasses', 
-// verifyToken, 
-teacherController.getAssignedClasses);
 
-router.get('/getStudents', 
-// verifyToken,
-teacherController.getEnrolledStudents
-)
+router.get("/getStudents", verifyToken, teacherController.getEnrolledStudents);
 
+router.get(
+  "/class/get-specific-class/:id",
+  verifyToken,
+  teacherController.getSpecificClass
+);
+
+router.get("/get-all-teachers", verifyToken, teacherController.getAllTeachers);
+
+router.patch(
+  "/update-students-in-class",
+  verifyToken,
+  teacherController.updateStudentsInClass
+);
 
 module.exports = router;
