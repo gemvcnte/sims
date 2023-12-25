@@ -1,3 +1,4 @@
+import { getAnnouncementsEndpoint } from "@/config/publicEndpoints";
 import { useEffect, useState } from "react";
 
 const useAnnouncements = () => {
@@ -8,7 +9,7 @@ const useAnnouncements = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await fetch("http://localhost:5000/announcement");
+        const response = await fetch(getAnnouncementsEndpoint);
         const data = await response.json();
         setAnnouncements(data.data);
       } catch (error) {
