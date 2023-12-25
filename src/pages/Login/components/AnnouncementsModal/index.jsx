@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -6,11 +6,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Icon } from "@iconify/react";
 import useAnnouncements from "../../hooks/useAnnouncements";
+import AnnouncementCard from "./AnnouncementCard";
 
 export default function AnnouncementModal() {
   const { announcements, loading, error } = useAnnouncements();
+
   const [isOpen, setIsOpen] = useState(true);
   const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
 
@@ -46,50 +47,12 @@ export default function AnnouncementModal() {
             {!loading && !error && (
               <>
                 {sortedAnnouncements.map((announcement) => (
-                  <div
+                  <AnnouncementCard
                     key={announcement._id}
-                    className="mb-4 rounded-lg border p-4"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h2 className="break-words font-semibold">
-                          {announcement.title}
-                        </h2>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(announcement.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            },
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      className="mt-4 flex justify-center gap-1 text-xs"
-                      variant="outline"
-                      onClick={() => toggleContent(announcement._id)}
-                    >
-                      {expandedAnnouncement === announcement._id ? (
-                        <>
-                          Hide Details
-                          <Icon icon="dashicons:arrow-up" rotate={2} />
-                        </>
-                      ) : (
-                        <>
-                          Show Details
-                          <Icon icon="dashicons:arrow-up" rotate={1} />
-                        </>
-                      )}
-                    </button>
-                    {expandedAnnouncement === announcement._id && (
-                      <div className="mt-2 text-sm text-gray-400">
-                        {announcement.content}
-                      </div>
-                    )}
-                  </div>
+                    announcement={announcement}
+                    expandedAnnouncement={expandedAnnouncement}
+                    toggleContent={toggleContent}
+                  />
                 ))}
               </>
             )}
