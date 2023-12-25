@@ -7,6 +7,7 @@ const asyncHandler = require("express-async-handler");
 const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
 const { transporter } = require("../mailer");
+const { Admin } = require("../models/AdminModel");
 
 //
 const teacherLogin = asyncHandler(async (req, res) => {
@@ -483,9 +484,12 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
 const getAllTeachers = asyncHandler(async (req, res) => {
   try {
     const retrieveTeachers = await Teacher.find();
+    const retrieveAdmins = await Admin.find();
+
+    const allTeachers = [...retrieveTeachers, ...retrieveAdmins];
 
     // Map the retrieved data to create a new array with the desired fields
-    const modifiedData = retrieveTeachers.map((teacher) => ({
+    const modifiedData = allTeachers.map((teacher) => ({
       username: teacher.username,
       fullName: `${teacher.firstName} ${teacher.lastName}`,
     }));
