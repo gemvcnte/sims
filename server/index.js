@@ -6,6 +6,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const dotenv = require('dotenv')
 const connectDb = require('./db/database')
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use(cookieParser())
 // app.use(rateLimiter)
 
 const corsOptions = {

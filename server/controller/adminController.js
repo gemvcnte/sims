@@ -251,7 +251,7 @@ const deleteAdmin = asyncHandler(async (req, res) => {
     const admin = await Admin.findOneAndDelete({ username });
 
     if (!admin) {
-      return res.status(404).json({ message: "There is no username chuchu" });
+      return res.status(404).json({ message: "Admin not found." });
     }
 
     return res.status(202).json({ message: "Admin deleted successfully" });
@@ -498,7 +498,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
 
 const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
 
     const retrieveSpecificStudent = await Student.findById({ lrn: id });
 
@@ -604,11 +604,12 @@ const createClassroom = asyncHandler(async (req, res) => {
   }
 });
 
+
 const getSpecificClass = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
 
-    const findClass = await Classroom.findOne({ sectionName: id });
+    const findClass = await Classroom.findOne({ _id: id });
 
     if (!findClass) {
       return res.status(404).json({ message: "Class not found." });
@@ -619,9 +620,10 @@ const getSpecificClass = asyncHandler(async (req, res) => {
       data: findClass,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
   }
 });
+
 
 const getAllClasses = asyncHandler(async (req, res) => {
   try {
