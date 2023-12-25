@@ -234,122 +234,122 @@ const deleteClassAnnouncement = asyncHandler(async (req, res) => {
   }
 })
 
-const assignStudentToClass = asyncHandler(async (req, res) => {
-  try {
-    const { studentName, sectionName } = req.body;
-    const [firstName, lastName, emailAddress] = studentName.split(' ');
+// const assignStudentToClass = asyncHandler(async (req, res) => {
+//   try {
+//     const { studentName, sectionName } = req.body;
+//     const [firstName, lastName, emailAddress] = studentName.split(' ');
 
-    console.log('Attempting to assign student:', { firstName, lastName, emailAddress, sectionName });
+//     console.log('Attempting to assign student:', { firstName, lastName, emailAddress, sectionName });
 
-    const existingClassroom = await Classroom.findOne({ sectionName });
+//     const existingClassroom = await Classroom.findOne({ sectionName });
 
-    if (!existingClassroom) {
-      res.status(404).json({ message: 'Class not found.' });
-    }
+//     if (!existingClassroom) {
+//       res.status(404).json({ message: 'Class not found.' });
+//     }
 
-    const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
+//     const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
 
-    if (existingStudent) {
-      res.status(400).json({ message: 'Student is already assigned to this class.' });
-    }
+//     if (existingStudent) {
+//       res.status(400).json({ message: 'Student is already assigned to this class.' });
+//     }
 
-    const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
+//     const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
 
-    if (!studentRecord) {
-      res.status(404).json({ message: 'Student not found in enrolled records.' });
-    }
+//     if (!studentRecord) {
+//       res.status(404).json({ message: 'Student not found in enrolled records.' });
+//     }
 
-    existingClassroom.students.push({ firstName, lastName, emailAddress }); 
+//     existingClassroom.students.push({ firstName, lastName, emailAddress }); 
 
-    await existingClassroom.save();
+//     await existingClassroom.save();
 
-    res.status(200).json({ message: 'Student has been assigned to this class' });
-  } catch (error) {
-    console.error('Error in assignStudentToClass:', error);
-    res.status(500).json({ message: 'Internal server error. Please try again later.' });
-  }
-});
-
-
-
-const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
-  try {
-    const { studentName, sectionName } = req.body;
-    const [firstName, lastName, emailAddress] = studentName.split(' ') || studentName.split('');
-
-    console.log(`Attempting to update this student ${firstName} ${lastName}`);
-
-    const existingClassroom = await Classroom.find({ sectionName });
-
-    if (!existingClassroom) {
-      res.status(404).json({ message: 'Classroom not found. Please check the section name properly.' })
-    }
-
-    const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
-
-    if (!existingStudent) {
-      res.status(404).json({ message: 'Student not found. Please check the credentials properly.' })
-    }
-
-    const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
-
-    if (!studentRecord) {
-      res.status(404).json({ message: 'Student not found in enrolled records.' })
-    }
-
-    const updatedStudent = await Classroom.findOneAndUpdate({
-      firstName,
-      lastName,
-      emailAddress
-    }, { new: true })
-
-    const updatedClassroom = await Classroom.findOneAndUpdate({ sectionName, 'students.firstName': firstName, 'students.lastName': lastName, 'students.emailAddress': emailAddress },
-      { $set: { 'students.$': updatedStudent } },
-      { new: true },
-    )
-
-    res.status(200).json({ message: 'Student on this class has been updated successfully.', updatedStudent, updatedClassroom })
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error. Please try again later.' })
-  }
-})
+//     res.status(200).json({ message: 'Student has been assigned to this class' });
+//   } catch (error) {
+//     console.error('Error in assignStudentToClass:', error);
+//     res.status(500).json({ message: 'Internal server error. Please try again later.' });
+//   }
+// });
 
 
-const removeStudentToClass = asyncHandler(async (req, res) => {
-  try {
-    const { studentName, sectionName } = req.body;
-    const [firstName, lastName] = studentName.split(' ') || studentName.split('')
 
-    const existingClassroom = await Classroom.findOne({ sectionName })
+// const updateAssignedStudentToClass = asyncHandler(async (req, res) => {
+//   try {
+//     const { studentName, sectionName } = req.body;
+//     const [firstName, lastName, emailAddress] = studentName.split(' ') || studentName.split('');
+
+//     console.log(`Attempting to update this student ${firstName} ${lastName}`);
+
+//     const existingClassroom = await Classroom.find({ sectionName });
+
+//     if (!existingClassroom) {
+//       res.status(404).json({ message: 'Classroom not found. Please check the section name properly.' })
+//     }
+
+//     const existingStudent = existingClassroom.students.find((student) => student.firstName === firstName && student.lastName === lastName && student.emailAddress === emailAddress);
+
+//     if (!existingStudent) {
+//       res.status(404).json({ message: 'Student not found. Please check the credentials properly.' })
+//     }
+
+//     const studentRecord = await Student.findOne({ firstName, lastName, emailAddress });
+
+//     if (!studentRecord) {
+//       res.status(404).json({ message: 'Student not found in enrolled records.' })
+//     }
+
+//     const updatedStudent = await Classroom.findOneAndUpdate({
+//       firstName,
+//       lastName,
+//       emailAddress
+//     }, { new: true })
+
+//     const updatedClassroom = await Classroom.findOneAndUpdate({ sectionName, 'students.firstName': firstName, 'students.lastName': lastName, 'students.emailAddress': emailAddress },
+//       { $set: { 'students.$': updatedStudent } },
+//       { new: true },
+//     )
+
+//     res.status(200).json({ message: 'Student on this class has been updated successfully.', updatedStudent, updatedClassroom })
+//   } catch (error) {
+//     res.status(500).json({ message: 'Internal server error. Please try again later.' })
+//   }
+// })
 
 
-    if (!existingClassroom) {
-      res.status(404).json({ message: 'Class not found.' })
-    }
+// const removeStudentToClass = asyncHandler(async (req, res) => {
+//   try {
+//     const { studentName, sectionName } = req.body;
+//     const [firstName, lastName] = studentName.split(' ') || studentName.split('')
+
+//     const existingClassroom = await Classroom.findOne({ sectionName })
 
 
-    const studentIndex = existingClassroom.students.findIndex((student) => student.firstName === firstName && student.lastName === lastName);
+//     if (!existingClassroom) {
+//       res.status(404).json({ message: 'Class not found.' })
+//     }
 
 
-    if (studentIndex === -1) {
-      res.status(404).json({ message: 'Student not found in this class.' })
-    }
-
-    await existingClassroom.splice(studentIndex, 1)
+//     const studentIndex = existingClassroom.students.findIndex((student) => student.firstName === firstName && student.lastName === lastName);
 
 
-    res.status(200).json({ message: 'Student has been removed successfully.' })
-  } catch (error) {
-    res.status(500).json({ message: `Internal server error. Please try again later.` })
-  }
-})
+//     if (studentIndex === -1) {
+//       res.status(404).json({ message: 'Student not found in this class.' })
+//     }
+
+//     await existingClassroom.splice(studentIndex, 1)
+
+
+//     res.status(200).json({ message: 'Student has been removed successfully.' })
+//   } catch (error) {
+//     res.status(500).json({ message: `Internal server error. Please try again later.` })
+//   }
+// })
 
 const getAssignedClasses = asyncHandler(async (req, res) => {
   try {
     const { 
       adviser, 
       // subjectTeachers 
-    } = req.body;
+    } = req.query;
 
     const assignedClasses = await Classroom.find({
       $or: [
@@ -372,6 +372,133 @@ const getAssignedClasses = asyncHandler(async (req, res) => {
   }
 });
 
+const createStudentGrade = asyncHandler(async (req,res) => {
+	try {
+		const  {studentId, } = req.body;
+
+		const existingStudent = await Student.findOne();
+
+		const existingGrade = await Grades.findOne();
+
+		if (!existingStudent) {
+			res.status(404).json({message: 'Student not found.'})
+		}
+
+
+		res.status(200).json({message: 'Student grades has been created successfully.'})
+		
+	} catch {
+		res.status(500).json({message: 'Internal server error. Please try again later.'})
+	}
+})
+
+const updateStudentGrade = asyncHandler(async (req,res) => {
+	try {
+		
+	} catch (error) {
+		res.status(500).json({message: 'Internal server error. Please try again later.'})
+	}
+})
+
+const deleteStudentGrade = asyncHandler(async (req,res) => {
+	try {
+		const {_id, fullName} = req.body
+		const [firstName, lastName] = req.body
+
+		const existingGrade = await Grades.findOneAndDelete(_id);
+		const existingStudent = await Student.findOne()
+
+		if (!existingGrade) {
+			res.status(404).json({message: 'There is no grade to delete.'})
+		}
+
+		if (!existingStudent) {
+			res.status(404).json({message: 'This student is not enrolled.'})
+		}
+
+
+	} catch (error) {
+		res.status(500).json({message: 'Internal server error. Please try again later.'})
+	}
+})
+
+
+const getAllTeachers = asyncHandler(async (req, res) => {
+  try {
+    const retrieveTeachers = await Teacher.find();
+    const retrieveAdminTeachers = await Admin.find();
+
+
+    if (!retrieveTeachers && ! retrieveAdminTeachers) {
+      res.status(404).json({message: 'Teachers data not found.'})
+    }
+
+    const allTeachers = [...retrieveTeachers, ...retrieveAdminTeachers];
+
+    // sort alphabetical
+    allTeachers.sort((a,b) => {
+      const fullNameTeacher = `${a.lastName}, ${a.firstName}`;
+      const fullNameAdmin = `${b.lastName}, ${b.firstName}`;
+      return fullNameTeacher.localeCompare(fullNameAdmin);
+    })
+    // Map the retrieved data to create a new array with the desired fields
+    const modifiedData = allTeachers.map((teacher) => ({
+      username: teacher.username  ,
+      fullName: `${teacher.lastName}, ${teacher.firstName}, ${teacher.middleName}`,
+    }));
+
+    if (!modifiedData.length === 0) {
+      res.status(404).json({message: 'No teachers data available. '})
+    }
+
+    res.status(200).json({
+      message: "Teachers data retrieved successfully.",
+      data: modifiedData,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+  }
+});
+
+
+const getSpecificClass = asyncHandler(async (req,res) => {
+	try {
+		const { id } = req.params;
+
+		const findClass = await Classroom.findOne({ _id: id });
+
+		if (!findClass) {
+			res.status(404).json({message: 'Classroom not found.'});
+		}
+
+		res.status(200).json({message: 'Classroom found.'})
+
+	} catch (error) {
+		res.status(500).json({message: 'Internal server error. Please try again later.'})
+	}
+})
+
+
+const getSpecificStudent = asyncHandler(async (req,res) => {
+	try {
+		const {id} = req.params;
+
+		const findStudent = await Student.findOne({_id: id})
+		
+
+		if (!findStudent)  {
+			res.status(404).json({message: 'Student not found.'});
+		}
+
+		res.status(200).json({message: 'Student found.'});
+
+
+	} catch {
+		res.status(500).json({message: 'Internal server error. Please try again later.'})
+	}
+})
+
+
 module.exports = {
   teacherLogin,
   getTeacherSchedule,
@@ -380,9 +507,12 @@ module.exports = {
   postClassAnnouncement,
   updateClassAnnouncement,
   deleteClassAnnouncement,
-  assignStudentToClass,
-  updateAssignedStudentToClass,
-  removeStudentToClass,
+  // assignStudentToClass,
+  // updateAssignedStudentToClass,
+  // removeStudentToClass,
   getAssignedClasses,
   getEnrolledStudents,
+  getAllTeachers,
+  getSpecificClass,
+  getSpecificStudent,
 };
