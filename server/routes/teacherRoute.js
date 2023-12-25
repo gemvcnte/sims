@@ -30,22 +30,25 @@ router.patch(
   verifyToken,
   teacherController.updateTeacherProfile
 );
-router.patch(
-  "/class/assign-student",
-  // verifyToken,
-  teacherController.assignStudentToClass
-); // /class/assignStudent
 
-router.patch(
-  "/class/update-assigned-student",
-  verifyToken,
-  teacherController.updateAssignedStudentToClass
-);
-router.delete(
-  "/class/remove-student",
-  verifyToken,
-  teacherController.removeStudentToClass
-);
+// router.patch(
+//   "/class/assign-student",
+//   // verifyToken,
+//   teacherController.assignStudentToClass
+// ); // /class/assignStudent
+
+// router.patch(
+//   "/class/update-assigned-student",
+//   verifyToken,
+//   teacherController.updateAssignedStudentToClass
+// );
+
+// router.delete(
+//   "/class/remove-student",
+//   verifyToken,
+//   teacherController.removeStudentToClass
+// );
+
 router.get(
   "/class/getAssignedClasses",
   verifyToken,
