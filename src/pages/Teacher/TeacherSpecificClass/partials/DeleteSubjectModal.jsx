@@ -13,17 +13,14 @@ import { TableCell } from "@/components/ui/table";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { Icon } from "@iconify/react";
-import axios from "axios";
+import deleteSubjectApi from "../helpers/deleteSubjectApi";
 
 export function DeleteSubjectModal({ onSuccess, subject }) {
   const handleDelete = async () => {
     try {
       const deletionData = { data: { subjectId: subject._id } };
 
-      const response = await axios.delete(
-        "http://localhost:5000/teacher/class/delete-subject",
-        deletionData,
-      );
+      const response = await deleteSubjectApi(deletionData);
 
       showSuccessNotification(response.data.message);
       onSuccess();
