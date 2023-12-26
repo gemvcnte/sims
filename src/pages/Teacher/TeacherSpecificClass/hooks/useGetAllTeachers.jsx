@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import getAuthHeaders from "@/utils/getAuthHeaders";
+import { getAllTeachersEndpoint } from "@/config/teacherEndpoints";
 
 const useGetAllTeachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -11,7 +12,7 @@ const useGetAllTeachers = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/teacher/get-all-teachers",
+          getAllTeachersEndpoint,
           getAuthHeaders(),
         );
 
