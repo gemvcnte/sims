@@ -52,20 +52,22 @@ const classroomSchema = mongoose.Schema(
                 type: String,
                 required: true,
             },
-            schedule: {
+            schedules: [
+                {
                 day: {
-                type: String,
-                required: true,
+                    type: String,
+                    required: true,
                 },
                 startTime: {
-                type: String,
-                required: true,
+                    type: String,
+                    required: true,
                 },
                 endTime: {
-                type: String,
-                required: true,
+                    type: String,
+                    required: true,
                 },
-            },
+                },
+            ],
             },
         ],
     },
