@@ -45,7 +45,7 @@ export function DeleteSubjectModal({ onSuccess, subject }) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription className="mx-auto max-w-[80%]">
+          <AlertDialogDescription>
             This action cannot be undone. This will permanently delete the
             subject.
           </AlertDialogDescription>
