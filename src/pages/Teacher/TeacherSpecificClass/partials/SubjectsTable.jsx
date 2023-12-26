@@ -14,40 +14,28 @@ import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import AddSubjectModal from "./AddSubjectModal";
+import UpdateSubjectModal from "./UpdateSubjectModal";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
 
   const [rowCounter, setRowCounter] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   console.log(classDetails);
 
   return (
     <main className="p-4">
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <div className="mb-4 flex gap-4">
-          <DialogTrigger asChild>
-            <Button variant="outline">Add Subject</Button>
-          </DialogTrigger>
-        </div>
-        <AddSubjectModal
-          onSuccess={() => fetchClassDetails()}
-          closeModal={closeModal}
-        />
-      </Dialog>
+      <AddSubjectModal onSuccess={() => fetchClassDetails()} />
 
       <Table>
         {/* <TableCaption className="pb-4">No Subjects Found</TableCaption> */}
         <TableHeader>
           <TableRow>
             <TableHead></TableHead>
-            <TableHead>Subject Name</TableHead>
+            <TableHead>
+              Subject <span className="hidden sm:inline">Name</span>
+            </TableHead>
             <TableHead>Teacher</TableHead>
             <TableHead></TableHead>
           </TableRow>
@@ -62,14 +50,10 @@ export default function SubjectsTable() {
                 {subject.subjectName}
               </TableCell>
               <TableCell>{subject.subjectTeacher}</TableCell>
-              <TableCell className="inline-block">
-                Update <span className="hidden sm:inline">Subject</span>
-                <Icon
-                  icon="octicon:arrow-down-24"
-                  rotate={3}
-                  className="ml-2 inline-block -rotate-45 transform transition-all group-hover:rotate-45"
-                />
-              </TableCell>
+              <UpdateSubjectModal
+                onSuccess={() => fetchClassDetails()}
+                subject={subject}
+              />
             </TableRow>
           ))}
         </TableBody>

@@ -10,50 +10,50 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectTeacherCombobox from "./SelectTeacherCombobox";
 import { useState } from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import axios from "axios";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import UpdateSelectTeacherCombobox from "./UpdateSelectTeacherCombobox";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import { TableCell } from "@/components/ui/table";
+import { Icon } from "@iconify/react";
 
-export default function AddSubjectModal({ onSuccess }) {
-  const classDetailsContext = useClassDetails();
-  const { classDetails } = classDetailsContext;
+export default function UpdateSubjectModal({ onSuccess, subject }) {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
-  const [subjectName, setSubjectName] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState("");
-  const [schedules, setSchedules] = useState([
-    { day: "", startTime: "", endTime: "" },
-  ]);
+  const closeModal = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const [subjectName, setSubjectName] = useState(subject.subjectName || "");
+  const [selectedTeacher, setSelectedTeacher] = useState(
+    subject.subjectTeacher || "",
+  );
+  const [schedules, setSchedules] = useState(subject.schedules || []);
 
   const handleSaveChanges = async () => {
     try {
       const newSubjectData = {
-        classId: classDetails._id,
+        subjectId: subject._id,
         subjectName,
         subjectTeacher: selectedTeacher,
         schedules,
       };
 
-      const response = await axios.post(
-        "http://localhost:5000/teacher/class/add-subject",
+      console.log(newSubjectData);
+
+      const response = await axios.patch(
+        "http://localhost:5000/teacher/class/update-subject",
         newSubjectData,
       );
 
       showSuccessNotification(response.data.message);
 
-      // Clear the form
-      setSubjectName("");
-      setSelectedTeacher("");
-      setSchedules([{ day: "", startTime: "", endTime: "" }]);
-
-      // Call the onSuccess callback to fetch updated class details
       onSuccess();
-
-      // Close the modal
       closeModal();
     } catch (error) {
-      console.error("Error adding subject:", error.message);
+      showErrorNotification("Error adding subject:", error.message);
     }
   };
 
@@ -75,24 +75,23 @@ export default function AddSubjectModal({ onSuccess }) {
     setSchedules(updatedSchedules);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <div className="mb-4 flex gap-4">
-        <DialogTrigger asChild>
-          <Button variant="outline">Add Subject</Button>
-        </DialogTrigger>
-      </div>
+    <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
+      <DialogTrigger>
+        <TableCell className="inline-block hover:cursor-pointer">
+          Update <span className="hidden sm:inline">Subject</span>
+          <Icon
+            icon="octicon:arrow-down-24"
+            rotate={3}
+            className="ml-2 hidden -rotate-45 transform transition-all group-hover:rotate-45 sm:inline"
+          />
+        </TableCell>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Add Subject</DialogTitle>
+          <DialogTitle>Update Subject</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
-            Add a new subject by providing the required details below.
+            Update subject by changing details below.
           </DialogDescription>
         </DialogHeader>
         <div className="grid h-80 gap-4 overflow-y-auto py-4">
@@ -113,7 +112,10 @@ export default function AddSubjectModal({ onSuccess }) {
             <Label htmlFor="teacher" className="text-right">
               Teacher
             </Label>
-            <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
+            <UpdateSelectTeacherCombobox
+              onSelectTeacher={setSelectedTeacher}
+              selectedTeacher={selectedTeacher}
+            />
           </div>
 
           {schedules.map((schedule, index) => (
@@ -183,7 +185,7 @@ export default function AddSubjectModal({ onSuccess }) {
           </Button>
         </div>
 
-        <Button onClick={handleSaveChanges}>Add subject</Button>
+        <Button onClick={handleSaveChanges}>Update subject</Button>
       </DialogContent>
     </Dialog>
   );
