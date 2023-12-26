@@ -42,38 +42,35 @@ const classroomSchema = mongoose.Schema(
                 required: true,
             }
     }],
-        subjectTeachers: [{
-            firstName: {
+        subjects: [
+            {
+            subjectName: {
                 type: String,
                 required: true,
             },
-            lastName: {
+            subjectTeacher: {
                 type: String,
                 required: true,
             },
-            subject: {
-                type: String,
-                required: true,
+            schedules: [
+                {
+                day: {
+                    type: String,
+                    required: true,
+                },
+                startTime: {
+                    type: String,
+                    required: true,
+                },
+                endTime: {
+                    type: String,
+                    required: true,
+                },
+                },
+            ],
             },
-            emailAddress: {
-                type: String,
-                required: true,
-            }
-        }],
-    //     subjects: [
-    //         {
-    //             subjectName: {
-    //                 type: String,
-    //                 required: true,
-    //             },
-    //             teacher: {
-    //                 type: mongoose.Schema.Types.ObjectId,
-    //                 ref: 'Teacher',
-    //                 required: true,
-    //             },
-    //         },
-    //     ],
-},
+        ],
+    },
     { timestamps: true }
 );
 

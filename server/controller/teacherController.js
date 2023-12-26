@@ -411,23 +411,19 @@ const deleteClassAnnouncement = asyncHandler(async (req, res) => {
 
 const getAssignedClasses = asyncHandler(async (req, res) => {
   try {
-    const {
-      adviser,
-      // subjectTeachers
-    } = req.query;
+    const { username } = req.user;
 
     const assignedClasses = await Classroom.find({
       $or: [
-        { adviser: adviser },
-        // { subjectTeachers: subjectTeachers },
-        { "subjectTeachers.emailAddress": adviser }, // Assuming emailAddress is unique
+        { adviser: username },
+        { subjects: { $elemMatch: { "subjectTeacher": username } } },
       ],
     });
 
     if (!assignedClasses || assignedClasses.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Teacher not found or not assigned to any classes." });
+      return res.status(404).json({
+        message: "Teacher not found or not assigned to any classes.",
+      });
     }
 
     return res.status(200).json({
@@ -440,6 +436,7 @@ const getAssignedClasses = asyncHandler(async (req, res) => {
       .json({ message: "Internal server error. Please try again later." });
   }
 });
+
 
 const getSpecificClass = asyncHandler(async (req, res) => {
   try {
@@ -519,6 +516,13 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Class not found." });
     }
 
+    // Check if the user making the request is the adviser of the class
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
+    }
+
     // Fetch the students by their emails
     const students = await Student.find({
       emailAddress: { $in: studentEmails },
@@ -553,6 +557,108 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
   }
 });
 
+const addSubjectToClass = asyncHandler(async (req, res) => {
+  const { classId, subjectName, subjectTeacher, schedules } = req.body;
+
+  const classroom = await Classroom.findById(classId);
+
+  if (!classroom) {
+    return res.status(404).json({ message: "Class not found." });
+  }
+
+  if (classroom.adviser !== req.user.username) {
+    return res.status(403).json({
+      message: "Unauthorized: You are not the adviser of this class.",
+    });
+  }
+
+  classroom.subjects.push({
+    subjectName,
+    subjectTeacher,
+    schedules, 
+  });
+
+  await classroom.save();
+
+  res.status(201).json({ message: "Subject added to class successfully." });
+});
+
+
+const updateSubjectClass = asyncHandler(async (req, res) => {
+  const { subjectId, subjectName, subjectTeacher, schedules } = req.body;
+
+  try {
+    const classroom = await Classroom.findOne({
+      'subjects._id': subjectId,
+    });
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
+    }
+
+    const subjectIndex = classroom.subjects.findIndex(
+      (subject) => subject._id.toString() === subjectId
+    );
+
+    if (subjectIndex === -1) {
+      return res.status(404).json({ message: 'Subject not found in class.' });
+    }
+
+    // Update the subject fields
+    classroom.subjects[subjectIndex].subjectName = subjectName;
+    classroom.subjects[subjectIndex].subjectTeacher = subjectTeacher;
+    classroom.subjects[subjectIndex].schedules = schedules;
+
+    await classroom.save();
+
+    res.json({ message: 'Subject updated successfully', updatedSubject: classroom.subjects[subjectIndex] });
+  } catch (error) {
+    console.error('Error updating subject:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+const deleteSubjectFromClass = asyncHandler(async (req, res) => {
+  try {
+    const { subjectId } = req.body;
+
+    if (!subjectId) {
+      return res.status(400).json({ message: 'subjectId is required in the request body' });
+    }
+
+    const classroom = await Classroom.findOne({ 'subjects._id': subjectId });
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
+    }
+
+    classroom.subjects = classroom.subjects.filter(subject => subject._id.toString() !== subjectId);
+
+    await classroom.save();
+
+    res.status(200).json({ message: 'Subject removed from class successfully.' });
+  } catch (error) {
+    console.error('Error deleting subject from class:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
 
 module.exports = {
   teacherLogin,
@@ -571,4 +677,7 @@ module.exports = {
   getSpecificStudent,
   getAllTeachers,
   updateStudentsInClass,
+  addSubjectToClass,
+  updateSubjectClass,
+  deleteSubjectFromClass,
 };
