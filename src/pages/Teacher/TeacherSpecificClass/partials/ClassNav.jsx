@@ -1,8 +1,14 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useClassNav } from "../contexts/ClassNavContext";
+import { useClassDetails } from "../contexts/ClassDetailsContext";
+import { isClassAdviser } from "../helpers/isClassAdviser";
 
 function ClassNav({ className, ...props }) {
+  const classDetailsContext = useClassDetails();
+  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+  const isAdviser = isClassAdviser(classDetails);
+
   const { selectedTab, setTab } = useClassNav();
 
   console.log(selectedTab);
@@ -25,15 +31,19 @@ function ClassNav({ className, ...props }) {
       >
         Students
       </p>
-      <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-          selectedTab === "subjects" &&
-          "border-b-2 border-foreground !text-foreground"
-        }`}
-        onClick={() => handleTabClick("subjects")}
-      >
-        Subjects
-      </p>
+
+      {isAdviser && (
+        <p
+          className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
+            selectedTab === "subjects" &&
+            "border-b-2 border-foreground !text-foreground"
+          }`}
+          onClick={() => handleTabClick("subjects")}
+        >
+          Subjects
+        </p>
+      )}
+
       <p
         className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
           selectedTab === "schedule" &&
