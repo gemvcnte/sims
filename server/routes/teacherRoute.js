@@ -72,4 +72,9 @@ router.patch(
 );
 
 router.get("/class/get-specific-student/:id", verifyToken, teacherController.getSpecificStudent);
+
+// Add subject, subject teacher, and time to class
+router.post('/class/add-subject', teacherController.addSubjectToClass);
+
+
 module.exports = router;
