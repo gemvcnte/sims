@@ -1,3 +1,4 @@
+import getAuthHeaders from "@/utils/getAuthHeaders";
 import axios from "axios";
 
 export const addSubjectApi = async (newSubjectData) => {
@@ -5,6 +6,7 @@ export const addSubjectApi = async (newSubjectData) => {
     const response = await axios.post(
       `http://localhost:5000/teacher/class/add-subject`,
       newSubjectData,
+      getAuthHeaders(),
     );
     return response;
   } catch (error) {

@@ -1,3 +1,4 @@
+import getAuthHeaders from "@/utils/getAuthHeaders";
 import axios from "axios";
 
 export const updateSubjectApi = async (updatedSubjectData) => {
@@ -5,6 +6,7 @@ export const updateSubjectApi = async (updatedSubjectData) => {
     const response = await axios.patch(
       `http://localhost:5000/teacher/class/update-subject/`,
       updatedSubjectData,
+      getAuthHeaders(),
     );
     return response;
   } catch (error) {

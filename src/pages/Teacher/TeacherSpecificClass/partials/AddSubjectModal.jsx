@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { addSubjectApi } from "../helpers/addSubjectApi";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function AddSubjectModal({ onSuccess }) {
   const classDetailsContext = useClassDetails();
@@ -52,7 +53,7 @@ export default function AddSubjectModal({ onSuccess }) {
       onSuccess();
       closeModal();
     } catch (error) {
-      console.error("Error adding subject:", error.message);
+      showErrorNotification("Error adding subject:", error.message);
     }
   };
 

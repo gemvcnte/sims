@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import getAuthHeaders from "@/utils/getAuthHeaders";
 
 const useGetAllTeachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -11,6 +12,7 @@ const useGetAllTeachers = () => {
       try {
         const response = await axios.get(
           "http://localhost:5000/teacher/get-all-teachers",
+          getAuthHeaders(),
         );
 
         setTeachers(response.data.data);
