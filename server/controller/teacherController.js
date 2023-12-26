@@ -553,6 +553,28 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
   }
 });
 
+const addSubjectToClass = asyncHandler(async (req, res) => {
+  const { classId, subjectName, subjectTeacher, day, startTime, endTime } =
+    req.body;
+
+  const classroom = await Classroom.findById(classId);
+
+  if (!classroom) {
+    return res.status(404).json({ message: "Class not found." });
+  }
+
+  classroom.subjects.push({
+    subjectName,
+    subjectTeacher,
+    schedule: { day, startTime, endTime },
+  });
+
+  await classroom.save();
+
+  res.status(201).json({ message: "Subject added to class successfully." });
+});
+
+
 
 module.exports = {
   teacherLogin,
@@ -571,4 +593,5 @@ module.exports = {
   getSpecificStudent,
   getAllTeachers,
   updateStudentsInClass,
+  addSubjectToClass,
 };
