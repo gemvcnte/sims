@@ -516,6 +516,13 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Class not found." });
     }
 
+    // Check if the user making the request is the adviser of the class
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
+    }
+
     // Fetch the students by their emails
     const students = await Student.find({
       emailAddress: { $in: studentEmails },
