@@ -554,8 +554,7 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
 });
 
 const addSubjectToClass = asyncHandler(async (req, res) => {
-  const { classId, subjectName, subjectTeacher, day, startTime, endTime } =
-    req.body;
+  const { classId, subjectName, subjectTeacher, schedules } = req.body;
 
   const classroom = await Classroom.findById(classId);
 
@@ -566,13 +565,14 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
   classroom.subjects.push({
     subjectName,
     subjectTeacher,
-    schedule: { day, startTime, endTime },
+    schedules, 
   });
 
   await classroom.save();
 
   res.status(201).json({ message: "Subject added to class successfully." });
 });
+
 
 
 
