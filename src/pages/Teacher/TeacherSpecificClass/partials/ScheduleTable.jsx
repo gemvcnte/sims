@@ -19,7 +19,6 @@ export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
 
-  console.log(classDetails);
   return (
     <main className="p-4">
       <Table>
@@ -28,7 +27,7 @@ export default function ScheduleTable() {
         )}
         <TableHeader>
           <TableRow>
-            <TableHead>Time</TableHead>
+            <TableHead></TableHead>
             <TableHead className="text-center">Monday</TableHead>
             <TableHead className="text-center">Tuesday</TableHead>
             <TableHead className="text-center">Wednesday</TableHead>
@@ -37,7 +36,6 @@ export default function ScheduleTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* Assuming your schedule starts at 7:00 AM and ends at 5:00 PM */}
           {Array.from({ length: 12 }, (_, index) => index + 7).map((hour) => (
             <TableRow key={hour}>
               <TableCell className="font-medium">
@@ -47,7 +45,6 @@ export default function ScheduleTable() {
                     ? `12:00 PM`
                     : `${hour - 12}:00 PM`}
               </TableCell>
-              {/* Display subjects for each day */}
               {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
                 (day) => {
                   const subjectForDayAndHour = classDetails.subjects.find(
@@ -76,9 +73,10 @@ export default function ScheduleTable() {
                                       schedule.startTime.split(":")[0],
                                     ) === hour,
                                 )
-                                .startTime.replace(/^0/, ""), // Remove leading zero
+                                .startTime.replace(/^0/, ""),
                             )}{" "}
-                            -{" "}
+                            <br className="sm:hidden" />-
+                            <br className="sm:hidden" />{" "}
                             {convertTo12HourFormat(
                               subjectForDayAndHour.schedules
                                 .find(
@@ -88,7 +86,7 @@ export default function ScheduleTable() {
                                       schedule.startTime.split(":")[0],
                                     ) === hour,
                                 )
-                                .endTime.replace(/^0/, ""), // Remove leading zero
+                                .endTime.replace(/^0/, ""),
                             )}
                           </p>
                         </div>
@@ -109,7 +107,6 @@ export default function ScheduleTable() {
   );
 }
 
-// Helper function to convert 24-hour format to 12-hour format
 function convertTo12HourFormat(time) {
   const [hours, minutes] = time.split(":");
   const period = hours >= 12 ? "PM" : "AM";
