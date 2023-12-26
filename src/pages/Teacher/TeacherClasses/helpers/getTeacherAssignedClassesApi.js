@@ -8,12 +8,12 @@ export default async function getTeacherAssignedClassesApi() {
   const decodedToken = jwtDecode(authToken);
   const username = decodedToken ? decodedToken.username : null;
 
-  const queryParams = {
-    adviser: username,
-  };
+  // const queryParams = {
+  //   adviser: username,
+  // };
 
   const response = await axios.get(getTeacherAssignedClassesEndpoint, {
-    params: queryParams,
+    // params: queryParams,
     ...getAuthHeaders(),
   });
 

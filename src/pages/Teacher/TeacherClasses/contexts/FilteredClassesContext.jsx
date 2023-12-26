@@ -9,14 +9,11 @@ export const FilteredClassesProvider = ({ children }) => {
   const { assignedClasses } = useAssignedClassesContext();
   const [filter, setFilter] = useState("all");
   const user = getUserFromToken();
-  console.log(user);
 
   const filterSections = () => {
     if (filter === "all") {
-      console.log("all");
       return assignedClasses;
     } else if (filter === "advisory") {
-      console.log("advisory");
       return assignedClasses.filter((section) => section.adviser === user);
     } else if (filter === "subjectTeacher") {
       return assignedClasses.filter((section) => section.adviser !== user);
