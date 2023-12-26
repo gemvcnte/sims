@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const useGetAllTeachers = () => {
   const [teachers, setTeachers] = useState([]);
@@ -8,19 +9,14 @@ const useGetAllTeachers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "http://localhost:5000/teacher/get-all-teachers",
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const result = await response.json();
-        setTeachers(result.data);
+        setTeachers(response.data.data);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        setError(error.message || "Failed to fetch data");
         setLoading(false);
       }
     };
