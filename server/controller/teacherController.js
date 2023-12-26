@@ -574,6 +574,43 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
 });
 
 
+const updateSubjectClass = asyncHandler(async (req, res) => {
+  const { subjectId, subjectName, subjectTeacher, schedules } = req.body;
+
+  try {
+    const classroom = await Classroom.findOne({
+      'subjects._id': subjectId,
+    });
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    const subjectIndex = classroom.subjects.findIndex(
+      (subject) => subject._id.toString() === subjectId
+    );
+
+    if (subjectIndex === -1) {
+      return res.status(404).json({ message: 'Subject not found in class.' });
+    }
+
+    // Update the subject fields
+    classroom.subjects[subjectIndex].subjectName = subjectName;
+    classroom.subjects[subjectIndex].subjectTeacher = subjectTeacher;
+    classroom.subjects[subjectIndex].schedules = schedules;
+
+    await classroom.save();
+
+    res.json({ message: 'Subject updated successfully', updatedSubject: classroom.subjects[subjectIndex] });
+  } catch (error) {
+    console.error('Error updating subject:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
 
 
 module.exports = {
@@ -594,4 +631,5 @@ module.exports = {
   getAllTeachers,
   updateStudentsInClass,
   addSubjectToClass,
+  updateSubjectClass,
 };
