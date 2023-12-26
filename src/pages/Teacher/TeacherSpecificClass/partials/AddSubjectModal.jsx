@@ -98,7 +98,7 @@ export default function AddSubjectModal({ onSuccess }) {
         <div className="grid h-80 gap-4 overflow-y-auto py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Subject Name
+              Subject <span className="hidden sm:inline">Name</span>
             </Label>
             <Input
               id="name"
