@@ -609,6 +609,31 @@ const updateSubjectClass = asyncHandler(async (req, res) => {
 });
 
 
+const deleteSubjectFromClass = asyncHandler(async (req, res) => {
+  try {
+    const { subjectId } = req.body;
+
+    if (!subjectId) {
+      return res.status(400).json({ message: 'subjectId is required in the request body' });
+    }
+
+    const classroom = await Classroom.findOne({ 'subjects._id': subjectId });
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    classroom.subjects = classroom.subjects.filter(subject => subject._id.toString() !== subjectId);
+
+    await classroom.save();
+
+    res.status(200).json({ message: 'Subject removed from class successfully.' });
+  } catch (error) {
+    console.error('Error deleting subject from class:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 
 
@@ -632,4 +657,5 @@ module.exports = {
   updateStudentsInClass,
   addSubjectToClass,
   updateSubjectClass,
+  deleteSubjectFromClass,
 };

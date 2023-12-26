@@ -80,4 +80,6 @@ router.post('/class/add-subject', teacherController.addSubjectToClass);
 
 router.patch('/class/update-subject', teacherController.updateSubjectClass);
 
+router.delete('/class/delete-subject', verifyToken, teacherController.deleteSubjectFromClass);
+
 module.exports = router;
