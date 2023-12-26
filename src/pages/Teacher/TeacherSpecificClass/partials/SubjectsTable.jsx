@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { Icon } from "@iconify/react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import AddSubjectModal from "./AddSubjectModal";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -62,9 +64,14 @@ export default function SubjectsTable() {
 
   return (
     <main className="p-4">
-      <div className="mb-4 flex gap-4">
-        <Button variant="outline">Add Subject</Button>
-      </div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="mb-4 flex gap-4">
+            <Button variant="outline">Add Subject</Button>
+          </div>
+        </DialogTrigger>
+        <AddSubjectModal />
+      </Dialog>
 
       <Table>
         {/* <TableCaption className="pb-4">No Subjects Found</TableCaption> */}
