@@ -11,8 +11,6 @@ function ClassNav({ className, ...props }) {
 
   const { selectedTab, setTab } = useClassNav();
 
-  console.log(selectedTab);
-
   const handleTabClick = (tab) => {
     setTab(tab);
   };
