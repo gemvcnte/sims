@@ -11,13 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { useClassDetails } from "../contexts/ClassDetailsContext";
-import axios from "axios";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import UpdateSelectTeacherCombobox from "./UpdateSelectTeacherCombobox";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { TableCell } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
+import { updateSubjectApi } from "../helpers/updateSubjectApi";
 
 export default function UpdateSubjectModal({ onSuccess, subject }) {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -34,22 +33,16 @@ export default function UpdateSubjectModal({ onSuccess, subject }) {
 
   const handleSaveChanges = async () => {
     try {
-      const newSubjectData = {
+      const updatedSubjectData = {
         subjectId: subject._id,
         subjectName,
         subjectTeacher: selectedTeacher,
         schedules,
       };
 
-      console.log(newSubjectData);
-
-      const response = await axios.patch(
-        "http://localhost:5000/teacher/class/update-subject",
-        newSubjectData,
-      );
+      const response = await updateSubjectApi(updatedSubjectData);
 
       showSuccessNotification(response.data.message);
-
       onSuccess();
       closeModal();
     } catch (error) {
@@ -91,7 +84,7 @@ export default function UpdateSubjectModal({ onSuccess, subject }) {
         <DialogHeader>
           <DialogTitle>Update Subject</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
-            Update subject by changing details below.
+            Update the subject details by making changes below.
           </DialogDescription>
         </DialogHeader>
         <div className="grid h-80 gap-4 overflow-y-auto py-4">
