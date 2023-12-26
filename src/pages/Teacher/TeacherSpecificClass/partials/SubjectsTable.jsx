@@ -65,11 +65,11 @@ export default function SubjectsTable() {
   return (
     <main className="p-4">
       <Dialog>
-        <DialogTrigger asChild>
-          <div className="mb-4 flex gap-4">
+        <div className="mb-4 flex gap-4">
+          <DialogTrigger asChild>
             <Button variant="outline">Add Subject</Button>
-          </div>
-        </DialogTrigger>
+          </DialogTrigger>
+        </div>
         <AddSubjectModal />
       </Dialog>
 
