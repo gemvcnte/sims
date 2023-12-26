@@ -15,10 +15,6 @@ import UpdateSubjectModal from "./UpdateSubjectModal";
 import { Icon } from "@iconify/react";
 import { DeleteSubjectModal } from "./DeleteSubjectModal";
 
-// ... (previous imports)
-
-// ... (previous imports)
-
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
@@ -46,7 +42,7 @@ export default function ScheduleTable() {
             <TableRow key={hour}>
               <TableCell className="font-medium">
                 {hour < 12
-                  ? `${hour}:00 AM`
+                  ? `${hour === 0 ? 12 : hour}:00 AM`
                   : hour === 12
                     ? `12:00 PM`
                     : `${hour - 12}:00 PM`}
@@ -71,23 +67,29 @@ export default function ScheduleTable() {
                         <div>
                           <p>{subjectForDayAndHour.subjectName}</p>
                           <p>
-                            {
-                              subjectForDayAndHour.schedules.find(
-                                (schedule) =>
-                                  schedule.day === day &&
-                                  parseInt(schedule.startTime.split(":")[0]) ===
-                                    hour,
-                              ).startTime
-                            }
-                            -
-                            {
-                              subjectForDayAndHour.schedules.find(
-                                (schedule) =>
-                                  schedule.day === day &&
-                                  parseInt(schedule.startTime.split(":")[0]) ===
-                                    hour,
-                              ).endTime
-                            }
+                            {convertTo12HourFormat(
+                              subjectForDayAndHour.schedules
+                                .find(
+                                  (schedule) =>
+                                    schedule.day === day &&
+                                    parseInt(
+                                      schedule.startTime.split(":")[0],
+                                    ) === hour,
+                                )
+                                .startTime.replace(/^0/, ""), // Remove leading zero
+                            )}{" "}
+                            -{" "}
+                            {convertTo12HourFormat(
+                              subjectForDayAndHour.schedules
+                                .find(
+                                  (schedule) =>
+                                    schedule.day === day &&
+                                    parseInt(
+                                      schedule.startTime.split(":")[0],
+                                    ) === hour,
+                                )
+                                .endTime.replace(/^0/, ""), // Remove leading zero
+                            )}
                           </p>
                         </div>
                       ) : (
@@ -105,4 +107,13 @@ export default function ScheduleTable() {
       </Table>
     </main>
   );
+}
+
+// Helper function to convert 24-hour format to 12-hour format
+function convertTo12HourFormat(time) {
+  const [hours, minutes] = time.split(":");
+  const period = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 || 12;
+  //   return `${formattedHours}:${minutes} ${period}`;
+  return `${formattedHours}:${minutes}`;
 }
