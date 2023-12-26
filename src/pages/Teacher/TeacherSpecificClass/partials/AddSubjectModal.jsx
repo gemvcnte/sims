@@ -13,8 +13,8 @@ import { Label } from "@/components/ui/label";
 import SelectTeacherCombobox from "./SelectTeacherCombobox";
 import { useState } from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
-import axios from "axios";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import { addSubjectApi } from "../helpers/addSubjectApi";
 
 export default function AddSubjectModal({ onSuccess }) {
   const classDetailsContext = useClassDetails();
@@ -26,6 +26,12 @@ export default function AddSubjectModal({ onSuccess }) {
     { day: "", startTime: "", endTime: "" },
   ]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleSaveChanges = async () => {
     try {
       const newSubjectData = {
@@ -35,22 +41,15 @@ export default function AddSubjectModal({ onSuccess }) {
         schedules,
       };
 
-      const response = await axios.post(
-        "http://localhost:5000/teacher/class/add-subject",
-        newSubjectData,
-      );
+      const response = await addSubjectApi(newSubjectData);
 
       showSuccessNotification(response.data.message);
 
-      // Clear the form
       setSubjectName("");
       setSelectedTeacher("");
       setSchedules([{ day: "", startTime: "", endTime: "" }]);
 
-      // Call the onSuccess callback to fetch updated class details
       onSuccess();
-
-      // Close the modal
       closeModal();
     } catch (error) {
       console.error("Error adding subject:", error.message);
@@ -73,12 +72,6 @@ export default function AddSubjectModal({ onSuccess }) {
     const updatedSchedules = [...schedules];
     updatedSchedules[index][field] = value;
     setSchedules(updatedSchedules);
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
