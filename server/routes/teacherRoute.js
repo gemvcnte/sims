@@ -68,7 +68,7 @@ verifyToken,
 teacherController.getAllTeachers);
 
 router.patch(
-  "/update-students-in-class",
+  "/class/update-students",
   verifyToken,
   teacherController.updateStudentsInClass
 );
