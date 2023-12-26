@@ -64,7 +64,7 @@ router.get(
 );
 
 router.get("/get-all-teachers",
-// verifyToken, 
+verifyToken, 
 teacherController.getAllTeachers);
 
 router.patch(
@@ -76,9 +76,9 @@ router.patch(
 router.get("/class/get-specific-student/:id", verifyToken, teacherController.getSpecificStudent);
 
 // Add subject, subject teacher, and time to class
-router.post('/class/add-subject', teacherController.addSubjectToClass);
+router.post('/class/add-subject', verifyToken, teacherController.addSubjectToClass);
 
-router.patch('/class/update-subject', teacherController.updateSubjectClass);
+router.patch('/class/update-subject', verifyToken, teacherController.updateSubjectClass);
 
 router.delete('/class/delete-subject', verifyToken, teacherController.deleteSubjectFromClass);
 

@@ -566,6 +566,12 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Class not found." });
   }
 
+  if (classroom.adviser !== req.user.username) {
+    return res.status(403).json({
+      message: "Unauthorized: You are not the adviser of this class.",
+    });
+  }
+
   classroom.subjects.push({
     subjectName,
     subjectTeacher,
@@ -588,6 +594,12 @@ const updateSubjectClass = asyncHandler(async (req, res) => {
 
     if (!classroom) {
       return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
     }
 
     const subjectIndex = classroom.subjects.findIndex(
@@ -625,6 +637,12 @@ const deleteSubjectFromClass = asyncHandler(async (req, res) => {
 
     if (!classroom) {
       return res.status(404).json({ message: 'Subject not found in any class.' });
+    }
+
+    if (classroom.adviser !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the adviser of this class.",
+      });
     }
 
     classroom.subjects = classroom.subjects.filter(subject => subject._id.toString() !== subjectId);
