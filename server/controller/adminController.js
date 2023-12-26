@@ -338,13 +338,17 @@ const rejectStudentApplication = asyncHandler(async (req, res) => {
         .json({ message: `Student Application not found.` });
     }
 
-    await studentApplication.findByIdAndUpdate({ status: "rejected" });
-    // await studentApplication.remove()
+    await StudentApplication.updateOne(
+      { _id: studentApplicationId },
+      { status: "rejected" }
+    );
+
     res.status(200).json({ message: "Student Application has been rejected." });
   } catch (error) {
     return res.status(500).json({ message: `${error}` });
   }
 });
+
 
 const updateTeacher = asyncHandler(async (req, res) => {
   try {
