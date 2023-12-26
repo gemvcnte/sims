@@ -17,7 +17,7 @@ function ClassNav({ className, ...props }) {
       {...props}
     >
       <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
           selectedTab === "students" &&
           "border-b-2 border-foreground !text-foreground"
         }`}
@@ -26,7 +26,7 @@ function ClassNav({ className, ...props }) {
         Students
       </p>
       <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
           selectedTab === "subjects" &&
           "border-b-2 border-foreground !text-foreground"
         }`}
@@ -35,7 +35,7 @@ function ClassNav({ className, ...props }) {
         Subjects
       </p>
       <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground ${
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
           selectedTab === "schedule" &&
           "border-b-2 border-foreground !text-foreground"
         }`}
