@@ -10,8 +10,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import SelectTeacherCombobox from "./SelectTeacherCombobox";
+import { useState } from "react";
 
 export default function AddSubjectModal() {
+  const [selectedTeacher, setSelectedTeacher] = useState("");
+
+  console.log(selectedTeacher);
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -31,11 +37,12 @@ export default function AddSubjectModal() {
             placeholder="Enter Subject Name"
           />
         </div>
+
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="username" className="text-right">
             Teacher
           </Label>
-          <Input id="username" className="col-span-3" />
+          <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
         </div>
       </div>
       <DialogFooter>
