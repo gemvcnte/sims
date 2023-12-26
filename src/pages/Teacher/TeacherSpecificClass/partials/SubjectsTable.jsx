@@ -12,6 +12,7 @@ import {
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import AddSubjectModal from "./AddSubjectModal";
 import UpdateSubjectModal from "./UpdateSubjectModal";
+import { Icon } from "@iconify/react";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -35,6 +36,7 @@ export default function SubjectsTable() {
             </TableHead>
             <TableHead>Teacher</TableHead>
             <TableHead></TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -51,6 +53,15 @@ export default function SubjectsTable() {
                 onSuccess={() => fetchClassDetails()}
                 subject={subject}
               />
+              <TableCell className="hover:cursor-pointer">
+                <span className="flex items-center gap-2">
+                  Delete
+                  <Icon
+                    icon="ant-design:delete-outlined"
+                    className="hidden sm:inline"
+                  />
+                </span>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -72,7 +72,7 @@ export default function UpdateSubjectModal({ onSuccess, subject }) {
     <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
       <DialogTrigger>
         <TableCell className="inline-block hover:cursor-pointer">
-          Update <span className="hidden sm:inline">Subject</span>
+          Update
           <Icon
             icon="octicon:arrow-down-24"
             rotate={3}
