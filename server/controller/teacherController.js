@@ -411,23 +411,19 @@ const deleteClassAnnouncement = asyncHandler(async (req, res) => {
 
 const getAssignedClasses = asyncHandler(async (req, res) => {
   try {
-    const {
-      adviser,
-      // subjectTeachers
-    } = req.query;
+    const { username } = req.user;
 
     const assignedClasses = await Classroom.find({
       $or: [
-        { adviser: adviser },
-        // { subjectTeachers: subjectTeachers },
-        { "subjectTeachers.emailAddress": adviser }, // Assuming emailAddress is unique
+        { adviser: username },
+        { subjects: { $elemMatch: { "subjectTeacher": username } } },
       ],
     });
 
     if (!assignedClasses || assignedClasses.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Teacher not found or not assigned to any classes." });
+      return res.status(404).json({
+        message: "Teacher not found or not assigned to any classes.",
+      });
     }
 
     return res.status(200).json({
@@ -440,6 +436,7 @@ const getAssignedClasses = asyncHandler(async (req, res) => {
       .json({ message: "Internal server error. Please try again later." });
   }
 });
+
 
 const getSpecificClass = asyncHandler(async (req, res) => {
   try {
