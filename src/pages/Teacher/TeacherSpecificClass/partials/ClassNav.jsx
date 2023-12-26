@@ -30,17 +30,17 @@ function ClassNav({ className, ...props }) {
         Students
       </p>
 
-      {isAdviser && (
-        <p
-          className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-            selectedTab === "subjects" &&
-            "border-b-2 border-foreground !text-foreground"
-          }`}
-          onClick={() => handleTabClick("subjects")}
-        >
-          Subjects
-        </p>
-      )}
+      {/* {isAdviser && ( */}
+      <p
+        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
+          selectedTab === "subjects" &&
+          "border-b-2 border-foreground !text-foreground"
+        }`}
+        onClick={() => handleTabClick("subjects")}
+      >
+        Subjects
+      </p>
+      {/* )} */}
 
       <p
         className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${

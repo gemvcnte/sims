@@ -14,6 +14,7 @@ import AddSubjectModal from "./AddSubjectModal";
 import UpdateSubjectModal from "./UpdateSubjectModal";
 import { Icon } from "@iconify/react";
 import { DeleteSubjectModal } from "./DeleteSubjectModal";
+import { isClassAdviser } from "../helpers/isClassAdviser";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -21,9 +22,11 @@ export default function SubjectsTable() {
 
   const [rowCounter, setRowCounter] = useState(1);
 
+  const isAdviser = isClassAdviser(classDetails);
+
   return (
     <main className="p-4">
-      <AddSubjectModal onSuccess={() => fetchClassDetails()} />
+      {isAdviser && <AddSubjectModal onSuccess={() => fetchClassDetails()} />}
 
       <Table>
         {classDetails.subjects.length === 0 && (
@@ -50,14 +53,22 @@ export default function SubjectsTable() {
                 {subject.subjectName}
               </TableCell>
               <TableCell>{subject.subjectTeacher}</TableCell>
-              <UpdateSubjectModal
-                onSuccess={() => fetchClassDetails()}
-                subject={subject}
-              />
-              <DeleteSubjectModal
-                onSuccess={() => fetchClassDetails()}
-                subject={subject}
-              />
+              {isAdviser ? (
+                <UpdateSubjectModal
+                  onSuccess={() => fetchClassDetails()}
+                  subject={subject}
+                />
+              ) : (
+                <TableCell></TableCell>
+              )}
+              {isAdviser ? (
+                <DeleteSubjectModal
+                  onSuccess={() => fetchClassDetails()}
+                  subject={subject}
+                />
+              ) : (
+                <TableCell></TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
