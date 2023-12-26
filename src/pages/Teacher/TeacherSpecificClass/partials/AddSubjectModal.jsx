@@ -14,8 +14,9 @@ import SelectTeacherCombobox from "./SelectTeacherCombobox";
 import { useState } from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import axios from "axios";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 
-export default function AddSubjectModal() {
+export default function AddSubjectModal({ onSuccess, closeModal }) {
   const classDetailsContext = useClassDetails();
   const { classDetails } = classDetailsContext;
 
@@ -39,7 +40,18 @@ export default function AddSubjectModal() {
         newSubjectData,
       );
 
-      console.log("Server Response:", response.data);
+      showSuccessNotification(response.data.message);
+
+      // Clear the form
+      setSubjectName("");
+      setSelectedTeacher("");
+      setSchedules([{ day: "", startTime: "", endTime: "" }]);
+
+      // Call the onSuccess callback to fetch updated class details
+      onSuccess();
+
+      // Close the modal
+      closeModal();
     } catch (error) {
       console.error("Error adding subject:", error.message);
     }

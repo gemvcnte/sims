@@ -19,72 +19,45 @@ export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
 
+  const [rowCounter, setRowCounter] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   console.log(classDetails);
-
-  const [formData, setFormData] = useState({
-    classId: "yourClassId",
-    subjectName: "",
-    subjectTeacher: "",
-    day: "",
-    startTime: "",
-    endTime: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(
-        "http://your-api-base-url/api/class/add-subject",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-
-      if (!response.ok) {
-        // Handle error
-        console.error("Error:", response.statusText);
-      }
-
-      const result = await response.json();
-      console.log(result.message);
-    } catch (error) {
-      // Handle error
-      console.error("Error:", error.message);
-    }
-  };
 
   return (
     <main className="p-4">
-      <Dialog>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <div className="mb-4 flex gap-4">
           <DialogTrigger asChild>
             <Button variant="outline">Add Subject</Button>
           </DialogTrigger>
         </div>
-        <AddSubjectModal />
+        <AddSubjectModal
+          onSuccess={() => fetchClassDetails()}
+          closeModal={closeModal}
+        />
       </Dialog>
 
       <Table>
         {/* <TableCaption className="pb-4">No Subjects Found</TableCaption> */}
         <TableHeader>
           <TableRow>
+            <TableHead></TableHead>
             <TableHead>Subject Name</TableHead>
             <TableHead>Teacher</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {classDetails.subjects.map((subject) => (
+          {classDetails.subjects.map((subject, index) => (
             <TableRow key={subject._id}>
+              <TableCell className="text-muted-foreground">
+                {index + rowCounter}
+              </TableCell>
               <TableCell className="font-medium">
                 {subject.subjectName}
               </TableCell>
