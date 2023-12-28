@@ -89,13 +89,13 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-const getCookie = (name) => {
-  const cookies = document.cookie.split(";");
-  for (const cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.trim().split("=");
-    if (cookieName === name) {
-      return cookieValue;
-    }
-  }
-  return null;
-};
+// const getCookie = (name) => {
+//   const cookies = document.cookie.split(";");
+//   for (const cookie of cookies) {
+//     const [cookieName, cookieValue] = cookie.trim().split("=");
+//     if (cookieName === name) {
+//       return cookieValue;
+//     }
+//   }
+//   return null;
+// };
