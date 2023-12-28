@@ -36,6 +36,9 @@ const announcementSchema = mongoose.Schema({
         type: Boolean,
         default: false, 
     },
+    class: {
+        type: String,
+    },
 
 }, {timestamps: true})
 
