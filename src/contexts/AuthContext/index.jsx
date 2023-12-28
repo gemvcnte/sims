@@ -30,12 +30,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkTokenExpiration = async () => {
-      const storedToken = getCookie("token");
+      const storedToken = localStorage.getItem("authToken");
 
       if (storedToken && user === null) {
         try {
           const decodedToken = jwtDecode(storedToken);
-          jwtDecode(storedToken);
           setUser(decodedToken);
         } catch (error) {
           console.error("Error decoding token:", error);
