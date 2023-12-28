@@ -4,7 +4,7 @@ const { Announcement } = require("../models/Announcement");
 
 router.get("/", async (req, res) => {
   try {
-    const publicAnnouncements = await Announcement.find();
+    const publicAnnouncements = await Announcement.find({isPublic: true});
 
     if (!publicAnnouncements) {
       res.status(404).json({message: 'No Announcements for today.'});

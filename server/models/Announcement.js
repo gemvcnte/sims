@@ -21,7 +21,7 @@ const announcementSchema = mongoose.Schema({
     createdBy: {
         type: String,
         required: true,
-        enum: ['admin', 'teacher']
+        // enum: ['admin', 'teacher']
     },
     typeOfAnnouncement: {
         type: String,
