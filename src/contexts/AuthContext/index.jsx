@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
     const decodedToken = jwtDecode(token);
     setUser((prevUser) => {
       localStorage.setItem("lastUsedRole", decodedToken.role);
-      console.log(decodedToken);
       return decodedToken;
     });
 
