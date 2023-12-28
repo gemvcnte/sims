@@ -32,6 +32,11 @@ const announcementSchema = mongoose.Schema({
     //     required: true,
     // },
 
+    isPublic: {
+        type: Boolean,
+        default: false, 
+    },
+
 }, {timestamps: true})
 
 
