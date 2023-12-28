@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 const AuthContext = createContext();
 
@@ -34,38 +35,49 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkTokenExpiration = async () => {
       const storedToken = localStorage.getItem("authToken");
-
-      if (storedToken && user === null) {
+      if (storedToken) {
         try {
           const decodedToken = jwtDecode(storedToken);
-          setUser(decodedToken);
+          const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+
+          if (isTokenExpired) {
+            showErrorNotification("Your session has expired. Logging out...");
+            setTimeout(() => {
+              logout();
+            }, 3000);
+          }
         } catch (error) {
           console.error("Error decoding token:", error);
           logout();
         }
       }
     };
+    checkTokenExpiration();
 
-    console.log(user);
-    checkTokenExpiration(); // Immediately check on component mount
-
-    const intervalId = setInterval(checkTokenExpiration, 1000); // Check every second
+    const intervalId = setInterval(() => {
+      checkTokenExpiration();
+    }, 5000); // Check every 5 seconds
 
     return () => {
-      clearInterval(intervalId); // Cleanup on component unmount
+      clearInterval(intervalId);
     };
-  }, [logout, user]);
+  }, [logout]);
 
-  //   useEffect(() => {
-  //     // Additional useEffect to check for existing cookie on component mount
-  //     const storedToken = getCookie("token");
+  // useEffect for setting the user when refreshed
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
 
-  //     if (storedToken && user === null) {
-  //       jwtDecode(storedToken); // Check if the token is valid; you can use this line to log any issues during decoding
-  //       const decodedToken = jwtDecode(storedToken);
-  //       setUser(decodedToken);
-  //     }
-  //   }, [user]); // Make sure to include user as a dependency
+    if (storedToken && user === null) {
+      try {
+        const decodedToken = jwtDecode(storedToken);
+
+        setUser(decodedToken);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        logout();
+      }
+    }
+  }, [user, logout]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
