@@ -699,6 +699,7 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
       content,
       createdBy,
       typeOfAnnouncement,
+      isPublic: true,
     });
 
     await Announcement.insertMany([announcement]);
