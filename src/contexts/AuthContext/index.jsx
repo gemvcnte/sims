@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import axios from "@/utils/axios";
+import axiosInstance from "@/utils/axios";
 
 const AuthContext = createContext();
 
@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
       console.log(decodedToken);
       return decodedToken;
     });
+
+    window.location.reload();
   };
 
   const logout = async () => {
