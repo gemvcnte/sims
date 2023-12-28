@@ -6,8 +6,10 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useAuth } from "@/contexts/AuthContext";
 
 function LoginForm({ role, setSelectedRole }) {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
   let apiUrl = `${baseUrl}/${role}/login`;
@@ -29,9 +31,10 @@ function LoginForm({ role, setSelectedRole }) {
 
         if (response.status === 200) {
           const token = response.data.token;
-          localStorage.setItem("authToken", token);
-          navigate("/");
-          window.location.reload();
+          login(token);
+          // localStorage.setItem("authToken", token);
+          // navigate("/");
+          // window.location.reload();
         } else {
           console.log("Login failed");
         }
