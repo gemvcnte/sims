@@ -13,8 +13,8 @@ export default function SidebarFooter() {
       <section className="flex items-center gap-2">
         <div className="h-10 w-10 rounded-full bg-foreground"></div>
         <div className="flex flex-col items-start justify-around">
-          <span>{user.username || "username"}</span>
-          <span className="text-muted-foreground">{user.role}</span>
+          <span>{user?.username || "username"}</span>
+          <span className="text-muted-foreground">{user?.role}</span>
         </div>
       </section>
       <section>
