@@ -6,19 +6,22 @@ import HomeRoutes from "./HomeRoutes";
 import { SidebarProvider } from "@src/contexts/SidebarContext.jsx";
 import { ThemeProvider } from "@/components/theme-provider";
 import AutoLogout from "@/utils/AutoLogout";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const AppRouter = () => {
   return (
     <Router>
-      <AutoLogout />
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <SidebarProvider>
-          <RegistrationRoutes />
-          <Routes>
-            <Route path="*" element={<HomeRoutes />} />
-          </Routes>
-        </SidebarProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <AutoLogout />
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <SidebarProvider>
+            <RegistrationRoutes />
+            <Routes>
+              <Route path="*" element={<HomeRoutes />} />
+            </Routes>
+          </SidebarProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </Router>
   );
 };
