@@ -1,6 +1,6 @@
 // useTeacherProfile.js
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/utils/axios";
 import { getTeacherProfileEndpoint } from "@/config/teacherEndpoints";
 
 const useTeacherProfile = () => {
@@ -25,11 +25,7 @@ const useTeacherProfile = () => {
       }
 
       try {
-        const response = await axios.get(getTeacherProfileEndpoint, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const response = await axiosInstance.get(getTeacherProfileEndpoint);
 
         const fetchedProfileData = response.data.teacherProfile;
         console.log(fetchedProfileData);
