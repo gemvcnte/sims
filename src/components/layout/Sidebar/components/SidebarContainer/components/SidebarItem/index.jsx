@@ -1,4 +1,4 @@
-import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import React from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";

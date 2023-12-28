@@ -1,5 +1,5 @@
 import React from "react";
-import { useSidebarContext } from "@contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@contexts/SidebarContext";
 
 export default function CloseButton() {
   const { toggleSidebar } = useSidebarContext();
@@ -7,7 +7,7 @@ export default function CloseButton() {
   return (
     <div className="absolute right-0 top-4 z-20 p-2 md:hidden">
       <button
-        className="h-[2rem] w-[10vw] border border-white-400 text-white-400"
+        className="border-white-400 text-white-400 h-[2rem] w-[10vw] border"
         onClick={toggleSidebar}
       >
         x

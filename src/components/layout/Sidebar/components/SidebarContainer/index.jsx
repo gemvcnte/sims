@@ -1,5 +1,5 @@
 import React from "react";
-import { useSidebarContext } from "@contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@contexts/SidebarContext";
 import {
   SidebarFooter,
   BackgroundCover,

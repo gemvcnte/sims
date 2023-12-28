@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSidebarContext } from "@contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@contexts/SidebarContext";
 import axios from "axios";
 import StudentCard from "./components/StudentCard";
 import StudentDataModal from "./components/StudentDataModal";

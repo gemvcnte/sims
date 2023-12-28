@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CreateAnnouncementModal from "@/pages/Admin/CreateAnnouncementModal";

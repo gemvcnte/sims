@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function SidebarFooterDropdown({}) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { ToastContainer } from "react-toastify";
 
 export default function Topbar({ children }) {

@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { TeachersDropdown } from "./TeachersDropdown";
-import { useSidebarContext } from "@/contexts/SidebarContext.jsx";
+import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ClassroomsDropdown } from "./ClassroomsDropdown";
 import { AnnouncementsDropdown } from "./AnnouncementsDropdown";

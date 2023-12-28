@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginRoutes from "./LoginRoutes";
 import RegistrationRoutes from "./RegistrationRoutes";
 import HomeRoutes from "./HomeRoutes";
-import { SidebarProvider } from "@src/contexts/SidebarContext.jsx";
+import { SidebarProvider } from "@src/contexts/SidebarContext";
 import { ThemeProvider } from "@/components/theme-provider";
 import AutoLogout from "@/utils/AutoLogout";
 import { AuthProvider } from "@/contexts/AuthContext";
