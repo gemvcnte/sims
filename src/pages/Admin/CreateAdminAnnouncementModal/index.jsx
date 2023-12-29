@@ -59,8 +59,6 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
     };
 
     fetchData();
-    console.log(classes);
-    console.log(selectedClass);
   }, []);
 
   return (
