@@ -82,4 +82,6 @@ router.patch('/class/update-subject', verifyToken, teacherController.updateSubje
 
 router.delete('/class/delete-subject', verifyToken, teacherController.deleteSubjectFromClass);
 
+router.post('/create-announcement', verifyToken, teacherController.createTeacherAnnouncement);
+
 module.exports = router;

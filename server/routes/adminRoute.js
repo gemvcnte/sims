@@ -49,6 +49,11 @@ router.patch(
 );
 
 router.post(
+  "/announcement/create-class-announcement",
+  verifyToken,
+  adminController.createClassAnnouncement);
+
+router.post(
   "/announcement/create-school-announcement",
   // verifyToken,
   adminController.createSchoolAnnouncement

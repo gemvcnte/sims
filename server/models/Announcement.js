@@ -21,7 +21,7 @@ const announcementSchema = mongoose.Schema({
     createdBy: {
         type: String,
         required: true,
-        enum: ['admin', 'teacher']
+        // enum: ['admin', 'teacher']
     },
     typeOfAnnouncement: {
         type: String,
@@ -31,6 +31,14 @@ const announcementSchema = mongoose.Schema({
     //     type: String,
     //     required: true,
     // },
+
+    isPublic: {
+        type: Boolean,
+        default: false, 
+    },
+    class: {
+        type: String,
+    },
 
 }, {timestamps: true})
 
