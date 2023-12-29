@@ -3,7 +3,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { createTeacherAnnouncementEndpoint } from "@/config/teacherEndpoints";
 import axiosInstance from "@/utils/axios";
 
-const createAnnouncementApi = async (announcementData) => {
+const createTeacherAnnouncementApi = async (announcementData) => {
   try {
     const response = await axiosInstance.post(
       createTeacherAnnouncementEndpoint,
@@ -19,4 +19,4 @@ const createAnnouncementApi = async (announcementData) => {
   }
 };
 
-export { createAnnouncementApi };
+export { createTeacherAnnouncementApi };

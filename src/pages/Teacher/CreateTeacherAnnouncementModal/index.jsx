@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { getTeacherAssignedClassesApi } from "../TeacherClasses/helpers";
+import { createTeacherAnnouncementApi } from "./helpers/createTeacherAnnouncementApi";
 // import { createAnnouncementApi } from "./helpers";
 
 export default function CreateTeacherAnnouncementModal({ onClose }) {
@@ -38,8 +39,7 @@ export default function CreateTeacherAnnouncementModal({ onClose }) {
         content,
       };
 
-      //   await createAnnouncementApi(TeacherAnnouncementData);
-      console.log(TeacherAnnouncementData);
+      await createTeacherAnnouncementApi(TeacherAnnouncementData);
 
       resetAnnouncementData();
       onClose();
