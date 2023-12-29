@@ -687,6 +687,45 @@ const deleteClassroom = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+const createClassAnnouncement = asyncHandler(async (req, res) => {
+  try {
+    const { title, content, classId } = req.body;
+
+    const createdBy = req.user && req.user.username ? req.user.username : 'admin';
+
+    const isValidClassId = await Classroom.findById(classId);
+
+    if (!isValidClassId) {
+      return res.status(400).json({ message: 'Invalid classId provided.' });
+    }
+
+    const announcement = new Announcement({
+      title,
+      content,
+      createdBy,
+      class: classId,
+    });
+
+    await announcement.save();
+
+    // Get student email addresses by classId
+    // const studentEmails = await Student.find({ class: classId }).select('emailAddress').exec();
+
+    // Send emails to students in the specified class
+
+    res.status(201).json({
+      message: 'Announcement created successfully.',
+      data: announcement,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
@@ -1037,6 +1076,7 @@ module.exports = {
   getAllApproved,
   getAllPending,
   getAllRejected,
+  createClassAnnouncement,
   createSchoolAnnouncement,
   updateSchoolAnnouncement,
   deleteSchoolAnnouncement,
