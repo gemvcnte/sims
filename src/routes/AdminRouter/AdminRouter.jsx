@@ -9,6 +9,7 @@ import AdminProfile from "@/pages/Admin/AdminProfile";
 import CreateAdminAccount from "@/pages/Admin/CreateAdminAccount";
 import Sections from "@/pages/Admin/Sections";
 import AllClasses from "@/pages/Admin/AllClasses";
+import AdminClasses from "@/pages/Admin/AdminClasses";
 
 export default function AdminRouter() {
   return (
@@ -36,7 +37,7 @@ export default function AdminRouter() {
             element={<CreateAdminAccount />}
           />
 
-          <Route path="/classes" element={<Sections />} />
+          <Route path="/classes" element={<AdminClasses />} />
 
           <Route path="/all-classes" element={<AllClasses />} />
         </Routes>
