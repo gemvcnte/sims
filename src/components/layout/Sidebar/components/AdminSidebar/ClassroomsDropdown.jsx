@@ -54,7 +54,13 @@ export function ClassroomsDropdown({}) {
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="sections">
-            View Sections
+            View My Sections
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link onClick={handleDropdownClick} to="all-sections">
+            View All Sections
           </Link>
         </DropdownMenuItem>
 
