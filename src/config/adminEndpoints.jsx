@@ -26,3 +26,4 @@ export const getAllTeachersEndpoint = `${baseUrl}/admin/get-all-teachers`;
 
 // announcements
 export const createAdminAnnouncementEndpoint = `${baseUrl}/admin/announcement/create-school-announcement`;
+export const createAdminClassAnnouncementEndpoint = `${baseUrl}/admin/announcement/create-class-announcement`;
