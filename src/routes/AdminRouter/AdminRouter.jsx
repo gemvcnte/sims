@@ -10,6 +10,7 @@ import CreateAdminAccount from "@/pages/Admin/CreateAdminAccount";
 import Sections from "@/pages/Admin/Sections";
 import AllClasses from "@/pages/Admin/AllClasses";
 import AdminClasses from "@/pages/Admin/AdminClasses";
+import AdminSpecificClass from "@/pages/Admin/AdminSpecificClass";
 
 export default function AdminRouter() {
   return (
@@ -38,6 +39,7 @@ export default function AdminRouter() {
           />
 
           <Route path="/classes" element={<AdminClasses />} />
+          <Route path="/class/:id" element={<AdminSpecificClass />} />
 
           <Route path="/all-classes" element={<AllClasses />} />
         </Routes>
