@@ -2,6 +2,7 @@ import React from "react";
 import SidebarContainer from "../SidebarContainer";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import SidebarItem from "@/components/layout/Sidebar/components/SidebarContainer/components/SidebarItem";
+import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
 
 export default function TeacherSidebar() {
   return (
@@ -24,9 +25,7 @@ export default function TeacherSidebar() {
 
       <DropdownMenuSeparator />
 
-      <SidebarItem to="" icon="mingcute:announcement-line">
-        Announcements
-      </SidebarItem>
+      <AnnouncementsDropdown />
 
       <SidebarItem to="profile" icon="teenyicons:user-outline">
         Profile
