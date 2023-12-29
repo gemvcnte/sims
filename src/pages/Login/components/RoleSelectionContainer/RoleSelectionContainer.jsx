@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RoleSelectionButton from "./RoleSelectionButton";
 import LoginForm from "./LoginForm";
 
@@ -9,10 +9,18 @@ function RoleSelectionContainer() {
     setSelectedRole(role);
   };
 
+  useEffect(() => {
+    const lastUsedRole = localStorage.getItem("lastUsedRole");
+
+    if (lastUsedRole) {
+      setSelectedRole(lastUsedRole);
+    }
+  }, []);
+
   return (
     <main className="-mt-8 px-8">
       {!selectedRole && (
-        <section className="mx-auto mt-12 flex max-w-[350px] flex-col gap-4 rounded-lg p-4">
+        <section className="mx-auto mt-20 flex max-w-[350px] flex-col gap-4 rounded-lg p-4">
           <RoleSelectionButton
             role="Student"
             hasBorder={true}
