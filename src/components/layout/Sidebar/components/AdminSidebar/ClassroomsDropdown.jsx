@@ -36,7 +36,7 @@ export function ClassroomsDropdown({}) {
         <Button variant="ghost" className="w-full justify-between ">
           <span className="flex items-center">
             <Icon icon="mdi:google-classroom" className="mr-2" />
-            Sections
+            Classes
           </span>
           <span>
             {!isDropdownOpen ? (
@@ -48,19 +48,19 @@ export function ClassroomsDropdown({}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Sections</DropdownMenuLabel>
+        <DropdownMenuLabel>Classes</DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="sections">
-            View My Sections
+          <Link onClick={handleDropdownClick} to="classes">
+            View My Classes
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="all-sections">
-            View All Sections
+          <Link onClick={handleDropdownClick} to="all-classes">
+            View All Classes
           </Link>
         </DropdownMenuItem>
 

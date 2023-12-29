@@ -7,8 +7,8 @@ import ApplicationMonitoring from "@pages/Admin/ApplicationMonitoring";
 import CreateTeacherAccount from "@/pages/Admin/CreateTeacherAccount";
 import AdminProfile from "@/pages/Admin/AdminProfile";
 import CreateAdminAccount from "@/pages/Admin/CreateAdminAccount";
-import AllSections from "@/pages/Admin/AllSections";
 import Sections from "@/pages/Admin/Sections";
+import AllClasses from "@/pages/Admin/AllClasses";
 
 export default function AdminRouter() {
   return (
@@ -36,9 +36,9 @@ export default function AdminRouter() {
             element={<CreateAdminAccount />}
           />
 
-          <Route path="/sections" element={<Sections />} />
+          <Route path="/classes" element={<Sections />} />
 
-          <Route path="/all-sections" element={<AllSections />} />
+          <Route path="/all-classes" element={<AllClasses />} />
         </Routes>
       </div>
     </>
