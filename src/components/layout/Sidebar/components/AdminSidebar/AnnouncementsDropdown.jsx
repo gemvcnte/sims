@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import CreateAnnouncementModal from "@/pages/Admin/CreateAnnouncementModal";
+import CreateClassAnnouncementItem from "./CreateClassAnnouncementItem";
+import CreatePublicAnnouncementItem from "./CreatePublicAnnouncementItem";
 
 export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -52,14 +52,11 @@ export function AnnouncementsDropdown({}) {
 
         <DropdownMenuSeparator />
 
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
-            <DropdownMenuItem>
-              <Link onClick={handleDialogClick}>Create a New Announcement</Link>
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <CreateAnnouncementModal onClose={handleDialogClick} />
-        </Dialog>
+        <div className="flex flex-col">
+          <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} />
+
+          <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} />
+        </div>
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Announcements</Link>

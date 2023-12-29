@@ -3,7 +3,7 @@ import React from "react";
 import { SectionAnalytics, SectionCard, SectionFilter } from "./components";
 import useSection from "./hooks/useSection";
 
-export default function Sections() {
+export default function AllClasses() {
   const { sections, loading, error } = useSection();
 
   if (loading) {
@@ -16,7 +16,7 @@ export default function Sections() {
 
   return (
     <main className="w-full">
-      <Topbar>SECTIONS</Topbar>
+      <Topbar>ALL CLASSES</Topbar>
 
       <SectionAnalytics />
       <SectionFilter />

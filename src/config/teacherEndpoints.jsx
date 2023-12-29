@@ -12,3 +12,6 @@ export const deleteSubjectEndpoint = `${baseUrl}/teacher/class/delete-subject`;
 export const updateStudentsInClassEndpoint = `${baseUrl}/teacher/class/update-students`;
 export const getAllTeachersEndpoint = `${baseUrl}/teacher/get-all-teachers`;
 export const getAllStudentsEndpoint = `${baseUrl}/teacher/getStudents`;
+
+// announcement
+export const createTeacherAnnouncementEndpoint = `${baseUrl}/teacher/create-announcement`;
