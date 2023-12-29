@@ -13,11 +13,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { getTeacherAssignedClassesApi } from "../TeacherClasses/helpers";
-import { createTeacherAnnouncementApi } from "./helpers/createTeacherAnnouncementApi";
+import { createAdminAnnouncementApi } from "./helpers/createAdminAnnouncementApi";
+import getTeacherAssignedClassesApi from "./helpers/getTeacherAssignedClassesApi";
 // import { createAnnouncementApi } from "./helpers";
 
-export default function CreateAdminAnnouncementModal({ onClose }) {
+export default function CreateAdminClassAnnouncementModal({ onClose }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [classes, setClasses] = useState([]);
@@ -39,7 +39,7 @@ export default function CreateAdminAnnouncementModal({ onClose }) {
         content,
       };
 
-      await createTeacherAnnouncementApi(TeacherAnnouncementData);
+      await createAdminAnnouncementApi(TeacherAnnouncementData);
 
       resetAnnouncementData();
       onClose();
@@ -51,7 +51,7 @@ export default function CreateAdminAnnouncementModal({ onClose }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const classes = await getTeacherAssignedClassesApi();
+        const classes = await getTeacherAssignedClassesApi();
         setClasses(classes);
       } catch (error) {
         console.error("Error fetching data:", error);
