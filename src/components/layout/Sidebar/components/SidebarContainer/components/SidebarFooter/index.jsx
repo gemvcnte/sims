@@ -10,6 +10,10 @@ export default function SidebarFooter() {
   const { user, logout } = useAuth();
   const { toggleSidebar } = useSidebarContext();
 
+  if (!user) {
+    return null;
+  }
+
   const displayText = user?.username || "";
   const abbreviatedText = displayText.slice(0, 2).toUpperCase();
 
