@@ -46,12 +46,38 @@ const getStudentSchedule = asyncHandler(async (req, res) => {
   } catch (error) {}
 });
 
+
 const getStudentAnnouncements = asyncHandler(async (req, res) => {
   try {
+    const { _id } = req.user;
+
+    const student = await Student.findById(_id);
+    const studentEmailAddress = student.emailAddress;
+
+    const classIds = await Classroom.find({
+      'students.emailAddress': studentEmailAddress,
+    }).distinct('_id');
+
+    const announcements = await Announcement.find({
+      $or: [
+        { isPublic: true }, 
+        { class: { $in: classIds } }, 
+      ],
+    })
+      .sort({ createdAt: -1 }) 
+      .populate('class', 'sectionName'); 
+
+    res.status(200).json({
+      message: 'Announcements retrieved successfully',
+      data: announcements,
+    });
   } catch (error) {
-    res.status(500).json({ message: `${error}` });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error.' });
   }
 });
+
+
 
 const getStudentProfile = asyncHandler(async (req, res) => {
   try {

@@ -20,4 +20,8 @@ studentController.getAssignedClass)
 // router.get('/school-announcements', studentController.getAnnouncements)
 // router.get('/profile', studentController.updateProfile)
 
+router.get("/get-announcements", 
+verifyToken, 
+studentController.getStudentAnnouncements)
+
 module.exports = router;
