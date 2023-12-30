@@ -10,18 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
 import CreateClassAnnouncementItem from "../AdminSidebar/CreateClassAnnouncementItem";
+import ViewTeacherAnnouncementsItem from "./ViewTeacherAnnouncementsItem";
 
 export function AnnouncementsDropdown({}) {
-  const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleDropdownClick = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-    toggleSidebar();
-  };
 
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
@@ -47,11 +41,8 @@ export function AnnouncementsDropdown({}) {
 
         <div className="flex flex-col">
           <CreateClassAnnouncementItem />
+          <ViewTeacherAnnouncementsItem />
         </div>
-
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>View Announcements</Link>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

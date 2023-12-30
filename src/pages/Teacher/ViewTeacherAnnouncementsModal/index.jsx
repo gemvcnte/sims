@@ -12,7 +12,6 @@ import AnnouncementCard from "./AnnouncementCard";
 export default function ViewTeacherAnnouncementsModal() {
   const { announcements, loading, error } = useAnnouncements();
 
-  const [isOpen, setIsOpen] = useState(true);
   const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
 
   const toggleContent = (announcementId) => {
@@ -27,38 +26,31 @@ export default function ViewTeacherAnnouncementsModal() {
 
   return (
     <>
-      <Dialog
-        className=""
-        isOpen={isOpen}
-        defaultOpen={true}
-        onOpenChange={setIsOpen}
-      >
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>Announcements</DialogTitle>
-            <DialogDescription>
-              Here are the latest announcements.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="max-h-80 overflow-y-auto">
-            {loading && <p>Loading announcements...</p>}
-            {error && <p>Error fetching announcements</p>}
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>Announcements</DialogTitle>
+          <DialogDescription>
+            Here are the latest announcements.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="max-h-80 overflow-y-auto">
+          {loading && <p>Loading announcements...</p>}
+          {error && <p>Error fetching announcements</p>}
 
-            {!loading && !error && (
-              <>
-                {sortedAnnouncements.map((announcement) => (
-                  <AnnouncementCard
-                    key={announcement._id}
-                    announcement={announcement}
-                    expandedAnnouncement={expandedAnnouncement}
-                    toggleContent={toggleContent}
-                  />
-                ))}
-              </>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+          {!loading && !error && (
+            <>
+              {sortedAnnouncements.map((announcement) => (
+                <AnnouncementCard
+                  key={announcement._id}
+                  announcement={announcement}
+                  expandedAnnouncement={expandedAnnouncement}
+                  toggleContent={toggleContent}
+                />
+              ))}
+            </>
+          )}
+        </div>
+      </DialogContent>
     </>
   );
 }
