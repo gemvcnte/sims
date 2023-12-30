@@ -3,12 +3,12 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
-const nodeMailer = require('nodemailer')
+const nodeMailer = require("nodemailer");
 const { Classroom } = require("../models/ClassroomModel");
 const { Announcement } = require("../models/Announcement");
-const { transporter } = require('../mailer')
+const { transporter } = require("../mailer");
 const generateAuthToken = require("../configs/auth");
-const generateEmailTemplate = require('../templates/emailTemplate');
+const generateEmailTemplate = require("../templates/emailTemplate");
 const dotenv = require("dotenv");
 const asyncHandler = require("express-async-handler");
 
@@ -19,15 +19,11 @@ const createAdmin = asyncHandler(async (req, res) => {
   try {
     const adminData = req.body;
 
-    const cleanedFirstName = adminData.firstName.replace(/\s/g, "")
-    const cleanedLastName = adminData.lastName.replace(/\s/g, "")
+    const cleanedFirstName = adminData.firstName.replace(/\s/g, "");
+    const cleanedLastName = adminData.lastName.replace(/\s/g, "");
 
     // Generate username by combining firstname and lastname
-    const username = (
-      cleanedFirstName +
-      "." +
-      cleanedLastName
-    ).toLowerCase();
+    const username = (cleanedFirstName + "." + cleanedLastName).toLowerCase();
     // const username = (
     //   adminData.firstName +
     //   "." +
@@ -349,7 +345,6 @@ const rejectStudentApplication = asyncHandler(async (req, res) => {
   }
 });
 
-
 const updateTeacher = asyncHandler(async (req, res) => {
   try {
     const { username, password, ...updateData } = req.body;
@@ -394,11 +389,11 @@ const getAllTeachers = asyncHandler(async (req, res) => {
     const allTeachers = [...retrieveTeachers, ...retrieveAdminTeachers];
 
     // sort alphabetical
-    allTeachers.sort((a,b) => {
+    allTeachers.sort((a, b) => {
       const fullNameTeacher = `${a.lastName}, ${a.firstName}, ${a.middleName}`;
       const fullNameAdmin = `${b.lastName}, ${b.firstName}, ${b.middleName}`;
       return fullNameTeacher.localeCompare(fullNameAdmin);
-    })
+    });
     // Map the retrieved data to create a new array with the desired fields
     const modifiedData = allTeachers.map((teacher) => ({
       username: teacher.username,
@@ -580,7 +575,6 @@ const getAllPending = asyncHandler(async (req, res) => {
   }
 });
 
-
 const createClassroom = asyncHandler(async (req, res) => {
   try {
     const { sectionName, gradeLevel, adviser, strand } = req.body;
@@ -608,7 +602,6 @@ const createClassroom = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getSpecificClass = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -624,10 +617,11 @@ const getSpecificClass = asyncHandler(async (req, res) => {
       data: findClass,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error. Please try again later.' });
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again later." });
   }
 });
-
 
 const getAllClasses = asyncHandler(async (req, res) => {
   try {
@@ -687,18 +681,17 @@ const deleteClassroom = asyncHandler(async (req, res) => {
   }
 });
 
-
-
 const createClassAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, classId } = req.body;
 
-    const createdBy = req.user && req.user.username ? req.user.username : 'admin';
+    const createdBy =
+      req.user && req.user.username ? req.user.username : "admin";
 
     const isValidClassId = await Classroom.findById(classId);
 
     if (!isValidClassId) {
-      return res.status(400).json({ message: 'Invalid classId provided.' });
+      return res.status(400).json({ message: "Invalid classId provided." });
     }
 
     const announcement = new Announcement({
@@ -716,22 +709,22 @@ const createClassAnnouncement = asyncHandler(async (req, res) => {
     // Send emails to students in the specified class
 
     res.status(201).json({
-      message: 'Announcement created successfully.',
+      message: "Announcement created successfully.",
       data: announcement,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
+    res.status(500).json({ message: "Internal server error." });
   }
 });
-
 
 // creating an announcement for the school
 const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement, } = req.body;
+    const { title, content, typeOfAnnouncement } = req.body;
 
-    const createdBy = req.user && req.user.username ? req.user.username : 'admin';
+    const createdBy =
+      req.user && req.user.username ? req.user.username : "admin";
 
     const announcement = new Announcement({
       title,
@@ -743,15 +736,15 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
 
     await Announcement.insertMany([announcement]);
 
-    const studentEmails = await Student.find({}).distinct('emailAddress');
-    const teacherEmails = await Teacher.find({}).distinct('emailAddress');
-    const adminEmails = await Admin.find({}).distinct('emailAddress');
+    const studentEmails = await Student.find({}).distinct("emailAddress");
+    const teacherEmails = await Teacher.find({}).distinct("emailAddress");
+    const adminEmails = await Admin.find({}).distinct("emailAddress");
 
     const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
 
     const mailOptions = {
-      from: 'mrmnhs.simsannouncement@gmail.com',
-      subject: `New School Announcement: ${typeOfAnnouncement || 'General'}`,
+      from: "mrmnhs.simsannouncement@gmail.com",
+      subject: `New School Announcement: ${typeOfAnnouncement || "General"}`,
       // Use HTML content for the email body
       html: `
         <html>
@@ -761,12 +754,13 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
             <h2>${title}</h2>
             <p>${content}</p>
             <p>Created By: ${createdBy}</p>
-            <p>Type of Announcement: ${typeOfAnnouncement || 'Important Announcement'}</p>
+            <p>Type of Announcement: ${
+              typeOfAnnouncement || "Important Announcement"
+            }</p>
           </body>
         </html>
       `,
     };
-
 
     await Promise.all(
       allEmails.map(async (email) => {
@@ -779,13 +773,13 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
           await transporter.sendMail(personalizedMailOptions);
           console.log(`Email sent successfully to ${email}`);
         } catch (error) {
-          console.error(`Error sending email to ${email}, ${error}`)
+          console.error(`Error sending email to ${email}, ${error}`);
         }
       })
-    )
+    );
 
     res.status(201).json({
-      message: 'Announcement created successfully.',
+      message: "Announcement created successfully.",
       data: announcement,
     });
   } catch (error) {
@@ -793,15 +787,14 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
   }
 });
 
-
 // UPDATE A SCHOOL ANNOUNCEMENT
 
 const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
   try {
     const { title, content, typeOfAnnouncement } = req.body;
 
-    const updatedBy = req.user && req.user.username ? req.user.username : 'Admin'
-    
+    const updatedBy =
+      req.user && req.user.username ? req.user.username : "Admin";
 
     const updatedAnnouncement = await Announcement.findOneAndUpdate(
       { title, content },
@@ -809,27 +802,28 @@ const updateSchoolAnnouncement = asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    const studentEmails = await Student.find({}).distinct('emailAddress');
-    const teacherEmails = await Teacher.find({}).distinct('emailAddress');
-    const adminEmails = await Admin.find({}).distinct('emailAddress');
+    const studentEmails = await Student.find({}).distinct("emailAddress");
+    const teacherEmails = await Teacher.find({}).distinct("emailAddress");
+    const adminEmails = await Admin.find({}).distinct("emailAddress");
 
-
-    const allEmails = [...studentEmails, ...teacherEmails, ... adminEmails];
+    const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
 
     const mailOptions = {
-      from: 'mrmnhs.simsannouncement@gmail.com',
-      subject: `School Announcement ${typeOfAnnouncement || 'Important Announcement'}`,
-      text: `Title: ${title}\nContent: ${content}` 
-    }
+      from: "mrmnhs.simsannouncement@gmail.com",
+      subject: `School Announcement ${
+        typeOfAnnouncement || "Important Announcement"
+      }`,
+      text: `Title: ${title}\nContent: ${content}`,
+    };
 
     for (const email of allEmails) {
       mailOptions.to = email;
 
       try {
         await transporter.sendMail(mailOptions);
-        console.log(`Email sent successfully to ${email}`)
+        console.log(`Email sent successfully to ${email}`);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     }
 
@@ -850,9 +844,10 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
 
     const deletedAnnouncement = await Announcement.findOneAndDelete(title);
 
-
     if (!deletedAnnouncement) {
-      return res.status(404).json({message: 'There is no announcement with that title.'})
+      return res
+        .status(404)
+        .json({ message: "There is no announcement with that title." });
     }
 
     res.status(202).json({ message: "Announcement has been deleted" });
@@ -862,123 +857,125 @@ const deleteSchoolAnnouncement = asyncHandler(async (req, res) => {
 });
 
 //post faculty announcement only
-const createFacultyAnnouncement = asyncHandler(async(req,res) => {
+const createFacultyAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title, content, typeOfAnnouncement,
-    } = req.body;
-
+    const { title, content, typeOfAnnouncement } = req.body;
 
     const facultyAnnouncement = new Announcement({
-      title, 
-      content, 
+      title,
+      content,
       createdBy,
-      typeOfAnnouncement, 
+      typeOfAnnouncement,
     });
 
-    await Announcement.insertMany([facultyAnnouncement])
+    await Announcement.insertMany([facultyAnnouncement]);
 
-    const teacherEmails = await Teacher.find({}).distinct('emailAddress');
+    const teacherEmails = await Teacher.find({}).distinct("emailAddress");
 
     const mailOptions = {
-      from: 'mrmnhs.simsannouncement@gmail.com',
-      subject: `New School Announcement ${typeOfAnnouncement || 'Important Announcement'}`,
-      content: {generateEmailTemplate}
-
-    }
-    
+      from: "mrmnhs.simsannouncement@gmail.com",
+      subject: `New School Announcement ${
+        typeOfAnnouncement || "Important Announcement"
+      }`,
+      content: { generateEmailTemplate },
+    };
 
     await Promise.all(
-      teacherEmails.map(async(email) => {
+      teacherEmails.map(async (email) => {
         try {
           const personalizedMailOptions = {
             ...mailOptions,
             to: email,
-          }
+          };
 
-          await transporter.sendMail(personalizedMailOptions)
-          console.log(`Email has been sent successfully to all faculty personnel's ${email}`)
+          await transporter.sendMail(personalizedMailOptions);
+          console.log(
+            `Email has been sent successfully to all faculty personnel's ${email}`
+          );
         } catch (error) {
-          console.error(`Error sending email to ${email}, ${error}`)
+          console.error(`Error sending email to ${email}, ${error}`);
         }
       })
-    )
+    );
 
-    res.status(201).json({message: 
-      'Announcement created successfully.',
-      data: facultyAnnouncement
-  
-  })
+    res
+      .status(201)
+      .json({
+        message: "Announcement created successfully.",
+        data: facultyAnnouncement,
+      });
   } catch (error) {
-    res.status(500).json({message: `${error}`})
-  }  
-})
+    res.status(500).json({ message: `${error}` });
+  }
+});
 
 // update faculty announcement only
-const updateFacultyAnnouncement = asyncHandler(async(res,req) => {
+const updateFacultyAnnouncement = asyncHandler(async (res, req) => {
   try {
-    const { title, content, typeOfAnnouncement,} = req.body
+    const { title, content, typeOfAnnouncement } = req.body;
 
+    const updatedAnnouncement = await Announcement.findOneAndUpdate(
+      { title, content },
+      updatedAnnouncement,
+      { new: true }
+    );
 
-    const updatedAnnouncement = await Announcement.findOneAndUpdate({title, content},
-    updatedAnnouncement,
-      {new: true},
-  );
+    const facultyEmails = await Teacher.find({}).distinct("emailAddress");
+    const adminEmails = await Admin.find({}).distinct("emailAddress");
 
+    const allEmails = [...facultyEmails, ...adminEmails];
 
+    const mailOptions = {
+      from: "mrmnhs.simsannouncement@gmail.com",
+      subject: `School Announcement ${
+        typeOfAnnouncement || "Important Announcement"
+      }`,
+      text: `Title ${title}\nContent: ${content}`,
+    };
 
-  const facultyEmails = await Teacher.find({}).distinct('emailAddress');
-  const adminEmails = await Admin.find({}).distinct('emailAddress');
+    for (const email of allEmails) {
+      mailOptions.to = email;
 
-  const allEmails = [...facultyEmails, ...adminEmails]
+      try {
+        await transporter.sendEmail(emailOptions);
+        console.log(`Email has been sent successfully to ${email}`);
+      } catch (error) {
+        console.error(error);
+      }
 
-
-  const mailOptions = {
-    from: 'mrmnhs.simsannouncement@gmail.com',
-    subject: `School Announcement ${typeOfAnnouncement || 'Important Announcement'}`,
-    text: `Title ${title}\nContent: ${content}`,
-  }
-
-  for ( const email of allEmails) {
-    mailOptions.to = email;
-
-    try {
-      await transporter.sendEmail(emailOptions);
-      console.log(`Email has been sent successfully to ${email}`)
-    } catch (error) {
-      console.error(error)
-      
+      res
+        .status(200)
+        .json({
+          message: "Announcement has been successfully updated.",
+          data: updatedAnnouncement,
+        });
     }
-
-    res.status(200).json({message: 'Announcement has been successfully updated.',
-    data: updatedAnnouncement,
-  })
-  }
   } catch (error) {
-    res.status(500
-      ).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` });
   }
-})
+});
 
 // delete faculty announcement
-const deleteFacultyAnnouncement = asyncHandler(async(req,res) => {
+const deleteFacultyAnnouncement = asyncHandler(async (req, res) => {
   try {
-    const { title } = req.body
+    const { title } = req.body;
 
     const deletedAnnouncement = await Announcement.findOneAndDelete(title);
 
-
     if (!deletedAnnouncement) {
-      return res.status(404).json({message: 'There is no announcement with that title.'});
+      return res
+        .status(404)
+        .json({ message: "There is no announcement with that title." });
     }
 
-    res.status(202).json({message: "Announcement has been deleted."})
-
+    res.status(202).json({ message: "Announcement has been deleted." });
   } catch (error) {
-    res.status(500).json({message: `${error}`})
+    res.status(500).json({ message: `${error}` });
   }
 });
-// GET ALL SCHOOL ANNOUNCEMENTS
 
+// GET ALL SCHOOL ANNOUNCEMENTS
+// FOR SUPERADMIN ACCOUNTS
 const getAllSchoolAnnouncements = asyncHandler(async (req, res) => {
   try {
     const retrieveAnnouncements = await Announcement.find();
@@ -1030,9 +1027,6 @@ const assignTeacherToClass = asyncHandler(async (req, res) => {
   }
 });
 
-
-
-
 // const updateStudentProfile = asyncHandler(async (req, res) => {
 //   try {
 //     const { lrn } = req.body;
@@ -1053,6 +1047,26 @@ const assignTeacherToClass = asyncHandler(async (req, res) => {
 //     res.status(500).json({ message: `${error}` });
 //   }
 // });
+
+const getAnnouncements = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.user;
+
+    const announcements = await Announcement.find({
+      $or: [{ isPublic: true }, { createdBy: username }],
+    })
+      .sort({ createdAt: -1 })
+      .populate("class", "sectionName");
+
+    res.status(200).json({
+      message: "Announcements retrieved successfully",
+      data: announcements,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+});
 
 module.exports = {
   getAllAdmins,
@@ -1090,6 +1104,7 @@ module.exports = {
   updateClassroom,
   deleteClassroom,
   assignTeacherToClass,
+  getAnnouncements,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

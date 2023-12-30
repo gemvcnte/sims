@@ -48,6 +48,11 @@ router.patch(
   adminController.rejectStudentApplication
 );
 
+router.get(
+  "/get-announcements",
+  verifyToken,
+  adminController.getAnnouncements);
+
 router.post(
   "/announcement/create-class-announcement",
   verifyToken,
