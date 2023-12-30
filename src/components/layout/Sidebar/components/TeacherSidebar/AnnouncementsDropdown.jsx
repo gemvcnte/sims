@@ -12,22 +12,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import CreateTeacherAnnouncementModal from "@/pages/Teacher/CreateTeacherAnnouncementModal";
+import CreateClassAnnouncementItem from "../AdminSidebar/CreateClassAnnouncementItem";
 
 export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     toggleSidebar();
-  };
-
-  const handleDialogClick = (event) => {
-    // event.preventDefault();
-    setIsDialogOpen(!isDialogOpen);
   };
 
   return (
@@ -52,14 +45,9 @@ export function AnnouncementsDropdown({}) {
 
         <DropdownMenuSeparator />
 
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
-            <DropdownMenuItem>
-              <Link onClick={handleDialogClick}>Create Class Announcement</Link>
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <CreateTeacherAnnouncementModal onClose={handleDialogClick} />
-        </Dialog>
+        <div className="flex flex-col">
+          <CreateClassAnnouncementItem />
+        </div>
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Announcements</Link>
