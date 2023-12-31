@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import SidebarContainer from "../SidebarContainer";
 import SidebarItem from "@/components/layout/Sidebar/components/SidebarContainer/components/SidebarItem";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import ViewTeacherAnnouncementsItem from "../TeacherSidebar/ViewTeacherAnnouncementsItem";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Link } from "react-router-dom";
+import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
+import { Icon } from "@iconify/react";
 
 export default function StudentSidebar() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleDialogClick = (event) => {
+    // event.preventDefault();
+    setIsDialogOpen(!isDialogOpen);
+  };
+
   return (
     <SidebarContainer>
       <SidebarItem to="dashboard" icon="material-symbols:dashboard">
@@ -20,9 +35,20 @@ export default function StudentSidebar() {
 
       <DropdownMenuSeparator />
 
-      <SidebarItem to="" icon="mingcute:announcement-line">
-        Announcements
-      </SidebarItem>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger>
+          <SidebarItem>
+            <Link
+              onClick={handleDialogClick}
+              className="flex items-center gap-2"
+            >
+              <Icon icon="mingcute:announcement-line" />
+              View Announcements
+            </Link>
+          </SidebarItem>
+        </DialogTrigger>
+        <ViewStudentAnnouncementsModal onClose={handleDialogClick} />
+      </Dialog>
 
       <SidebarItem to="profile" icon="teenyicons:user-outline">
         Profile

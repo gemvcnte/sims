@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
 import CreateClassAnnouncementItem from "./CreateClassAnnouncementItem";
 import CreatePublicAnnouncementItem from "./CreatePublicAnnouncementItem";
+import ViewTeacherAnnouncementsItem from "../TeacherSidebar/ViewTeacherAnnouncementsItem";
 
 export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -56,11 +57,9 @@ export function AnnouncementsDropdown({}) {
           <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} />
 
           <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} />
-        </div>
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>View Announcements</Link>
-        </DropdownMenuItem>
+          <ViewTeacherAnnouncementsItem />
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

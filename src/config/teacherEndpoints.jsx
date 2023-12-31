@@ -15,3 +15,4 @@ export const getAllStudentsEndpoint = `${baseUrl}/teacher/getStudents`;
 
 // announcement
 export const createTeacherAnnouncementEndpoint = `${baseUrl}/teacher/create-announcement`;
+export const getTeacherAnnouncementsEndpoint = `${baseUrl}/teacher/get-announcements`;

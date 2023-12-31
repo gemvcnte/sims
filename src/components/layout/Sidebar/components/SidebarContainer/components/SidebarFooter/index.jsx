@@ -38,7 +38,13 @@ export default function SidebarFooter() {
           </div>
         </section>
         <section>
-          <Button variant="ghost" onClick={() => logout()}>
+          <Button
+            variant="ghost"
+            onClick={(e) => {
+              e.stopPropagation();
+              logout();
+            }}
+          >
             <Icon
               icon="material-symbols:logout"
               rotate={2}
