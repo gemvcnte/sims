@@ -11,8 +11,7 @@ const useAnnouncements = () => {
     const fetchAnnouncements = async () => {
       try {
         const response = await axiosInstance(getTeacherAnnouncementsEndpoint);
-        const data = await response.json();
-        setAnnouncements(data.data);
+        setAnnouncements(response.data.data);
       } catch (error) {
         setError(error);
       } finally {
