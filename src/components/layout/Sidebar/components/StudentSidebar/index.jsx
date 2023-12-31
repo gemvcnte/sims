@@ -9,6 +9,7 @@ import ViewTeacherAnnouncementsItem from "../TeacherSidebar/ViewTeacherAnnouncem
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
+import { Icon } from "@iconify/react";
 
 export default function StudentSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,7 +38,13 @@ export default function StudentSidebar() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
           <SidebarItem>
-            <Link onClick={handleDialogClick}>View Announcements</Link>
+            <Link
+              onClick={handleDialogClick}
+              className="flex items-center gap-2"
+            >
+              <Icon icon="mingcute:announcement-line" />
+              View Announcements
+            </Link>
           </SidebarItem>
         </DialogTrigger>
         <ViewStudentAnnouncementsModal onClose={handleDialogClick} />
