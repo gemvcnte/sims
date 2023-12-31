@@ -696,6 +696,32 @@ const createTeacherAnnouncement = asyncHandler(async (req, res) => {
 
 
 
+const getAnnouncements = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.user;
+
+    const announcements = await Announcement.find({
+      $or: [
+        { isPublic: true }, 
+        { createdBy: username }, 
+      ],
+    })  
+    .sort({ createdAt: -1 }) 
+    .populate('class', 'sectionName'); 
+
+    res.status(200).json({
+      message: 'Announcements retrieved successfully',
+      data: announcements,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+
+
+
 module.exports = {
   teacherLogin,
   getTeacherSchedule,
@@ -717,4 +743,5 @@ module.exports = {
   updateSubjectClass,
   deleteSubjectFromClass,
   createTeacherAnnouncement,
+  getAnnouncements,
 };

@@ -84,4 +84,7 @@ router.delete('/class/delete-subject', verifyToken, teacherController.deleteSubj
 
 router.post('/create-announcement', verifyToken, teacherController.createTeacherAnnouncement);
 
+router.get('/get-announcements', verifyToken, teacherController.getAnnouncements);
+
+
 module.exports = router;
