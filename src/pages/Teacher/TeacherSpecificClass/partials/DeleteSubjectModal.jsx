@@ -34,7 +34,9 @@ export function DeleteSubjectModal({ onSuccess, subject }) {
       <AlertDialogTrigger asChild>
         <TableCell className="hover:cursor-pointer">
           <span className="flex items-center gap-2">
-            Delete
+            <span className="border-b border-background py-0 hover:border-foreground">
+              Delete
+            </span>
             <Icon
               icon="ant-design:delete-outlined"
               className="hidden sm:inline"

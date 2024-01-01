@@ -126,7 +126,9 @@ export default function StudentsTable() {
               <TableCell className="uppercase">{student.lastName}</TableCell>
               <TableCell>{student.firstName}</TableCell>
               <TableCell className="inline-block">
-                View <span className="hidden sm:inline">Student</span> Profile
+                <span className="border-b border-background py-1 hover:border-foreground">
+                  View <span className="hidden sm:inline">Student</span> Profile
+                </span>
                 <Icon
                   icon="octicon:arrow-down-24"
                   rotate={3}

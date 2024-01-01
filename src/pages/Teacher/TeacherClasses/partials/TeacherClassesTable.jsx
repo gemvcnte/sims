@@ -13,6 +13,7 @@ import {
 import { Icon } from "@iconify/react";
 import { useFilteredClassesContext } from "../contexts/FilteredClassesContext";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function TeacherClassesTable() {
   const { filterSections } = useFilteredClassesContext();
@@ -50,11 +51,13 @@ export default function TeacherClassesTable() {
                 {section.students.length}
               </TableCell>
               <TableCell className="inline-block">
-                View <span className="hidden sm:inline-block">Section</span>
+                <span className="border-b border-background py-1 hover:border-foreground">
+                  View <span className="hidden sm:inline-block">Section</span>
+                </span>
                 <Icon
                   icon="octicon:arrow-down-24"
                   rotate={3}
-                  className="inline-block -rotate-45 transform transition-all group-hover:rotate-45"
+                  className="ml-2 inline-block -rotate-45 transform transition-all group-hover:rotate-45"
                 />
               </TableCell>
             </TableRow>

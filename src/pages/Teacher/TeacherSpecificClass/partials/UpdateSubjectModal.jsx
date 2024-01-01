@@ -72,12 +72,16 @@ export default function UpdateSubjectModal({ onSuccess, subject }) {
     <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
       <DialogTrigger>
         <TableCell className="inline-block hover:cursor-pointer">
-          Update
-          <Icon
-            icon="octicon:arrow-down-24"
-            rotate={3}
-            className="ml-2 hidden -rotate-45 transform transition-all group-hover:rotate-45 sm:inline"
-          />
+          <span className="flex items-center gap-2">
+            <span className="border-b border-background py-1 hover:border-foreground">
+              Update
+            </span>
+            <Icon
+              icon="octicon:arrow-down-24"
+              rotate={3}
+              className="ml-2 hidden -rotate-45 transform transition-all group-hover:rotate-45 sm:inline"
+            />
+          </span>
         </TableCell>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
