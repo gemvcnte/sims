@@ -25,7 +25,7 @@ export default function StudentSidebar() {
         Dashboard
       </SidebarItem>
 
-      <SidebarItem to="" icon="uil:schedule">
+      <SidebarItem to="schedule" icon="uil:schedule">
         Schedule
       </SidebarItem>
 
@@ -37,15 +37,12 @@ export default function StudentSidebar() {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
-          <SidebarItem>
-            <Link
-              onClick={handleDialogClick}
-              className="flex items-center gap-2"
-            >
+          <span onClick={handleDialogClick}>
+            <SidebarItem className="flex items-center gap-2">
               <Icon icon="mingcute:announcement-line" />
               View Announcements
-            </Link>
-          </SidebarItem>
+            </SidebarItem>
+          </span>
         </DialogTrigger>
         <ViewStudentAnnouncementsModal onClose={handleDialogClick} />
       </Dialog>
