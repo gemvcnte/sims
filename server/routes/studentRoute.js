@@ -14,7 +14,7 @@ router.patch(
   studentController.updateStudentProfile
 );
 router.get("/class/assigned-class", 
-// verifyToken, 
+verifyToken, 
 studentController.getAssignedClass)
 // router.get('/scheduling', studentController.getSchedule)
 // router.get('/school-announcements', studentController.getAnnouncements)

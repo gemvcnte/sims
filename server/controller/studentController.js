@@ -170,28 +170,23 @@ const updateStudentProfile = asyncHandler(async (req, res) => {
 
 const getAssignedClass = asyncHandler(async (req, res) => {
   try {
-    const { 
-      firstName, 
-      lastName, 
-      // emailAddress 
-    } = req.body;
+    const { _id } = req.user;
 
-    const assignedClasses = await Classroom.find({
-      'students.firstName': firstName,
-      'students.lastName': lastName,
-      // 'students.emailAddress': emailAddress,
+    const student = await Student.findById(_id);
+    const studentLrn = student.lrn;
+
+    const classIds = await Classroom.find({
+      'students.lrn': studentLrn,
+    }).distinct('_id');
+
+    const findClass = await Classroom.find({ _id: classIds });
+
+    return res.status(200).json({
+      message: "Class found",
+      data: findClass,
     });
-
-    if (!assignedClasses || assignedClasses.length === 0) {
-      res.status(400).json({ message: 'Student is not assigned to any classes.' });
-    } else {
-      res.status(200).json({
-        message: 'Assigned Classes retrieved successfully',
-        data: assignedClasses,
-      });
-    }
   } catch (error) {
-    res.status(500).json({ message: `Internal server error. Please try again later. ${error}`  });
+    res.status(500).json({ message: error.message });
   }
 });
 
