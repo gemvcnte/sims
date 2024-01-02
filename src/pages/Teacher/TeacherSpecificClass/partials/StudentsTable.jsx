@@ -31,7 +31,7 @@ export default function StudentsTable() {
         if (classDetails && isEditing) {
           await fetchStudentsApi(setAllStudents);
           setSelectedStudents(
-            classDetails.students.map((student) => student.emailAddress),
+            classDetails.students.map((student) => student.lrn),
           );
         } else if (classDetails) {
           setAllStudents(classDetails.students);
@@ -118,8 +118,8 @@ export default function StudentsTable() {
                 <TableCell>
                   <input
                     type="checkbox"
-                    checked={selectedStudents.includes(student.emailAddress)}
-                    onChange={() => handleAddStudent(student.emailAddress)}
+                    checked={selectedStudents.includes(student.lrn)}
+                    onChange={() => handleAddStudent(student.lrn)}
                   />
                 </TableCell>
               )}

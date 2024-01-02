@@ -2,13 +2,13 @@ import { updateStudentsInClassEndpoint } from "@/config/teacherEndpoints";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import axios from "axios";
 
-const updateStudentsInClassApi = async (classId, studentEmails) => {
+const updateStudentsInClassApi = async (classId, studentLrns) => {
   try {
     const response = await axios.patch(
       updateStudentsInClassEndpoint,
       {
         classId,
-        studentEmails,
+        studentLrns,
       },
       getAuthHeaders(),
     );
