@@ -502,10 +502,10 @@ const getAllTeachers = asyncHandler(async (req, res) => {
 
 const updateStudentsInClass = asyncHandler(async (req, res) => {
   try {
-    const { classId, studentEmails } = req.body;
+    const { classId, studentLrns } = req.body;
 
     // Validate that required fields are provided
-    if (!classId || !Array.isArray(studentEmails)) {
+    if (!classId || !Array.isArray(studentLrns)) {
       return res.status(400).json({ message: "Invalid request payload." });
     }
 
@@ -525,10 +525,10 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
 
     // Fetch the students by their emails
     const students = await Student.find({
-      emailAddress: { $in: studentEmails },
+      lrn: { $in: studentLrns },
     });
 
-    if (students.length !== studentEmails.length) {
+    if (students.length !== studentLrns.length) {
       return res
         .status(404)
         .json({ message: "One or more students not found." });
@@ -538,7 +538,7 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
     classroom.students = students.map((student) => ({
       firstName: student.firstName,
       lastName: student.lastName,
-      emailAddress: student.emailAddress,
+      lrn: student.lrn,
     }));
 
     // Save the updated class
