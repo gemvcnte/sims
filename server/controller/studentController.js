@@ -52,10 +52,10 @@ const getStudentAnnouncements = asyncHandler(async (req, res) => {
     const { _id } = req.user;
 
     const student = await Student.findById(_id);
-    const studentEmailAddress = student.emailAddress;
+    const studentLrn = student.lrn;
 
     const classIds = await Classroom.find({
-      'students.emailAddress': studentEmailAddress,
+      'students.lrn': studentLrn,
     }).distinct('_id');
 
     const announcements = await Announcement.find({
