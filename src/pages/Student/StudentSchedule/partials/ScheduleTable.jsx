@@ -10,10 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
-import AddSubjectModal from "./AddSubjectModal";
-import UpdateSubjectModal from "./UpdateSubjectModal";
-import { Icon } from "@iconify/react";
-import { DeleteSubjectModal } from "./DeleteSubjectModal";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
