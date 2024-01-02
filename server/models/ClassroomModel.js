@@ -37,7 +37,7 @@ const classroomSchema = mongoose.Schema(
                 type: String,
                 required: true,
             },
-            emailAddress: {
+            lrn: {
                 type: String,
                 required: true,
             }
