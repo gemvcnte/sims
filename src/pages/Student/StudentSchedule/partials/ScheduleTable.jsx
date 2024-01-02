@@ -18,10 +18,13 @@ export default function ScheduleTable() {
   const [classDetails, setClassDetails] = useState(null);
 
   useEffect(() => {
-    // always take the first section
-    // incase the student is in more than 1 class
     if (fetchedClass && fetchedClass.length > 0) {
-      setClassDetails(fetchedClass[0]);
+      // Sort classes by createdAt in descending order
+      const sortedClasses = [...fetchedClass].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      );
+      // Take the most lastest class
+      setClassDetails(sortedClasses[0]);
     }
   }, [fetchedClass]);
 
