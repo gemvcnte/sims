@@ -13,15 +13,13 @@ import { useClassDetails } from "../contexts/ClassDetailsContext";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
-  const {
-    classDetails: fetchedClass,
-    loading,
-    fetchClassDetails,
-  } = classDetailsContext;
+  const { classDetails: fetchedClass, loading } = classDetailsContext;
 
   const [classDetails, setClassDetails] = useState(null);
 
   useEffect(() => {
+    // always take the first section
+    // incase the student is in more than 1 class
     if (fetchedClass && fetchedClass.length > 0) {
       setClassDetails(fetchedClass[0]);
     }
@@ -29,13 +27,14 @@ export default function ScheduleTable() {
 
   if (loading) {
     return <p>loading..</p>;
-  } else if (!classDetails) {
-    return <p>No schedule found.</p>;
   }
 
   return (
     <main className="p-4">
       <Table>
+        {!classDetails && (
+          <TableCaption className="pb-6 pt-4">No Schedule Found</TableCaption>
+        )}
         <TableHeader>
           <TableRow>
             <TableHead></TableHead>
@@ -46,72 +45,73 @@ export default function ScheduleTable() {
             <TableHead className="text-center">Friday</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {Array.from({ length: 12 }, (_, index) => index + 7).map((hour) => (
-            <TableRow key={hour}>
-              <TableCell className="font-medium">
-                {hour < 12
-                  ? `${hour === 0 ? 12 : hour}:00 AM`
-                  : hour === 12
-                    ? `12:00 PM`
-                    : `${hour - 12}:00 PM`}
-              </TableCell>
-              {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
-                (day) => {
-                  const subjectForDayAndHour = classDetails.subjects.find(
-                    (subject) => {
-                      const subjectSchedule = subject.schedules.find(
-                        (schedule) =>
-                          schedule.day === day &&
-                          parseInt(schedule.startTime.split(":")[0]) === hour,
-                      );
-                      return subjectSchedule;
-                    },
-                  );
+        {classDetails && (
+          <TableBody>
+            {Array.from({ length: 12 }, (_, index) => index + 7).map((hour) => (
+              <TableRow key={hour}>
+                <TableCell className="font-medium">
+                  {hour < 12
+                    ? `${hour === 0 ? 12 : hour}:00 AM`
+                    : hour === 12
+                      ? `12:00 PM`
+                      : `${hour - 12}:00 PM`}
+                </TableCell>
+                {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
+                  (day) => {
+                    const subjectForDayAndHour = classDetails.subjects.find(
+                      (subject) => {
+                        const subjectSchedule = subject.schedules.find(
+                          (schedule) =>
+                            schedule.day === day &&
+                            parseInt(schedule.startTime.split(":")[0]) === hour,
+                        );
+                        return subjectSchedule;
+                      },
+                    );
 
-                  return (
-                    <TableCell className="text-center" key={`${day}-${hour}`}>
-                      {subjectForDayAndHour ? (
-                        <div>
-                          <p>{subjectForDayAndHour.subjectName}</p>
-                          <p>
-                            {convertTo12HourFormat(
-                              subjectForDayAndHour.schedules
-                                .find(
-                                  (schedule) =>
-                                    schedule.day === day &&
-                                    parseInt(
-                                      schedule.startTime.split(":")[0],
-                                    ) === hour,
-                                )
-                                .startTime.replace(/^0/, ""),
-                            )}{" "}
-                            <br className="sm:hidden" />-
-                            <br className="sm:hidden" />{" "}
-                            {convertTo12HourFormat(
-                              subjectForDayAndHour.schedules
-                                .find(
-                                  (schedule) =>
-                                    schedule.day === day &&
-                                    parseInt(
-                                      schedule.startTime.split(":")[0],
-                                    ) === hour,
-                                )
-                                .endTime.replace(/^0/, ""),
-                            )}
-                          </p>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                    </TableCell>
-                  );
-                },
-              )}
-            </TableRow>
-          ))}
-        </TableBody>
-
+                    return (
+                      <TableCell className="text-center" key={`${day}-${hour}`}>
+                        {subjectForDayAndHour ? (
+                          <div>
+                            <p>{subjectForDayAndHour.subjectName}</p>
+                            <p>
+                              {convertTo12HourFormat(
+                                subjectForDayAndHour.schedules
+                                  .find(
+                                    (schedule) =>
+                                      schedule.day === day &&
+                                      parseInt(
+                                        schedule.startTime.split(":")[0],
+                                      ) === hour,
+                                  )
+                                  .startTime.replace(/^0/, ""),
+                              )}{" "}
+                              <br className="sm:hidden" />-
+                              <br className="sm:hidden" />{" "}
+                              {convertTo12HourFormat(
+                                subjectForDayAndHour.schedules
+                                  .find(
+                                    (schedule) =>
+                                      schedule.day === day &&
+                                      parseInt(
+                                        schedule.startTime.split(":")[0],
+                                      ) === hour,
+                                  )
+                                  .endTime.replace(/^0/, ""),
+                              )}
+                            </p>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </TableCell>
+                    );
+                  },
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
         <TableFooter></TableFooter>
       </Table>
     </main>
