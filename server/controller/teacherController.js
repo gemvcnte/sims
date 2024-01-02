@@ -72,7 +72,7 @@ const getEnrolledStudents = asyncHandler(async (req, res) => {
   try {
     const findStudents = await Student.find(
       {},
-      "firstName lastName emailAddress"
+      "firstName lastName lrn"
     );
 
     if (!findStudents.length) {
