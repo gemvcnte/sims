@@ -1,41 +1,34 @@
 // ClassDetailsContext.js
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import getAuthHeaders from "@/utils/getAuthHeaders";
+import axiosInstance from "@/utils/axios";
 
 const ClassDetailsContext = createContext();
 
 const ClassDetailsProvider = ({ children }) => {
   const [classDetails, setClassDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
 
   const fetchClassDetails = async () => {
-    if (id) {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/teacher/class/get-specific-class/${id}`,
-          getAuthHeaders(),
-        );
-        setClassDetails(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching class details:", error);
-      }
+    try {
+      const response = await axiosInstance(
+        `http://localhost:5000/student/class/assigned-class`,
+      );
+      setClassDetails(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching class details:", error);
     }
   };
 
   useEffect(() => {
     fetchClassDetails();
-  }, [id]);
+  }, []);
 
   return (
     <ClassDetailsContext.Provider
       value={{
         classDetails,
         loading,
-        currentId: id,
         setClassDetails,
         fetchClassDetails,
       }}
@@ -46,18 +39,12 @@ const ClassDetailsProvider = ({ children }) => {
 };
 
 const useClassDetails = () => {
-  const {
-    classDetails,
-    loading,
-    currentId,
-    setClassDetails,
-    fetchClassDetails,
-  } = useContext(ClassDetailsContext);
+  const { classDetails, loading, setClassDetails, fetchClassDetails } =
+    useContext(ClassDetailsContext);
 
   return {
     classDetails,
     loading,
-    currentId,
     setClassDetails,
     fetchClassDetails,
   };

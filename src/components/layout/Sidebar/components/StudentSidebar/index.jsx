@@ -25,7 +25,7 @@ export default function StudentSidebar() {
         Dashboard
       </SidebarItem>
 
-      <SidebarItem to="" icon="uil:schedule">
+      <SidebarItem to="schedule" icon="uil:schedule">
         Schedule
       </SidebarItem>
 

@@ -5,6 +5,7 @@ import TableController from "./partials/TableController";
 import Header from "./partials/Header";
 import { ClassDetailsProvider } from "./contexts/ClassDetailsContext";
 import ClassName from "./partials/ClassName";
+import ScheduleTable from "./partials/ScheduleTable";
 
 export default function StudentSchedule() {
   return (
@@ -14,10 +15,7 @@ export default function StudentSchedule() {
           <ClassName />
         </Topbar>
 
-        <ClassNavProvider>
-          <Header />
-          <TableController />
-        </ClassNavProvider>
+        <ScheduleTable />
       </main>
     </ClassDetailsProvider>
   );

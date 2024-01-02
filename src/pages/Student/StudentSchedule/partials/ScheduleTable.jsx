@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -17,14 +17,29 @@ import { DeleteSubjectModal } from "./DeleteSubjectModal";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
-  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+  const {
+    classDetails: fetchedClass,
+    loading,
+    fetchClassDetails,
+  } = classDetailsContext;
+
+  const [classDetails, setClassDetails] = useState(null);
+
+  useEffect(() => {
+    if (fetchedClass && fetchedClass.length > 0) {
+      setClassDetails(fetchedClass[0]);
+    }
+  }, [fetchedClass]);
+
+  if (loading) {
+    return <p>loading..</p>;
+  } else if (!classDetails) {
+    return <p>No schedule found.</p>;
+  }
 
   return (
     <main className="p-4">
       <Table>
-        {classDetails.subjects.length === 0 && (
-          <TableCaption className="pb-4">No Subjects Found</TableCaption>
-        )}
         <TableHeader>
           <TableRow>
             <TableHead></TableHead>
