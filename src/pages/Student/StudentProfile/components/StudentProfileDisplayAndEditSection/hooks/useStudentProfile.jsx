@@ -32,7 +32,6 @@ const useStudentProfile = () => {
         });
 
         const fetchedProfileData = response.data.studentProfile;
-        console.log(fetchedProfileData);
         setStudentProfile(fetchedProfileData);
 
         localStorage.setItem(
