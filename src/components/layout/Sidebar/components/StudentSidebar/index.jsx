@@ -40,7 +40,7 @@ export default function StudentSidebar() {
           <span onClick={handleDialogClick}>
             <SidebarItem className="flex items-center gap-2">
               <Icon icon="mingcute:announcement-line" />
-              View Announcements
+              <span className="ml-2">View Announcements</span>
             </SidebarItem>
           </span>
         </DialogTrigger>
