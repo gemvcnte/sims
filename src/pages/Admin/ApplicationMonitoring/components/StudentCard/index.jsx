@@ -46,7 +46,6 @@ export default function StudentCard({ application, onClick }) {
         { studentApplicationId: application._id },
         getAuthHeaders(),
       );
-      console.log(response);
 
       showSuccessNotification("Application Rejected");
       hideCard();

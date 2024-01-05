@@ -39,7 +39,6 @@ export default function StudentDataModal({ application, onSave, onClose }) {
   });
 
   const handleInputChange = (field, value) => {
-    console.log(value); // Add this line to log the value
     if (field === "birthDate") {
       setEditedApplication({
         ...editedApplication,
@@ -59,7 +58,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center justify-center bg-white-500 bg-opacity-75">
+    <div className="bg-white-500 fixed bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center justify-center bg-opacity-75">
       <div>
         <section>
           <div>
@@ -110,7 +109,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             required
             className={`${
               editedApplication.extensionName &&
-              "!border-blue-400 bg-blue-400 text-white-400"
+              "text-white-400 !border-blue-400 bg-blue-400"
             }`}
             value={editedApplication.extensionName}
             name="extensionName"
@@ -145,7 +144,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
           <select
             className={`${
               editedApplication.gender &&
-              "!border-blue-400 bg-blue-400 text-white-400"
+              "text-white-400 !border-blue-400 bg-blue-400"
             }`}
             value={editedApplication.gender}
             required
@@ -309,7 +308,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             <select
               className={` ${
                 editedApplication.schoolYear &&
-                "!border-blue-400 bg-blue-400 text-white-400"
+                "text-white-400 !border-blue-400 bg-blue-400"
               }`}
               id="schoolYear"
               value={editedApplication.schoolYear}
@@ -326,7 +325,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             <select
               className={`${
                 editedApplication.semester &&
-                "!border-blue-400 bg-blue-400 text-white-400"
+                "text-white-400 !border-blue-400 bg-blue-400"
               }`}
               id="semester"
               value={editedApplication.semester}
@@ -345,7 +344,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             <select
               className={` ${
                 editedApplication.track &&
-                "!border-blue-400 bg-blue-400 text-white-400"
+                "text-white-400 !border-blue-400 bg-blue-400"
               }`}
               id="track"
               value={editedApplication.track}
@@ -361,7 +360,7 @@ export default function StudentDataModal({ application, onSave, onClose }) {
             <select
               className={` ${
                 editedApplication.strand &&
-                "!border-blue-400 bg-blue-400 text-white-400"
+                "text-white-400 !border-blue-400 bg-blue-400"
               }`}
               id="strand"
               value={editedApplication.strand}
@@ -396,14 +395,14 @@ export default function StudentDataModal({ application, onSave, onClose }) {
         <button
           type="button"
           onClick={handleSaveChanges}
-          className="text-white rounded-md bg-blue-500 px-4 py-2"
+          className="rounded-md bg-blue-500 px-4 py-2 text-white"
         >
           Save
         </button>
         <button
           type="button"
           onClick={onClose}
-          className="text-white ml-2 rounded-md bg-gray-400 px-4 py-2"
+          className="ml-2 rounded-md bg-gray-400 px-4 py-2 text-white"
         >
           Close
         </button>

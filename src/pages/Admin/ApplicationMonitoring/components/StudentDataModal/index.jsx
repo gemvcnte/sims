@@ -51,7 +51,6 @@ export default function StudentDataModal({ application, onSave, onClose }) {
   });
 
   const handleInputChange = (field, value) => {
-    console.log(value); // Add this line to log the value
     if (field === "birthDate") {
       setEditedApplication({
         ...editedApplication,

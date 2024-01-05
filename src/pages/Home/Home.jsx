@@ -24,7 +24,6 @@ export default function Home() {
         } else {
           setUserRole(storedUserRole);
         }
-        console.log(userRole); // Access the value directly here if needed
       } catch (error) {
         console.error("Error fetching user role:", error);
       }

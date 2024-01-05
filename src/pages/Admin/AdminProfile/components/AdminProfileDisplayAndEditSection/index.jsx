@@ -25,7 +25,6 @@ const AdminProfileDisplayAndEditSection = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     const updatedProfileData = { ...adminProfile };
-    // console.log(updatedProfileData);
     try {
       const response = await updateAdminProfileApi(updatedProfileData);
       if (response && response.status === 200) {
