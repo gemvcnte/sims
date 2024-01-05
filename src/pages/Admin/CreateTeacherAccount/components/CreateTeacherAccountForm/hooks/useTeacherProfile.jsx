@@ -28,7 +28,6 @@ const useTeacherProfile = () => {
         const response = await axiosInstance.get(getTeacherProfileEndpoint);
 
         const fetchedProfileData = response.data.teacherProfile;
-        console.log(fetchedProfileData);
         setTeacherProfile(fetchedProfileData);
 
         localStorage.setItem(

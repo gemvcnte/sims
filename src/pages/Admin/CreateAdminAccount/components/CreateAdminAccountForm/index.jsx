@@ -23,7 +23,6 @@ const CreateAdminAccountForm = () => {
 
   const handleCreateTeacherAccount = async (e) => {
     e.preventDefault();
-    // console.log(teacherProfile);
     try {
       const response = await createAdminProfileApi(teacherProfile);
       if (response && response.status === 201) {

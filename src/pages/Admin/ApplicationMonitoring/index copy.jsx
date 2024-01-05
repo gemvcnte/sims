@@ -22,7 +22,6 @@ export default function ApplicationMonitoring() {
       try {
         const response = await axios.get(`${baseUrl}/admin/getPending`);
         setPendingApplications(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching pending applications:", error.message);
       }
@@ -42,7 +41,6 @@ export default function ApplicationMonitoring() {
 
   const handleCardClick = (application) => {
     setSelectedApplication(application);
-    console.log(application);
   };
 
   const handleSaveChanges = async (editedApplication) => {
@@ -52,7 +50,6 @@ export default function ApplicationMonitoring() {
         studentApplicationId,
         editedApplication,
       );
-      console.log(updateResponse);
 
       updateLocalApplicationState(
         studentApplicationId,

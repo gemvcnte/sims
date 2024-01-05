@@ -59,8 +59,6 @@ export default function CreateTeacherAnnouncementModal({ onClose }) {
     };
 
     fetchData();
-    console.log(classes);
-    console.log(selectedClass);
   }, []);
 
   return (

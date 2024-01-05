@@ -5,8 +5,6 @@ import TeacherClassCard from "./TeacherClassCard";
 export default function TeacherClassesSection() {
   const { assignedClasses, loading, error } = useAssignedClasses();
 
-  console.log(assignedClasses);
-
   if (loading) {
     return <div>Loading...</div>;
   }

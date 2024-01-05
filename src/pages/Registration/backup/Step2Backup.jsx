@@ -21,7 +21,6 @@ function Step2({ onNext, onBack, formData }) {
 
   const handleNext = () => {
     const isFormValid = FormValidator(parentData, 2);
-    console.log(isFormValid);
     isFormValid ? onNext(parentData) : notify();
   };
 

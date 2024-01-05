@@ -15,7 +15,6 @@ export default function TeacherClassesFilter() {
   const { filter, setFilter } = useFilteredClassesContext();
 
   const handleFilterChange = (value) => {
-    console.log(value);
     setFilter(value);
   };
 
