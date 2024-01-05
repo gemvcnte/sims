@@ -19,7 +19,6 @@ function LoginForm({ role, setSelectedRole }) {
 
   const handleLogin = async (event) => {
     // event.preventDefault();
-    // console.log(loginData);
 
     const isFormValid = FormValidator(loginData, 4);
 
@@ -35,9 +34,7 @@ function LoginForm({ role, setSelectedRole }) {
     //     const response = await axios.post(apiUrl, loginData);
 
     // if (response.status === 200) {
-    //       console.log("Login successful");
     //     } else {
-    //       console.log("Login failed");
     //     }
     // } catch (error) {
     //     console.error("Error:", error);
@@ -67,7 +64,7 @@ function LoginForm({ role, setSelectedRole }) {
         <div className="mb-4 flex flex-col">
           {/* <label>Username</label> */}
           <input
-            className={`rounded-lg border border-white-700 p-3 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 
+            className={`border-white-700 rounded-lg border p-3 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 
     focus:ring-blue-400`}
             type="text"
             placeholder={`Enter ${role} Username`}
@@ -79,7 +76,7 @@ function LoginForm({ role, setSelectedRole }) {
         <div className="flex flex-col">
           {/* <label>Password</label> */}
           <input
-            className={`rounded-lg border border-white-700 p-3 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 
+            className={`border-white-700 rounded-lg border p-3 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 
     focus:ring-blue-400`}
             type="password"
             placeholder="Enter Password"
@@ -89,7 +86,7 @@ function LoginForm({ role, setSelectedRole }) {
         </div>
         <button
           type="submit"
-          className="mt-6 w-full rounded-lg bg-blue-400 px-4 py-3 text-white-400 "
+          className="text-white-400 mt-6 w-full rounded-lg bg-blue-400 px-4 py-3 "
         >
           Login
         </button>

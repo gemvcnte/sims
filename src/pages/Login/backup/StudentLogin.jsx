@@ -17,13 +17,10 @@ function StudentLogin() {
     const isFormValid = FormValidator(loginData, 4);
     if (isFormValid) {
       try {
-        console.log(loginData);
         const response = await axios.post(loginEndpoint, loginData);
 
         if (response.status === 200) {
-          console.log("Student login successful");
         } else {
-          console.log("Student login failed");
         }
       } catch (error) {
         console.error("Error:", error);

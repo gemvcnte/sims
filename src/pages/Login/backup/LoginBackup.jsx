@@ -35,9 +35,7 @@ export default function Login() {
         const response = await axios.post(apiUrl, loginData);
 
         if (response.status === 200) {
-          console.log("Login successful");
         } else {
-          console.log("Login failed");
         }
       } catch (error) {
         console.error("Error:", error);

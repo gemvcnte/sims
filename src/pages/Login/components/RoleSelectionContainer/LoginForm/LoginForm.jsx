@@ -36,7 +36,7 @@ function LoginForm({ role, setSelectedRole }) {
           // navigate("/");
           // window.location.reload();
         } else {
-          console.log("Login failed");
+          showErrorNotification("Login failed");
         }
       } catch (error) {
         showErrorNotification(error.response.data.message);

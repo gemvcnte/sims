@@ -37,7 +37,6 @@ export default function Registration() {
 
   const handleSubmit = async (data) => {
     setLoading(true);
-    console.log(data);
 
     try {
       const response = await axios.post(
