@@ -41,11 +41,11 @@ export function StudentsDropdown({}) {
       <DropdownMenuContent align="start">
         <DropdownMenuLabel>Students</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <Link onClick={handleDropdownClick} className="w-full">
             Create Student Account
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} className="w-full">
