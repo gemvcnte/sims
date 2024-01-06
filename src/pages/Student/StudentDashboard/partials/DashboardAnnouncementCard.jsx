@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/card";
 import AnnouncementCard from "./AnnouncementCard";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ViewStudentAnnouncementsModal from "../../ViewStudentAnnouncementsModal";
 
 export default function DashboardAnnouncementCard() {
   const { announcements, loading, error } = useAnnouncements();
@@ -22,6 +24,11 @@ export default function DashboardAnnouncementCard() {
   };
 
   const twoMostRecentAnnouncements = announcements.slice(0, 2);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const handleDialogClick = () => {
+    setIsDialogOpen(!isDialogOpen);
+  };
 
   return (
     <Card className="md:w-[60%]">
@@ -40,8 +47,16 @@ export default function DashboardAnnouncementCard() {
           </>
         )}
       </CardContent>
+
       <CardFooter>
-        <Button variant="outline">View all</Button>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger>
+            <span onClick={handleDialogClick}>
+              <Button variant="outline">View all</Button>
+            </span>
+          </DialogTrigger>
+          <ViewStudentAnnouncementsModal onClose={handleDialogClick} />
+        </Dialog>
       </CardFooter>
     </Card>
   );
