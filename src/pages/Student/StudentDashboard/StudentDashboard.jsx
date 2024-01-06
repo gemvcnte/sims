@@ -1,12 +1,12 @@
 import React from "react";
 import Topbar from "@/components/layout/Topbar";
-import AnnouncementCard from "./partials/AnnouncementCard";
+import DashboardAnnouncementCard from "./partials/DashboardAnnouncementCard";
 
 export default function StudentDashboard() {
   return (
     <main className="w-full">
       <Topbar>DASHBOARD</Topbar>
-      <AnnouncementCard />
+      <DashboardAnnouncementCard />
     </main>
   );
 }
