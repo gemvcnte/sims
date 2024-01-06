@@ -64,9 +64,9 @@ export function ClassroomsDropdown({}) {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Section Schedule</Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger>
