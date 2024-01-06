@@ -24,7 +24,7 @@ export default function DashboardAnnouncementCard() {
   const twoMostRecentAnnouncements = announcements.slice(0, 2);
 
   return (
-    <Card className="mx-4 mt-4 max-w-[500px]">
+    <Card className="md:w-[60%]">
       <CardHeader>Announcements</CardHeader>
       <CardContent className="px-4 pb-2">
         {!loading && !error && (
