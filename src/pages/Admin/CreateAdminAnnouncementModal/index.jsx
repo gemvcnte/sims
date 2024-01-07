@@ -119,8 +119,8 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
           <DialogFooter>
             <Button type="submit">
               <span>
-                Create <span className="hidden md:inline">class</span>{" "}
-                <span className="hidden sm:inline">announcement</span>
+                Create <span className="hidden sm:inline">class</span>{" "}
+                announcement
               </span>
             </Button>
           </DialogFooter>
