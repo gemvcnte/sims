@@ -57,3 +57,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+html,
+body {
+  height: -webkit-fill-available;
+}
