@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const jwksClient = require('jwks-rsa');
 
 const verifyToken = (req, res, next) => {
   // Extract the token from the Authorization header
@@ -12,7 +13,7 @@ const verifyToken = (req, res, next) => {
   }
 
   // Verify the token
-  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+  jwt.verify(token, getPublicKey(), (err, decodedToken) => {
     if (err) {
       return res.status(401).json({ message: "Unauthorized: Invalid token" });
     }
@@ -24,5 +25,9 @@ const verifyToken = (req, res, next) => {
     next();
   });
 };
+
+const getPublicKey = () => {
+  return process.env.PUBLIC_KEY;
+}
 
 module.exports = verifyToken;
