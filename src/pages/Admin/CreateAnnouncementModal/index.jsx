@@ -49,7 +49,7 @@ export default function CreateAnnouncementModal({ onClose }) {
     <>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create a New Announcement</DialogTitle>
+          <DialogTitle>Create Public Announcement</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
             Add a new announcement by providing the required details below.
           </DialogDescription>
@@ -98,7 +98,12 @@ export default function CreateAnnouncementModal({ onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit">Create Section</Button>
+            <Button type="submit">
+              <span>
+                Create <span className="hidden sm:inline">public</span>{" "}
+                announcement
+              </span>
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
