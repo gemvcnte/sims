@@ -58,6 +58,7 @@
   }
 }
 
-html body {
+html,
+body {
   height: -webkit-fill-available;
 }
