@@ -117,7 +117,12 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit">Create Section</Button>
+            <Button type="submit">
+              <span>
+                Create <span className="hidden md:inline">class</span>{" "}
+                <span className="hidden sm:inline">announcement</span>
+              </span>
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
