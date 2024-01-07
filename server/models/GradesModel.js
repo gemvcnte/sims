@@ -21,3 +21,8 @@ const gradesSchema = new.mongoose.Schema({
 
 
 })
+
+
+const Grades = mongoose.model('grades', gradesSchema)
+
+module.exports = { Grades}
