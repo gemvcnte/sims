@@ -27,13 +27,13 @@ export default function ScheduleTable() {
   }, [fetchedClass]);
 
   if (loading) {
-    return <p>loading..</p>;
+    return <main className="order-2 min-w-[60%]">loading schedule...</main>;
   }
 
   const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
 
   return (
-    <main className="order-2 min-w-[50%]">
+    <main className="order-2 min-w-[60%]">
       <Table>
         {!classDetails && (
           <TableCaption className="pb-6 pt-4">No Schedule Found</TableCaption>

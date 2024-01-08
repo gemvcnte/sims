@@ -15,7 +15,7 @@ export default function StudentDashboard() {
         <Topbar>DASHBOARD</Topbar>
         <section className="flex flex-col gap-4 p-4 md:flex-row ">
           <ScheduleTable />
-          <div className="order-1 flex min-w-[50%] flex-col gap-4 md:order-2 md:pr-4">
+          <div className="order-1 flex min-w-[40%] flex-col gap-4 md:order-2 md:pr-4">
             <ProfileProgressCard />
             <DashboardAnnouncementCard />
           </div>

@@ -32,7 +32,7 @@ export default function DashboardAnnouncementCard() {
 
   return (
     <Card className="">
-      <CardHeader>Announcements</CardHeader>
+      <CardHeader>Most Recent Announcement</CardHeader>
       <CardContent className="px-4 pb-2">
         {!loading && !error && (
           <>
