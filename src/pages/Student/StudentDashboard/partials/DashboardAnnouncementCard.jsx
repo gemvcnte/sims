@@ -23,7 +23,7 @@ export default function DashboardAnnouncementCard() {
     );
   };
 
-  const twoMostRecentAnnouncements = announcements.slice(0, 2);
+  const mostRecentAnnouncement = announcements.slice(0, 1);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const handleDialogClick = () => {
@@ -31,12 +31,18 @@ export default function DashboardAnnouncementCard() {
   };
 
   return (
-    <Card className="md:w-[60%]">
-      <CardHeader>Announcements</CardHeader>
+    <Card className="">
+      <CardHeader>
+        Most Recent Announcement
+        <span className="text-sm text-muted-foreground">
+          Stay informed with the latest updates! Check out the most recent
+          announcement
+        </span>
+      </CardHeader>
       <CardContent className="px-4 pb-2">
         {!loading && !error && (
           <>
-            {twoMostRecentAnnouncements.map((announcement) => (
+            {mostRecentAnnouncement.map((announcement) => (
               <AnnouncementCard
                 key={announcement._id}
                 announcement={announcement}
@@ -50,9 +56,11 @@ export default function DashboardAnnouncementCard() {
 
       <CardFooter>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
-            <span onClick={handleDialogClick}>
-              <Button variant="outline">View all</Button>
+          <DialogTrigger className="w-full">
+            <span onClick={handleDialogClick} className="w-full">
+              <Button variant="outline" className="w-full">
+                View announcements
+              </Button>
             </span>
           </DialogTrigger>
           <ViewStudentAnnouncementsModal onClose={handleDialogClick} />
