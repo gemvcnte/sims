@@ -13,11 +13,13 @@ export default function StudentDashboard() {
     <ClassDetailsProvider>
       <main className="w-full">
         <Topbar>DASHBOARD</Topbar>
-        <section className="flex flex-col gap-4 p-4 md:flex-row">
-          <ProfileProgressCard />
-          <DashboardAnnouncementCard />
+        <section className="flex flex-col gap-4 p-4 md:flex-row ">
+          <ScheduleTable />
+          <div className="order-1 flex min-w-[50%] flex-col gap-4 md:order-2 md:pr-4">
+            <ProfileProgressCard />
+            <DashboardAnnouncementCard />
+          </div>
         </section>
-        <ScheduleTable />
       </main>
     </ClassDetailsProvider>
   );

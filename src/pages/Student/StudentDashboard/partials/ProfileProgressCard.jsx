@@ -62,7 +62,7 @@ export default function ProfileProgressCard() {
   const profileCompletionPercentage = calculateProfileCompletion();
 
   return (
-    <Card className="h-fit md:order-2 md:w-[40%]">
+    <Card className="h-fit">
       <CardHeader>
         Complete your profile
         <span className="text-sm text-muted-foreground">

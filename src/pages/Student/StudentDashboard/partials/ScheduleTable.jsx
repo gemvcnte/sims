@@ -33,7 +33,7 @@ export default function ScheduleTable() {
   const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
 
   return (
-    <main className="p-4">
+    <main className="order-2 min-w-[50%]">
       <Table>
         {!classDetails && (
           <TableCaption className="pb-6 pt-4">No Schedule Found</TableCaption>

@@ -23,7 +23,7 @@ export default function DashboardAnnouncementCard() {
     );
   };
 
-  const twoMostRecentAnnouncements = announcements.slice(0, 2);
+  const mostRecentAnnouncement = announcements.slice(0, 1);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const handleDialogClick = () => {
@@ -31,12 +31,12 @@ export default function DashboardAnnouncementCard() {
   };
 
   return (
-    <Card className="md:w-[60%]">
+    <Card className="">
       <CardHeader>Announcements</CardHeader>
       <CardContent className="px-4 pb-2">
         {!loading && !error && (
           <>
-            {twoMostRecentAnnouncements.map((announcement) => (
+            {mostRecentAnnouncement.map((announcement) => (
               <AnnouncementCard
                 key={announcement._id}
                 announcement={announcement}
