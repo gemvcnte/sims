@@ -538,6 +538,18 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
         .json({ message: "One or more students not found." });
     }
 
+     // Extract the existing grades
+     const existingGrades = {};
+     classroom.subjects.forEach((subject) => {
+       subject.grades.forEach((grade) => {
+         existingGrades[grade.lrn] = existingGrades[grade.lrn] || {};
+         existingGrades[grade.lrn][subject.subjectName] = {
+           p1Grade: grade.p1Grade,
+           p2Grade: grade.p2Grade,
+         };
+       });
+     });
+
     // Update the students in the class
     classroom.students = students.map((student) => ({
       firstName: student.firstName,
@@ -556,6 +568,19 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
 
     // Save the updated class
     const updatedClassroom = await classroom.save();
+
+    // Restore the existing grades for the updated students
+    updatedClassroom.subjects.forEach((subject) => {
+      subject.grades.forEach((grade) => {
+        if (existingGrades[grade.lrn] && existingGrades[grade.lrn][subject.subjectName]) {
+          grade.p1Grade = existingGrades[grade.lrn][subject.subjectName].p1Grade;
+          grade.p2Grade = existingGrades[grade.lrn][subject.subjectName].p2Grade;
+        }
+      });
+    });
+
+    // Save the class with the restored grades
+    const finalUpdatedClassroom = await updatedClassroom.save();
 
     res.status(200).json({
       message: "Students in class updated successfully.",
