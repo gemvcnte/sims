@@ -448,6 +448,9 @@ const getSpecificClass = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Class not found." });
     }
 
+    // Sort students by lastname ascending
+    findClass.students.sort((a, b) => a.lastName.localeCompare(b.lastName));
+
     return res.status(200).json({
       message: "Class found",
       data: findClass,
@@ -456,6 +459,7 @@ const getSpecificClass = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
