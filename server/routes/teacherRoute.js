@@ -73,6 +73,12 @@ router.patch(
   teacherController.updateStudentsInClass
 );
 
+router.patch(
+  "/class/update-grades",
+  verifyToken,
+  teacherController.updateGradesOnClass
+);
+
 router.get("/class/get-specific-student/:id", verifyToken, teacherController.getSpecificStudent);
 
 // Add subject, subject teacher, and time to class
