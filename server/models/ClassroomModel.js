@@ -68,6 +68,22 @@ const classroomSchema = mongoose.Schema(
                 },
                 },
             ],
+            grades: [
+                {
+                lrn: {
+                    type: String,
+                    required: true,
+                },
+                p1Grade: {
+                    type: String,
+                    required: false,
+                },
+                p2Grade: {
+                    type: String,
+                    required: false,
+                },
+                },
+            ],
             },
         ],
     },

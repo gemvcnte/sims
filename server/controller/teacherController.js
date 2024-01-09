@@ -448,6 +448,9 @@ const getSpecificClass = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Class not found." });
     }
 
+    // Sort students by lastname ascending
+    findClass.students.sort((a, b) => a.lastName.localeCompare(b.lastName));
+
     return res.status(200).json({
       message: "Class found",
       data: findClass,
@@ -456,6 +459,7 @@ const getSpecificClass = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 const getSpecificStudent = asyncHandler(async (req, res) => {
   try {
@@ -523,7 +527,7 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       });
     }
 
-    // Fetch the students by their emails
+    // Fetch the students by their LRNs
     const students = await Student.find({
       lrn: { $in: studentLrns },
     });
@@ -534,6 +538,18 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
         .json({ message: "One or more students not found." });
     }
 
+     // Extract the existing grades
+     const existingGrades = {};
+     classroom.subjects.forEach((subject) => {
+       subject.grades.forEach((grade) => {
+         existingGrades[grade.lrn] = existingGrades[grade.lrn] || {};
+         existingGrades[grade.lrn][subject.subjectName] = {
+           p1Grade: grade.p1Grade,
+           p2Grade: grade.p2Grade,
+         };
+       });
+     });
+
     // Update the students in the class
     classroom.students = students.map((student) => ({
       firstName: student.firstName,
@@ -541,8 +557,30 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       lrn: student.lrn,
     }));
 
+    // Update the LRNs in the grades array
+    classroom.subjects.forEach((subject) => {
+      subject.grades = studentLrns.map((lrn) => ({
+        lrn,
+        p1Grade: "", // Set initial values for p1Grade and p2Grade
+        p2Grade: "",
+      }));
+    });
+
     // Save the updated class
     const updatedClassroom = await classroom.save();
+
+    // Restore the existing grades for the updated students
+    updatedClassroom.subjects.forEach((subject) => {
+      subject.grades.forEach((grade) => {
+        if (existingGrades[grade.lrn] && existingGrades[grade.lrn][subject.subjectName]) {
+          grade.p1Grade = existingGrades[grade.lrn][subject.subjectName].p1Grade;
+          grade.p2Grade = existingGrades[grade.lrn][subject.subjectName].p2Grade;
+        }
+      });
+    });
+
+    // Save the class with the restored grades
+    const finalUpdatedClassroom = await updatedClassroom.save();
 
     res.status(200).json({
       message: "Students in class updated successfully.",
@@ -720,6 +758,66 @@ const getAnnouncements = asyncHandler(async (req, res) => {
 });
 
 
+const updateGradesOnClass = asyncHandler(async (req, res) => {
+  try {
+    const { classId, subjectId, grades } = req.body;
+
+    // Validate that required fields are provided
+    if (!classId || !subjectId || !grades || typeof grades !== 'object') {
+      return res.status(400).json({ message: "Invalid request payload." });
+    }
+
+    // Fetch the class
+    const classroom = await Classroom.findById(classId);
+
+    if (!classroom) {
+      return res.status(404).json({ message: "Class not found." });
+    }
+
+    // Check if the user making the request is the subjectTeacher of the specified subjectId
+    const subject = classroom.subjects.find(subject => subject._id.toString() === subjectId);
+    if (!subject || subject.subjectTeacher !== req.user.username) {
+      return res.status(403).json({
+        message: "Unauthorized: You are not the subject teacher of this subject.",
+      });
+    }
+
+    // Find the subject in the class
+    const subjectIndex = classroom.subjects.findIndex(
+      (subject) => subject._id.toString() === subjectId
+    );
+
+    if (subjectIndex === -1) {
+      return res.status(404).json({ message: 'Subject not found in class.' });
+    }
+
+    // Update the grades for the subject
+    classroom.subjects[subjectIndex].grades = [];
+
+    // Convert the nested grades into a flat array
+    for (const [lrn, grade] of Object.entries(grades)) {
+      classroom.subjects[subjectIndex].grades.push({
+        lrn,
+        ...grade,
+      });
+    }
+
+    // Save the updated class
+    const updatedClassroom = await classroom.save();
+
+    res.status(200).json({
+      message: "Grades on class updated successfully.",
+      updatedClassroom,
+    });
+  } catch (error) {
+    console.error("Error updating grades on class:", error);
+    res.status(500).json({
+      message: "Internal server error. Please try again later.",
+      error,
+    });
+  }
+});
+
 
 
 module.exports = {
@@ -744,4 +842,5 @@ module.exports = {
   deleteSubjectFromClass,
   createTeacherAnnouncement,
   getAnnouncements,
+  updateGradesOnClass,
 };
