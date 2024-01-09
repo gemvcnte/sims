@@ -20,7 +20,6 @@ export default function GradesTable() {
   const { user } = useAuth();
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
-  console.log(classDetails);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [modifiedGrades, setModifiedGrades] = useState({});
