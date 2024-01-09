@@ -96,11 +96,18 @@ export default function GradesTable() {
 
   return (
     <main className="p-4">
-      <div className="mb-4 flex justify-between gap-4">
-        <Button variant="outline" onClick={() => setIsEditing((prev) => !prev)}>
-          {isEditing ? "Cancel Editing" : "Edit Grades"}
-        </Button>
-        {isEditing && <Button onClick={handleSaveChanges}>Save Changes</Button>}
+      <header className="mb-4 flex justify-between gap-4">
+        <div className="flex gap-4">
+          <Button
+            variant="outline"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
+            {isEditing ? "Cancel Editing" : "Edit Grades"}
+          </Button>
+          {isEditing && (
+            <Button onClick={handleSaveChanges}>Save Changes</Button>
+          )}
+        </div>
         <div>
           <select
             onChange={(e) => setSelectedSubject(e.target.value)}
@@ -115,7 +122,7 @@ export default function GradesTable() {
             ))}
           </select>
         </div>
-      </div>
+      </header>
 
       <Table>
         {classDetails?.students.length === 0 && !isEditing && (
@@ -143,7 +150,6 @@ export default function GradesTable() {
                 const matchedStudent = classDetails.students.find(
                   (student) => student.lrn === grade.lrn,
                 );
-                console.log(matchedStudent);
                 return (
                   <TableRow
                     key={grade.lrn}
