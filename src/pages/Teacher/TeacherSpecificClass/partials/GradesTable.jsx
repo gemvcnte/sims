@@ -14,6 +14,7 @@ import { useClassDetails } from "../contexts/ClassDetailsContext";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { useAuth } from "@/contexts/AuthContext";
 import axiosInstance from "@/utils/axios";
+import { updateGradesEndpoint } from "@/config/teacherEndpoints";
 
 export default function GradesTable() {
   const { user } = useAuth();
@@ -38,7 +39,7 @@ export default function GradesTable() {
       };
 
       const response = await axiosInstance.patch(
-        "http://localhost:5000/teacher/class/update-grades",
+        updateGradesEndpoint,
         gradesData,
       );
 
