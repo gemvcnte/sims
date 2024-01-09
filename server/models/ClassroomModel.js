@@ -76,11 +76,11 @@ const classroomSchema = mongoose.Schema(
                 },
                 p1Grade: {
                     type: String,
-                    required: true,
+                    required: false,
                 },
                 p2Grade: {
                     type: String,
-                    required: true,
+                    required: false,
                 },
                 },
             ],

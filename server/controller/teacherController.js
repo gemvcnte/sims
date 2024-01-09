@@ -523,7 +523,7 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       });
     }
 
-    // Fetch the students by their emails
+    // Fetch the students by their LRNs
     const students = await Student.find({
       lrn: { $in: studentLrns },
     });
@@ -540,6 +540,15 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       lastName: student.lastName,
       lrn: student.lrn,
     }));
+
+    // Update the LRNs in the grades array
+    classroom.subjects.forEach((subject) => {
+      subject.grades = studentLrns.map((lrn) => ({
+        lrn,
+        p1Grade: "", // Set initial values for p1Grade and p2Grade
+        p2Grade: "",
+      }));
+    });
 
     // Save the updated class
     const updatedClassroom = await classroom.save();
