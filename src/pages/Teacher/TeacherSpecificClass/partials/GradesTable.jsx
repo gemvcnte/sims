@@ -9,12 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import fetchStudentsApi from "../helpers/fetchStudentsApi";
-import updateStudentsInClassApi from "../helpers/updateStudentsInClassApi";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
-import { isClassAdviser } from "../helpers/isClassAdviser";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -23,76 +19,125 @@ export default function GradesTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
 
-  const [allStudents, setAllStudents] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedStudents, setSelectedStudents] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState(""); // State for selected subject
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (classDetails && isEditing) {
-          await fetchStudentsApi(setAllStudents);
-          setSelectedStudents(
-            classDetails.students.map((student) => student.lrn),
-          );
-        } else if (classDetails) {
-          setAllStudents(classDetails.students);
-          setSelectedStudents(
-            classDetails.students.map((student) => student._id),
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [isEditing, classDetails]);
-
-  const handleAddStudent = (studentEmail) => {
-    const updatedSelectedStudents = [...selectedStudents];
-
-    if (updatedSelectedStudents.includes(studentEmail)) {
-      updatedSelectedStudents.splice(
-        updatedSelectedStudents.indexOf(studentEmail),
-        1,
-      );
-    } else {
-      updatedSelectedStudents.push(studentEmail);
-    }
-
-    setSelectedStudents(updatedSelectedStudents);
-  };
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [modifiedGrades, setModifiedGrades] = useState({});
 
   const handleSaveChanges = async () => {
-    try {
-      if (classDetails) {
-        await updateStudentsInClassApi(classDetails._id, selectedStudents);
+    console.log(modifiedGrades);
 
-        showSuccessNotification("Updated Successfully");
-        fetchClassDetails();
-        setSelectedStudents([]);
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.error("Error updating students in class:", error);
-    }
+    showSuccessNotification("Updated Successfully");
+    fetchClassDetails();
+    setIsEditing(false);
   };
 
-  const isAdviser = isClassAdviser(classDetails);
-
-  // Filter subjects based on the subjectTeacher
   const filteredSubjects = classDetails?.subjects.filter(
     (subject) => subject.subjectTeacher === user.username,
   );
 
   useEffect(() => {
-    // Set the first subject as the default selected subject
     if (filteredSubjects.length > 0) {
       setSelectedSubject(filteredSubjects[0].subjectName);
     }
   }, []);
+
+  const handleChangeGrade = (lrn, type, value) => {
+    setModifiedGrades((prevGrades) => ({
+      ...prevGrades,
+      [lrn]: {
+        ...prevGrades[lrn],
+        [type]: value,
+      },
+    }));
+  };
+
+  useEffect(() => {
+    initializeModifiedGrades();
+  }, [selectedSubject]);
+
+  const initializeModifiedGrades = () => {
+    const initialModifiedGrades = {};
+
+    if (classDetails) {
+      const selectedSubjectDetails = classDetails.subjects.find(
+        (subject) => subject.subjectName === selectedSubject,
+      );
+
+      if (selectedSubjectDetails) {
+        selectedSubjectDetails.grades.forEach((grade) => {
+          initialModifiedGrades[grade.lrn] = {
+            p1Grade: grade.p1Grade || "",
+            p2Grade: grade.p2Grade || "",
+          };
+        });
+      }
+    }
+
+    setModifiedGrades(initialModifiedGrades);
+  };
+
+  const renderSortedStudents = () => {
+    const studentsToRender = classDetails?.students || [];
+
+    return studentsToRender
+      .slice()
+      .sort((a, b) => a.lastName.localeCompare(b.lastName))
+      .map((student) => {
+        const selectedSubjectDetails = classDetails.subjects.find(
+          (subject) => subject.subjectName === selectedSubject,
+        );
+
+        if (selectedSubjectDetails) {
+          const grade = selectedSubjectDetails.grades.find(
+            (grade) => grade.lrn === student.lrn,
+          );
+
+          return (
+            <TableRow
+              key={student._id}
+              className="group transition-all duration-700 hover:cursor-pointer"
+            >
+              <TableCell>{student.lastName}</TableCell>
+              <TableCell>{student.firstName}</TableCell>
+              <TableCell>{student.lrn}</TableCell>
+              <TableCell>{selectedSubject}</TableCell>
+              {isEditing ? (
+                <TableCell>
+                  <input
+                    className="border"
+                    value={modifiedGrades[student.lrn]?.p1Grade}
+                    onChange={(e) =>
+                      handleChangeGrade(student.lrn, "p1Grade", e.target.value)
+                    }
+                  />
+                </TableCell>
+              ) : (
+                <TableCell>{grade?.p1Grade || ""}</TableCell>
+              )}
+              {isEditing ? (
+                <TableCell>
+                  <input
+                    className="border"
+                    value={
+                      modifiedGrades[student.lrn]?.p2Grade ||
+                      grade?.p2Grade ||
+                      ""
+                    }
+                    onChange={(e) =>
+                      handleChangeGrade(student.lrn, "p2Grade", e.target.value)
+                    }
+                  />
+                </TableCell>
+              ) : (
+                <TableCell>{grade?.p2Grade || ""}</TableCell>
+              )}
+            </TableRow>
+          );
+        }
+
+        return null; // Return null if selectedSubjectDetails is not defined
+      });
+  };
 
   return (
     <main className="p-4">
@@ -131,61 +176,16 @@ export default function GradesTable() {
 
         <TableHeader>
           <TableRow>
-            {isEditing && <TableHead></TableHead>}
             <TableHead>Lastname</TableHead>
             <TableHead>Firstname</TableHead>
             <TableHead>LRN</TableHead>
             <TableHead>Subject</TableHead>
             <TableHead>P1</TableHead>
             <TableHead>P2</TableHead>
-            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
 
-        <TableBody>
-          {filteredSubjects
-            .filter((subject) => subject.subjectName === selectedSubject)
-            .map((subject) =>
-              subject.grades.map((grade) => {
-                const matchedStudent = classDetails.students.find(
-                  (student) => student.lrn === grade.lrn,
-                );
-                return (
-                  <TableRow
-                    key={grade.lrn}
-                    className="group transition-all duration-700 hover:cursor-pointer"
-                  >
-                    {isEditing && (
-                      <TableCell>
-                        <input
-                          type="checkbox"
-                          checked={selectedStudents.includes(grade.lrn)}
-                          onChange={() => handleAddStudent(grade.lrn)}
-                        />
-                      </TableCell>
-                    )}
-                    <TableCell>{matchedStudent?.lastName}</TableCell>
-                    <TableCell>{matchedStudent?.firstName}</TableCell>
-                    <TableCell>{grade.lrn}</TableCell>
-                    <TableCell>{subject.subjectName}</TableCell>
-                    <TableCell>{grade.p1Grade}</TableCell>
-                    <TableCell>{grade.p2Grade}</TableCell>
-                    <TableCell className="inline-block">
-                      <span className="border-b border-background py-1 hover:border-foreground">
-                        View <span className="hidden sm:inline">Student</span>{" "}
-                        Profile
-                      </span>
-                      <Icon
-                        icon="octicon:arrow-down-24"
-                        rotate={3}
-                        className="ml-2 inline-block -rotate-45 transform transition-all group-hover:rotate-45"
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              }),
-            )}
-        </TableBody>
+        <TableBody>{renderSortedStudents()}</TableBody>
 
         <TableFooter></TableFooter>
       </Table>
