@@ -13,22 +13,45 @@ import { Button } from "@/components/ui/button";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { useAuth } from "@/contexts/AuthContext";
+import axiosInstance from "@/utils/axios";
 
 export default function GradesTable() {
   const { user } = useAuth();
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
-
+  console.log(classDetails);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [modifiedGrades, setModifiedGrades] = useState({});
 
   const handleSaveChanges = async () => {
-    console.log(modifiedGrades);
+    try {
+      const classId = classDetails._id;
+      const subjectId = classDetails.subjects.find(
+        (subject) => subject.subjectName === selectedSubject,
+      )?._id;
 
-    showSuccessNotification("Updated Successfully");
-    fetchClassDetails();
-    setIsEditing(false);
+      const gradesData = {
+        classId,
+        subjectId,
+        grades: modifiedGrades,
+      };
+
+      const response = await axiosInstance.patch(
+        "http://localhost:5000/teacher/class/update-grades",
+        gradesData,
+      );
+
+      if (response.status === 200) {
+        showSuccessNotification("Updated Successfully");
+        fetchClassDetails();
+        setIsEditing(false);
+      } else {
+        console.error("Failed to update grades:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error updating grades:", error.message);
+    }
   };
 
   const filteredSubjects = classDetails?.subjects.filter(
