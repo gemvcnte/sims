@@ -19,9 +19,9 @@ export default function TeacherSidebar() {
         Classes
       </SidebarItem>
 
-      <SidebarItem to="" icon="material-symbols:analytics-outline">
+      {/* <SidebarItem to="" icon="material-symbols:analytics-outline">
         Grades
-      </SidebarItem>
+      </SidebarItem> */}
 
       <DropdownMenuSeparator />
 
