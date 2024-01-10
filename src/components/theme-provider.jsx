@@ -18,9 +18,12 @@ export function ThemeProvider({
       window.location.pathname === "/" ||
       window.location.pathname === "/registration";
 
-    const initialTheme = isDefaultPath
-      ? "light"
-      : localStorage.getItem(storageKey) || defaultTheme;
+    const authToken = localStorage.getItem("authToken");
+
+    const initialTheme =
+      !authToken || isDefaultPath
+        ? "light"
+        : localStorage.getItem(storageKey) || defaultTheme;
 
     return initialTheme;
   });
