@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SyncLoader } from "react-spinners";
 
 const LoadingSpinner = () => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "visible";
+    };
+  }, []);
+
   return (
     <>
       <div className="fixed  top-0 z-[100] h-[100vh] w-[100vw] bg-black opacity-80"></div>
