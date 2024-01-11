@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
+import LoadingSpinner from "@/utils/LoadingSpinner";
 
 function LoginForm({ role, setSelectedRole }) {
   const { login } = useAuth();
@@ -20,6 +21,8 @@ function LoginForm({ role, setSelectedRole }) {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -27,6 +30,8 @@ function LoginForm({ role, setSelectedRole }) {
 
     if (isFormValid) {
       try {
+        setLoading(true);
+
         const response = await axios.post(apiUrl, loginData);
 
         if (response.status === 200) {
@@ -40,6 +45,8 @@ function LoginForm({ role, setSelectedRole }) {
         }
       } catch (error) {
         showErrorNotification(error.response.data.message);
+      } finally {
+        setLoading(false);
       }
     } else {
       notify();
@@ -52,6 +59,10 @@ function LoginForm({ role, setSelectedRole }) {
       [field]: value,
     });
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
