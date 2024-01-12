@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function StudentGradesTable() {
+export default function StudentGradesTable({ setSectionName }) {
   const { user } = useAuth();
   const classDetailsContext = useClassDetails();
   const { classDetails: fetchedClass, loading } = classDetailsContext;
@@ -23,6 +23,7 @@ export default function StudentGradesTable() {
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
       );
       setClassDetails(sortedClasses[0]);
+      setSectionName(sortedClasses[0].sectionName);
     }
   }, [fetchedClass]);
 
