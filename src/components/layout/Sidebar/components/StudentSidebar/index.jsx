@@ -29,7 +29,7 @@ export default function StudentSidebar() {
         Schedule
       </SidebarItem>
 
-      <SidebarItem to="" icon="material-symbols:analytics-outline">
+      <SidebarItem to="grades" icon="material-symbols:analytics-outline">
         Grades
       </SidebarItem>
 
