@@ -27,6 +27,7 @@ const studentLogin = asyncHandler(async (req, res) => {
     const tokenPayload = {
       _id: student.id,
       // username: student.username,
+      lrn: student.lrn,
       username: `${student.firstName} ${student.lastName}`,
       role: "student",
     };
