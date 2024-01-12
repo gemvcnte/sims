@@ -7,11 +7,19 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const generateAuthToken = (user) => {
-  const token = jwt.sign(
-    { _id: user._id, username: user.username, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
+  // Create a payload object without lrn property
+  const payload = {
+    _id: user._id,
+    username: user.username,
+    role: user.role,
+  };
+
+  // Add lrn property to payload only if the user's role is "student"
+  if (user.role === "student") {
+    payload.lrn = user.lrn;
+  }
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   // comment out muna habang wala pa frontend
 
