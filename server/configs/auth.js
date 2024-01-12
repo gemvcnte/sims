@@ -9,7 +9,7 @@ dotenv.config();
 
 const generateAuthToken = (user) => {
   const token = jwt.sign(
-    { _id: user._id, username: user.username, role: user.role },
+    { _id: user._id, username: user.username, role: user.role, lrn: user.lrn },
     getPrivateKey(),
     {algorithm: 'RS256', expiresIn: '1h'}
   );
