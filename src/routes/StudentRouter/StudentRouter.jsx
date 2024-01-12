@@ -6,6 +6,7 @@ import Student from "@pages/Student";
 import StudentSidebar from "@src/components/layout/Sidebar/components/StudentSidebar";
 import StudentProfile from "@/pages/Student/StudentProfile";
 import StudentSchedule from "@/pages/Student/StudentSchedule";
+import StudentGrades from "@/pages/Student/StudentGrades";
 
 export default function StudentRouter() {
   return (
@@ -18,6 +19,7 @@ export default function StudentRouter() {
           <Route path="/dashboard" element={<StudentDashboard />} />
           <Route path="/profile" element={<StudentProfile />} />
           <Route path="/schedule" element={<StudentSchedule />} />
+          <Route path="/grades" element={<StudentGrades />} />
         </Routes>
       </div>
     </>
