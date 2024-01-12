@@ -72,9 +72,7 @@ export default function StudentGradesTable({ setSectionName }) {
       return (
         <TableRow key={subject._id}>
           <TableCell>{subject.subjectName}</TableCell>
-          <TableCell className="hidden sm:table-cell">
-            {subject.subjectTeacher}
-          </TableCell>
+          <TableCell>{subject.subjectTeacher}</TableCell>
           <TableCell>{p1Grade}</TableCell>
           <TableCell>{p2Grade}</TableCell>
           <TableCell>{roundedFinalGrade}</TableCell>
@@ -90,9 +88,7 @@ export default function StudentGradesTable({ setSectionName }) {
         <TableHeader>
           <TableRow>
             <TableHead>Subject Name</TableHead>
-            <TableHead className="hidden sm:table-cell">
-              Subject Teacher
-            </TableHead>
+            <TableHead>Subject Teacher</TableHead>
             <TableHead>P1 Grade</TableHead>
             <TableHead>P2 Grade</TableHead>
             <TableHead>Final Grade</TableHead>
