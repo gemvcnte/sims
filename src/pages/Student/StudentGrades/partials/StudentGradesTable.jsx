@@ -27,8 +27,6 @@ export default function StudentGradesTable({ setSectionName }) {
     }
   }, [fetchedClass]);
 
-  console.log(classDetails);
-
   const getStudentGrades = (subject) => {
     const student = classDetails?.students.find(
       (student) => student.lrn === user.lrn,
