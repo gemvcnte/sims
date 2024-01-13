@@ -128,7 +128,7 @@ const AllTeachersTable = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -183,7 +183,7 @@ const AllTeachersTable = () => {
           Total of {""}
           {table.getFilteredRowModel().rows.length} teacher(s).
         </div>
-        <div className="space-x-2">
+        {/* <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
@@ -200,7 +200,7 @@ const AllTeachersTable = () => {
           >
             Next
           </Button>
-        </div>
+        </div> */}
       </footer>
     </div>
   );
