@@ -28,6 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Icon } from "@iconify/react";
 
 const AllTeachersTable = () => {
   const { allTeachers, loading, error } = useAllTeachers();
@@ -47,6 +48,21 @@ const AllTeachersTable = () => {
       accessorKey: "username",
       header: "Username",
       cell: ({ row }) => <div>{row.getValue("username")}</div>,
+    },
+    {
+      accessorKey: "viewProfile",
+      header: "",
+      cell: ({ row }) => (
+        <button className="">
+          View Profile
+          <Icon
+            icon="octicon:arrow-down-24"
+            rotate={3}
+            className="ml-2 inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
+          />
+          <span class="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
+        </button>
+      ),
     },
   ];
 
@@ -134,6 +150,8 @@ const AllTeachersTable = () => {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  className="group transition-all duration-700 hover:cursor-pointer"
+                  onClick={() => console.log(row.original)}
                   key={row.id}
                   data-state={row.getIsSelected() ? "selected" : ""}
                 >
@@ -160,30 +178,6 @@ const AllTeachersTable = () => {
           </TableBody>
         </Table>
       </div>
-      {/* <footer className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </footer> */}
     </div>
   );
 };
