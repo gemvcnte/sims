@@ -29,6 +29,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
 
 const AllTeachersTable = () => {
   const { allTeachers, loading, error } = useAllTeachers();
@@ -60,7 +62,7 @@ const AllTeachersTable = () => {
             rotate={3}
             className="ml-2 inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
           />
-          <span class="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
+          <span className="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
         </button>
       ),
     },
@@ -89,6 +91,19 @@ const AllTeachersTable = () => {
       rowSelection,
     },
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const onClose = () => {
+    setIsModalOpen(false);
+    setSelectedRow(null);
+  };
+
+  const onSave = () => {
+    setIsModalOpen(false);
+    setSelectedRow(null);
+  };
 
   return (
     <div className="w-full px-4">
@@ -129,54 +144,68 @@ const AllTeachersTable = () => {
         </DropdownMenu>
       </div>
       <div className="rounded-md ">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  className="group transition-all duration-700 hover:cursor-pointer"
-                  onClick={() => console.log(row.original)}
-                  key={row.id}
-                  data-state={row.getIsSelected() ? "selected" : ""}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    as={TableRow}
+                    className="group transition-all duration-700 hover:cursor-pointer"
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      setSelectedRow(row.original);
+                      console.log(row.original);
+                    }}
+                    data-state={row.getIsSelected() ? "selected" : ""}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+          {selectedRow && (
+            <ViewTeacherProfileModal
+              application={selectedRow}
+              onSave={onSave}
+              onClose={onClose}
+            />
+          )}
+        </Dialog>
       </div>
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
