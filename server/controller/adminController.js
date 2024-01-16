@@ -433,9 +433,14 @@ const getAllAdmins = asyncHandler(async (req, res) => {
     const isAdmin = req.user.role === "admin";
 
     if (!isAdmin) {
-      return res.status(403).json({ message: "Forbidden: You do not have permission to perform this action." });
+      return res
+        .status(403)
+        .json({
+          message:
+            "Forbidden: You do not have permission to perform this action.",
+        });
     }
-    
+
     const retrieveAdmins = await Admin.find().sort({ lastName: 1 });
 
     if (!retrieveAdmins) {
@@ -486,7 +491,18 @@ const getAdminProfile = asyncHandler(async (req, res) => {
 
 const getAllStudents = asyncHandler(async (req, res) => {
   try {
-    const retrieveStudents = await Student.find();
+    const isAdmin = req.user.role === "admin";
+
+    if (!isAdmin) {
+      return res
+        .status(403)
+        .json({
+          message:
+            "Forbidden: You do not have permission to perform this action.",
+        });
+    }
+
+    const retrieveStudents = await Student.find().sort({ lastName: 1 });
 
     if (!retrieveStudents) {
       res.status(404).json({ message: "There is nothing here." });
@@ -904,12 +920,10 @@ const createFacultyAnnouncement = asyncHandler(async (req, res) => {
       })
     );
 
-    res
-      .status(201)
-      .json({
-        message: "Announcement created successfully.",
-        data: facultyAnnouncement,
-      });
+    res.status(201).json({
+      message: "Announcement created successfully.",
+      data: facultyAnnouncement,
+    });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
@@ -949,12 +963,10 @@ const updateFacultyAnnouncement = asyncHandler(async (res, req) => {
         console.error(error);
       }
 
-      res
-        .status(200)
-        .json({
-          message: "Announcement has been successfully updated.",
-          data: updatedAnnouncement,
-        });
+      res.status(200).json({
+        message: "Announcement has been successfully updated.",
+        data: updatedAnnouncement,
+      });
     }
   } catch (error) {
     res.status(500).json({ message: `${error}` });
@@ -1074,13 +1086,17 @@ const getAnnouncements = asyncHandler(async (req, res) => {
   }
 });
 
-
 const getAllTeachersAccount = asyncHandler(async (req, res) => {
   try {
     const isAdmin = req.user.role === "admin";
 
     if (!isAdmin) {
-      return res.status(403).json({ message: "Forbidden: You do not have permission to perform this action." });
+      return res
+        .status(403)
+        .json({
+          message:
+            "Forbidden: You do not have permission to perform this action.",
+        });
     }
 
     const allTeachers = await Teacher.find().sort({ lastName: 1 });
@@ -1093,8 +1109,6 @@ const getAllTeachersAccount = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
-
-
 
 module.exports = {
   getAllAdmins,
