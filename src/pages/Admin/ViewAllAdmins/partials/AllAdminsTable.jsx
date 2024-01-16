@@ -172,7 +172,6 @@ const AllAdminsTable = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setSelectedRow(row.original);
-                      console.log(row.original);
                     }}
                     data-state={row.getIsSelected() ? "selected" : ""}
                   >
