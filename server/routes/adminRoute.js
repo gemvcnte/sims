@@ -10,6 +10,7 @@ router.post("/login", adminController.adminLogin);
 router.post("/create", verifyToken, adminController.createAdmin);
 router.patch("/updateAdmin", verifyToken, adminController.updateAdmin);
 router.delete("/deleteAdmin", verifyToken, adminController.deleteAdmin);
+router.get("/get-admins", verifyToken, adminController.getAllAdmins);
 
 // Teacher routes for admin...
 router.post("/create-teacher", verifyToken, adminController.createTeacher); // /createTeacher
