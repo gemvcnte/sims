@@ -12,6 +12,8 @@ import TeacherClasses from "@/pages/Teacher/TeacherClasses";
 import TeacherSpecificClass from "@/pages/Teacher/TeacherSpecificClass";
 import ViewAllTeachers from "@/pages/Admin/ViewAllTeachers";
 import ViewAllAdmins from "@/pages/Admin/ViewAllAdmins";
+import Registration from "@/pages/Registration";
+import ViewAllStudents from "@/pages/Admin/ViewAllStudents";
 
 export default function AdminRouter() {
   return (
@@ -22,10 +24,13 @@ export default function AdminRouter() {
         <Routes>
           <Route path="/" element={<Admin />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
+
+          <Route path="/registration" element={<Registration />} />
           <Route
             path="/student-application-monitoring"
             element={<ApplicationMonitoring />}
           />
+          <Route path="/students" element={<ViewAllStudents />} />
 
           <Route path="/profile" element={<AdminProfile />} />
 

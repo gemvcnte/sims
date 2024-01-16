@@ -56,7 +56,7 @@ export function StudentsDropdown({}) {
         <DropdownMenuItem>
           <Link
             to="registration"
-            // target="_blank"
+            target="_blank"
             className="w-full"
             onClick={handleDropdownClick}
           >
@@ -71,6 +71,12 @@ export function StudentsDropdown({}) {
             className="w-full"
           >
             Student Application Monitoring
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link onClick={handleDropdownClick} to="students" className="w-full">
+            View All Students
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
