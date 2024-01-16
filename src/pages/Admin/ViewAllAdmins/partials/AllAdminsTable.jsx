@@ -56,11 +56,11 @@ const AllAdminsTable = () => {
       header: "",
       cell: ({ row }) => (
         <button className="">
-          View Profile
+          View <span className="hidden sm:inline">Profile</span>
           <Icon
             icon="octicon:arrow-down-24"
             rotate={3}
-            className="ml-2 inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
+            className="ml-2 hidden -rotate-45 transform transition-all duration-300 group-hover:rotate-45 sm:inline-block"
           />
           <span className="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
         </button>
@@ -107,7 +107,7 @@ const AllAdminsTable = () => {
 
   return (
     <div className="w-full px-4">
-      <div className="flex items-center py-4">
+      <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter usernames..."
           value={table.getColumn("username")?.getFilterValue() || ""}
@@ -172,7 +172,6 @@ const AllAdminsTable = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setSelectedRow(row.original);
-                      console.log(row.original);
                     }}
                     data-state={row.getIsSelected() ? "selected" : ""}
                   >
