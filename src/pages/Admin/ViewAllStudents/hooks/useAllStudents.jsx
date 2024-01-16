@@ -1,8 +1,8 @@
-import { getAllAdmins } from "@/config/adminEndpoints";
+import { getAllStudentsEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import { useEffect, useState } from "react";
 
-export default function useAllAdmins() {
+export default function useAllStudents() {
   const [allTeachers, setAllTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ export default function useAllAdmins() {
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const response = await axiosInstance.get(getAllAdmins);
+        const response = await axiosInstance.get(getAllStudentsEndpoint);
 
         if (response.status === 200) {
           setAllTeachers(response.data.data);

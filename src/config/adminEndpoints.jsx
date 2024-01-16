@@ -13,6 +13,11 @@ export const enrollApplicationEndpoint = `${baseUrl}/admin/enroll-student`;
 export const rejectApplicationEndpoint = `${baseUrl}/admin/reject-application`;
 export const updateApplicationEndpoint = `${baseUrl}/admin/update-application`;
 
+// view all {role} - user management
+export const getAllStudentsEndpoint = `${baseUrl}/admin/get-all-students`;
+export const getALlTeachers = `${baseUrl}/admin/get-teachers`;
+export const getAllAdmins = `${baseUrl}/admin/get-admins`;
+
 // creating accounts
 export const createTeacherEndpoint = `${baseUrl}/admin/create-teacher`;
 export const createAdminEndpoint = `${baseUrl}/admin/create`;
