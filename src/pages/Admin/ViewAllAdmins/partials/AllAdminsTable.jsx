@@ -29,8 +29,8 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
 import useAllAdmins from "../hooks/useAllAdmins";
+import ViewAdminProfileModal from "./ViewAdminProfileModal";
 
 const AllAdminsTable = () => {
   const { allTeachers, loading, error } = useAllAdmins();
@@ -199,7 +199,7 @@ const AllAdminsTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewTeacherProfileModal
+            <ViewAdminProfileModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}
