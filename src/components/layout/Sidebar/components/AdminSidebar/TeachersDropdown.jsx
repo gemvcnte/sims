@@ -50,6 +50,12 @@ export function TeachersDropdown({}) {
             Create Teacher Account
           </Link>
         </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link to="teachers" onClick={handleDropdownClick}>
+            View All Teachers
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
