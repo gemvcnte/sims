@@ -1,3 +1,4 @@
+import { getAllAdmins } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import { useEffect, useState } from "react";
 
@@ -9,9 +10,7 @@ export default function useAllAdmins() {
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const response = await axiosInstance.get(
-          `http://localhost:5000/admin/get-admins`,
-        );
+        const response = await axiosInstance.get(getAllAdmins);
 
         if (response.status === 200) {
           setAllTeachers(response.data.data);
