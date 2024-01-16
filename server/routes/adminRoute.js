@@ -15,6 +15,7 @@ router.delete("/deleteAdmin", verifyToken, adminController.deleteAdmin);
 router.post("/create-teacher", verifyToken, adminController.createTeacher); // /createTeacher
 router.patch("/update-teacher", verifyToken, adminController.updateTeacher); // /updateTeacher
 router.get("/get-all-teachers", verifyToken, adminController.getAllTeachers); // /getAllTeachers
+router.get("/get-teachers", verifyToken, adminController.getAllTeachersAccount); 
 router.delete("/delete-teacher", verifyToken, adminController.deleteTeacher); // /deleteTeacher
 
 // reference only ⬇
