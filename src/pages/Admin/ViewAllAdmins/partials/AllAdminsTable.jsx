@@ -210,7 +210,7 @@ const AllAdminsTable = () => {
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total of {""}
-          {table.getFilteredRowModel().rows.length} teacher(s).
+          {table.getFilteredRowModel().rows.length} admin(s).
         </div>
         {/* <div className="space-x-2">
           <Button
