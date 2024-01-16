@@ -32,7 +32,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
 import useAllAdmins from "../hooks/useAllAdmins";
 
-const AllTeachersTable = () => {
+const AllAdminsTable = () => {
   const { allTeachers, loading, error } = useAllAdmins();
 
   const columns = [
@@ -235,4 +235,4 @@ const AllTeachersTable = () => {
   );
 };
 
-export default AllTeachersTable;
+export default AllAdminsTable;
