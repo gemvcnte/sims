@@ -284,7 +284,9 @@ export default function ViewTeacherProfileModal({
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Close</Button>
+          <Button type="submit" variant="outline">
+            Close
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>
