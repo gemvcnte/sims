@@ -5,7 +5,7 @@ import AllAdminsTable from "./partials/AllAdminsTable";
 export default function ViewAllAdmins() {
   return (
     <main className="w-full">
-      <Topbar>ALL TEACHERS</Topbar>
+      <Topbar>ALL ADMINS</Topbar>
 
       <AllAdminsTable />
     </main>
