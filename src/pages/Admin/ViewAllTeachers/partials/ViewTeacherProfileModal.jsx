@@ -69,7 +69,6 @@ export default function ViewTeacherProfileModal({
               disabled
               id="lastName"
               type="text"
-              placeholder="Input Your Last Name"
               defaultValue={application.lastName}
               name="lastName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -85,7 +84,6 @@ export default function ViewTeacherProfileModal({
               disabled
               id="firstName"
               type="text"
-              placeholder="Input Your First Name"
               defaultValue={application.firstName}
               name="firstName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -101,7 +99,6 @@ export default function ViewTeacherProfileModal({
               disabled
               id="middleName"
               type="text"
-              placeholder="Input Your Middle Name"
               defaultValue={application.middleName}
               name="middleName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -134,7 +131,6 @@ export default function ViewTeacherProfileModal({
             </Label>
             <InputField
               type="date"
-              placeholder="Input Your Birthdate (MM/DD/YY)"
               value={application.birthDate}
               name="birthDate"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -179,7 +175,6 @@ export default function ViewTeacherProfileModal({
             <InputField
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="email"
-              placeholder="Input Your Email"
               value={application.emailAddress}
               name="emailAddress"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
