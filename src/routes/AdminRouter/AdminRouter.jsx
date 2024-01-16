@@ -11,6 +11,7 @@ import AllClasses from "@/pages/Admin/AllClasses";
 import TeacherClasses from "@/pages/Teacher/TeacherClasses";
 import TeacherSpecificClass from "@/pages/Teacher/TeacherSpecificClass";
 import ViewAllTeachers from "@/pages/Admin/ViewAllTeachers";
+import ViewAllAdmins from "@/pages/Admin/ViewAllAdmins";
 
 export default function AdminRouter() {
   return (
@@ -39,6 +40,8 @@ export default function AdminRouter() {
             path="/create-admin-account"
             element={<CreateAdminAccount />}
           />
+
+          <Route path="/admins" element={<ViewAllAdmins />} />
 
           <Route path="/classes" element={<TeacherClasses />} />
           <Route path="/class/:id" element={<TeacherSpecificClass />} />
