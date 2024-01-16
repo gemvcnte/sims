@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useAllTeachers from "../hooks/useAllTeachers";
 import {
   flexRender,
   getCoreRowModel,
@@ -31,9 +30,10 @@ import {
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
+import useAllAdmins from "../hooks/useAllAdmins";
 
 const AllTeachersTable = () => {
-  const { allTeachers, loading, error } = useAllTeachers();
+  const { allTeachers, loading, error } = useAllAdmins();
 
   const columns = [
     {

@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axios";
 import { useEffect, useState } from "react";
 
-export default function useAllTeachers() {
+export default function useAllAdmins() {
   const [allTeachers, setAllTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ export default function useAllTeachers() {
     const fetchTeachers = async () => {
       try {
         const response = await axiosInstance.get(
-          `http://localhost:5000/admin/get-teachers`,
+          `http://localhost:5000/admin/get-admins`,
         );
 
         if (response.status === 200) {
