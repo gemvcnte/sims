@@ -41,7 +41,7 @@ const selectOptions = [
   { value: "NONE", label: "None" },
 ];
 
-export default function ViewTeacherProfileModal({
+export default function ViewAdminProfileModal({
   application,
   onSave,
   onClose,

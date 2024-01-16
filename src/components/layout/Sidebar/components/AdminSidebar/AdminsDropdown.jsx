@@ -42,12 +42,24 @@ export function AdminsDropdown({}) {
         <DropdownMenuLabel>Admins</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>Update Admin Password</Link>
+          <Link onClick={handleDropdownClick} className="w-full">
+            Update Admin Password
+          </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link to="create-admin-account" onClick={handleDropdownClick}>
+          <Link
+            to="create-admin-account"
+            onClick={handleDropdownClick}
+            className="w-full"
+          >
             Create Admin Account
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link to="admins" onClick={handleDropdownClick} className="w-full">
+            View All Admins
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

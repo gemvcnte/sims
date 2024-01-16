@@ -42,17 +42,23 @@ export function TeachersDropdown({}) {
         <DropdownMenuLabel>Teachers</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>Update Teacher Password</Link>
+          <Link onClick={handleDropdownClick} className="w-full">
+            Update Teacher Password
+          </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link to="create-teacher-account" onClick={handleDropdownClick}>
+          <Link
+            to="create-teacher-account"
+            onClick={handleDropdownClick}
+            className="w-full"
+          >
             Create Teacher Account
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link to="teachers" onClick={handleDropdownClick}>
+          <Link to="teachers" onClick={handleDropdownClick} className="w-full">
             View All Teachers
           </Link>
         </DropdownMenuItem>
