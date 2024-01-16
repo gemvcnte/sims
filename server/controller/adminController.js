@@ -430,7 +430,13 @@ const getSpecificTeacher = asyncHandler(async (req, res) => {
 
 const getAllAdmins = asyncHandler(async (req, res) => {
   try {
-    const retrieveAdmins = await Admin.find();
+    const isAdmin = req.user.role === "admin";
+
+    if (!isAdmin) {
+      return res.status(403).json({ message: "Forbidden: You do not have permission to perform this action." });
+    }
+    
+    const retrieveAdmins = await Admin.find().sort({ lastName: 1 });
 
     if (!retrieveAdmins) {
       res.status(404).json({ message: `There are nothing here` });
@@ -1089,6 +1095,7 @@ const getAllTeachersAccount = asyncHandler(async (req, res) => {
 });
 
 
+
 module.exports = {
   getAllAdmins,
   createAdmin,
@@ -1126,7 +1133,7 @@ module.exports = {
   deleteClassroom,
   assignTeacherToClass,
   getAnnouncements,
-  getAllTeachersAccount
+  getAllTeachersAccount,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
