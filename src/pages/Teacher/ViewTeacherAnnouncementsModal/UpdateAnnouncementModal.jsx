@@ -13,15 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { createAdminAnnouncementApi } from "./helpers/createAdminAnnouncementApi";
-import getTeacherAssignedClassesApi from "./helpers/getTeacherAssignedClassesApi";
-// import { createAnnouncementApi } from "./helpers";
 
-export default function UpdateAnnouncementModal({ onClose }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [classes, setClasses] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("");
+export default function UpdateAnnouncementModal({ announcement, onClose }) {
+  const [title, setTitle] = useState(announcement.title || "");
+  const [content, setContent] = useState(announcement.content || "");
 
   const resetAnnouncementData = () => {
     setSelectedClass("");
@@ -65,35 +60,13 @@ export default function UpdateAnnouncementModal({ onClose }) {
     <>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Class Announcement</DialogTitle>
+          <DialogTitle>Update Announcement</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
-            Add a new class announcement by providing the required details
-            below.
+            Update an announcement by changing the details below.
           </DialogDescription>
         </DialogHeader>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
           <CardContent className="grid gap-6 px-0">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="class">Class</Label>
-                <select
-                  className="col-span-3 flex h-10 rounded-md border border-input bg-background object-contain px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  id="class"
-                  value={selectedClass}
-                  onChange={(e) => setSelectedClass(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Select a Class
-                  </option>
-                  {classes.map((classItem) => (
-                    <option key={classItem._id} value={classItem._id}>
-                      {classItem.sectionName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
             <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
               <Input
@@ -117,11 +90,11 @@ export default function UpdateAnnouncementModal({ onClose }) {
           </CardContent>
 
           <DialogFooter>
+            <Button type="submit" variant="outline">
+              <span>Delete</span>
+            </Button>
             <Button type="submit">
-              <span>
-                Create <span className="hidden sm:inline">class</span>{" "}
-                announcement
-              </span>
+              <span>Update</span>
             </Button>
           </DialogFooter>
         </form>

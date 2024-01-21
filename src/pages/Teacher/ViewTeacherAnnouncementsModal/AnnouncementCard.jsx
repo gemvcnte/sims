@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
 
 const AnnouncementCard = ({
   announcement,
@@ -58,6 +59,7 @@ const AnnouncementCard = ({
             />
           </button>
         </DialogTrigger>
+        <UpdateAnnouncementModal announcement={announcement} />
       </Dialog>
     </section>
     {expandedAnnouncement === announcement._id && (
