@@ -74,6 +74,8 @@ router.delete(
   adminController.deleteSchoolAnnouncement
 ); // or /announcement/deleteSchoolAnnouncement
 
+router.patch("/announcement/update", verifyToken, adminController.updateAnnouncement);
+
 // Admin Profile
 router.get("/profile", verifyToken, adminController.getAdminProfile);
 router.patch(
