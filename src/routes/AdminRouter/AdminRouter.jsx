@@ -14,6 +14,7 @@ import ViewAllTeachers from "@/pages/Admin/ViewAllTeachers";
 import ViewAllAdmins from "@/pages/Admin/ViewAllAdmins";
 import Registration from "@/pages/Registration";
 import ViewAllStudents from "@/pages/Admin/ViewAllStudents";
+import RegistrationRoutes from "../RegistrationRoutes";
 
 export default function AdminRouter() {
   return (
@@ -25,7 +26,7 @@ export default function AdminRouter() {
           <Route path="/" element={<Admin />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
 
-          <Route path="/registration" element={<Registration />} />
+          {/* <Route path="/registration" element={<Registration />} /> */}
           <Route
             path="/student-application-monitoring"
             element={<ApplicationMonitoring />}
