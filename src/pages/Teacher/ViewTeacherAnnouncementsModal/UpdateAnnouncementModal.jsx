@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { updateAnnouncementApi } from "./helpers/updateAnnouncementApi";
+import { updateAnnouncementApi } from "./helpers/updateAnnouncementApi.js";
 import { deleteAnnouncementApi } from "./helpers/deleteAnnouncementApi";
 
 export default function UpdateAnnouncementModal({ announcement, onClose }) {

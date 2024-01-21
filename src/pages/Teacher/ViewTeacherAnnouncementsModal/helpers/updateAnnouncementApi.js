@@ -5,16 +5,19 @@ import { updateAnnouncementEndpoint } from "@/config/adminEndpoints";
 
 const updateAnnouncementApi = async (updatedAnnouncementData) => {
   try {
+    showSuccessNotification(`Successfully updated, Please refresh...`);
+
     const response = await axiosInstance.patch(
       updateAnnouncementEndpoint,
       updatedAnnouncementData,
     );
 
-    response.status == 200
-      ? showSuccessNotification(response.data.message)
-      : showErrorNotification(response.data.message);
-    return response.data;
+    if (response.status !== 200) {
+      showErrorNotification(response.data.message);
+      throw new Error(response.data.message);
+    }
   } catch (error) {
+    showErrorNotification("An error occurred while updating the announcement.");
     throw error;
   }
 };
