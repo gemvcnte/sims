@@ -11,6 +11,8 @@ const generateAuthToken = require("../configs/auth");
 const generateEmailTemplate = require("../templates/emailTemplate");
 const dotenv = require("dotenv");
 const asyncHandler = require("express-async-handler");
+const { mongoose } = require("mongoose");
+
 
 dotenv.config();
 
@@ -1110,6 +1112,62 @@ const getAllTeachersAccount = asyncHandler(async (req, res) => {
   }
 });
 
+
+const updateAnnouncement = asyncHandler(async (req, res) => {
+  try {
+    const { announcementId, title, content } = req.body;
+    const isAdminOrTeacher = req.user.role === "admin" || req.user.role === "teacher";
+
+    if (!isAdminOrTeacher) {
+      return res.status(403).json({
+        message: "Forbidden: You do not have permission to perform this action.",
+      });
+    }
+
+    const updatedAnnouncement = await Announcement.findByIdAndUpdate(
+      announcementId,
+      { title, content },
+      { new: true }
+    );
+
+    if (!updatedAnnouncement) {
+      return res.status(404).json({
+        message: "Announcement not found.",
+      });
+    }
+
+    res.status(200).json({
+      message: "Announcement has been successfully updated.",
+      data: updatedAnnouncement,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+const deleteAnnouncement = asyncHandler(async (req, res) => {
+  try {
+    const { announcementId } = req.body;
+
+    const deletedAnnouncement = await Announcement.findOneAndDelete({
+      _id: announcementId,
+    });
+
+    if (!deletedAnnouncement) {
+      return res.status(404).json({ message: 'There is no announcement with that ID.' });
+    }
+
+    res.status(202).json({ message: 'Announcement has been deleted.' });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
+
+
 module.exports = {
   getAllAdmins,
   createAdmin,
@@ -1148,6 +1206,8 @@ module.exports = {
   assignTeacherToClass,
   getAnnouncements,
   getAllTeachersAccount,
+  updateAnnouncement,
+  deleteAnnouncement,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
