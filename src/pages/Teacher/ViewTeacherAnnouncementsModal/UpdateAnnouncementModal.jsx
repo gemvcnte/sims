@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { updateAnnouncementApi } from "./helpers/updateAnnouncementApi";
+import { deleteAnnouncementApi } from "./helpers/deleteAnnouncementApi";
 
 export default function UpdateAnnouncementModal({ announcement, onClose }) {
   const [title, setTitle] = useState(announcement.title || "");
@@ -31,6 +32,19 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
       await updateAnnouncementApi(updatedAnnouncementData);
 
+      // onClose();
+    } catch (error) {
+      console.error("Error handling submit:", error);
+    }
+  };
+
+  const deleteAnnouncement = async (event) => {
+    event.preventDefault();
+
+    try {
+      console.log(announcement._id);
+      await deleteAnnouncementApi(announcement._id);
+
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
@@ -46,7 +60,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
             Update an announcement by changing the details below.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+        <form className="grid gap-4 py-4">
           <CardContent className="grid gap-6 px-0">
             <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
@@ -74,12 +88,11 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
             <Button
               // className="border-red-500 text-red-500 hover:text-red-500"
               variant="outline"
+              onClick={deleteAnnouncement}
             >
-              <span>Delete</span>
+              Delete
             </Button>
-            <Button type="submit">
-              <span>Update</span>
-            </Button>
+            <Button onClick={handleSubmit}>Update</Button>
           </DialogFooter>
         </form>
       </DialogContent>
