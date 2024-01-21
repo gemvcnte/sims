@@ -1,0 +1,22 @@
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import axiosInstance from "@/utils/axios";
+import { updateAnnouncementEndpoint } from "@/config/adminEndpoints";
+
+const updateAnnouncementApi = async (updatedAnnouncementData) => {
+  try {
+    const response = await axiosInstance.patch(
+      updateAnnouncementEndpoint,
+      updatedAnnouncementData,
+    );
+
+    response.status == 200
+      ? showSuccessNotification(response.data.message)
+      : showErrorNotification(response.data.message);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { updateAnnouncementApi };

@@ -13,48 +13,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { updateAnnouncementApi } from "./helpers/updateAnnouncementApi";
 
 export default function UpdateAnnouncementModal({ announcement, onClose }) {
   const [title, setTitle] = useState(announcement.title || "");
   const [content, setContent] = useState(announcement.content || "");
 
-  const resetAnnouncementData = () => {
-    setSelectedClass("");
-    setTitle("");
-    setContent("");
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const TeacherAnnouncementData = {
-        classId: selectedClass,
+      const updatedAnnouncementData = {
+        announcementId: announcement._id,
         title,
         content,
       };
 
-      await createAdminAnnouncementApi(TeacherAnnouncementData);
+      await updateAnnouncementApi(updatedAnnouncementData);
 
-      resetAnnouncementData();
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const classes = await getTeacherAssignedClassesApi();
-        setClasses(classes);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -90,7 +71,10 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit" variant="outline">
+            <Button
+              // className="border-red-500 text-red-500 hover:text-red-500"
+              variant="outline"
+            >
               <span>Delete</span>
             </Button>
             <Button type="submit">
