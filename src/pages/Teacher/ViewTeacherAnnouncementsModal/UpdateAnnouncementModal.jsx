@@ -32,7 +32,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
       await updateAnnouncementApi(updatedAnnouncementData);
 
-      // onClose();
+      onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
     }
@@ -42,7 +42,6 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
     event.preventDefault();
 
     try {
-      console.log(announcement._id);
       await deleteAnnouncementApi(announcement._id);
 
       onClose();
