@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const AnnouncementCard = ({
   announcement,
@@ -9,6 +10,7 @@ const AnnouncementCard = ({
   toggleContent,
 }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <div key={announcement._id} className="mb-4 rounded-lg border p-4">
@@ -51,22 +53,24 @@ const AnnouncementCard = ({
           )}
         </button>
 
-        <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
-          <DialogTrigger>
-            <button className="group">
-              Update{" "}
-              <Icon
-                icon="octicon:arrow-down-24"
-                rotate={3}
-                className="inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
-              />
-            </button>
-          </DialogTrigger>
-          <UpdateAnnouncementModal
-            announcement={announcement}
-            onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
-          />
-        </Dialog>
+        {user.role === "teacher" && announcement.isPublic === true ? null : (
+          <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
+            <DialogTrigger>
+              <button className="group">
+                Update{" "}
+                <Icon
+                  icon="octicon:arrow-down-24"
+                  rotate={3}
+                  className="inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
+                />
+              </button>
+            </DialogTrigger>
+            <UpdateAnnouncementModal
+              announcement={announcement}
+              onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+            />
+          </Dialog>
+        )}
       </section>
       {expandedAnnouncement === announcement._id && (
         <div className="mt-2 text-sm text-gray-400">{announcement.content}</div>
