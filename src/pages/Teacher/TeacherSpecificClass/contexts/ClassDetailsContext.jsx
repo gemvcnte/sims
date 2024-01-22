@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import { getSpecificClassEndpoint } from "@/config/teacherEndpoints";
+import axiosInstance from "@/utils/axios";
 
 const ClassDetailsContext = createContext();
 
@@ -15,9 +16,8 @@ const ClassDetailsProvider = ({ children }) => {
   const fetchClassDetails = async () => {
     if (id) {
       try {
-        const response = await axios.get(
+        const response = await axiosInstance(
           `${getSpecificClassEndpoint}/${id}`,
-          getAuthHeaders(),
         );
         setClassDetails(response.data.data);
         setLoading(false);
