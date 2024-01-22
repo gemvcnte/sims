@@ -1,6 +1,7 @@
 // ClassDetailsContext.js
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "@/utils/axios";
+import { getStudentAssignedClassEndpoint } from "@/config/studentEndpoints";
 
 const ClassDetailsContext = createContext();
 
