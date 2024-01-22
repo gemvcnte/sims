@@ -141,11 +141,7 @@ export default function GradesTable() {
                 <TableCell>
                   <input
                     className="border bg-background text-foreground"
-                    value={
-                      modifiedGrades[student.lrn]?.p2Grade ||
-                      grade?.p2Grade ||
-                      ""
-                    }
+                    value={modifiedGrades[student.lrn]?.p2Grade}
                     onChange={(e) =>
                       handleChangeGrade(student.lrn, "p2Grade", e.target.value)
                     }
