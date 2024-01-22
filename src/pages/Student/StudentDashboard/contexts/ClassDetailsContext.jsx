@@ -1,6 +1,7 @@
 // ClassDetailsContext.js
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "@/utils/axios";
+import { getStudentAssignedClassEndpoint } from "@/config/studentEndpoints";
 
 const ClassDetailsContext = createContext();
 
@@ -10,9 +11,7 @@ const ClassDetailsProvider = ({ children }) => {
 
   const fetchClassDetails = async () => {
     try {
-      const response = await axiosInstance(
-        `http://localhost:5000/student/class/assigned-class`,
-      );
+      const response = await axiosInstance(getStudentAssignedClassEndpoint);
       setClassDetails(response.data.data);
       setLoading(false);
     } catch (error) {
