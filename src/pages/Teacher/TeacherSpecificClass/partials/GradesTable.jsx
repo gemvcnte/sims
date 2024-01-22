@@ -127,6 +127,7 @@ export default function GradesTable() {
               {isEditing ? (
                 <TableCell>
                   <input
+                    type="number"
                     className="border bg-background text-foreground"
                     value={modifiedGrades[student.lrn]?.p1Grade}
                     onChange={(e) =>
@@ -140,6 +141,7 @@ export default function GradesTable() {
               {isEditing ? (
                 <TableCell>
                   <input
+                    type="number"
                     className="border bg-background text-foreground"
                     value={modifiedGrades[student.lrn]?.p2Grade}
                     onChange={(e) =>
