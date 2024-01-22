@@ -10,9 +10,7 @@ const ClassDetailsProvider = ({ children }) => {
 
   const fetchClassDetails = async () => {
     try {
-      const response = await axiosInstance(
-        `http://localhost:5000/student/class/assigned-class`,
-      );
+      const response = await axiosInstance(getStudentAssignedClassEndpoint);
       setClassDetails(response.data.data);
       setLoading(false);
     } catch (error) {
