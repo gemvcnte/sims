@@ -150,7 +150,8 @@ const createTeacher = asyncHandler(async (req, res) => {
 // logging in as an admin
 const adminLogin = asyncHandler(async (req, res) => {
   try {
-    const { username, password } = req.body;
+    let { username, password } = req.body;
+    username = username.toLowerCase(); 
 
     const admin = await Admin.findOne({ username });
 
