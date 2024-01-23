@@ -12,7 +12,8 @@ const { Admin } = require("../models/AdminModel");
 //
 const teacherLogin = asyncHandler(async (req, res) => {
   try {
-    const { username, password } = req.body;
+    let { username, password } = req.body;
+    username = username.toLowerCase(); 
 
     // finding teacher base sa uname
     const teacher = await Teacher.findOne({ username });
