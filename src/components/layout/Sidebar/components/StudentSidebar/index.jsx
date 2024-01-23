@@ -10,6 +10,17 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
 import { Icon } from "@iconify/react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 
 export default function StudentSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -50,6 +61,29 @@ export default function StudentSidebar() {
       <SidebarItem to="profile" icon="teenyicons:user-outline">
         Profile
       </SidebarItem>
+
+      <Drawer>
+        <DrawerTrigger>
+          <Button variant="ghost" className="w-full justify-start">
+            <Icon icon="mdi:password-outline" className="mr-2" />
+            Password
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="sm:mx-auto sm:max-w-[500px]">
+            <DrawerTitle>Update Password</DrawerTitle>
+            <DrawerDescription>
+              We recommend updating your password regularly
+            </DrawerDescription>
+          </DrawerHeader>
+          <DrawerFooter>
+            <Button>Submit</Button>
+            <DrawerClose>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </SidebarContainer>
   );
 }
