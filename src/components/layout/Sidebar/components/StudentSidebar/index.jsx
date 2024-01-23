@@ -70,18 +70,22 @@ export default function StudentSidebar() {
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="sm:mx-auto sm:max-w-[500px]">
-            <DrawerTitle>Update Password</DrawerTitle>
-            <DrawerDescription>
-              We recommend updating your password regularly
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <Button>Submit</Button>
-            <DrawerClose>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle>Update Password</DrawerTitle>
+              <DrawerDescription>
+                We recommend updating your password regularly
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <Button>Submit</Button>
+              <DrawerClose className="w-full">
+                <Button variant="outline" className="w-full">
+                  Cancel
+                </Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
         </DrawerContent>
       </Drawer>
     </SidebarContainer>
