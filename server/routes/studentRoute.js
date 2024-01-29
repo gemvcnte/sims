@@ -24,4 +24,8 @@ router.get("/get-announcements",
 verifyToken, 
 studentController.getStudentAnnouncements)
 
+router.patch("/update-password", 
+verifyToken, 
+studentController.updateStudentPassword)
+
 module.exports = router;
