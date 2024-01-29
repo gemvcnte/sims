@@ -11,7 +11,7 @@ const generateAuthToken = require("../configs/auth");
 const generateEmailTemplate = require("../templates/emailTemplate");
 const dotenv = require("dotenv");
 const asyncHandler = require("express-async-handler");
-const { mongoose } = require("mongoose");
+// const { validationResult, check } = require('express-validator');
 
 
 dotenv.config();
@@ -1166,6 +1166,144 @@ const deleteAnnouncement = asyncHandler(async (req, res) => {
 });
 
 
+const getTotalStudents = asyncHandler(async (req,res) => {
+  try {
+    const totalStudents = await Student.countDocuments();
+    res.json({totalStudents})
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalTeachers = asyncHandler(async (req,res) => {
+  try {
+    
+    const totalTeachers = await Teacher.countDocuments();
+    res.json({totalTeachers});
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalMaleStudents = asyncHandler(async (req,res) => {
+  try {
+
+    // await check('gender').equals('MALE').run(req);
+
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   res.status(400).json({errors: errors.array()});
+    // }
+
+
+    // const { gender } = req.query;
+
+    // console.log(gender)
+
+
+    // const totalMaleStudents = await Student.countDocuments({gender});
+    const totalMaleStudents = await Student.countDocuments({gender: 'MALE'});
+    res.json({totalMaleStudents});
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalFemaleStudents = asyncHandler(async (req,res) => {
+ try {
+
+    const totalFemaleStudents = await Student.countDocuments({gender: 'FEMALE'});
+    res.json({totalFemaleStudents});
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+// get total students in the academic track
+const getTotalAcadTrack = asyncHandler(async (req,res) => {
+  try {
+
+    const totalStudentsAcadTrack = await Student.countDocuments({track: 'ACADEMIC'})
+    res.json({totalStudentsAcadTrack})
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalTVLTrack = asyncHandler(async (req,res) => {
+  try {
+    const totalStudentsTVLTrack = await Student.countDocuments({track: 'TVL'});
+    res.json({totalStudentsTVLTrack});
+  } catch (error) {
+    res.status(500).json({message: `${error}`});
+  }
+})
+
+
+const getTotalStudentsInABM = asyncHandler(async (req,res) => {
+  try {
+
+    const totalABMStudents = await Student.countDocuments({strand: 'ABM'});
+    res.json({totalABMStudents});
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalStudentsInSTEM = asyncHandler(async (req,res) => {
+  try {
+    
+    const totalSTEMStudents = await Student.countDocuments({strand: 'STEM'});
+    res.json({totalSTEMStudents});
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalStudentsInHUMSS = asyncHandler(async (req,res) => {
+  try {
+
+    const totalHumssStudents = await Student.countDocuments({strand: 'HUMSS'})
+    res.json({totalHumssStudents})
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+const getTotalStudentsInICT = asyncHandler(async (req,res) => {
+  try {
+
+    const totalICTStudents = await Student.countDocuments({strand: 'ICT'});
+    res.json({totalICTStudents});
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}`})
+  }
+})
+
+
+const getTotalStudentsInHE = asyncHandler(async (req,res) => {
+  try {
+
+    const totalHEStudents = await Student.countDocuments({strand: 'HE'});
+
+    res.json({totalHEStudents})
+    
+  } catch (error) {
+    res.status(500).json({message: `${error}}`})
+  }
+})
 
 
 
@@ -1209,6 +1347,17 @@ module.exports = {
   getAllTeachersAccount,
   updateAnnouncement,
   deleteAnnouncement,
+  getTotalStudents,
+  getTotalTeachers,
+  getTotalMaleStudents,
+  getTotalFemaleStudents,
+  getTotalAcadTrack,
+  getTotalTVLTrack,
+  getTotalStudentsInABM,
+  getTotalStudentsInSTEM,
+  getTotalStudentsInHUMSS,
+  getTotalStudentsInICT,
+  getTotalStudentsInHE,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
