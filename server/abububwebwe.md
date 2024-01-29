@@ -43,10 +43,6 @@ PUTANGINA MO YUNG .ENV MO MUNA BAGO MO BUKSAN❗❗❗
 
 == Todo List ==
 
-- apply/registration of the student to the school = Done
-- can CREATE an admin and teacher account using api only :> = Done 
-- accounts when logged in provided with a json web token = Done
-- password hashed perfectly = Done
 
 
 
