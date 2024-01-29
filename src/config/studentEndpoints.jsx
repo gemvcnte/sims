@@ -6,3 +6,5 @@ export const updateStudentProfileEndpoint = `${baseUrl}/student/profile/update`;
 export const getStudentAnnouncementsEndpoint = `${baseUrl}/student/get-announcements`;
 
 export const getStudentAssignedClassEndpoint = `${baseUrl}/student/class/assigned-class`;
+
+export const updateStudentPasswordEndpoint = `${baseUrl}/student/update-password`;
