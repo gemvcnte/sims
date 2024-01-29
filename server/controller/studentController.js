@@ -191,6 +191,34 @@ const getAssignedClass = asyncHandler(async (req, res) => {
   }
 });
 
+
+const updateStudentPassword = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { currentPassword, newPassword } = req.body;
+
+    console.log(_id)
+
+    const student = await Student.findById(_id);
+
+    if (!(await bcryptjs.compare(currentPassword, student.password))) {
+      return res.status(401).json({ message: "Current password is incorrect." });
+    }
+
+    const hashedNewPassword = await bcryptjs.hash(newPassword, 10);
+
+    student.password = hashedNewPassword;
+    await student.save();
+
+    res.status(200).json({ message: "Password changed successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to change password." });
+  }
+});
+
+
+
 module.exports = {
   studentLogin,
   getStudentSchedule,
@@ -199,4 +227,5 @@ module.exports = {
   updateStudentProfile,
   getAssignedClass,
   // requestUpdateStudentProfile,
+  updateStudentPassword,
 };
