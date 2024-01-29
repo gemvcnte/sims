@@ -10,17 +10,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
 import { Icon } from "@iconify/react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+import ChangePasswordDrawer from "../ChangePasswordDrawer";
 
 export default function StudentSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -62,32 +52,7 @@ export default function StudentSidebar() {
         Profile
       </SidebarItem>
 
-      <Drawer>
-        <DrawerTrigger>
-          <Button variant="ghost" className="w-full justify-start">
-            <Icon icon="mdi:password-outline" className="mr-2" />
-            Password
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent>
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
-              <DrawerTitle>Update Password</DrawerTitle>
-              <DrawerDescription>
-                We recommend updating your password regularly
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter>
-              <Button>Submit</Button>
-              <DrawerClose className="w-full">
-                <Button variant="outline" className="w-full">
-                  Cancel
-                </Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
+      <ChangePasswordDrawer />
     </SidebarContainer>
   );
 }
