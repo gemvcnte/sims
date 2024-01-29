@@ -97,4 +97,19 @@ router.delete("/class/delete", verifyToken, adminController.deleteClassroom);
 // router.patch("/announcement/update-faculty-announcement")
 // router.delete("/announcement/delete-faculty-announcement")
 
+
+// analytics
+
+router.get('/analytics/total-students', adminController.getTotalStudents);
+router.get('/analytics/total-teachers', adminController.getTotalTeachers);
+router.get('/analytics/total-male-students', adminController.getTotalMaleStudents);
+router.get('/analytics/total-female-students', adminController.getTotalFemaleStudents);
+router.get('/analytics/total-acad-students', adminController.getTotalAcadTrack);
+router.get('/analytics/total-tvl-students', adminController.getTotalTVLTrack);
+router.get('/analytics/total-abm-students', adminController.getTotalStudentsInABM);
+router.get('/analytics/total-stem-students', adminController.getTotalStudentsInSTEM);
+router.get('/analytics/total-humss-students', adminController.getTotalStudentsInHUMSS);
+router.get('/analytics/total-ict-students', adminController.getTotalStudentsInICT);
+router.get('/analytics/total-he-students', adminController.getTotalStudentsInHE);
+
 module.exports = router;
