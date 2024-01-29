@@ -17,7 +17,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import updatePasswordApi from "./update-password-api";
 
-export default function ChangePasswordDrawer() {
+export default function ChangePasswordDrawer({ userType }) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -29,7 +29,11 @@ export default function ChangePasswordDrawer() {
         return;
       }
 
-      const response = await updatePasswordApi(currentPassword, newPassword);
+      const response = await updatePasswordApi(
+        currentPassword,
+        newPassword,
+        userType,
+      );
 
       showSuccessNotification(response.message);
     } catch (error) {

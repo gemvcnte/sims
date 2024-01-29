@@ -52,7 +52,7 @@ export default function StudentSidebar() {
         Profile
       </SidebarItem>
 
-      <ChangePasswordDrawer />
+      <ChangePasswordDrawer userType="student" />
     </SidebarContainer>
   );
 }
