@@ -18,3 +18,6 @@ export const updateGradesEndpoint = `${baseUrl}/teacher/class/update-grades`;
 // announcement
 export const createTeacherAnnouncementEndpoint = `${baseUrl}/teacher/create-announcement`;
 export const getTeacherAnnouncementsEndpoint = `${baseUrl}/teacher/get-announcements`;
+
+// password
+export const updateTeacherPasswordEndpoint = `${baseUrl}/teacher/update-password`;

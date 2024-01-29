@@ -10,6 +10,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
 import { Icon } from "@iconify/react";
+import ChangePasswordDrawer from "../ChangePasswordDrawer";
 
 export default function StudentSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -50,6 +51,8 @@ export default function StudentSidebar() {
       <SidebarItem to="profile" icon="teenyicons:user-outline">
         Profile
       </SidebarItem>
+
+      <ChangePasswordDrawer userType="student" />
     </SidebarContainer>
   );
 }

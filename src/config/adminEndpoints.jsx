@@ -34,3 +34,6 @@ export const createAdminAnnouncementEndpoint = `${baseUrl}/admin/announcement/cr
 export const createAdminClassAnnouncementEndpoint = `${baseUrl}/admin/announcement/create-class-announcement`;
 export const updateAnnouncementEndpoint = `${baseUrl}/admin/announcement/update`;
 export const deleteAnnouncementEndpoint = `${baseUrl}/admin/announcement/delete`;
+
+// password
+export const updateAdminPasswordEndpoint = `${baseUrl}/admin/update-password`;
