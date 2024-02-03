@@ -1306,6 +1306,30 @@ const getTotalStudentsInHE = asyncHandler(async (req,res) => {
 })
 
 
+const updateAdminPassword = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { currentPassword, newPassword } = req.body;
+
+    const admin = await Admin.findById(_id);
+
+    if (!(await bcryptjs.compare(currentPassword, admin.password))) {
+      return res.status(401).json({ message: "Current password is incorrect." });
+    }
+
+    const hashedNewPassword = await bcryptjs.hash(newPassword, 10);
+
+    admin.password = hashedNewPassword;
+    await admin.save();
+
+    res.status(200).json({ message: "Password changed successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to change password." });
+  }
+});
+
+
 
 module.exports = {
   getAllAdmins,
@@ -1358,6 +1382,7 @@ module.exports = {
   getTotalStudentsInHUMSS,
   getTotalStudentsInICT,
   getTotalStudentsInHE,
+  updateAdminPassword,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
