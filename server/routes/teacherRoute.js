@@ -92,5 +92,6 @@ router.post('/create-announcement', verifyToken, teacherController.createTeacher
 
 router.get('/get-announcements', verifyToken, teacherController.getAnnouncements);
 
+router.patch('/update-password', verifyToken, teacherController.updateTeacherPassword);
 
 module.exports = router;
