@@ -35,7 +35,10 @@ export default function ChangePasswordDrawer({ userType }) {
         userType,
       );
 
-      showSuccessNotification(response.message);
+      showSuccessNotification(response.data.message);
+      setCurrentPassword("");
+      setNewPassword("");
+      setRepeatPassword("");
     } catch (error) {
       showErrorNotification(error.response?.data.message);
     }
