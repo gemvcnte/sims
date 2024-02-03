@@ -24,7 +24,7 @@ export default function SidebarContainer({ children }) {
           !isSidebarOpen && "hidden"
         } lg:block`}
       >
-        <div className="flex h-[100vh] flex-col justify-between px-4">
+        <div className="flex h-[100svh] flex-col justify-between px-4">
           <div>
             <SidebarHeader />
             <main className="flex flex-col gap-2 py-2">{children}</main>

@@ -61,7 +61,7 @@ export default function Registration() {
   return (
     <>
       {loading && <LoadingSpinner />}
-      <div className="fixed z-10 grid h-[100vh] w-[100vw] place-items-center items-center bg-slate-50 md:hidden">
+      <div className="fixed z-10 grid h-[100svh] w-[100vw] place-items-center items-center bg-slate-50 md:hidden">
         <p>Registration Only Available on Desktop</p>
       </div>
       <ToastContainer />
