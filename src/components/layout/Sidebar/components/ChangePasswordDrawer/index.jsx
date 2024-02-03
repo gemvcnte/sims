@@ -35,6 +35,7 @@ export default function ChangePasswordDrawer({ userType }) {
         userType,
       );
 
+
       showSuccessNotification(response.data.message);
       setCurrentPassword("");
       setNewPassword("");
