@@ -11,6 +11,7 @@ import { ClassroomsDropdown } from "./ClassroomsDropdown";
 import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
 import SidebarItem from "../SidebarContainer/components/SidebarItem";
 import { AdminsDropdown } from "./AdminsDropdown";
+import ChangePasswordDrawer from "../ChangePasswordDrawer";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -40,6 +41,8 @@ export default function AdminSidebar() {
         <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile
         </SidebarItem>
+
+        <ChangePasswordDrawer userType="admin" />
       </SidebarContainer>
     )
   );
