@@ -112,4 +112,9 @@ router.get('/analytics/total-humss-students', adminController.getTotalStudentsIn
 router.get('/analytics/total-ict-students', adminController.getTotalStudentsInICT);
 router.get('/analytics/total-he-students', adminController.getTotalStudentsInHE);
 
+
+// password
+router.patch('/update-password', verifyToken, adminController.updateAdminPassword);
+
+
 module.exports = router;
