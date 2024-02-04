@@ -1,3 +1,4 @@
+import { AnalyticsTabs } from "./AnalyticsTabs";
 import React, { useState } from "react";
 import {
   Drawer,
@@ -14,11 +15,16 @@ import { Icon } from "@iconify/react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAnalyticsContext } from "../context/AnalyticsContext";
 
 export default function AnalyticsDrawerPartial() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const { analyticsData, loading, error } = useAnalyticsContext();
+
+  if (loading) {
+    console.log("loading...");
+  } else {
+    console.log(analyticsData);
+  }
 
   return (
     <Drawer>
@@ -33,59 +39,9 @@ export default function AnalyticsDrawerPartial() {
           <DrawerHeader>
             {/* <DrawerTitle>Analytics</DrawerTitle> */}
             <DrawerDescription>
-              <Tabs defaultValue="students" className="w-full">
-                <TabsList className="w-full">
-                  <TabsTrigger value="students" className="w-full">
-                    Students
-                  </TabsTrigger>
-                  <TabsTrigger value="faculty" className="w-full">
-                    Faculty
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="students">students analytics</TabsContent>
-                <TabsContent value="faculty">faculty analytics</TabsContent>
-              </Tabs>
+              <AnalyticsTabs />
             </DrawerDescription>
           </DrawerHeader>
-
-          <section>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                Current Password
-              </Label>
-              <Input
-                placeholder=""
-                value={currentPassword}
-                onChange={(e) => {
-                  setCurrentPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                New Password
-              </Label>
-              <Input
-                placeholder=""
-                value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                Repeat Password
-              </Label>
-              <Input
-                placeholder=""
-                value={repeatPassword}
-                onChange={(e) => {
-                  setRepeatPassword(e.target.value);
-                }}
-              />
-            </div>
-          </section>
 
           <DrawerFooter>
             <DrawerClose className="w-full">
