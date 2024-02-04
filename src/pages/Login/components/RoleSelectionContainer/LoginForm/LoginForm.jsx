@@ -98,7 +98,7 @@ function LoginForm({ role, setSelectedRole }) {
             value={loginData.username}
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
-            placeholder={role === "student" ? "LRN" : `${role} Username`}
+            placeholder={role === "student" ? "LRN" : `Username`}
             className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
         </div>
@@ -125,7 +125,7 @@ function LoginForm({ role, setSelectedRole }) {
             value={loginData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
-            placeholder={role === "student" ? "YYYY-MM-DD" : `${role} Password`}
+            placeholder={role === "student" ? "YYYY-MM-DD" : `Password`}
             className=" border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
           {/* <PasswordInput /> */}

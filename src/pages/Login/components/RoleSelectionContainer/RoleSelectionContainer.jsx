@@ -22,17 +22,17 @@ function RoleSelectionContainer() {
       {!selectedRole && (
         <section className="mx-auto mt-20 flex max-w-[350px] flex-col gap-4 rounded-lg p-4">
           <RoleSelectionButton
-            role="Student"
+            role="student"
             hasBorder={true}
             onClick={handleRoleSelection}
           />
           <RoleSelectionButton
-            role="Teacher"
+            role="teacher"
             hasBorder={true}
             onClick={handleRoleSelection}
           />
           <RoleSelectionButton
-            role="Admin"
+            role="admin"
             hasBorder={true}
             onClick={handleRoleSelection}
           />
