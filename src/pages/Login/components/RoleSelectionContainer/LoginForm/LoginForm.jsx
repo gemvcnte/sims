@@ -8,6 +8,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
 import LoadingSpinner from "@/utils/LoadingSpinner";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 function LoginForm({ role, setSelectedRole }) {
   const { login } = useAuth();
@@ -92,12 +93,12 @@ function LoginForm({ role, setSelectedRole }) {
             )}
           </span>
           <input
-            type="text"
+            type={role === "student" ? "number" : "text"}
             name="username"
             value={loginData.username}
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
-            placeholder={`${role} Username`}
+            placeholder={role === "student" ? "LRN" : `Username`}
             className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
         </div>
@@ -118,15 +119,16 @@ function LoginForm({ role, setSelectedRole }) {
               />
             )}
           </span>
-          <input
+          <PasswordInput
             type="password"
             name="password"
             value={loginData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
-            placeholder={`${role} Password`}
-            className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
+            placeholder={role === "student" ? "YYYY-MM-DD" : `Password`}
+            className=" border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
+          {/* <PasswordInput /> */}
         </div>
 
         <button
