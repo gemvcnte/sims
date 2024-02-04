@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
 import { StudentsTabContent } from "./StudentsTabContent";
+import FacultyTabContent from "./FacultyTabContent";
 export function AnalyticsTabs({}) {
   return (
     <Tabs defaultValue="students" className="w-full">
@@ -15,7 +16,9 @@ export function AnalyticsTabs({}) {
       <TabsContent value="students" className="pl-4">
         <StudentsTabContent />
       </TabsContent>
-      <TabsContent value="faculty">faculty analytics</TabsContent>
+      <TabsContent value="faculty">
+        <FacultyTabContent />
+      </TabsContent>
     </Tabs>
   );
 }
