@@ -12,6 +12,7 @@ import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
 import SidebarItem from "../SidebarContainer/components/SidebarItem";
 import { AdminsDropdown } from "./AdminsDropdown";
 import ChangePasswordDrawer from "../ChangePasswordDrawer";
+import AnalyticsDrawer from "@/pages/Admin/AnalyticsDrawer";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -34,9 +35,7 @@ export default function AdminSidebar() {
 
         <AnnouncementsDropdown />
 
-        <SidebarItem icon="material-symbols:analytics-outline">
-          Analytics
-        </SidebarItem>
+        <AnalyticsDrawer />
 
         <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile

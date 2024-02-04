@@ -37,3 +37,6 @@ export const deleteAnnouncementEndpoint = `${baseUrl}/admin/announcement/delete`
 
 // password
 export const updateAdminPasswordEndpoint = `${baseUrl}/admin/update-password`;
+
+// analytics
+export const getAllAnalyticsEndpoint = `${baseUrl}/admin/analytics/all`;
