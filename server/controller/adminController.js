@@ -1330,6 +1330,45 @@ const updateAdminPassword = asyncHandler(async (req, res) => {
 });
 
 
+const getAllAnalytics = asyncHandler(async (req, res) => {
+  try {
+    const totalStudents = await Student.countDocuments({});
+    const totalTeachers = await Teacher.countDocuments({});
+    const totalAdmins = await Admin.countDocuments({});
+    const totalMaleStudents = await Student.countDocuments({ gender: 'MALE' });
+    const totalFemaleStudents = await Student.countDocuments({ gender: 'FEMALE' });
+    const totalAcadStudents = await Student.countDocuments({ track: 'ACADEMIC' });
+    const totalTVLStudents = await Student.countDocuments({ track: 'TVL' });
+    const totalABMStudents = await Student.countDocuments({ strand: 'ABM' });
+    const totalSTEMStudents = await Student.countDocuments({ strand: 'STEM' });
+    const totalHumssStudents = await Student.countDocuments({ strand: 'HUMSS' });
+    const totalICTStudents = await Student.countDocuments({ strand: 'ICT' });
+    const totalHEStudents = await Student.countDocuments({ strand: 'HE' });
+
+    res.json({
+      students: {
+        totalStudents,
+        totalMaleStudents,
+        totalFemaleStudents,
+        totalAcadStudents,
+        totalTVLStudents,
+        totalABMStudents,
+        totalSTEMStudents,
+        totalHumssStudents,
+        totalICTStudents,
+        totalHEStudents,
+      },
+      faculty: {
+        totalTeachers,
+        totalAdmins,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
 
 module.exports = {
   getAllAdmins,
@@ -1382,6 +1421,7 @@ module.exports = {
   getTotalStudentsInHUMSS,
   getTotalStudentsInICT,
   getTotalStudentsInHE,
+  getAllAnalytics,
   updateAdminPassword,
 };
 

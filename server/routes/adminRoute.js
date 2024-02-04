@@ -111,6 +111,7 @@ router.get('/analytics/total-stem-students', adminController.getTotalStudentsInS
 router.get('/analytics/total-humss-students', adminController.getTotalStudentsInHUMSS);
 router.get('/analytics/total-ict-students', adminController.getTotalStudentsInICT);
 router.get('/analytics/total-he-students', adminController.getTotalStudentsInHE);
+router.get('/analytics/all', verifyToken, adminController.getAllAnalytics);
 
 
 // password
