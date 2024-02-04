@@ -12,6 +12,7 @@ import AnnouncementCard from "./AnnouncementCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewStudentAnnouncementsModal from "../../ViewStudentAnnouncementsModal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardAnnouncementCard() {
   const { announcements, loading, error } = useAnnouncements();
@@ -40,6 +41,8 @@ export default function DashboardAnnouncementCard() {
         </span>
       </CardHeader>
       <CardContent className="px-4 pb-2">
+        {loading && <Skeleton className="mb-2 h-24" />}
+
         {!loading && !error && (
           <>
             {mostRecentAnnouncement.map((announcement) => (
