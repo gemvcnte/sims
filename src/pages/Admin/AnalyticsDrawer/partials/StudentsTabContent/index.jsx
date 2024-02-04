@@ -8,10 +8,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import StudentCard from "./StudentCard";
+import TotalStudentsCard from "./TotalStudentsCard";
 
 export function StudentsTabContent() {
-  const componentsArray = [StudentCard, StudentCard, StudentCard];
+  const componentsArray = [
+    TotalStudentsCard,
+    TotalStudentsCard,
+    TotalStudentsCard,
+  ];
 
   return (
     <Carousel className="w-full max-w-xs">

@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import { useAnalyticsContext } from "../../context/AnalyticsContext";
 
-export default function StudentCard() {
+export default function TotalStudentsCard() {
   const { analyticsData, loading, error } = useAnalyticsContext();
 
   return (
