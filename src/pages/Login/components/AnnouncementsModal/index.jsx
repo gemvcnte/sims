@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import useAnnouncements from "../../hooks/useAnnouncements";
 import AnnouncementCard from "./AnnouncementCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AnnouncementModal() {
   const { announcements, loading, error } = useAnnouncements();
@@ -41,7 +42,9 @@ export default function AnnouncementModal() {
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-80 overflow-y-auto">
-            {loading && <p>Loading announcements...</p>}
+            {loading && <Skeleton className="mb-2 h-24" />}
+            {loading && <Skeleton className="mb-2 h-24" />}
+            {loading && <Skeleton className="h-24" />}
             {error && <p>Error fetching announcements</p>}
 
             {!loading && !error && (
