@@ -32,6 +32,8 @@ const StackedBarChartExample = () => {
     "totalStudents",
     "totalMaleStudents",
     "totalFemaleStudents",
+    "totalAcadStudents",
+    "totalTVLStudents",
   ];
   const filteredData = Object.entries(studentData)
     .filter(([category]) => !excludedKeys.includes(category))
