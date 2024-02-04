@@ -28,7 +28,9 @@ export default function TotalAcademicStudents() {
         <div className="text-2xl font-bold">
           {analyticsData.students.totalAcadStudents}
         </div>
-        <p className="text-xs text-muted-foreground">+180.1% from last month</p>
+        <p className="text-xs text-muted-foreground">
+          +180.1% from last semester
+        </p>
       </CardContent>
     </Card>
   );

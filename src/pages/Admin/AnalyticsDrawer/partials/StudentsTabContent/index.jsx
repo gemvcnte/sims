@@ -8,13 +8,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import TotalStudentsCard from "./TotalStudentsCard";
 import StudentsStackedBarChart from "./StudentsStackedBarChart";
 import StudentsGenderPieChart from "./StudentsGenderPieChart";
+import StudentAnalyticsCards from "./StudentAnalyticsCards";
 
 export function StudentsTabContent() {
   const componentsArray = [
-    TotalStudentsCard,
+    StudentAnalyticsCards,
     StudentsStackedBarChart,
     StudentsGenderPieChart,
   ];

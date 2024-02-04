@@ -43,13 +43,13 @@ export default function AnalyticsDrawerPartial() {
             </DrawerDescription>
           </DrawerHeader>
 
-          <DrawerFooter>
+          {/* <DrawerFooter>
             <DrawerClose className="w-full">
               <Button variant="outline" className="w-full">
                 Close
               </Button>
             </DrawerClose>
-          </DrawerFooter>
+          </DrawerFooter> */}
         </section>
       </DrawerContent>
     </Drawer>
