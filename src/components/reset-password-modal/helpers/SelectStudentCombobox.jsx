@@ -22,10 +22,6 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
 
   const { students: StudentData, loading, error } = useFetchStudents();
 
-  if (!loading) {
-    console.log(StudentData);
-  }
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

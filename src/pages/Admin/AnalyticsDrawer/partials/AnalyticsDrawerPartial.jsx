@@ -20,12 +20,6 @@ import { useAnalyticsContext } from "../context/AnalyticsContext";
 export default function AnalyticsDrawerPartial() {
   const { analyticsData, loading, error } = useAnalyticsContext();
 
-  if (loading) {
-    console.log("loading...");
-  } else {
-    console.log(analyticsData);
-  }
-
   return (
     <Drawer>
       <DrawerTrigger>
