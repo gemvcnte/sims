@@ -48,8 +48,12 @@ export function StudentsDropdown({}) {
         </DropdownMenuItem> */}
 
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} className="w-full">
-            Update Student Password
+          <Link
+            onClick={handleDropdownClick}
+            to="student-application-monitoring"
+            className="w-full"
+          >
+            Student Application Monitoring
           </Link>
         </DropdownMenuItem>
 
@@ -65,12 +69,8 @@ export function StudentsDropdown({}) {
         </DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link
-            onClick={handleDropdownClick}
-            to="student-application-monitoring"
-            className="w-full"
-          >
-            Student Application Monitoring
+          <Link onClick={handleDropdownClick} className="w-full">
+            Reset Student Password
           </Link>
         </DropdownMenuItem>
 
