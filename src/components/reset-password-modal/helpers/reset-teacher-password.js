@@ -1,7 +1,7 @@
 import { resetTeacherPasswordEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 
-export const resetStudentPassword = async (teacherId) => {
+export const resetTeacherPassword = async (teacherId) => {
   try {
     const response = await axiosInstance.patch(resetTeacherPasswordEndpoint, {
       id: teacherId,

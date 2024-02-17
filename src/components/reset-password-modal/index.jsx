@@ -14,6 +14,9 @@ import SelectStudentCombobox from "./helpers/SelectStudentCombobox";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { resetStudentPassword } from "./helpers/reset-student-password";
+import SelectTeacherCombobox from "./helpers/SelectTeacherCombobox";
+import { resetTeacherPasswordEndpoint } from "@/config/adminEndpoints";
+import { resetTeacherPassword } from "./helpers/reset-teacher-password";
 
 export default function ResetPasswordModal({ userType, onClose }) {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -35,7 +38,7 @@ export default function ResetPasswordModal({ userType, onClose }) {
           await resetStudentPassword(selectedUser.lrn);
           break;
         case "Teacher":
-          // Code to reset teacher password
+          await resetTeacherPassword(selectedUser._id);
           break;
         case "Admin":
           // Code to reset admin password
@@ -54,7 +57,7 @@ export default function ResetPasswordModal({ userType, onClose }) {
         return <SelectStudentCombobox onSelectStudent={setSelectedUser} />;
       case "Teacher":
         // Return content for teacher
-        return <div>Content for teacher</div>;
+        return <SelectTeacherCombobox onSelectStudent={setSelectedUser} />;
       case "Admin":
         // Return content for admin
         return <div>Content for admin</div>;
