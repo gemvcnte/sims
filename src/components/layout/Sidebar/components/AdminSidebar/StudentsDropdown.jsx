@@ -83,7 +83,7 @@ export function StudentsDropdown({}) {
               </Link>
             </DropdownMenuItem>
           </DialogTrigger>
-          <ResetPasswordModal />
+          <ResetPasswordModal onClose={setIsDialogOpen} />
         </Dialog>
 
         <DropdownMenuItem>

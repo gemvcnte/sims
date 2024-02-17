@@ -16,7 +16,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { resetStudentPassword } from "./helpers/reset-student-password";
 
-export default function ResetPasswordModal() {
+export default function ResetPasswordModal({ onClose }) {
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   const handleSubmit = async () => {
@@ -26,7 +26,8 @@ export default function ResetPasswordModal() {
     }
 
     try {
-      showSuccessNotification("Successfully reset the student's password.");
+      showSuccessNotification("Successfully resets student's password");
+      onClose();
       const response = await resetStudentPassword(selectedStudent.lrn);
     } catch (error) {
       showErrorNotification(error.message);
