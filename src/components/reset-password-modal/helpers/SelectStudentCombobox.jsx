@@ -19,30 +19,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import getAuthHeaders from "@/utils/getAuthHeaders";
-import { getAllTeachersEndpoint } from "@/config/adminEndpoints";
+import { useFetchStudents } from "./useFetchStudents";
 
 export default function SelectStudentCombobox({ onSelectTeacher }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
-  const [StudentData, setStudentData] = React.useState([]);
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await axios.get(
-          getAllTeachersEndpoint,
-          getAuthHeaders(),
-        );
-        setStudentData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching teacher data:", error);
-      }
-    };
-
-    fetchStudents();
-  }, []);
+  const { students: StudentData, loading, error } = useFetchStudents();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
