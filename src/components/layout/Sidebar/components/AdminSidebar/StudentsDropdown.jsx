@@ -11,14 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ResetPasswordModal from "@/components/reset-password-modal";
 
 export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     toggleSidebar();
+  };
+
+  const handleDialogClick = () => {
+    setIsDialogOpen(!isDialogOpen);
   };
 
   return (
@@ -68,11 +75,16 @@ export function StudentsDropdown({}) {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} className="w-full">
-            Reset Student Password
-          </Link>
-        </DropdownMenuItem>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <DropdownMenuItem>
+              <Link className="w-full" onClick={handleDialogClick}>
+                Reset Student Password
+              </Link>
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <ResetPasswordModal />
+        </Dialog>
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="students" className="w-full">
