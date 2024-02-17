@@ -43,3 +43,4 @@ export const getAllAnalyticsEndpoint = `${baseUrl}/admin/analytics/all`;
 
 // students
 export const StudentsEndpoint = `${baseUrl}/admin/students`;
+export const ResetStudentPasswordEndpoint = `${baseUrl}/admin/reset-student-password`;

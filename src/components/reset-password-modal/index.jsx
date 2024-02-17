@@ -12,12 +12,25 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SelectStudentCombobox from "./helpers/SelectStudentCombobox";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import { resetStudentPassword } from "./helpers/reset-student-password";
 
 export default function ResetPasswordModal() {
   const [selectedStudent, setSelectedStudent] = useState(null);
 
-  const handleSubmit = () => {
-    console.log(selectedStudent);
+  const handleSubmit = async () => {
+    if (!selectedStudent) {
+      showErrorNotification("No student selected");
+      return;
+    }
+
+    try {
+      showSuccessNotification("Successfully reset the student's password.");
+      const response = await resetStudentPassword(selectedStudent.lrn);
+    } catch (error) {
+      showErrorNotification(error.message);
+    }
   };
 
   return (
