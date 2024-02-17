@@ -1,11 +1,5 @@
-"use client";
-
 import * as React from "react";
-import axios from "axios";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { useEffect } from "react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -20,6 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useFetchStudents } from "./useFetchStudents";
+import { cn } from "@/lib/utils";
 
 export default function SelectStudentCombobox({ onSelectStudent }) {
   const [open, setOpen] = React.useState(false);
@@ -30,6 +25,7 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
   if (!loading) {
     console.log(StudentData);
   }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -40,21 +36,20 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
           className="col-span-3 flex h-10  w-full justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {value
-            ? StudentData.find((student) => student.username === value)
-                ?.fullName
+            ? StudentData.find((student) => student._id === value)?.fullName
             : "Select student..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search student..." />
+          <CommandInput placeholder="Search LRN..." />
           <CommandEmpty>No student found.</CommandEmpty>
           <CommandGroup>
             {StudentData.map((student) => (
               <CommandItem
-                key={student.username}
-                value={student.username}
+                key={student._id}
+                value={student._id}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
@@ -64,7 +59,7 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === student.username ? "opacity-100" : "opacity-0",
+                    value === student._id ? "opacity-100" : "opacity-0",
                   )}
                 />
                 {student.fullName}
