@@ -21,12 +21,15 @@ import {
 } from "@/components/ui/popover";
 import { useFetchStudents } from "./useFetchStudents";
 
-export default function SelectStudentCombobox({ onSelectTeacher }) {
+export default function SelectStudentCombobox({ onSelectStudent }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
   const { students: StudentData, loading, error } = useFetchStudents();
 
+  if (!loading) {
+    console.log(StudentData);
+  }
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -37,34 +40,34 @@ export default function SelectStudentCombobox({ onSelectTeacher }) {
           className="col-span-3 flex h-10  w-full justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {value
-            ? StudentData.find((teacher) => teacher.username === value)
+            ? StudentData.find((student) => student.username === value)
                 ?.fullName
-            : "Select teacher..."}
+            : "Select student..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search teacher..." />
-          <CommandEmpty>No teacher found.</CommandEmpty>
+          <CommandInput placeholder="Search student..." />
+          <CommandEmpty>No student found.</CommandEmpty>
           <CommandGroup>
-            {StudentData.map((teacher) => (
+            {StudentData.map((student) => (
               <CommandItem
-                key={teacher.username}
-                value={teacher.username}
+                key={student.username}
+                value={student.username}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
-                  onSelectTeacher(teacher);
+                  onSelectStudent(student);
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === teacher.username ? "opacity-100" : "opacity-0",
+                    value === student.username ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {teacher.fullName}
+                {student.fullName}
               </CommandItem>
             ))}
           </CommandGroup>

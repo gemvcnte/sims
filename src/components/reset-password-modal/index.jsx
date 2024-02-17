@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import SelectStudentCombobox from "./helpers/SelectStudentCombobox";
 
 export default function ResetPasswordModal() {
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -27,7 +29,7 @@ export default function ResetPasswordModal() {
           <Label htmlFor="name" className="text-right">
             Name
           </Label>
-          <SelectStudentCombobox />
+          <SelectStudentCombobox onSelectStudent={setSelectedStudent} />
         </div>
       </div>
       <DialogFooter>
