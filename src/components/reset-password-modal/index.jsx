@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -16,38 +15,66 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { resetStudentPassword } from "./helpers/reset-student-password";
 
-export default function ResetPasswordModal({ onClose }) {
-  const [selectedStudent, setSelectedStudent] = useState(null);
+export default function ResetPasswordModal({ userType, onClose }) {
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSubmit = async () => {
-    if (!selectedStudent) {
-      showErrorNotification("No student selected");
+    if (!selectedUser) {
+      showErrorNotification(`No ${userType} selected`);
       return;
     }
 
     try {
-      showSuccessNotification("Successfully resets student's password");
+      showSuccessNotification(`Successfully resets ${userType}'s password`);
       onClose();
-      const response = await resetStudentPassword(selectedStudent.lrn);
+      // Perform action based on userType
+      switch (userType) {
+        case "Student":
+          await resetStudentPassword(selectedUser.lrn);
+          break;
+        case "Teacher":
+          // Code to reset teacher password
+          break;
+        case "Admin":
+          // Code to reset admin password
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       showErrorNotification(error.message);
+    }
+  };
+
+  const renderUserTypeSpecificContent = () => {
+    switch (userType) {
+      case "Student":
+        return <SelectStudentCombobox onSelectStudent={setSelectedUser} />;
+      case "Teacher":
+        // Return content for teacher
+        return <div>Content for teacher</div>;
+      case "Admin":
+        // Return content for admin
+        return <div>Content for admin</div>;
+      default:
+        return null;
     }
   };
 
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Reset Student Password</DialogTitle>
+        <DialogTitle>Reset {userType} Password</DialogTitle>
         <DialogDescription className="sm:max-w-[80%]">
-          Ensure to choose the correct student account below.
+          Ensure to choose the correct {userType.toLowerCase()} account below.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="name" className="text-right">
-            Student
+            {userType}
           </Label>
-          <SelectStudentCombobox onSelectStudent={setSelectedStudent} />
+          {renderUserTypeSpecificContent()}
         </div>
       </div>
       <DialogFooter>
