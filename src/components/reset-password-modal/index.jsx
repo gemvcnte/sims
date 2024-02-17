@@ -25,7 +25,9 @@ export default function ResetPasswordModal({ userType, onClose }) {
     }
 
     try {
-      showSuccessNotification(`Successfully resets ${userType}'s password`);
+      showSuccessNotification(
+        `Successfully resets ${userType.toLowerCase()}'s password`,
+      );
       onClose();
       // Perform action based on userType
       switch (userType) {
