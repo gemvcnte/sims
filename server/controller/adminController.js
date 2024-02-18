@@ -1370,6 +1370,137 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
 
 
 
+const resetTeacherPassword = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const teacher = await Teacher.findById(id);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found." });
+    }
+
+    teacher.password = bcryptjs.hashSync(teacher.birthDate, 10); 
+
+    await teacher.save();
+
+    res.status(200).json({ message: "Teacher password reset successfully." });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+const resetAdminPassword = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    const admin = await Admin.findById(id);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    admin.password = bcryptjs.hashSync(admin.birthDate, 10); 
+    await admin.save();
+
+    res.status(200).json({ message: "Admin password reset successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+const resetStudentPassword = asyncHandler(async (req, res) => {
+  try {
+    const { lrn } = req.body;
+
+    const student = await Student.findOne({ lrn });
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    student.password = bcryptjs.hashSync(student.birthDate, 10); 
+    await student.save();
+
+    res.status(200).json({ message: "Student password reset successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+const getAllStudentsAccounts = asyncHandler(async (req, res) => {
+  try {
+    const students = await Student.find({}, 'firstName lastName lrn');
+
+    const formattedStudents = students.map(student => ({
+      _id: student._id,
+      fullName: `${student.lastName}, ${student.firstName}`,
+      lrn: student.lrn
+    }));
+
+    formattedStudents.sort((a, b) => a.fullName.localeCompare(b.fullName));
+
+    res.status(200).json({
+      message: "All students' accounts retrieved successfully.",
+      data: formattedStudents,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+const getAllTeachersAccounts = asyncHandler(async (req, res) => {
+  try {
+    const teachers = await Teacher.find({}, 'firstName lastName username');
+
+    const formattedTeachers = teachers.map(teacher => ({
+      _id: teacher._id,
+      fullName: `${teacher.lastName}, ${teacher.firstName}`,
+      username: teacher.username
+    }));
+
+    formattedTeachers.sort((a, b) => a.fullName.localeCompare(b.fullName));
+
+    res.status(200).json({
+      message: "All teachers' accounts retrieved successfully.",
+      data: formattedTeachers,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
+const getAllAdminsAccounts = asyncHandler(async (req, res) => {
+  try {
+    const admins = await Admin.find({}, 'firstName lastName username');
+
+    const formattedAdmins = admins.map(admin => ({
+      _id: admin._id,
+      fullName: `${admin.lastName}, ${admin.firstName}`,
+      username: admin.username
+    }));
+
+    formattedAdmins.sort((a, b) => a.fullName.localeCompare(b.fullName));
+
+    res.status(200).json({
+      message: "All admins' accounts retrieved successfully.",
+      data: formattedAdmins,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
+
+
 module.exports = {
   getAllAdmins,
   createAdmin,
@@ -1423,6 +1554,12 @@ module.exports = {
   getTotalStudentsInHE,
   getAllAnalytics,
   updateAdminPassword,
+  resetTeacherPassword,
+  resetAdminPassword,
+  resetStudentPassword,
+  getAllStudentsAccounts,
+  getAllTeachersAccounts,
+  getAllAdminsAccounts,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

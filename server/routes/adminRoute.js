@@ -117,5 +117,16 @@ router.get('/analytics/all', verifyToken, adminController.getAllAnalytics);
 // password
 router.patch('/update-password', verifyToken, adminController.updateAdminPassword);
 
+// reset password
+router.patch('/reset-teacher-password', verifyToken, adminController.resetTeacherPassword);
+router.patch('/reset-admin-password', verifyToken, adminController.resetAdminPassword);
+router.patch('/reset-student-password', verifyToken, adminController.resetStudentPassword);
+
+// get all accounts
+router.get('/students', verifyToken, adminController.getAllStudentsAccounts);
+router.get('/teachers', verifyToken, adminController.getAllTeachersAccounts);
+router.get('/admins', verifyToken, adminController.getAllAdminsAccounts);
+
+
 
 module.exports = router;
