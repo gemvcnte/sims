@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllTeachersEndpoint } from "@/config/adminEndpoints";
+import { teachersEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 
 export function useFetchTeachers() {
@@ -11,7 +11,7 @@ export function useFetchTeachers() {
     const useFetchTeachers = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get(getAllTeachersEndpoint);
+        const response = await axiosInstance.get(teachersEndpoint);
         setTeachers(response.data.data);
       } catch (error) {
         setError(error);
