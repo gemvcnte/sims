@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { useFetchStudents } from "./useFetchStudents";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function SelectStudentCombobox({ onSelectStudent }) {
   const [open, setOpen] = React.useState(false);
@@ -38,31 +39,33 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search LRN..." />
-          <CommandEmpty>No student found.</CommandEmpty>
-          <CommandGroup>
-            {StudentData.map((student) => (
-              <CommandItem
-                key={student._id}
-                value={student._id}
-                onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                  onSelectStudent(student);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === student._id ? "opacity-100" : "opacity-0",
-                  )}
-                />
-                {student.fullName}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
+        <ScrollArea className="flex max-h-60 flex-col" type="always">
+          <Command>
+            <CommandInput placeholder="Search LRN..." />
+            <CommandEmpty>No student found.</CommandEmpty>
+            <CommandGroup>
+              {StudentData.map((student) => (
+                <CommandItem
+                  key={student._id}
+                  value={student._id}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                    onSelectStudent(student);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === student._id ? "opacity-100" : "opacity-0",
+                    )}
+                  />
+                  {student.fullName}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </ScrollArea>
       </PopoverContent>
     </Popover>
   );
