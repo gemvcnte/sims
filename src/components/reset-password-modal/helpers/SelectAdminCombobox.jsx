@@ -36,7 +36,7 @@ export default function SelectAdminCombobox({ onSelectStudent }) {
           {value
             ? TeacherData.find((teacher) => teacher.username === value)
                 ?.fullName
-            : "Select teacher..."}
+            : "Select admin..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -44,7 +44,7 @@ export default function SelectAdminCombobox({ onSelectStudent }) {
         <ScrollArea className="flex max-h-60 flex-col" type="always">
           <Command>
             <CommandInput placeholder="Search username..." />
-            <CommandEmpty>No teacher found.</CommandEmpty>
+            <CommandEmpty>No admin found.</CommandEmpty>
             <CommandGroup>
               {TeacherData.map((teacher) => (
                 <CommandItem

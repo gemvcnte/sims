@@ -17,6 +17,8 @@ import { resetStudentPassword } from "./helpers/reset-student-password";
 import SelectTeacherCombobox from "./helpers/SelectTeacherCombobox";
 import { resetTeacherPasswordEndpoint } from "@/config/adminEndpoints";
 import { resetTeacherPassword } from "./helpers/reset-teacher-password";
+import { resetAdminPassword } from "./helpers/reset-admin-password";
+import SelectAdminCombobox from "./helpers/SelectAdminCombobox";
 
 export default function ResetPasswordModal({ userType, onClose }) {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -41,7 +43,7 @@ export default function ResetPasswordModal({ userType, onClose }) {
           await resetTeacherPassword(selectedUser._id);
           break;
         case "Admin":
-          // Code to reset admin password
+          await resetAdminPassword(selectedUser._id);
           break;
         default:
           break;
@@ -60,7 +62,7 @@ export default function ResetPasswordModal({ userType, onClose }) {
         return <SelectTeacherCombobox onSelectStudent={setSelectedUser} />;
       case "Admin":
         // Return content for admin
-        return <div>Content for admin</div>;
+        return <SelectAdminCombobox onSelectStudent={setSelectedUser} />;
       default:
         return null;
     }

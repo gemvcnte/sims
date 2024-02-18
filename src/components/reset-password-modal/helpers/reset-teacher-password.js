@@ -9,7 +9,7 @@ export const resetTeacherPassword = async (teacherId) => {
     return response;
   } catch (error) {
     throw new Error(
-      error.response?.data?.message || "Failed to reset student password",
+      error.response?.data?.message || "Failed to reset teacher password",
     );
   }
 };

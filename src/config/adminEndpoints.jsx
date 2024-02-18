@@ -47,3 +47,4 @@ export const ResetStudentPasswordEndpoint = `${baseUrl}/admin/reset-student-pass
 export const teachersEndpoint = `${baseUrl}/admin/teachers`;
 export const resetTeacherPasswordEndpoint = `${baseUrl}/admin/reset-teacher-password`;
 export const adminsEndpoint = `${baseUrl}/admin/admins`;
+export const resetAdminPasswordEndpoint = `${baseUrl}/admin/reset-admin-password`;
