@@ -40,3 +40,11 @@ export const updateAdminPasswordEndpoint = `${baseUrl}/admin/update-password`;
 
 // analytics
 export const getAllAnalyticsEndpoint = `${baseUrl}/admin/analytics/all`;
+
+// reset password
+export const StudentsEndpoint = `${baseUrl}/admin/students`;
+export const ResetStudentPasswordEndpoint = `${baseUrl}/admin/reset-student-password`;
+export const teachersEndpoint = `${baseUrl}/admin/teachers`;
+export const resetTeacherPasswordEndpoint = `${baseUrl}/admin/reset-teacher-password`;
+export const adminsEndpoint = `${baseUrl}/admin/admins`;
+export const resetAdminPasswordEndpoint = `${baseUrl}/admin/reset-admin-password`;

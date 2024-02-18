@@ -11,14 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import ResetPasswordModal from "@/components/reset-password-modal";
 
 export function AdminsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     toggleSidebar();
+  };
+
+  const handleDialogClick = () => {
+    setIsDialogOpen(!isDialogOpen);
   };
 
   return (
@@ -41,11 +48,17 @@ export function AdminsDropdown({}) {
       <DropdownMenuContent align="start">
         <DropdownMenuLabel>Admins</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} className="w-full">
-            Update Admin Password
-          </Link>
-        </DropdownMenuItem>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <DropdownMenuItem>
+              <Link className="w-full" onClick={handleDialogClick}>
+                Reset Admin Password
+              </Link>
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <ResetPasswordModal onClose={setIsDialogOpen} userType="Admin" />
+        </Dialog>
 
         <DropdownMenuItem>
           <Link
