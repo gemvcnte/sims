@@ -103,8 +103,13 @@ export function EducationalInformationSection({
             }
           >
             <option value="">Select Highest Educational Attainment</option>
-            <option value="ACADEMIC">test</option>
-            <option value="TVL">test</option>
+            <option value="BACHELOR_DEGREE">Bachelor Degree</option>
+            <option value="MASTER_DEGREE_UNITS">Master Degree Units</option>
+            <option value="MASTER_DEGREE">Master Degree</option>
+            <option value="DOCTORATE_DEGREE_UNITS">
+              Doctorate Degree Units
+            </option>
+            <option value="DOCTORATE_DEGREE">Doctorate Degree</option>
           </select>
         </div>
       </main>

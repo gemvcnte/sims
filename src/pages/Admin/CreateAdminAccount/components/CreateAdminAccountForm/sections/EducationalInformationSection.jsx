@@ -87,7 +87,10 @@ export function EducationalInformationSection({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="highestEducationalAttainment" className="text-right text-xs sm:text-sm">
+          <Label
+            htmlFor="highestEducationalAttainment"
+            className="text-right text-xs sm:text-sm"
+          >
             Highest <span className="hidden sm:block">Educational</span>{" "}
             Attainment
           </Label>
@@ -100,8 +103,13 @@ export function EducationalInformationSection({
             }
           >
             <option value="">Select Highest Educational Attainment</option>
-            <option value="ACADEMIC">test</option>
-            <option value="TVL">test</option>
+            <option value="BACHELOR_DEGREE">Bachelor Degree</option>
+            <option value="MASTER_DEGREE_UNITS">Master Degree Units</option>
+            <option value="MASTER_DEGREE">Master Degree</option>
+            <option value="DOCTORATE_DEGREE_UNITS">
+              Doctorate Degree Units
+            </option>
+            <option value="DOCTORATE_DEGREE">Doctorate Degree</option>
           </select>
         </div>
       </main>
