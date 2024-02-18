@@ -81,8 +81,13 @@ export function EducationalInformationSection({
             }
           >
             <option value="">Select Area of Specialization</option>
-            <option value="FIRST specialization">1st specialization</option>
-            <option value="SECOND specialization">2nd specialization</option>
+            <option value="MATHEMATICS">Mathematics</option>
+            <option value="SCIENCE">Science</option>
+            <option value="ENGLISH">English</option>
+            <option value="FILIPINO">Filipino</option>
+            <option value="SOCIAL STUDIES">Social Studies</option>
+            <option value="ICT">ICT</option>
+            <option value="MAPEH">MAPEH</option>
           </select>
         </div>
 
