@@ -4,16 +4,16 @@
 // import cors from 'cors';
 // import dotenv from 'dotenv';
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser');
-const cors = require('cors')
-const dotenv = require('dotenv')
-const connectDb = require('./db/database')
-const dbConn = require('./db/dbConnection')
-const helmet = require('helmet')
-const morgan = require('morgan')
-const getRateLimiter = require('./middleware/rate-limiter')
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDb = require("./db/database");
+const dbConn = require("./db/dbConnection");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const getRateLimiter = require("./middleware/rate-limiter");
 
 connectDb();
 dotenv.config();
@@ -22,16 +22,32 @@ const port = process.env.PORT || 3000;
 
 // middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"], //  default source for content not explicitly allowed in other directives.
+        scriptSrc: ["'self'", "'unsafe-inline'"], //specifies valid sources for js code.
+        styleSrc: ["'self'"], // valid sources for stylesheets only
+        fontSrc: ["'self'"], //valid sources for fonts only
+        imgSrc: ["'self'", "'data:'"], //valid sources for images
+        objectSrc: ["'none'"], //valid sources of embedded objects.
+        mediaSrc: ["'none'"], //valid sources for media files
+        frameSrc: ["'none'"], //valid sources for frames
+        frameAncestors: ["'none'"], //valid sources for the ancestor sources for embedded frames
+      },
+    },
+  }),
+);
 app.use(bodyParser.json());
-app.use(morgan('tiny'));
-app.use(cookieParser())
+app.use(morgan("tiny"));
+app.use(cookieParser());
 // app.use(rateLimiter)
 
 const corsOptions = {
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -68,5 +84,5 @@ app.use("/teacher", teacherRateLimiter, teacherRoute);
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
