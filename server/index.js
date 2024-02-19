@@ -30,7 +30,7 @@ app.use(
         scriptSrc: ["'self'", "'unsafe-inline'"], //specifies valid sources for js code.
         styleSrc: ["'self'"], // valid sources for stylesheets only
         fontSrc: ["'self'"], //valid sources for fonts only
-        imgSrc: ["'self'", "'data:'"], //valid sources for images
+        imgSrc: ["'self'"], //valid sources for images
         objectSrc: ["'none'"], //valid sources of embedded objects.
         mediaSrc: ["'none'"], //valid sources for media files
         frameSrc: ["'none'"], //valid sources for frames
