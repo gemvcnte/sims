@@ -1,4 +1,5 @@
 import { globalSettingsEndpoint } from "@/config/adminEndpoints";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import axiosInstance from "@/utils/axios";
 import { useState, useEffect } from "react";
 
@@ -25,13 +26,10 @@ const useGlobalSettings = () => {
 
   const updateGlobalSettings = async (updatedSettings) => {
     try {
+      showSuccessNotification("Successfully Updated Global Settings");
       localStorage.setItem("globalSettings", JSON.stringify(updatedSettings));
 
-      const response = await axiosInstance.patch(
-        globalSettingsEndpoint,
-        updatedSettings,
-      );
-      console.log(response);
+      await axiosInstance.patch(globalSettingsEndpoint, updatedSettings);
     } catch (error) {
       console.error("Error updating global settings:", error);
     }
