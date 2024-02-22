@@ -28,13 +28,13 @@ export function GlobalSetttingsDrawer() {
         <DrawerHeader>
           <DrawerTitle>School Year and Semester</DrawerTitle>
           <DrawerDescription>
-            Set the current school year and semester
+            Set the current school year and semester.
           </DrawerDescription>
         </DrawerHeader>
 
         <section className="flex flex-col gap-4 p-4">
           <div>
-            <Label className="font-semibold">School Year</Label>
+            <Label className="text-muted-foreground">School Year</Label>
             <Select>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select school year" />
@@ -53,7 +53,7 @@ export function GlobalSetttingsDrawer() {
           </div>
 
           <div>
-            <Label className="font-semibold">Semester</Label>
+            <Label className="text-muted-foreground">Semester</Label>
             <Select>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select semester" />
@@ -72,7 +72,7 @@ export function GlobalSetttingsDrawer() {
         </section>
 
         <DrawerFooter>
-          <Button>Change</Button>
+          <Button>Save</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>

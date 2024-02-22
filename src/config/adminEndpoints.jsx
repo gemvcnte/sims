@@ -48,3 +48,6 @@ export const teachersEndpoint = `${baseUrl}/admin/teachers`;
 export const resetTeacherPasswordEndpoint = `${baseUrl}/admin/reset-teacher-password`;
 export const adminsEndpoint = `${baseUrl}/admin/admins`;
 export const resetAdminPasswordEndpoint = `${baseUrl}/admin/reset-admin-password`;
+
+// global settings
+export const globalSettingsEndpoint = `${baseUrl}/admin/global-settings`;
