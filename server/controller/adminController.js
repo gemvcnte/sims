@@ -1499,6 +1499,31 @@ const getAllAdminsAccounts = asyncHandler(async (req, res) => {
 
 
 
+const updateGlobalSettings = async (req, res) => {
+  try {
+    const { schoolYear, semester } = req.body;
+
+    let globalSettings = await GlobalSettings.findOne();
+
+    if (!globalSettings) {
+      globalSettings = new GlobalSettings({
+        schoolYear,
+        semester
+      });
+    } else {
+      globalSettings.schoolYear = schoolYear;
+      globalSettings.semester = semester;
+    }
+
+    await globalSettings.save();
+
+    res.status(200).json({ message: 'Global settings updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: `Error updating global settings: ${error.message}` });
+  }
+};
+
+
 
 
 module.exports = {
@@ -1560,6 +1585,7 @@ module.exports = {
   getAllStudentsAccounts,
   getAllTeachersAccounts,
   getAllAdminsAccounts,
+  updateGlobalSettings,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
