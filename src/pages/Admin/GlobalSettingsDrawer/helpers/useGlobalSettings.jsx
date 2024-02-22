@@ -27,7 +27,11 @@ const useGlobalSettings = () => {
     try {
       localStorage.setItem("globalSettings", JSON.stringify(updatedSettings));
 
-      await axiosInstance.patch(globalSettingsEndpoint, updatedSettings);
+      const response = await axiosInstance.patch(
+        globalSettingsEndpoint,
+        updatedSettings,
+      );
+      console.log(response);
     } catch (error) {
       console.error("Error updating global settings:", error);
     }

@@ -1,14 +1,12 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Drawer,
   DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
   Select,
@@ -20,8 +18,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import useGlobalSettings from "./helpers/useGlobalSettings";
 
 export function GlobalSetttingsDrawer() {
+  const { loading, error, updateGlobalSettings } = useGlobalSettings();
+  const [schoolYear, setSchoolYear] = React.useState("");
+  const [semester, setSemester] = React.useState("");
+
+  React.useEffect(() => {
+    const storedGlobalSettings = JSON.parse(
+      localStorage.getItem("globalSettings"),
+    );
+    if (storedGlobalSettings) {
+      setSchoolYear(storedGlobalSettings.schoolYear);
+      setSemester(storedGlobalSettings.semester);
+    }
+  }, []);
+
+  const handleSaveSettings = () => {
+    updateGlobalSettings({ schoolYear, semester });
+  };
+
   return (
     <DrawerContent>
       <div className="mx-auto w-full max-w-sm">
@@ -35,7 +52,10 @@ export function GlobalSetttingsDrawer() {
         <section className="flex flex-col gap-4 p-4">
           <div>
             <Label className="text-muted-foreground">School Year</Label>
-            <Select>
+            <Select
+              value={schoolYear}
+              onValueChange={(value) => setSchoolYear(value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select school year" />
               </SelectTrigger>
@@ -54,13 +74,16 @@ export function GlobalSetttingsDrawer() {
 
           <div>
             <Label className="text-muted-foreground">Semester</Label>
-            <Select>
+            <Select
+              value={semester}
+              onValueChange={(value) => setSemester(value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select semester" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>School Year</SelectLabel>
+                  <SelectLabel>Semester</SelectLabel>
                   <SelectItem value="first semester">First Semester</SelectItem>
                   <SelectItem value="second semester">
                     Second Semester
@@ -72,7 +95,7 @@ export function GlobalSetttingsDrawer() {
         </section>
 
         <DrawerFooter>
-          <Button>Save</Button>
+          <Button onClick={handleSaveSettings}>Save</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
