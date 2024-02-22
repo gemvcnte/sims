@@ -3,6 +3,7 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
+const { GlobalSettings } = require('../models/GlobalSettingsModel');
 const nodeMailer = require("nodemailer");
 const { Classroom } = require("../models/ClassroomModel");
 const { Announcement } = require("../models/Announcement");
@@ -1502,9 +1503,9 @@ const getAllAdminsAccounts = asyncHandler(async (req, res) => {
 const updateGlobalSettings = async (req, res) => {
   try {
     const { schoolYear, semester } = req.body;
-
+console.log(schoolYear)
     let globalSettings = await GlobalSettings.findOne();
-
+console.log(globalSettings)
     if (!globalSettings) {
       globalSettings = new GlobalSettings({
         schoolYear,

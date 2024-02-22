@@ -128,5 +128,8 @@ router.get('/teachers', verifyToken, adminController.getAllTeachersAccounts);
 router.get('/admins', verifyToken, adminController.getAllAdminsAccounts);
 
 
+router.patch('/global-settings', verifyToken, adminController.updateGlobalSettings);
+
+
 
 module.exports = router;
