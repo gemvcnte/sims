@@ -13,3 +13,5 @@ const globalDataSchema = new mongoose.Schema({
 });
 
 const GlobalData = mongoose.model("globals", globalDataSchema);
+
+module.exports = { GlobalData };
