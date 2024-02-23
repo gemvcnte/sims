@@ -20,7 +20,7 @@ import {
 import { Label } from "@/components/ui/label";
 import useGlobalSettings from "./helpers/useGlobalSettings";
 
-export function GlobalSetttingsDrawer() {
+export function GlobalSetttingsDrawer({ onClose }) {
   const { loading, error, updateGlobalSettings } = useGlobalSettings();
   const [schoolYear, setSchoolYear] = React.useState("");
   const [semester, setSemester] = React.useState("");
@@ -37,6 +37,7 @@ export function GlobalSetttingsDrawer() {
 
   const handleSaveSettings = () => {
     updateGlobalSettings({ schoolYear, semester });
+    onClose();
   };
 
   return (

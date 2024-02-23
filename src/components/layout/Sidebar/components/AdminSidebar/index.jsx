@@ -60,7 +60,7 @@ export default function AdminSidebar() {
               </SidebarItem>
             </span>
           </DrawerTrigger>
-          <GlobalSetttingsDrawer />
+          <GlobalSetttingsDrawer onClose={handleDrawerClick} />
         </Drawer>
       </SidebarContainer>
     )
