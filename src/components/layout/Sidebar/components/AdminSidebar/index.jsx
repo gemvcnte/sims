@@ -1,5 +1,5 @@
 import { StudentsDropdown } from "./StudentsDropdown";
-import React from "react";
+import React, { useState } from "react";
 import SidebarContainer from "../SidebarContainer";
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -13,11 +13,20 @@ import SidebarItem from "../SidebarContainer/components/SidebarItem";
 import { AdminsDropdown } from "./AdminsDropdown";
 import ChangePasswordDrawer from "../ChangePasswordDrawer";
 import AnalyticsDrawer from "@/pages/Admin/AnalyticsDrawer";
+import { GlobalSetttingsDrawer } from "@/pages/Admin/GlobalSettingsDrawer";
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import { Global } from "recharts";
 
 export default function AdminSidebar() {
   const location = useLocation();
   const isOnRegistrationPage = location.pathname === "/registration";
   const { toggleSidebar } = useSidebarContext();
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const handleDrawerClick = (event) => {
+    // event.preventDefault();
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   return (
     !isOnRegistrationPage && (
@@ -42,6 +51,17 @@ export default function AdminSidebar() {
         </SidebarItem>
 
         <ChangePasswordDrawer userType="admin" />
+
+        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+          <DrawerTrigger>
+            <span onClick={handleDrawerClick}>
+              <SidebarItem icon="simple-line-icons:settings">
+                Settings
+              </SidebarItem>
+            </span>
+          </DrawerTrigger>
+          <GlobalSetttingsDrawer onClose={handleDrawerClick} />
+        </Drawer>
       </SidebarContainer>
     )
   );
