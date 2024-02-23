@@ -3,6 +3,7 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
+const { GlobalSettings } = require('../models/GlobalSettingsModel');
 const nodeMailer = require("nodemailer");
 const { Classroom } = require("../models/ClassroomModel");
 const { Announcement } = require("../models/Announcement");
@@ -1499,6 +1500,47 @@ const getAllAdminsAccounts = asyncHandler(async (req, res) => {
 
 
 
+const getGlobalSettings = async (req, res) => {
+  try {
+    const globalSettings = await GlobalSettings.findOne();
+
+    if (!globalSettings) {
+      return res.status(404).json({ message: 'Global settings not found' });
+    }
+
+    res.status(200).json(globalSettings);
+  } catch (error) {
+    res.status(500).json({ message: `Error retrieving global settings: ${error.message}` });
+  }
+};
+
+
+
+const updateGlobalSettings = async (req, res) => {
+  try {
+    const { schoolYear, semester } = req.body;
+console.log(schoolYear)
+    let globalSettings = await GlobalSettings.findOne();
+console.log(globalSettings)
+    if (!globalSettings) {
+      globalSettings = new GlobalSettings({
+        schoolYear,
+        semester
+      });
+    } else {
+      globalSettings.schoolYear = schoolYear;
+      globalSettings.semester = semester;
+    }
+
+    await globalSettings.save();
+
+    res.status(200).json({ message: 'Global settings updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: `Error updating global settings: ${error.message}` });
+  }
+};
+
+
 
 
 module.exports = {
@@ -1560,6 +1602,8 @@ module.exports = {
   getAllStudentsAccounts,
   getAllTeachersAccounts,
   getAllAdminsAccounts,
+  getGlobalSettings,
+  updateGlobalSettings,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
