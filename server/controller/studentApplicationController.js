@@ -1,37 +1,83 @@
 const { StudentApplication } = require("../models/StudentApplicationModel");
 const asyncHandler = require("express-async-handler");
 const bcryptjs = require("bcryptjs");
+const { Student } = require("../models/StudentModel");
 
 const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
+    const existingStudent = await Student.findOne({ lrn: registrationData.lrn });
 
-    const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 12);
+    if (existingStudent) {
+      if (existingStudent.lastName === registrationData.lastName) {
+        const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 10)
 
-    registrationData.registrationDate = new Date();
-    registrationData.password = hashedPassword;
+        await Student.updateOne({
+          lrn: registrationData.lrn
+        },
+        {
+          $set: {
+            ...registrationData,
+            password: hashedPassword
+          }
+        }
+        );
 
-    const student = new StudentApplication(registrationData);
-    const savedStudent = await student.save();
+        res.json({message: 'Student Information updated successfully.'})
+      } else {
 
-    res.json({ message: "Personal information saved", student: savedStudent });
+        // else pag walang na match na lastname, mag create ng new student acc
+        const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 10);
+        
+        registrationData.registrationDate = new Date();
+        registrationData.password = hashedPassword;
+
+        const student = new StudentApplication(registrationData);
+        const savedStudent = await student.save();
+    
+        res.json({ message: "Personal information saved", student: savedStudent });
+    
+      }
+    } else {
+      // else pag walang na match na lrn, mag create ng new student acc
+
+      const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 10);
+
+      registrationData.registrationDate = new Date();
+      registrationData.password = hashedPassword;
+
+      const student = new StudentApplication(registrationData);
+
+      const savedStudent = await student.save();
+
+      res.json({message: "Personal information saved", student: savedStudent})
+    }
+
+    // // const hashedPassword = await bcryptjs.hash(registrationData.birthDate, 10);
+
+
+
+    // registrationData.registrationDate = new Date();
+    // registrationData.password = hashedPassword;
+
+    // const student = new StudentApplication(registrationData);
+    // const savedStudent = await student.save();
+
+    // res.json({ message: "Personal information saved", student: savedStudent });
   } catch (err) {
-    res.status(500).json({message: `${err}` });
+    res.status(500).json({ message: `${err}` });
   }
 });
-
 
 // });
 
 module.exports = { applyStudent };
 
-
-    // const validationError = validateRegistrationData(registrationData);
-    // if (validationError) {
-    // return res.status(400).json({ error: validationError });
-    // }
-
+// const validationError = validateRegistrationData(registrationData);
+// if (validationError) {
+// return res.status(400).json({ error: validationError });
+// }
 
 //const validateRegistrationData = (data) => {
 // const requiredFields = [
@@ -68,9 +114,6 @@ module.exports = { applyStudent };
 // registrationData.guardianContactNumber = 'none';
 // registrationData.guardianRelationship = 'none';
 // }
-
-
-
 
 // const applyStudent = asyncHandler(async(req, res) => {
 //     try {
