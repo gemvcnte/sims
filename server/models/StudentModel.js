@@ -36,8 +36,20 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     schoolYear: {
-      type: String,
-      required: false,
+      semester: [{
+        firstSemester: {
+          id: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Classroom',
+          },
+          type: String,
+        },
+        secondSemester: {
+          type: mongoose.Types.ObjectId,
+          ref: 'Classroom',
+        },
+        type: String,
+      }]
     },
     track: {
       type: String,
@@ -47,9 +59,7 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    semester: {
-      type: String,
-    },
+
     emailAddress: {
       type: String,
       required: true,

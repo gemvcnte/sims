@@ -24,7 +24,9 @@ const classroomSchema = mongoose.Schema(
     },
     schoolYear: {
       type: String,
-      required: true,
+    },
+    semester: {
+      type: String,
     },
 
     strand: {
