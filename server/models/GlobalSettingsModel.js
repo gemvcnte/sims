@@ -10,6 +10,10 @@ const GlobalSettingsSchema = mongoose.Schema({
     enum: ["first semester", "second semester"],
     required: true,
   },
+  strands: {
+    type: String,
+    enum: ["abm", "stem", "humss", "gas", "ict", "he"],
+  },
 });
 
 const GlobalSettings = mongoose.model("GlobalSettings", GlobalSettingsSchema);
