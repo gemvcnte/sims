@@ -24,9 +24,11 @@ const classroomSchema = mongoose.Schema(
     },
     schoolYear: {
       type: String,
+      required: false,
     },
     semester: {
       type: String,
+      required: false,
     },
 
     strand: {
@@ -96,7 +98,7 @@ const classroomSchema = mongoose.Schema(
       },
     ],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 classroomSchema.index({ "students.firstName": 1, "students.lastName": 1 });
@@ -104,4 +106,3 @@ classroomSchema.index({ "students.firstName": 1, "students.lastName": 1 });
 const Classroom = mongoose.model("Classroom", classroomSchema);
 
 module.exports = { Classroom };
-
