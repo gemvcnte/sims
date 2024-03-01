@@ -32,7 +32,7 @@ function Step3({ fullFormData, onBack, onNext }) {
 
   return (
     <div className="px-36 lg:px-[12.5rem]">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <header className="py-6 text-center">
         <h4 className="text-black-300">Step 3</h4>

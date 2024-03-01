@@ -64,7 +64,7 @@ export default function Registration() {
       <div className="fixed z-10 grid h-[100svh] w-[100vw] place-items-center items-center bg-slate-50 md:hidden">
         <p>Registration Only Available on Desktop</p>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Header step={step} />
 
       <main className="bg-slate-50">

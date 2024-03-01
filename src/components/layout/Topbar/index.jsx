@@ -9,7 +9,7 @@ export default function Topbar({ children }) {
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <header className="border-white-700 sticky top-0 z-50 mx-4 flex items-center justify-between border-b  bg-background/95 py-6 italic backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Icon
           icon="heroicons-outline:menu-alt-2"

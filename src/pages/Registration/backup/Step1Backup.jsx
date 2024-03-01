@@ -34,7 +34,7 @@ function Step1({ onNext, fullFormData }) {
 
   return (
     <div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <h2>Step 1: Personal Information</h2>
       <input
         type="text"
