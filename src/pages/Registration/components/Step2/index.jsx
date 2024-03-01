@@ -122,7 +122,9 @@ function Step2({ onNext, onBack, formData }) {
               />
             </div>
             <div className="flex flex-col">
-              <label>Mother's Co. Number </label>
+              <label>
+                Mother's Co. Number <span className="text-destructive">*</span>
+              </label>
               <InputField
                 required
                 type="number"
