@@ -7,14 +7,22 @@ import LoadingSpinner from "@utils/LoadingSpinner";
 import { registrationEndpoint } from "@/config/adminEndpoints";
 import "./registration.css";
 import getAuthHeaders from "@/utils/getAuthHeaders";
+import { useTheme } from "@/components/theme-provider";
 
 export default function Registration() {
+  const { setTheme, theme } = useTheme();
+
   useEffect(() => {
     document.body.style.backgroundColor = "var(--clr-white-400)";
 
     return () => {
       document.body.style.backgroundColor = "";
     };
+  }, []);
+
+  useEffect(() => {
+    const newTheme = "light";
+    setTheme(newTheme);
   }, []);
 
   const [loading, setLoading] = useState(false);
