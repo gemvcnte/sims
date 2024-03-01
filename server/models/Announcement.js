@@ -25,7 +25,8 @@ const announcementSchema = mongoose.Schema({
     },
     typeOfAnnouncement: {
         type: String,
-        enum: ['Holiday', 'Exam', 'School Event', 'School Assessment', 'Class Cancellation',]
+        // enum: ['Holiday', 'Exam', 'School Event', 'School Assessment', 'Class Cancellation',],
+        required: false,
     },
     // updatedAt: {
     //     type: String,
