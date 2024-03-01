@@ -21,8 +21,8 @@ export default function Registration() {
   }, []);
 
   useEffect(() => {
-    const newTheme = "light";
-    setTheme(newTheme);
+    const lightTheme = "light";
+    setTheme(lightTheme);
   }, []);
 
   const [loading, setLoading] = useState(false);
