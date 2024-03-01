@@ -63,7 +63,9 @@ function Step2({ onNext, onBack, formData }) {
         <div className="gap-24 sm:flex">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col">
-              <label>Father's Name (*)</label>
+              <label>
+                Father's Name <span className="text-destructive">*</span>
+              </label>
               <InputField
                 required
                 type="text"
@@ -80,7 +82,9 @@ function Step2({ onNext, onBack, formData }) {
               />
             </div>
             <div className="flex flex-col">
-              <label>Mother's Name (*)</label>
+              <label>
+                Mother's Name <span className="text-destructive">*</span>
+              </label>
               <InputField
                 required
                 type="text"
@@ -99,7 +103,10 @@ function Step2({ onNext, onBack, formData }) {
 
           <div className="flex w-[60%] flex-col gap-8">
             <div className="flex flex-col">
-              <label>Father's Co. Number (*)</label>
+              <label>
+                Father's Contact Number{" "}
+                <span className="text-destructive">*</span>
+              </label>
               <InputField
                 required
                 type="number"
@@ -116,7 +123,10 @@ function Step2({ onNext, onBack, formData }) {
               />
             </div>
             <div className="flex flex-col">
-              <label>Mother's Co. Number (*)</label>
+              <label>
+                Mother's Contact Number{" "}
+                <span className="text-destructive">*</span>
+              </label>
               <InputField
                 required
                 type="number"
