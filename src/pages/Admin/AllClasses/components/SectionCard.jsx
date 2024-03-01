@@ -47,11 +47,11 @@ export default function SectionCard({ sectionName, adviser, totalStudents }) {
               <p className="text-sm text-muted-foreground">adviser</p>
             </div>
           </div>
-          <Popover>
+          {/* <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="ml-auto">
                 Edit{" "}
-                {/* <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" /> */}
+                <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="p-0" align="end">
@@ -88,7 +88,7 @@ export default function SectionCard({ sectionName, adviser, totalStudents }) {
                 </CommandList>
               </Command>
             </PopoverContent>
-          </Popover>
+          </Popover> */}
         </div>
       </CardContent>
     </Card>

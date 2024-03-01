@@ -18,10 +18,10 @@ export default function AllClasses() {
     <main className="w-full">
       <Topbar>ALL CLASSES</Topbar>
 
-      <SectionAnalytics />
-      <SectionFilter />
+      {/* <SectionAnalytics /> */}
+      {/* <SectionFilter /> */}
 
-      <section className="flex flex-col gap-4 px-4">
+      <section className="flex flex-col gap-4 px-4 py-4">
         {sections.map((section) => (
           <SectionCard
             key={section._id}

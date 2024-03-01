@@ -56,7 +56,7 @@ export default function CreateAnnouncementModal({ onClose }) {
         </DialogHeader>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
           <CardContent className="grid gap-6 px-0">
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="typeOfAnnouncement">Announcement Type</Label>
                 <select
@@ -74,7 +74,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                   <option value="School Event">Event</option>
                 </select>
               </div>
-            </div>
+            </div> */}
             <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
               <Input
