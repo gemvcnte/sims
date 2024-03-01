@@ -30,7 +30,7 @@ function Step2({ onNext, onBack, formData }) {
 
   return (
     <div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <h2>Step 2: Parent's Information</h2>
       <input
         type="text"

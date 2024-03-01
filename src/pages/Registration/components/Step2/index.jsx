@@ -52,7 +52,7 @@ function Step2({ onNext, onBack, formData }) {
 
   return (
     <div className="px-36 lg:px-[12.5rem]">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <header className="py-6 text-center">
         <h4 className="text-black-300">Step 2</h4>

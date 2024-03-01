@@ -56,7 +56,7 @@ export default function StudentCard({ application, onClick }) {
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <DialogTrigger
         className={`${
           isCardHidden ? "hidden" : "flex"
