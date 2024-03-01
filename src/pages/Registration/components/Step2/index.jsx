@@ -104,7 +104,8 @@ function Step2({ onNext, onBack, formData }) {
           <div className="flex w-[60%] flex-col gap-8">
             <div className="flex flex-col">
               <label>
-                Father's Co. Number <span className="text-destructive">*</span>
+                Father's Contact Number{" "}
+                <span className="text-destructive">*</span>
               </label>
               <InputField
                 required
@@ -123,7 +124,8 @@ function Step2({ onNext, onBack, formData }) {
             </div>
             <div className="flex flex-col">
               <label>
-                Mother's Co. Number <span className="text-destructive">*</span>
+                Mother's Contact Number{" "}
+                <span className="text-destructive">*</span>
               </label>
               <InputField
                 required
