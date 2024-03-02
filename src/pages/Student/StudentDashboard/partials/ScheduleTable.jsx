@@ -40,7 +40,7 @@ export default function ScheduleTable() {
         )}
         <TableHeader>
           <TableRow>
-            <TableHead></TableHead>
+            {classDetails && <TableHead></TableHead>}
             <TableHead className="text-center">{currentDay}</TableHead>
           </TableRow>
         </TableHeader>
