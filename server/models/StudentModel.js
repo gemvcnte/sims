@@ -9,7 +9,7 @@ const studentSchema = new mongoose.Schema(
     },
     middleName: {
       type: String,
-      required: false,
+      default: null, 
     },
     lastName: {
       type: String,
@@ -98,10 +98,6 @@ const studentSchema = new mongoose.Schema(
     guardianRelationship: {
       type: String,
       default: "",
-    },
-    lrn: {
-      type: String,
-      required: true,
     },
     religion: {
       type: String,
