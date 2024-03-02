@@ -37,6 +37,11 @@ const selectOptions = [
 ];
 
 function Step1({ onNext, fullFormData }) {
+  const [hasMiddleName, setHasMiddleName] = useState(false);
+  const handleMiddleNameToggle = (e) => {
+    setHasMiddleName(e.target.checked);
+  };
+
   useEffect(() => {
     if (fullFormData) {
       setFormData(fullFormData);
@@ -85,7 +90,9 @@ function Step1({ onNext, fullFormData }) {
       <form onSubmit={handleNext} className="gap-24 sm:flex">
         <div className="flex w-full flex-col gap-8">
           <div className="flex flex-col">
-            <label>Last Name</label>
+            <label>
+              Last Name <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="text"
               placeholder="Input Your Last Name"
@@ -99,7 +106,9 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex w-full flex-col">
-            <label>First Name</label>
+            <label>
+              First Name <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="text"
               placeholder="Input Your First Name"
@@ -113,8 +122,22 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex w-full flex-col">
-            <label>Middle Name</label>
-            <InputField
+            <section className="flex items-baseline justify-between">
+              <label>Middle Name</label>
+              <div className="flex">
+                <label className="text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={hasMiddleName}
+                    onChange={handleMiddleNameToggle}
+                    className="mr-2"
+                  />
+                  I don't have a middle name
+                </label>
+              </div>
+            </section>
+            <input
+              disabled={hasMiddleName}
               type="text"
               placeholder="Input Your Middle Name"
               value={formData.middleName}
@@ -122,7 +145,7 @@ function Step1({ onNext, fullFormData }) {
               onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
               className={`${
                 formData.middleName && "!border-blue-400 text-blue-400"
-              }`}
+              } col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm uppercase ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
             />
           </div>
 
