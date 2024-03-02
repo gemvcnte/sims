@@ -47,7 +47,20 @@ function Step2({ onNext, onBack, formData }) {
   };
 
   const handleFieldChange = (field, value) => {
-    setParentData({ ...parentData, [field]: value });
+    const maxLength = {
+      fatherContactNumber: 11,
+      motherContactNumber: 11,
+      guardianContactNumber: 11,
+    };
+
+    if (maxLength.hasOwnProperty(field)) {
+      setParentData({
+        ...parentData,
+        [field]: value.slice(0, maxLength[field]),
+      });
+    } else {
+      setParentData({ ...parentData, [field]: value });
+    }
   };
 
   return (
