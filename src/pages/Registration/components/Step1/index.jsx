@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import notify from "@utils/BlankFieldNotification";
 import { Icon } from "@iconify/react";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 const InputField = ({
   type,
@@ -55,8 +56,18 @@ function Step1({ onNext, fullFormData }) {
 
   const handleNext = (e) => {
     e.preventDefault();
-    const isFormValid = FormValidator(formData, 1);
-    isFormValid ? onNext(formData) : notify();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isEmailValid = emailRegex.test(formData.emailAddress);
+    const isOtherFieldsValid = FormValidator(formData, 1);
+    if (isEmailValid && isOtherFieldsValid) {
+      onNext(formData);
+    } else {
+      if (!isEmailValid) {
+        showErrorNotification("Invalid email address");
+      } else {
+        notify();
+      }
+    }
   };
 
   const handleFieldChange = (field, value) => {
