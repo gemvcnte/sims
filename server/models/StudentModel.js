@@ -9,7 +9,7 @@ const studentSchema = new mongoose.Schema(
     },
     middleName: {
       type: String,
-      required: true,
+      required: false,
     },
     lastName: {
       type: String,
@@ -36,20 +36,22 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     schoolYear: {
-      semester: [{
-        firstSemester: {
-          id: {
+      semester: [
+        {
+          firstSemester: {
+            id: {
+              type: mongoose.Types.ObjectId,
+              ref: "Classroom",
+            },
+            type: String,
+          },
+          secondSemester: {
             type: mongoose.Types.ObjectId,
-            ref: 'Classroom',
+            ref: "Classroom",
           },
           type: String,
         },
-        secondSemester: {
-          type: mongoose.Types.ObjectId,
-          ref: 'Classroom',
-        },
-        type: String,
-      }]
+      ],
     },
     track: {
       type: String,
