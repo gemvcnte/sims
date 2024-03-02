@@ -47,7 +47,20 @@ function Step2({ onNext, onBack, formData }) {
   };
 
   const handleFieldChange = (field, value) => {
-    setParentData({ ...parentData, [field]: value });
+    const maxLength = {
+      fatherContactNumber: 11,
+      motherContactNumber: 11,
+      guardianContactNumber: 11,
+    };
+
+    if (maxLength.hasOwnProperty(field)) {
+      setParentData({
+        ...parentData,
+        [field]: value.slice(0, maxLength[field]),
+      });
+    } else {
+      setParentData({ ...parentData, [field]: value });
+    }
   };
 
   return (
@@ -110,7 +123,7 @@ function Step2({ onNext, onBack, formData }) {
               <InputField
                 required
                 type="number"
-                placeholder="+639xxxxxxxxx"
+                placeholder="09xxxxxxxxx"
                 value={parentData.fatherContactNumber}
                 onChange={(e) =>
                   handleFieldChange("fatherContactNumber", e.target.value)
@@ -130,7 +143,7 @@ function Step2({ onNext, onBack, formData }) {
               <InputField
                 required
                 type="number"
-                placeholder="+639xxxxxxxxx"
+                placeholder="09xxxxxxxxx"
                 value={parentData.motherContactNumber}
                 onChange={(e) =>
                   handleFieldChange("motherContactNumber", e.target.value)
@@ -162,10 +175,10 @@ function Step2({ onNext, onBack, formData }) {
           </div>
 
           <div className="flex w-[60%] flex-col">
-            <label>Guardian's Co. Number</label>
+            <label>Guardian's Contact Number</label>
             <InputField
               type="number"
-              placeholder="+639xxxxxxxxx"
+              placeholder="09xxxxxxxxx"
               value={parentData.guardianContactNumber}
               onChange={(e) =>
                 handleFieldChange("guardianContactNumber", e.target.value)

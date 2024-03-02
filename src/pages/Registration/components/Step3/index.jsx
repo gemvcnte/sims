@@ -21,7 +21,12 @@ function Step3({ fullFormData, onBack, onNext }) {
   }, [fullFormData]);
 
   const handleFieldChange = (field, value) => {
-    setAcademicData({ ...academicData, [field]: value });
+    const maxLength = 12;
+    if (field === "lrn") {
+      setAcademicData({ ...academicData, [field]: value.slice(0, maxLength) });
+    } else {
+      setAcademicData({ ...academicData, [field]: value });
+    }
   };
 
   const handleSubmit = (e) => {
