@@ -48,10 +48,11 @@ const studentApplicationSchema = new mongoose.Schema(
           sectionId: {
             type: mongoose.Types.ObjectId,
             ref: "Classroom",
+            required: false,
           },
           sectionName: {
             type: String,
-            required: true,
+            required: false,
           },
           gradeLevel: {
             type: Number,
@@ -59,11 +60,11 @@ const studentApplicationSchema = new mongoose.Schema(
           },
           track: {
             type: String,
-            required: false,
+            required: true,
           },
           strand: {
             type: String,
-            required: false,
+            required: true,
           },
         },
       ],
