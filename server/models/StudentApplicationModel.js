@@ -91,6 +91,10 @@ const studentApplicationSchema = new mongoose.Schema(
         required: true,
         uppercase: true,
       },
+      gradeLevel: {
+        type: Number,
+        required: true,
+      },
       track: {
         type: String,
         required: true,
