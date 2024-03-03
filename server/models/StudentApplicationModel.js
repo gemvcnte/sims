@@ -34,41 +34,30 @@ const studentApplicationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    schoolYear: {
-      year: {
-        type: String,
-        required: true,
-      },
-      semester: [
-        {
-          type: {
-            type: String,
-            required: true,
-          },
-          sectionId: {
-            type: mongoose.Types.ObjectId,
-            ref: "Classroom",
-            required: false,
-          },
-          sectionName: {
-            type: String,
-            required: false,
-          },
-          gradeLevel: {
-            type: Number,
-            required: true,
-          },
-          track: {
-            type: String,
-            required: true,
-          },
-          strand: {
-            type: String,
-            required: true,
-          },
+    schoolYear: [
+      {
+        year: {
+          type: String,
+          required: true,
         },
-      ],
-    },
+        semester: {
+          type: String,
+          required: true,
+        },
+        gradeLevel: {
+          type: Number,
+          required: true,
+        },
+        track: {
+          type: String,
+          required: true,
+        },
+        strand: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     emailAddress: {
       type: String,
       required: true,
@@ -102,7 +91,6 @@ const studentApplicationSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    registrationDate: String,
     status: {
       type: String,
       default: "pending",
