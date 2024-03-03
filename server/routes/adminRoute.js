@@ -128,7 +128,7 @@ router.get('/teachers', verifyToken, adminController.getAllTeachersAccounts);
 router.get('/admins', verifyToken, adminController.getAllAdminsAccounts);
 
 
-router.get('/global-settings', verifyToken, adminController.getGlobalSettings);
+router.get('/global-settings', adminController.getGlobalSettings);
 router.patch('/global-settings', verifyToken, adminController.updateGlobalSettings);
 
 
