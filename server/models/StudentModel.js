@@ -35,59 +35,41 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    schoolYear: {
-      type: String, 
-      required: true,
-      semester: [
-        {
-          firstSemester: {
-            sectionId: {
-              type: mongoose.Types.ObjectId,
-              ref: "Classroom",
-            },
-            sectionName: {
-              type: String,
-              required: true,
-            },
-            gradeLevel: {
-              type: Number,
-              required: true,
-            },
-            track: {
-              type: String,
-              required: false,
-            },
-            strand: {
-              type: String,
-              required: false,
-            },
-          },
-          secondSemester: {
-            sectionId: {
-              type: mongoose.Types.ObjectId,
-              ref: "Classroom",
-            },
-            sectionName: {
-              type: String,
-              required: true,
-            },
-            gradeLevel: {
-              type: Number,
-              required: true,
-            },
-            track: {
-              type: String,
-              required: false,
-            },
-            strand: {
-              type: String,
-              required: false,
-            },
-          },
+    schoolYear: [
+      {
+        year: {
           type: String,
+          required: true,
         },
-      ],
-    },
+        semester: {
+          type: String,
+          required: true,
+        },
+        gradeLevel: {
+          type: Number,
+          required: true,
+        },
+        track: {
+          type: String,
+          required: true,
+          uppercase: true,
+        },
+        strand: {
+          type: String,
+          required: true,
+          uppercase: true,
+        },
+        sectionId: {
+          type: mongoose.Types.ObjectId,
+          ref: "Classroom",
+          required: false,
+        },
+        sectionName: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
     emailAddress: {
       type: String,
       required: true,

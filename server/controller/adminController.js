@@ -260,38 +260,80 @@ const deleteAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
 const acceptStudentApplication = asyncHandler(async (req, res) => {
   try {
     const { studentApplicationId } = req.body;
 
     // Find the application by ID
-    const originalStudentApplication = await StudentApplication.findById(
-      studentApplicationId
-    );
+    const originalStudentApplication = await StudentApplication.findById(studentApplicationId);
 
     if (!originalStudentApplication) {
       return res.status(404).json({ message: "Student Application not found" });
     }
 
-    // Create a new object with an additional "password" field
-    const modifiedStudentApplication = {
-      ...originalStudentApplication.toObject(),
-      password: bcryptjs.hashSync(originalStudentApplication.birthDate, 10), // Replace 10 with your desired js salt rounds
-    };
-
-    // save yung modified object sa enrolledStudents collection
-    const studentEnrolled = new Student(modifiedStudentApplication);
-    await studentEnrolled.save();
-
-    await StudentApplication.findByIdAndUpdate(originalStudentApplication._id, {
-      status: "enrolled",
+    // Check for LRN conflict with different last name
+    const existingEnrolledStudentWithLastnameConflict = await Student.findOne({
+      lrn: originalStudentApplication.lrn,
+      lastName: { $ne: originalStudentApplication.lastName }
     });
 
-    res.status(200).json({ message: "Student Enrolled" });
+    if (existingEnrolledStudentWithLastnameConflict) {
+      return res.status(400).json({ message: "LRN is already used by a student with a different last name." });
+    }
+
+    // Retrieve the student profile based on LRN
+    let studentProfile = await Student.findOne({ lrn: originalStudentApplication.lrn });
+
+    // If the student profile doesn't exist, create a new one
+    if (!studentProfile) {
+      const hashedPassword = bcryptjs.hashSync(originalStudentApplication.birthDate, 10);
+      studentProfile = new Student({
+        ...originalStudentApplication.toObject(),
+        password: hashedPassword,
+        status: "enrolled",
+      });
+    } else {
+     // Update existing fields
+     studentProfile.firstName = originalStudentApplication.firstName;
+     studentProfile.middleName = originalStudentApplication.middleName;
+    // lastName shouldn't be changed because it wouldn't work anyway 
+    //  because existingEnrolledStudentWithLastnameConflict checks for lastname
+    // and this function will only be read or run if existingEnrolledStudentWithLastnameConflict got passed
+    //  studentProfile.lastName = originalStudentApplication.lastName;
+     studentProfile.extensionName = originalStudentApplication.extensionName;
+     studentProfile.birthDate = originalStudentApplication.birthDate;
+     studentProfile.gender = originalStudentApplication.gender;
+     studentProfile.currentAddress = originalStudentApplication.currentAddress;
+     studentProfile.emailAddress = originalStudentApplication.emailAddress;
+     studentProfile.guardianName = originalStudentApplication.guardianName;
+     studentProfile.guardianContactNumber = originalStudentApplication.guardianContactNumber;
+     studentProfile.guardianRelationship = originalStudentApplication.guardianRelationship;
+
+     // Add schoolYear object to the schoolYear array
+     studentProfile.schoolYear.push(originalStudentApplication.schoolYear[0]);
+
+     studentProfile.status = "enrolled";
+    }
+
+    // Save the updated or new student profile
+    await studentProfile.save();
+
+    // Update status of student application to "enrolled"
+    await StudentApplication.findByIdAndUpdate(studentApplicationId, { status: "enrolled" });
+
+    res.status(200).json({ message: "Student information updated and enrolled" });
   } catch (error) {
     return res.status(500).json({ message: `Error: ${error.message}` });
   }
 });
+
+
+
+
+
 
 const updateStudentApplication = asyncHandler(async (req, res) => {
   try {
