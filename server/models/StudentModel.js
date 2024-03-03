@@ -9,7 +9,7 @@ const studentSchema = new mongoose.Schema(
     },
     middleName: {
       type: String,
-      required: true,
+      default: null,
     },
     lastName: {
       type: String,
@@ -36,20 +36,22 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     schoolYear: {
-      semester: [{
-        firstSemester: {
-          id: {
+      semester: [
+        {
+          firstSemester: {
+            id: {
+              type: mongoose.Types.ObjectId,
+              ref: "Classroom",
+            },
+            type: String,
+          },
+          secondSemester: {
             type: mongoose.Types.ObjectId,
-            ref: 'Classroom',
+            ref: "Classroom",
           },
           type: String,
         },
-        secondSemester: {
-          type: mongoose.Types.ObjectId,
-          ref: 'Classroom',
-        },
-        type: String,
-      }]
+      ],
     },
     track: {
       type: String,
@@ -71,19 +73,15 @@ const studentSchema = new mongoose.Schema(
     },
     fatherName: {
       type: String,
-      required: true,
     },
     fatherContactNumber: {
       type: String,
-      required: true,
     },
     motherName: {
       type: String,
-      required: true,
     },
     motherContactNumber: {
       type: String,
-      required: true,
     },
     guardianName: {
       type: String,
@@ -96,10 +94,6 @@ const studentSchema = new mongoose.Schema(
     guardianRelationship: {
       type: String,
       default: "",
-    },
-    lrn: {
-      type: String,
-      required: true,
     },
     religion: {
       type: String,
