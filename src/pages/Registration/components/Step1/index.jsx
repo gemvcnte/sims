@@ -153,7 +153,7 @@ function Step1({ onNext, fullFormData }) {
             {/* {!hasMiddleName && ( */}
             <input
               {...(formData.middleName === "" ? { required: true } : {})}
-              disabled={hasMiddleName}
+              disabled={formData.middleName === null}
               type="text"
               placeholder="Input Your Middle Name"
               value={formData.middleName === null ? "" : formData.middleName}
