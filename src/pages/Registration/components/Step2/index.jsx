@@ -73,6 +73,52 @@ function Step2({ onNext, onBack, formData }) {
       </header>
 
       <form onSubmit={handleNext}>
+        <div className=" mb-8 gap-24 sm:flex">
+          <div className="flex w-full flex-col">
+            <label>Guardian's Name</label>
+            <InputField
+              type="text"
+              placeholder="Firstname Middlename Lastname"
+              value={parentData.guardianName}
+              onChange={(e) =>
+                handleFieldChange("guardianName", e.target.value)
+              }
+              name="guardianName"
+            />
+          </div>
+
+          <div className="flex w-[60%] flex-col">
+            <label>Guardian's Contact Number</label>
+            <InputField
+              type="number"
+              placeholder="09xxxxxxxxx"
+              value={parentData.guardianContactNumber}
+              onChange={(e) =>
+                handleFieldChange("guardianContactNumber", e.target.value)
+              }
+              name="guardianContactNumber"
+            />
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <select
+            className="border-white-700 mb-8 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            name="guardianRelationship"
+            value={parentData.guardianRelationship}
+            onChange={(e) =>
+              handleFieldChange("guardianRelationship", e.target.value)
+            }
+          >
+            <option value="">Relationship</option>
+            <option value="Parent">Parent</option>
+            <option value="Relative">Relative</option>
+            <option value="Non-relative">Non-relative</option>
+          </select>
+        </div>
+
+        <hr className="mb-8" />
+
         <div className="gap-24 sm:flex">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col">
@@ -158,53 +204,7 @@ function Step2({ onNext, onBack, formData }) {
           </div>
         </div>
 
-        <hr className="mt-8" />
-
-        <div className=" mt-8 gap-24 sm:flex">
-          <div className="flex w-full flex-col">
-            <label>Guardian's Name</label>
-            <InputField
-              type="text"
-              placeholder="Firstname Middlename Lastname"
-              value={parentData.guardianName}
-              onChange={(e) =>
-                handleFieldChange("guardianName", e.target.value)
-              }
-              name="guardianName"
-            />
-          </div>
-
-          <div className="flex w-[60%] flex-col">
-            <label>Guardian's Contact Number</label>
-            <InputField
-              type="number"
-              placeholder="09xxxxxxxxx"
-              value={parentData.guardianContactNumber}
-              onChange={(e) =>
-                handleFieldChange("guardianContactNumber", e.target.value)
-              }
-              name="guardianContactNumber"
-            />
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <select
-            className="border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            name="guardianRelationship"
-            value={parentData.guardianRelationship}
-            onChange={(e) =>
-              handleFieldChange("guardianRelationship", e.target.value)
-            }
-          >
-            <option value="">Relationship</option>
-            <option value="Parent">Parent</option>
-            <option value="Relative">Relative</option>
-            <option value="Non-relative">Non-relative</option>
-          </select>
-        </div>
-
-        <div className="flex items-end justify-end gap-4 py-16">
+        <div className="flex items-end justify-end gap-4 pt-8">
           <button
             onClick={() => onBack(parentData)}
             type="submit"
