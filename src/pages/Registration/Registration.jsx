@@ -8,9 +8,11 @@ import { registrationEndpoint } from "@/config/adminEndpoints";
 import "./registration.css";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import { useTheme } from "@/components/theme-provider";
+import useGlobalSettings from "./useGlobalSettings";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
+  const { globalSettings } = useGlobalSettings();
 
   useEffect(() => {
     const lightTheme = "light";
@@ -25,7 +27,17 @@ export default function Registration() {
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
     if (step === 3) {
-      return handleSubmit(data);
+      const objectWithBackendSchemaStructure = {
+        schoolYear: {
+          year: globalSettings.schoolYear,
+          semester: globalSettings.semester,
+          gradeLevel: data.gradeLevel,
+          track: data.track,
+          strand: data.strand,
+        },
+        ...data,
+      };
+      return handleSubmit(objectWithBackendSchemaStructure);
     }
     setStep(step + 1);
   };
