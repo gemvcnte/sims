@@ -126,7 +126,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="Input Your First Name"
               value={formData.firstName}
               name="firstName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.firstName && "!border-blue-400 text-blue-400"
               }`}
@@ -158,7 +160,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="Input Your Middle Name"
               value={formData.middleName === null ? "" : formData.middleName}
               name="middleName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.middleName && "!border-blue-400 text-blue-400"
               } col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm uppercase ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
@@ -237,7 +241,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="E.g., 123 Purok St, Barangay, Municipality"
               value={formData.currentAddress}
               name="currentAddress"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
             />
           </div>
 
@@ -253,7 +259,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="Input Your Email"
               value={formData.emailAddress}
               name="emailAddress"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
             />
           </div>
 
