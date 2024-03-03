@@ -14,6 +14,8 @@ export const usePendingApplications = () => {
 };
 
 export const PendingApplicationsProvider = ({ children }) => {
+  const [originalPendingApplications, setOriginalPendingApplications] =
+    useState([]);
   const [pendingApplications, setPendingApplications] = useState([]);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export const PendingApplicationsProvider = ({ children }) => {
       );
 
       const responseData = response.data.data;
-      console.log(responseData);
+      setOriginalPendingApplications(responseData);
       setPendingApplications(responseData);
     } catch (error) {
       console.error("Error fetching pending applications:", error);
@@ -39,10 +41,14 @@ export const PendingApplicationsProvider = ({ children }) => {
   };
 
   const filterBySchoolYear = (year) => {
-    const filtered = pendingApplications.filter((application) =>
-      application.schoolYear.some((schoolYear) => schoolYear.year === year),
-    );
-    setPendingApplications(filtered);
+    if (year === "all") {
+      setPendingApplications(originalPendingApplications);
+    } else {
+      const filtered = originalPendingApplications.filter((application) =>
+        application.schoolYear.some((schoolYear) => schoolYear.year === year),
+      );
+      setPendingApplications(filtered);
+    }
   };
 
   const filterBySemester = (semester) => {

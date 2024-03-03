@@ -33,7 +33,7 @@ import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/View
 import { usePendingApplications } from "../../hooks/usePendingApplications";
 
 const StudentApplicationsDataTable = () => {
-  const { pendingApplications } = usePendingApplications();
+  const { pendingApplications, filterBySchoolYear } = usePendingApplications();
 
   const columns = [
     {
@@ -66,12 +66,47 @@ const StudentApplicationsDataTable = () => {
         </button>
       ),
     },
+    {
+      accessorKey: "reject",
+      header: "",
+      cell: ({ row }) => (
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleReject();
+          }}
+          variant="outline"
+        >
+          Reject
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "enroll",
+      header: "",
+      cell: ({ row }) => (
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleEnroll();
+          }}
+        >
+          Enroll
+        </Button>
+      ),
+    },
   ];
 
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+
+  const handleSchoolYearChange = (event) => {
+    const selectedYear = event.target.value;
+    filterBySchoolYear(selectedYear);
+    console.log(pendingApplications);
+  };
 
   const table = useReactTable({
     data: pendingApplications,
@@ -107,6 +142,18 @@ const StudentApplicationsDataTable = () => {
 
   return (
     <div className="w-full px-4">
+      <section className="" id="filter">
+        <select
+          className=" col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          id="schoolYear"
+          onChange={handleSchoolYearChange}
+        >
+          <option value="all">All School Year</option>
+          <option value="2023-2024">2023-2024</option>
+          <option value="2024-2025">2024-2025</option>
+          <option value="2025-2026">2025-2026</option>
+        </select>
+      </section>
       <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter lrns..."
