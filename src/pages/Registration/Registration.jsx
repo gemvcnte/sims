@@ -13,14 +13,6 @@ export default function Registration() {
   const { setTheme, theme } = useTheme();
 
   useEffect(() => {
-    document.body.style.backgroundColor = "var(--clr-white-400)";
-
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
-  }, []);
-
-  useEffect(() => {
     const lightTheme = "light";
     setTheme(lightTheme);
   }, []);
@@ -75,7 +67,7 @@ export default function Registration() {
       {/* <ToastContainer /> */}
       <Header step={step} />
 
-      <main className="bg-slate-50">
+      <main className="">
         {step === 1 && <Step1 onNext={handleNext} fullFormData={formData} />}
         {step === 2 && (
           <Step2 onNext={handleNext} onBack={handleBack} formData={formData} />
