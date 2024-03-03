@@ -12,6 +12,7 @@ function Step3({ fullFormData, onBack, onNext }) {
     semester: "",
     track: "",
     strand: "",
+    gradeLevel: 0,
   });
 
   useEffect(() => {
@@ -24,6 +25,15 @@ function Step3({ fullFormData, onBack, onNext }) {
     const maxLength = 12;
     if (field === "lrn") {
       setAcademicData({ ...academicData, [field]: value.slice(0, maxLength) });
+    } else if (field === "gradeLevel") {
+      const intValue = parseInt(value, 10);
+      setAcademicData({ ...academicData, [field]: intValue });
+    } else if (field === "strand") {
+      if (value === "abm" || value === "humss" || value === "stem") {
+        setAcademicData({ ...academicData, track: "academic", [field]: value });
+      } else if (value === "ict" || value === "he") {
+        setAcademicData({ ...academicData, track: "tvl", [field]: value });
+      }
     } else {
       setAcademicData({ ...academicData, [field]: value });
     }
@@ -31,8 +41,9 @@ function Step3({ fullFormData, onBack, onNext }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isFormValid = FormValidator(academicData, 3);
-    isFormValid ? onNext(academicData) : notify();
+    console.log(academicData);
+    // const isFormValid = FormValidator(academicData, 3);
+    // isFormValid ? onNext(academicData) : notify();
   };
 
   return (
@@ -53,6 +64,7 @@ function Step3({ fullFormData, onBack, onNext }) {
                 <span className="text-destructive">*</span>
               </label>
               <input
+                required
                 type="number"
                 placeholder="Input Your LRN"
                 value={academicData.lrn}
@@ -67,20 +79,23 @@ function Step3({ fullFormData, onBack, onNext }) {
           <div className="flex w-full flex-col gap-8">
             <div className="w flex flex-col items-start">
               <label>
-                Track <span className="text-destructive">*</span>
+                Grade Level <span className="text-destructive">*</span>
               </label>
               <select
+                required
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  academicData.track &&
+                  academicData.gradeLevel &&
                   "!border-blue-400 bg-blue-400 text-white"
                 }`}
-                id="track"
-                value={academicData.track}
-                onChange={(e) => handleFieldChange("track", e.target.value)}
+                id="gradeLevel"
+                value={academicData.gradeLevel}
+                onChange={(e) =>
+                  handleFieldChange("gradeLevel", e.target.value)
+                }
               >
-                <option value="">Select Track</option>
-                <option value="academic">Academic Track</option>
-                <option value="tvl">TVL Track</option>
+                <option value="">Select Grade Level</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
               </select>
             </div>
             <div className="form-group">
@@ -88,6 +103,7 @@ function Step3({ fullFormData, onBack, onNext }) {
                 Strand <span className="text-destructive">*</span>
               </label>
               <select
+                required
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.strand &&
                   "!border-blue-400 bg-blue-400 text-white"
