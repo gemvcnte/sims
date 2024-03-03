@@ -7,7 +7,7 @@ import {
   SidebarHeader,
 } from "./components";
 
-export default function SidebarContainer({ children }) {
+export default function SidebarContainer({ children, overflow }) {
   const { isSidebarOpen } = useSidebarContext();
 
   return (
@@ -24,7 +24,11 @@ export default function SidebarContainer({ children }) {
           !isSidebarOpen && "hidden"
         } lg:block`}
       >
-        <div className="flex h-[100svh] flex-col justify-between px-4">
+        <div
+          className={`flex h-[100svh] flex-col justify-between px-4 ${
+            overflow ? "overflow-y-scroll" : ""
+          }`}
+        >
           <div>
             <SidebarHeader />
             <main className="flex flex-col gap-2 py-2">{children}</main>

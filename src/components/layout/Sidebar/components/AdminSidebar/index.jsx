@@ -30,7 +30,7 @@ export default function AdminSidebar() {
 
   return (
     !isOnRegistrationPage && (
-      <SidebarContainer>
+      <SidebarContainer overflow={true}>
         <SidebarItem to="dashboard" icon="material-symbols:dashboard">
           Dashboard
         </SidebarItem>
