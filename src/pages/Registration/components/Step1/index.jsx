@@ -38,8 +38,15 @@ const selectOptions = [
 
 function Step1({ onNext, fullFormData }) {
   const [hasMiddleName, setHasMiddleName] = useState(false);
+
   const handleMiddleNameToggle = (e) => {
-    setHasMiddleName(e.target.checked);
+    const isChecked = e.target.checked;
+    setHasMiddleName(isChecked);
+    if (isChecked) {
+      setFormData({ ...formData, middleName: null });
+    } else {
+      setFormData({ ...formData, middleName: "" });
+    }
   };
 
   useEffect(() => {
@@ -51,7 +58,7 @@ function Step1({ onNext, fullFormData }) {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
-    middleName: "",
+    middleName: null,
     extensionName: "",
     birthDate: "",
     gender: "",
@@ -65,6 +72,7 @@ function Step1({ onNext, fullFormData }) {
     const isEmailValid = emailRegex.test(formData.emailAddress);
     const isOtherFieldsValid = FormValidator(formData, 1);
     if (isEmailValid && isOtherFieldsValid) {
+      console.log(formData);
       onNext(formData);
     } else {
       if (!isEmailValid) {
@@ -98,7 +106,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="Input Your Last Name"
               value={formData.lastName}
               name="lastName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.lastName && "!border-blue-400 text-blue-400"
               }`}
@@ -136,17 +146,21 @@ function Step1({ onNext, fullFormData }) {
                 </label>
               </div>
             </section>
-            <input
-              disabled={hasMiddleName}
-              type="text"
-              placeholder="Input Your Middle Name"
-              value={formData.middleName}
-              name="middleName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
-              className={`${
-                formData.middleName && "!border-blue-400 text-blue-400"
-              } col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm uppercase ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
-            />
+            {!hasMiddleName && (
+              <input
+                // disabled={hasMiddleName}
+                type="text"
+                placeholder="Input Your Middle Name"
+                value={formData.middleName}
+                name="middleName"
+                onChange={(e) =>
+                  handleFieldChange(e.target.name, e.target.value)
+                }
+                className={`${
+                  formData.middleName && "!border-blue-400 text-blue-400"
+                } col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm uppercase ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
+              />
+            )}
           </div>
 
           <div className="flex w-full flex-col">
