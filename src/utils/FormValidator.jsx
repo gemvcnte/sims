@@ -14,10 +14,9 @@ const FormValidator = (formData, step) => {
     ];
   } else if (step === 2) {
     requiredFields = [
-      "fatherName",
-      "fatherContactNumber",
-      "motherName",
-      "motherContactNumber",
+      "guardianName",
+      "guardianContactNumber",
+      "guardianRelationship",
     ];
   } else if (step === 3) {
     requiredFields = ["lrn", "schoolYear", "semester", "track", "strand"];

@@ -48,7 +48,10 @@ function Step3({ fullFormData, onBack, onNext }) {
         <div className="flex items-end justify-center gap-8">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col">
-              <label>LRN (Learner Reference Number)</label>
+              <label>
+                LRN (Learner Reference Number){" "}
+                <span className="text-destructive">*</span>
+              </label>
               <input
                 type="number"
                 placeholder="Input Your LRN"
@@ -61,7 +64,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             </div>
 
             <div className="w flex flex-col items-start">
-              <label htmlFor="schoolYear">School Year</label>
+              <label htmlFor="schoolYear">
+                School Year <span className="text-destructive">*</span>
+              </label>
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.schoolYear &&
@@ -80,7 +85,9 @@ function Step3({ fullFormData, onBack, onNext }) {
             </div>
 
             <div className="w flex flex-col items-start">
-              <label htmlFor="semester">Semester</label>
+              <label htmlFor="semester">
+                Semester <span className="text-destructive">*</span>
+              </label>
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.semester &&
@@ -99,7 +106,9 @@ function Step3({ fullFormData, onBack, onNext }) {
 
           <div className="flex w-full flex-col gap-8">
             <div className="w flex flex-col items-start">
-              <label>Track</label>
+              <label>
+                Track <span className="text-destructive">*</span>
+              </label>
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.track &&
@@ -115,7 +124,9 @@ function Step3({ fullFormData, onBack, onNext }) {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="strand">Strand</label>
+              <label htmlFor="strand">
+                Strand <span className="text-destructive">*</span>
+              </label>
               <select
                 className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.strand &&

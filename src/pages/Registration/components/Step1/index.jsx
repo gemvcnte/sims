@@ -37,6 +37,18 @@ const selectOptions = [
 ];
 
 function Step1({ onNext, fullFormData }) {
+  const [hasMiddleName, setHasMiddleName] = useState(false);
+
+  const handleMiddleNameToggle = (e) => {
+    const isChecked = e.target.checked;
+    setHasMiddleName(isChecked);
+    if (isChecked) {
+      setFormData({ ...formData, middleName: null });
+    } else {
+      setFormData({ ...formData, middleName: "" });
+    }
+  };
+
   useEffect(() => {
     if (fullFormData) {
       setFormData(fullFormData);
@@ -85,13 +97,17 @@ function Step1({ onNext, fullFormData }) {
       <form onSubmit={handleNext} className="gap-24 sm:flex">
         <div className="flex w-full flex-col gap-8">
           <div className="flex flex-col">
-            <label>Last Name</label>
+            <label>
+              Last Name <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="text"
               placeholder="Input Your Last Name"
               value={formData.lastName}
               name="lastName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.lastName && "!border-blue-400 text-blue-400"
               }`}
@@ -99,13 +115,18 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex w-full flex-col">
-            <label>First Name</label>
+            <label>
+              First Name <span className="text-destructive">*</span>
+            </label>
             <InputField
+              // required="firstName"
               type="text"
               placeholder="Input Your First Name"
               value={formData.firstName}
               name="firstName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.firstName && "!border-blue-400 text-blue-400"
               }`}
@@ -113,21 +134,44 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex w-full flex-col">
-            <label>Middle Name</label>
-            <InputField
+            <section className="flex items-baseline justify-between">
+              <label>
+                Middle Name <span className="text-destructive">*</span>
+              </label>
+              <div className="flex">
+                <label className="text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={formData.middleName === null}
+                    onChange={handleMiddleNameToggle}
+                    className="mr-2"
+                  />
+                  I don't have a middle name
+                </label>
+              </div>
+            </section>
+            {/* {!hasMiddleName && ( */}
+            <input
+              {...(formData.middleName === "" ? { required: true } : {})}
+              disabled={formData.middleName === null}
               type="text"
               placeholder="Input Your Middle Name"
-              value={formData.middleName}
+              value={formData.middleName === null ? "" : formData.middleName}
               name="middleName"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
               className={`${
                 formData.middleName && "!border-blue-400 text-blue-400"
-              }`}
+              } col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm uppercase ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
             />
+            {/* )} */}
           </div>
 
           <div className="flex w-full flex-col">
-            <label>Extension Name </label>
+            <label>
+              Extension Name <span className="text-destructive">*</span>
+            </label>
             <select
               required
               className={`border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
@@ -149,7 +193,9 @@ function Step1({ onNext, fullFormData }) {
 
         <div className=" flex w-full flex-col gap-8 ">
           <div className="flex flex-col">
-            <label>Birthdate</label>
+            <label>
+              Birthdate <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="date"
               placeholder="Input Your Birthdate (MM/DD/YY)"
@@ -163,7 +209,9 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex flex-col">
-            <label>Gender</label>
+            <label>
+              Gender <span className="text-destructive">*</span>
+            </label>
             <select
               className={`border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                 formData.gender && "!border-blue-400 bg-blue-400 text-white"
@@ -180,7 +228,9 @@ function Step1({ onNext, fullFormData }) {
           </div>
 
           <div className="flex flex-col">
-            <label>Current Address</label>
+            <label>
+              Current Address <span className="text-destructive">*</span>
+            </label>
             <InputField
               className={`${
                 formData.currentAddress && "!border-blue-400 text-blue-400"
@@ -189,12 +239,16 @@ function Step1({ onNext, fullFormData }) {
               placeholder="E.g., 123 Purok St, Barangay, Municipality"
               value={formData.currentAddress}
               name="currentAddress"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
             />
           </div>
 
           <div className="flex flex-col">
-            <label>Email</label>
+            <label>
+              Email <span className="text-destructive">*</span>
+            </label>
             <InputField
               className={`${
                 formData.emailAddress && "!border-blue-400 text-blue-400"
@@ -203,7 +257,9 @@ function Step1({ onNext, fullFormData }) {
               placeholder="Input Your Email"
               value={formData.emailAddress}
               name="emailAddress"
-              onChange={(e) => handleFieldChange(e.target.name, e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(e.target.name, e.target.value.toUpperCase())
+              }
             />
           </div>
 
