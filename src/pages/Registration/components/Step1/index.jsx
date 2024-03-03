@@ -144,7 +144,7 @@ function Step1({ onNext, fullFormData }) {
                 <label className="text-xs text-muted-foreground">
                   <input
                     type="checkbox"
-                    checked={hasMiddleName}
+                    checked={formData.middleName === null}
                     onChange={handleMiddleNameToggle}
                     className="mr-2"
                   />
