@@ -41,9 +41,8 @@ function Step3({ fullFormData, onBack, onNext }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(academicData);
-    // const isFormValid = FormValidator(academicData, 3);
-    // isFormValid ? onNext(academicData) : notify();
+    const isFormValid = FormValidator(academicData, 3);
+    isFormValid ? onNext(academicData) : notify();
   };
 
   return (

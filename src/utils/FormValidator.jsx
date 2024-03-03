@@ -19,7 +19,7 @@ const FormValidator = (formData, step) => {
       "guardianRelationship",
     ];
   } else if (step === 3) {
-    requiredFields = ["lrn", "schoolYear", "semester", "track", "strand"];
+    requiredFields = ["lrn", "gradeLevel", "track", "strand"];
   } else if (step === 4) {
     requiredFields = ["username", "password"];
   }
