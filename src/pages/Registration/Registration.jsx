@@ -9,6 +9,8 @@ import "./registration.css";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import { useTheme } from "@/components/theme-provider";
 import useGlobalSettings from "./useGlobalSettings";
+import ReviewStudentInformationModal from "./components/Step3/ReviewStudentInformationModal";
+import { Dialog } from "@/components/ui/dialog";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -23,10 +25,12 @@ export default function Registration() {
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
+  const [showDialog, setShowDialog] = useState(false); // State for controlling the visibility of the dialog
 
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
     if (step === 3) {
+      setShowDialog(true); // Show the dialog before proceeding to the next step
       const objectWithBackendSchemaStructure = {
         schoolYear: {
           year: globalSettings.schoolYear,
@@ -37,7 +41,8 @@ export default function Registration() {
         },
         ...data,
       };
-      return handleSubmit(objectWithBackendSchemaStructure);
+      console.log(data);
+      // return handleSubmit(objectWithBackendSchemaStructure);
     }
     setStep(step + 1);
   };
@@ -70,6 +75,22 @@ export default function Registration() {
     }
   };
 
+  const handleConfirmSubmission = () => {
+    setShowDialog(false);
+    const objectWithBackendSchemaStructure = {
+      schoolYear: {
+        year: globalSettings.schoolYear,
+        semester: globalSettings.semester,
+        gradeLevel: formData.gradeLevel,
+        track: formData.track,
+        strand: formData.strand,
+      },
+      ...formData,
+    };
+    // console.log(objectWithBackendSchemaStructure);
+    handleSubmit(objectWithBackendSchemaStructure); // Submit the form data to the API
+  };
+
   return (
     <>
       {loading && <LoadingSpinner />}
@@ -92,6 +113,13 @@ export default function Registration() {
           />
         )}
       </main>
+
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <ReviewStudentInformationModal
+          application={formData}
+          onSave={handleConfirmSubmission}
+        />
+      </Dialog>
     </>
   );
 }
