@@ -1,3 +1,4 @@
+import axiosInstance from "@/utils/axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const PendingApplicationsContext = createContext();
@@ -18,7 +19,9 @@ export const PendingApplicationsProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/admin/get-pending");
+        const response = await axiosInstance.get(
+          "http://localhost:5000/admin/get-pending",
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch pending applications");
         }
