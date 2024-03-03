@@ -15,7 +15,7 @@ const studentApplicationSchema = new mongoose.Schema(
       },
       middleName: {
         type: String,
-        required: true,
+        default: null,
         uppercase: true,
       },
       extensionName: {
