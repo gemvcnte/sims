@@ -5,18 +5,22 @@ const studentApplicationSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
+      uppercase: true,
     },
     middleName: {
       type: String,
       default: null,
+      uppercase: true,
     },
     lastName: {
       type: String,
       required: true,
+      uppercase: true,
     },
     extensionName: {
       type: String,
       required: true,
+      uppercase: true,
     },
     birthDate: {
       type: String,
@@ -25,10 +29,12 @@ const studentApplicationSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
+      uppercase: true,
     },
     currentAddress: {
       type: String,
       required: false,
+      uppercase: true,
     },
     lrn: {
       type: String,
