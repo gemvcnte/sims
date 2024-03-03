@@ -75,20 +75,28 @@ function Step2({ onNext, onBack, formData }) {
       <form onSubmit={handleNext}>
         <div className=" mb-8 gap-24 sm:flex">
           <div className="flex w-full flex-col">
-            <label>Guardian's Name</label>
+            <label>
+              Guardian's Name <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="text"
               placeholder="Firstname Middlename Lastname"
               value={parentData.guardianName}
               onChange={(e) =>
-                handleFieldChange("guardianName", e.target.value)
+                handleFieldChange("guardianName", e.target.value.toUpperCase())
               }
               name="guardianName"
+              className={`${
+                parentData.guardianName && "!border-blue-400 text-blue-400"
+              }`}
             />
           </div>
 
           <div className="flex w-[60%] flex-col">
-            <label>Guardian's Contact Number</label>
+            <label>
+              Guardian's Contact Number{" "}
+              <span className="text-destructive">*</span>
+            </label>
             <InputField
               type="number"
               placeholder="09xxxxxxxxx"
@@ -97,21 +105,29 @@ function Step2({ onNext, onBack, formData }) {
                 handleFieldChange("guardianContactNumber", e.target.value)
               }
               name="guardianContactNumber"
+              className={`${
+                parentData.guardianContactNumber &&
+                "!border-blue-400 text-blue-400"
+              }`}
             />
           </div>
         </div>
 
         <div className="mt-4">
           <select
-            className="border-white-700 mb-8 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+            className={`border-white-700 mb-8 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+              parentData.guardianRelationship &&
+              "!border-blue-400 bg-blue-400 text-white"
+            }`}
             name="guardianRelationship"
             value={parentData.guardianRelationship}
             onChange={(e) =>
               handleFieldChange("guardianRelationship", e.target.value)
             }
           >
-            <option value="">Relationship</option>
-            <option value="Parent">Parent</option>
+            <option value="">Relationship </option>
+            {/* <option value="Parent">Parent</option> */}
             <option value="Relative">Relative</option>
             <option value="Non-relative">Non-relative</option>
           </select>
@@ -122,16 +138,14 @@ function Step2({ onNext, onBack, formData }) {
         <div className="gap-24 sm:flex">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col">
-              <label>
-                Father's Name <span className="text-destructive">*</span>
-              </label>
+              <label>Father's Name</label>
               <InputField
                 required
                 type="text"
                 placeholder="Firstname Middlename Lastname"
                 value={parentData.fatherName}
                 onChange={(e) =>
-                  handleFieldChange("fatherName", e.target.value)
+                  handleFieldChange("fatherName", e.target.value.toUpperCase())
                 }
                 name="fatherName"
                 o
@@ -141,16 +155,14 @@ function Step2({ onNext, onBack, formData }) {
               />
             </div>
             <div className="flex flex-col">
-              <label>
-                Mother's Name <span className="text-destructive">*</span>
-              </label>
+              <label>Mother's Name</label>
               <InputField
                 required
                 type="text"
                 placeholder="Firstname Middlename Lastname"
                 value={parentData.motherName}
                 onChange={(e) =>
-                  handleFieldChange("motherName", e.target.value)
+                  handleFieldChange("motherName", e.target.value.toUpperCase())
                 }
                 name="motherName"
                 className={`${
@@ -162,10 +174,7 @@ function Step2({ onNext, onBack, formData }) {
 
           <div className="flex w-[60%] flex-col gap-8">
             <div className="flex flex-col">
-              <label>
-                Father's Contact Number{" "}
-                <span className="text-destructive">*</span>
-              </label>
+              <label>Father's Contact Number </label>
               <InputField
                 required
                 type="number"
@@ -182,10 +191,7 @@ function Step2({ onNext, onBack, formData }) {
               />
             </div>
             <div className="flex flex-col">
-              <label>
-                Mother's Contact Number{" "}
-                <span className="text-destructive">*</span>
-              </label>
+              <label>Mother's Contact Number </label>
               <InputField
                 required
                 type="number"

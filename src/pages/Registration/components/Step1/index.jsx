@@ -68,12 +68,10 @@ function Step1({ onNext, fullFormData }) {
 
   const handleNext = (e) => {
     e.preventDefault();
-    console.log(formData);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isEmailValid = emailRegex.test(formData.emailAddress);
     const isOtherFieldsValid = FormValidator(formData, 1);
     if (isEmailValid && isOtherFieldsValid) {
-      console.log(formData);
       onNext(formData);
     } else {
       if (!isEmailValid) {
