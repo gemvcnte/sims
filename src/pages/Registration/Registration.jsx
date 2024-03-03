@@ -41,10 +41,11 @@ export default function Registration() {
         },
         ...data,
       };
-      console.log(data);
+      // console.log(data);
       // return handleSubmit(objectWithBackendSchemaStructure);
+    } else {
+      setStep(step + 1);
     }
-    setStep(step + 1);
   };
 
   const handleBack = (data) => {
