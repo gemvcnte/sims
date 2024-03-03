@@ -17,27 +17,26 @@ export const PendingApplicationsProvider = ({ children }) => {
   const [pendingApplications, setPendingApplications] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get(
-          "http://localhost:5000/admin/get-pending",
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch pending applications");
-        }
-        const data = await response.json();
-        setPendingApplications(data.data);
-      } catch (error) {
-        console.error("Error fetching pending applications:", error);
-      }
-    };
-
     fetchData();
+  }, []); // Fetch data on mount
 
-    return () => {
-      // Cleanup logic if needed
-    };
-  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        "http://localhost:5000/admin/get-pending",
+      );
+
+      const responseData = response.data.data;
+      console.log(responseData);
+      setPendingApplications(responseData);
+    } catch (error) {
+      console.error("Error fetching pending applications:", error);
+    }
+  };
+
+  const refetchData = () => {
+    fetchData(); // Re-fetch data
+  };
 
   const filterBySchoolYear = (year) => {
     const filtered = pendingApplications.filter((application) =>
@@ -75,6 +74,7 @@ export const PendingApplicationsProvider = ({ children }) => {
     <PendingApplicationsContext.Provider
       value={{
         pendingApplications,
+        refetchData,
         filterBySchoolYear,
         filterBySemester,
         filterByGradeLevel,
