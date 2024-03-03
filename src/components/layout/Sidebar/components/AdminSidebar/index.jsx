@@ -52,7 +52,7 @@ export default function AdminSidebar() {
 
         <ChangePasswordDrawer userType="admin" />
 
-        {/* <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
           <DrawerTrigger>
             <span onClick={handleDrawerClick}>
               <SidebarItem icon="simple-line-icons:settings">
@@ -61,7 +61,7 @@ export default function AdminSidebar() {
             </span>
           </DrawerTrigger>
           <GlobalSetttingsDrawer onClose={handleDrawerClick} />
-        </Drawer> */}
+        </Drawer>
       </SidebarContainer>
     )
   );

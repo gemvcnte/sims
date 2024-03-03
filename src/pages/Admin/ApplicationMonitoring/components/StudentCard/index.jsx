@@ -10,6 +10,7 @@ import {
   rejectApplicationEndpoint,
 } from "@/config/adminEndpoints";
 import getAuthHeaders from "@/utils/getAuthHeaders";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function StudentCard({ application, onClick }) {
   const lastName = application.lastName.toLowerCase();
@@ -35,7 +36,7 @@ export default function StudentCard({ application, onClick }) {
       showSuccessNotification("Student Enrolled Successfully");
       hideCard();
     } catch (error) {
-      console.error("Error enrolling student:", error.message);
+      showErrorNotification(error.response.data.message);
     }
   };
 
