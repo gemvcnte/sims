@@ -45,7 +45,7 @@ function Step3({ fullFormData, onBack, onNext }) {
       </header>
 
       <form onSubmit={handleSubmit} className="gap-24">
-        <div className="flex items-end justify-center gap-8">
+        <div className="flex flex-col items-end justify-center gap-8">
           <div className="flex w-full flex-col gap-8">
             <div className="flex flex-col">
               <label>
@@ -61,46 +61,6 @@ function Step3({ fullFormData, onBack, onNext }) {
                 }`}
                 onChange={(e) => handleFieldChange("lrn", e.target.value)}
               />
-            </div>
-
-            <div className="w flex flex-col items-start">
-              <label htmlFor="schoolYear">
-                School Year <span className="text-destructive">*</span>
-              </label>
-              <select
-                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  academicData.schoolYear &&
-                  "!border-blue-400 bg-blue-400 text-white"
-                }`}
-                id="schoolYear"
-                value={academicData.schoolYear}
-                onChange={(e) =>
-                  handleFieldChange("schoolYear", e.target.value)
-                }
-              >
-                <option value="">Select School Year</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2024-2025">2024-2025</option>
-              </select>
-            </div>
-
-            <div className="w flex flex-col items-start">
-              <label htmlFor="semester">
-                Semester <span className="text-destructive">*</span>
-              </label>
-              <select
-                className={`border-white-700 w-full rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  academicData.semester &&
-                  "!border-blue-400 bg-blue-400 text-white"
-                }`}
-                id="semester"
-                value={academicData.semester}
-                onChange={(e) => handleFieldChange("semester", e.target.value)}
-              >
-                <option value="">Select Semester</option>
-                <option value="first semester">1st Semester</option>
-                <option value="second semester">2nd Semester</option>
-              </select>
             </div>
           </div>
 
