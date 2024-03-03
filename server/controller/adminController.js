@@ -281,7 +281,7 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
     });
 
     if (existingEnrolledStudentWithLastnameConflict) {
-      return res.status(400).json({ message: "LRN is already used by a student with a different last name." });
+      return res.status(400).json({ message: "LRN was already used by a student with a different last name." });
     }
 
     // Retrieve the student profile based on LRN
