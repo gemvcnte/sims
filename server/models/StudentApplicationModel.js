@@ -50,22 +50,18 @@ const studentApplicationSchema = new mongoose.Schema(
       },
       fatherName: {
         type: String,
-        required: true,
         uppercase: true,
       },
       fatherContactNumber: {
         type: String,
-        required: true,
         uppercase: true,
       },
       motherName: {
         type: String,
-        required: true,
         uppercase: true,
       },
       motherContactNumber: {
         type: String,
-        required: true,
         uppercase: true,
       },
       guardianName: {

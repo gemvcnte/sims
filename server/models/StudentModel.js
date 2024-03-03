@@ -9,7 +9,7 @@ const studentSchema = new mongoose.Schema(
     },
     middleName: {
       type: String,
-      default: null, 
+      default: null,
     },
     lastName: {
       type: String,
@@ -73,19 +73,15 @@ const studentSchema = new mongoose.Schema(
     },
     fatherName: {
       type: String,
-      required: true,
     },
     fatherContactNumber: {
       type: String,
-      required: true,
     },
     motherName: {
       type: String,
-      required: true,
     },
     motherContactNumber: {
       type: String,
-      required: true,
     },
     guardianName: {
       type: String,
