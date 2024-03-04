@@ -1,3 +1,4 @@
+import { allApplicationsEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -28,9 +29,7 @@ export const AllApplicationsProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.get(
-        "http://localhost:5000/admin/all-applications",
-      );
+      const response = await axiosInstance.get(allApplicationsEndpoint);
 
       const responseData = response.data.data;
       setOriginalPendingApplications(responseData);

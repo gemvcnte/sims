@@ -1,3 +1,4 @@
+import { approvedApplicationsEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -28,9 +29,7 @@ export const ApprovedApplicationsProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.get(
-        "http://localhost:5000/admin/get-approved",
-      );
+      const response = await axiosInstance.get(approvedApplicationsEndpoint);
 
       const responseData = response.data.data;
       setOriginalPendingApplications(responseData);
