@@ -51,3 +51,9 @@ export const resetAdminPasswordEndpoint = `${baseUrl}/admin/reset-admin-password
 
 // global settings
 export const globalSettingsEndpoint = `${baseUrl}/admin/global-settings`;
+
+// monitoring page
+export const pendingApplicationsEndpoint = `${baseUrl}/admin/get-pending`;
+export const rejectedApplicationsEndpoint = `${baseUrl}/admin/get-rejected`;
+export const approvedApplicationsEndpoint = `${baseUrl}/admin/get-approved`;
+export const allApplicationsEndpoint = `${baseUrl}/admin/all-applications`;
