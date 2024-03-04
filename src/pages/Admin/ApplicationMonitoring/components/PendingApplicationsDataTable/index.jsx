@@ -35,7 +35,10 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import PendingFiltersDrawer from "./PendingFiltersDrawer";
 import axios from "axios";
 import getAuthHeaders from "@/utils/getAuthHeaders";
-import { enrollApplicationEndpoint } from "@/config/adminEndpoints";
+import {
+  enrollApplicationEndpoint,
+  rejectApplicationEndpoint,
+} from "@/config/adminEndpoints";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { toast } from "react-toastify";
@@ -59,6 +62,26 @@ const PendingApplicationsDataTable = () => {
       setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
     } catch (error) {
       showErrorNotification(error.response.data.message);
+    }
+  };
+
+  const handleReject = async (application) => {
+    try {
+      const response = await axios.patch(
+        rejectApplicationEndpoint,
+        { studentApplicationId: application._id },
+        getAuthHeaders(),
+      );
+
+      // showSuccessNotification("Application Rejected");
+      toast.success("Application Rejected", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
+      hideCard();
+    } catch (error) {
+      console.error("Error rejecting student:", error.message);
     }
   };
 
@@ -103,7 +126,7 @@ const PendingApplicationsDataTable = () => {
           className="my-1 h-8 px-4 py-0"
           onClick={(e) => {
             e.stopPropagation();
-            handleReject();
+            handleReject(row.original);
           }}
           variant="outline"
         >
