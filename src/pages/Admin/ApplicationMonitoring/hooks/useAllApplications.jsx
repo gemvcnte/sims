@@ -46,8 +46,20 @@ export const AllApplicationsProvider = ({ children }) => {
     fetchData(); // Re-fetch data
   };
 
-  const filterApplications = ({ schoolYear, semester, gradeLevel, strand }) => {
+  const filterApplications = ({
+    status,
+    schoolYear,
+    semester,
+    gradeLevel,
+    strand,
+  }) => {
     let filtered = originalPendingApplications;
+
+    if (status !== "all") {
+      filtered = filtered.filter(
+        (application) => application.status === status,
+      );
+    }
 
     if (schoolYear !== "all") {
       filtered = filtered.filter((application) =>
