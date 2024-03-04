@@ -312,8 +312,8 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
      studentProfile.guardianContactNumber = originalStudentApplication.guardianContactNumber;
      studentProfile.guardianRelationship = originalStudentApplication.guardianRelationship;
 
-     // Add schoolYear object to the schoolYear array
-     studentProfile.schoolYear.push(originalStudentApplication.schoolYear[0]);
+    // Add schoolYear object to the beginning of the schoolYear array
+    studentProfile.schoolYear.unshift(originalStudentApplication.schoolYear[0]);
 
      studentProfile.status = "enrolled";
     }
@@ -584,9 +584,13 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
 
 const getAllApproved = asyncHandler(async (req, res) => {
   try {
+    // const findApproved = await StudentApplication.find({
+    //   status: "APPROVED" || "approved",
+    // });
     const findApproved = await StudentApplication.find({
-      status: "APPROVED" || "approved",
-    });
+      status: { $in: ["ENROLLED", "enrolled"] }, 
+    }).sort({ lastName: 1 }); 
+
 
     if (!findApproved) {
       return res
@@ -605,9 +609,12 @@ const getAllApproved = asyncHandler(async (req, res) => {
 
 const getAllRejected = asyncHandler(async (req, res) => {
   try {
+    // const findRejected = await StudentApplication.find({
+    //   status: "REJECTED" || "rejected",
+    // });
     const findRejected = await StudentApplication.find({
-      status: "REJECTED" || "rejected",
-    });
+      status: { $in: ["REJECTED", "rejected"] }, 
+    }).sort({ lastName: 1 }); 
 
     if (!findRejected) {
       return res
@@ -626,9 +633,13 @@ const getAllRejected = asyncHandler(async (req, res) => {
 
 const getAllPending = asyncHandler(async (req, res) => {
   try {
+    // const findPending = await StudentApplication.find({
+    //   status: "PENDING" || "pending",
+    // });
     const findPending = await StudentApplication.find({
-      status: "PENDING" || "pending",
-    });
+      status: { $in: ["PENDING", "pending"] }, 
+    }).sort({ lastName: 1 }); 
+
     if (!findPending) {
       res
         .status(404)
@@ -637,6 +648,23 @@ const getAllPending = asyncHandler(async (req, res) => {
     res.status(200).json({
       message: "Pending records retrieved successfully. ",
       data: findPending,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+const getAllApplications = asyncHandler(async (req, res) => {
+  try {
+    const allApplications = await StudentApplication.find({})
+    .sort({ lastName: 1 }); 
+
+    if (!allApplications || allApplications.length === 0) {
+      return res.status(404).json({ message: "No applications found." });
+    }
+    res.status(200).json({
+      message: "All applications retrieved successfully.",
+      data: allApplications,
     });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
@@ -1607,6 +1635,7 @@ module.exports = {
   getAllApproved,
   getAllPending,
   getAllRejected,
+  getAllApplications,
   createClassAnnouncement,
   createSchoolAnnouncement,
   updateSchoolAnnouncement,
