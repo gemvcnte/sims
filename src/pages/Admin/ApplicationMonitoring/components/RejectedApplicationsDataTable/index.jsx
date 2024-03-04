@@ -31,7 +31,6 @@ import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/ViewStudentProfileModal";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import PendingFiltersDrawer from "./PendingFiltersDrawer";
 import axios from "axios";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import {
@@ -60,6 +59,7 @@ import {
 } from "@/components/ui/tooltip";
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useRejectedApplications } from "../../hooks/useRejectedApplications";
+import RejectedFiltersDrawer from "./RejectedFiltersDrawer";
 
 const RejectedApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -227,7 +227,7 @@ const RejectedApplicationsDataTable = () => {
             <DrawerTrigger>
               <Button variant="outline">Filters</Button>
             </DrawerTrigger>
-            <PendingFiltersDrawer />
+            <RejectedFiltersDrawer />
           </Drawer>
         </section>
 
