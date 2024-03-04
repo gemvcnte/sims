@@ -626,9 +626,13 @@ const getAllRejected = asyncHandler(async (req, res) => {
 
 const getAllPending = asyncHandler(async (req, res) => {
   try {
+    // const findPending = await StudentApplication.find({
+    //   status: "PENDING" || "pending",
+    // });
     const findPending = await StudentApplication.find({
-      status: "PENDING" || "pending",
-    });
+      status: { $in: ["PENDING", "pending"] }, 
+    }).sort({ lastName: 1 }); 
+
     if (!findPending) {
       res
         .status(404)
