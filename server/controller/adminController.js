@@ -588,7 +588,7 @@ const getAllApproved = asyncHandler(async (req, res) => {
     //   status: "APPROVED" || "approved",
     // });
     const findApproved = await StudentApplication.find({
-      status: { $in: ["APPROVED", "approved"] }, 
+      status: { $in: ["ENROLLED", "enrolled"] }, 
     }).sort({ lastName: 1 }); 
 
 
