@@ -393,10 +393,11 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("strand", e.target.value)}
             >
               <option value="">Select Strand</option>
-              <option value="gas">GAS (Academic)</option>
-              <option value="humss">HUMSS (Academic)</option>
-              <option value="stem">STEM (Academic)</option>
-              <option value="ict">ICT (TVL)</option>
+              <option value="gas">GAS</option>
+              <option value="abm">ABM</option>
+              <option value="humss">HUMSS</option>
+              <option value="stem">STEM</option>
+              <option value="ict">ICT</option>
             </select>
           </div>
         </div>
