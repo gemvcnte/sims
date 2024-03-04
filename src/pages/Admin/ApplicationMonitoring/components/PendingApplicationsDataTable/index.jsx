@@ -250,7 +250,7 @@ const PendingApplicationsDataTable = () => {
                     }}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-0">
+                      <TableCell key={cell.id} className="py-2">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
