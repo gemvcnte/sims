@@ -33,8 +33,35 @@ import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/View
 import { usePendingApplications } from "../../hooks/usePendingApplications";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import PendingFiltersDrawer from "./PendingFiltersDrawer";
+import axios from "axios";
+import getAuthHeaders from "@/utils/getAuthHeaders";
+import { enrollApplicationEndpoint } from "@/config/adminEndpoints";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import { toast } from "react-toastify";
 
 const PendingApplicationsDataTable = () => {
+  const [enrolledRowIds, setEnrolledRowIds] = useState([]);
+
+  const handleEnroll = async (application) => {
+    try {
+      const response = await axios.post(
+        enrollApplicationEndpoint,
+        { studentApplicationId: application._id },
+        getAuthHeaders(),
+      );
+
+      // showSuccessNotification("");
+      toast.success("Student Enrolled Successfully", {
+        position: "top-right",
+        autoClose: 1000,
+      });
+      setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
+    } catch (error) {
+      showErrorNotification(error.response.data.message);
+    }
+  };
+
   const { pendingApplications, filterApplications } = usePendingApplications();
 
   const columns = [
@@ -90,7 +117,7 @@ const PendingApplicationsDataTable = () => {
         <Button
           onClick={(e) => {
             e.stopPropagation();
-            handleEnroll();
+            handleEnroll(row.original);
           }}
         >
           Enroll
@@ -213,6 +240,12 @@ const PendingApplicationsDataTable = () => {
                       setSelectedRow(row.original);
                     }}
                     data-state={row.getIsSelected() ? "selected" : ""}
+                    // Add conditional rendering based on enrolledRowIds array
+                    style={{
+                      display: enrolledRowIds.includes(row.original._id)
+                        ? "none"
+                        : "table-row",
+                    }}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
