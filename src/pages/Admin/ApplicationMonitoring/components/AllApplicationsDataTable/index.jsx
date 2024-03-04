@@ -31,7 +31,6 @@ import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/ViewStudentProfileModal";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import PendingFiltersDrawer from "./PendingFiltersDrawer";
 import axios from "axios";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import {
@@ -60,6 +59,7 @@ import {
 } from "@/components/ui/tooltip";
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useAllApplications } from "../../hooks/useAllApplications";
+import AllFiltersDrawer from "./AllFiltersDrawer";
 
 const AllApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -261,7 +261,7 @@ const AllApplicationsDataTable = () => {
             <DrawerTrigger>
               <Button variant="outline">Filters</Button>
             </DrawerTrigger>
-            <PendingFiltersDrawer />
+            <AllFiltersDrawer />
           </Drawer>
         </section>
 
