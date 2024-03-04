@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useAllTeachers from "../hooks/useAllStudents";
 import {
   flexRender,
   getCoreRowModel,
@@ -30,11 +29,11 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewTeacherProfileModal from "./ViewStudentProfileModal";
-import ViewStudentProfileModal from "./ViewStudentProfileModal";
+import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/ViewStudentProfileModal";
+import { usePendingApplications } from "../../hooks/usePendingApplications";
 
-const AllStudentsTable = () => {
-  const { allTeachers, loading, error } = useAllTeachers();
+const StudentApplicationsDataTable = () => {
+  const { pendingApplications } = usePendingApplications();
 
   const columns = [
     {
@@ -75,7 +74,7 @@ const AllStudentsTable = () => {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data: allTeachers,
+    data: pendingApplications,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -235,4 +234,4 @@ const AllStudentsTable = () => {
   );
 };
 
-export default AllStudentsTable;
+export default StudentApplicationsDataTable;

@@ -1,99 +1,82 @@
 import React, { useEffect, useState } from "react";
-import { useSidebarContext } from "@contexts/SidebarContext";
-import axios from "axios";
-import StudentCard from "./components/StudentCard";
-import StudentDataModal from "./components/StudentDataModal";
-import {
-  sendUpdateRequest,
-  updateLocalApplicationState,
-  handleUpdateError,
-} from "@utils/applicationMonitoringUtils";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import Topbar from "@/components/layout/Topbar";
-import { getPendingApplicationsEndpoint } from "@/config/adminEndpoints";
-import getAuthHeaders from "@/utils/getAuthHeaders";
+import { PendingApplicationsProvider } from "./hooks/usePendingApplications";
+import PendingApplicationsDataTable from "./components/PendingApplicationsDataTable";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import RejectedApplicationsDataTable from "./components/RejectedApplicationsDataTable";
+import { RejectedApplicationsProvider } from "./hooks/useRejectedApplications";
+import ApprovedApplicationsDataTable from "./components/ApprovedApplicationsDataTable";
+import { ApprovedApplicationsProvider } from "./hooks/useApprovedApplications";
+import { AllApplicationsProvider } from "./hooks/useAllApplications";
+import AllApplicationsDataTable from "./components/AllApplicationsDataTable";
 
 export default function ApplicationMonitoring() {
-  const { toggleSidebar } = useSidebarContext();
-  const [pendingApplications, setPendingApplications] = useState([]);
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState("PENDING");
 
-  useEffect(() => {
-    const fetchPendingApplications = async () => {
-      try {
-        const response = await axios.get(
-          getPendingApplicationsEndpoint,
-          getAuthHeaders(),
-        );
-
-        setPendingApplications(response.data.data);
-      } catch (error) {
-        console.error("Error fetching pending applications:", error.message);
-      }
-    };
-    ``;
-    fetchPendingApplications();
-  }, []);
-
-  const sortedPendingApplications = [...pendingApplications].sort((a, b) => {
-    const lastNameA = a.lastName.toLowerCase();
-    const lastNameB = b.lastName.toLowerCase();
-
-    if (lastNameA < lastNameB) return -1;
-    if (lastNameA > lastNameB) return 1;
-    return 0;
-  });
-
-  const handleCardClick = (application) => {
-    setSelectedApplication(application);
-  };
-
-  const handleSaveChanges = async (editedApplication) => {
-    try {
-      const studentApplicationId = editedApplication._id;
-      const updateResponse = await sendUpdateRequest(
-        studentApplicationId,
-        editedApplication,
-      );
-
-      updateLocalApplicationState(
-        studentApplicationId,
-        editedApplication,
-        setPendingApplications,
-        setSelectedApplication,
-      );
-    } catch (error) {
-      handleUpdateError(error);
-    }
-  };
-
-  const handleModalClose = () => {
-    setSelectedApplication(null);
+  // Function to handle the change of select value
+  const handleStatusChange = (value) => {
+    setSelectedStatus(value);
   };
 
   return (
     <>
-      <Dialog onOpenChange={setSelectedApplication}>
-        <section className="w-full">
-          {selectedApplication && (
-            <StudentDataModal
-              application={selectedApplication}
-              onSave={handleSaveChanges}
-              onClose={handleModalClose}
-            />
-          )}
-          <Topbar>STUDENT APPLICATION MONITORING</Topbar>
-          <main className="flex flex-col gap-2 px-4 py-2">
-            {sortedPendingApplications.map((application) => (
-              <StudentCard
-                key={application._id}
-                application={application}
-                onClick={() => handleCardClick(application)}
-              />
-            ))}
-          </main>
-        </section>
-      </Dialog>
+      <PendingApplicationsProvider>
+        <RejectedApplicationsProvider>
+          <ApprovedApplicationsProvider>
+            <AllApplicationsProvider>
+              <main className="w-full">
+                <Topbar>STUDENT APPLICATION MONITORING</Topbar>
+
+                <section className="px-4 pt-4">
+                  <Select
+                    defaultValue="PENDING"
+                    onValueChange={handleStatusChange}
+                  >
+                    <SelectTrigger className="flex w-auto items-center gap-2">
+                      <SelectValue placeholder="" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Status</SelectLabel>
+                        <SelectItem value="PENDING">
+                          Pending Applications
+                        </SelectItem>
+                        <SelectItem value="REJECTED">
+                          Rejected Applications
+                        </SelectItem>
+                        <SelectItem value="ENROLLED">
+                          Enrolled Applications
+                        </SelectItem>
+                        <SelectItem value="ALL">All Applications</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </section>
+
+                {selectedStatus === "PENDING" && (
+                  <PendingApplicationsDataTable />
+                )}
+                {selectedStatus === "REJECTED" && (
+                  <RejectedApplicationsDataTable />
+                )}
+                {selectedStatus === "ENROLLED" && (
+                  <ApprovedApplicationsDataTable />
+                )}
+                {selectedStatus === "ALL" && <AllApplicationsDataTable />}
+              </main>
+            </AllApplicationsProvider>
+          </ApprovedApplicationsProvider>
+        </RejectedApplicationsProvider>
+      </PendingApplicationsProvider>
     </>
   );
 }

@@ -68,6 +68,7 @@ export function GlobalSetttingsDrawer({ onClose }) {
                   <SelectItem value="2025-2026">2025-2026</SelectItem>
                   <SelectItem value="2026-2027">2026-2027</SelectItem>
                   <SelectItem value="2028-2029">2028-2029</SelectItem>
+                  <SelectItem value="2029-2030">2029-2030</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

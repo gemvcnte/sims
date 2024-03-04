@@ -28,7 +28,6 @@ const InputField = ({
     value={value}
     onChange={onChange}
     name={name}
-    disabled
   />
 );
 
@@ -42,35 +41,53 @@ const selectOptions = [
   { value: "NONE", label: "None" },
 ];
 
-export default function ViewStudentProfileModal({
-  application,
-  onSave,
-  onClose,
-}) {
+export default function StudentDataModal({ application, onSave, onClose }) {
+  const [editedApplication, setEditedApplication] = useState({
+    ...application,
+    // Convert values to lowercase
+    track: application.track ? application.track.toLowerCase() : "",
+    strand: application.strand ? application.strand.toLowerCase() : "",
+    semester: application.semester ? application.semester.toLowerCase() : "",
+  });
+
+  const handleInputChange = (field, value) => {
+    if (field === "birthDate") {
+      setEditedApplication({
+        ...editedApplication,
+        [field]: value,
+      });
+    } else {
+      setEditedApplication({
+        ...editedApplication,
+        [field]: value,
+      });
+    }
+  };
+
   const handleSaveChanges = () => {
-    onSave();
-    onClose();
+    onSave && onSave();
+    onClose && onClose();
   };
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
       <form onSubmit={handleSaveChanges}>
-        {/* <DialogHeader>
+        <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
             Make changes to student's profile here. Click save when you're done.
           </DialogDescription>
-        </DialogHeader> */}
+        </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="lastName" className="text-right">
               Last Name
             </Label>
             <Input
-              disabled
               id="lastName"
               type="text"
-              defaultValue={application.lastName}
+              placeholder="Input Your Last Name"
+              defaultValue={editedApplication.lastName}
               name="lastName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               className="col-span-3"
@@ -82,10 +99,10 @@ export default function ViewStudentProfileModal({
               First Name
             </Label>
             <Input
-              disabled
               id="firstName"
               type="text"
-              defaultValue={application.firstName}
+              placeholder="Input Your First Name"
+              defaultValue={editedApplication.firstName}
               name="firstName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               className="col-span-3"
@@ -97,10 +114,10 @@ export default function ViewStudentProfileModal({
               Middle Name
             </Label>
             <Input
-              disabled
               id="middleName"
               type="text"
-              defaultValue={application.middleName}
+              placeholder="Input Your Middle Name"
+              defaultValue={editedApplication.middleName}
               name="middleName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               className="col-span-3"
@@ -112,10 +129,9 @@ export default function ViewStudentProfileModal({
               Extension Name
             </Label>
             <select
-              disabled
               required
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              value={application.extensionName}
+              value={editedApplication.extensionName}
               name="extensionName"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             >
@@ -133,7 +149,8 @@ export default function ViewStudentProfileModal({
             </Label>
             <InputField
               type="date"
-              value={application.birthDate}
+              placeholder="Input Your Birthdate (MM/DD/YY)"
+              value={editedApplication.birthDate}
               name="birthDate"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -145,9 +162,8 @@ export default function ViewStudentProfileModal({
               Gender
             </Label>
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              value={application.gender}
+              value={editedApplication.gender}
               required
               name="gender"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -165,7 +181,8 @@ export default function ViewStudentProfileModal({
             <InputField
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="text"
-              value={application.currentAddress}
+              placeholder="E.g., 123 Purok St, Barangay, Municipality"
+              value={editedApplication.currentAddress}
               name="currentAddress"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             />
@@ -178,7 +195,8 @@ export default function ViewStudentProfileModal({
             <InputField
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="email"
-              value={application.emailAddress}
+              placeholder="Input Your Email"
+              value={editedApplication.emailAddress}
               name="emailAddress"
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             />
@@ -191,7 +209,8 @@ export default function ViewStudentProfileModal({
             <InputField
               required
               type="text"
-              value={application.fatherName}
+              placeholder="Firstname Middlename Lastname"
+              value={editedApplication.fatherName}
               onChange={(e) => handleInputChange("fatherName", e.target.value)}
               name="fatherName"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -205,7 +224,8 @@ export default function ViewStudentProfileModal({
             <InputField
               required
               type="text"
-              value={application.motherName}
+              placeholder="Firstname Middlename Lastname"
+              value={editedApplication.motherName}
               onChange={(e) => handleInputChange("motherName", e.target.value)}
               name="motherName"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -219,7 +239,8 @@ export default function ViewStudentProfileModal({
             <InputField
               required
               type="number"
-              value={application.fatherContactNumber}
+              placeholder="+639xxxxxxxxx"
+              value={editedApplication.fatherContactNumber}
               onChange={(e) =>
                 handleInputChange("fatherContactNumber", e.target.value)
               }
@@ -235,7 +256,8 @@ export default function ViewStudentProfileModal({
             <InputField
               required
               type="number"
-              value={application.motherContactNumber}
+              placeholder="+639xxxxxxxxx"
+              value={editedApplication.motherContactNumber}
               onChange={(e) =>
                 handleInputChange("motherContactNumber", e.target.value)
               }
@@ -250,7 +272,8 @@ export default function ViewStudentProfileModal({
             </Label>
             <InputField
               type="text"
-              value={application.guardianName}
+              placeholder="Firstname Middlename Lastname"
+              value={editedApplication.guardianName}
               onChange={(e) =>
                 handleInputChange("guardianName", e.target.value)
               }
@@ -265,7 +288,8 @@ export default function ViewStudentProfileModal({
             </Label>
             <InputField
               type="number"
-              value={application.guardianContactNumber}
+              placeholder="+639xxxxxxxxx"
+              value={editedApplication.guardianContactNumber}
               onChange={(e) =>
                 handleInputChange("guardianContactNumber", e.target.value)
               }
@@ -279,10 +303,9 @@ export default function ViewStudentProfileModal({
               Guardian Relationship
             </Label>
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               name="guardianRelationship"
-              value={application.guardianRelationship}
+              value={editedApplication.guardianRelationship}
               onChange={(e) =>
                 handleInputChange("guardianRelationship", e.target.value)
               }
@@ -299,9 +322,9 @@ export default function ViewStudentProfileModal({
               LRN
             </Label>
             <input
-              disabled
               type="number"
-              value={application.lrn}
+              placeholder="Input Your LRN"
+              value={editedApplication.lrn}
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               onChange={(e) => handleInputChange("lrn", e.target.value)}
             />
@@ -312,20 +335,14 @@ export default function ViewStudentProfileModal({
               School Year
             </Label>
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="schoolYear"
-              value={application.schoolYear[0].year}
+              value={editedApplication.schoolYear}
               onChange={(e) => handleInputChange("schoolYear", e.target.value)}
             >
               <option value="">Select School Year</option>
               <option value="2023-2024">2023-2024</option>
               <option value="2024-2025">2024-2025</option>
-              <option value="2025-2026">2025-2026</option>
-              <option value="2026-2027">2026-2027</option>
-              <option value="2027-2028">2027-2028</option>
-              <option value="2028-2029">2028-2029</option>
-              <option value="2029-2030">2029-2030</option>
             </select>
           </div>
 
@@ -334,10 +351,9 @@ export default function ViewStudentProfileModal({
               Semester
             </Label>
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="semester"
-              value={application.schoolYear[0].semester}
+              value={editedApplication.semester}
               onChange={(e) => handleInputChange("semester", e.target.value)}
             >
               <option value="">Select Semester</option>
@@ -347,31 +363,13 @@ export default function ViewStudentProfileModal({
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="gradeLevel" className="text-right">
-              Grade Level
-            </Label>
-            <select
-              disabled
-              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              id="gradeLevel"
-              value={application.schoolYear[0].gradeLevel}
-              onChange={(e) => handleInputChange("gradeLevel", e.target.value)}
-            >
-              <option value="">Select Grade Level</option>
-              <option value="11">Grade 11</option>
-              <option value="12">Grade 12</option>
-            </select>
-          </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="track" className="text-right">
               Track
             </Label>
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="track"
-              value={application.schoolYear[0].track}
+              value={editedApplication.track}
               onChange={(e) => handleInputChange("track", e.target.value)}
             >
               <option value="">Select Track</option>
@@ -386,25 +384,21 @@ export default function ViewStudentProfileModal({
             </Label>
 
             <select
-              disabled
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               id="strand"
-              value={application.schoolYear[0].strand}
+              value={editedApplication.strand}
               onChange={(e) => handleInputChange("strand", e.target.value)}
             >
               <option value="">Select Strand</option>
-              <option value="gas">GAS</option>
-              <option value="abm">ABM</option>
-              <option value="humss">HUMSS</option>
-              <option value="stem">STEM</option>
-              <option value="ict">ICT</option>
+              <option value="gas">GAS (Academic)</option>
+              <option value="humss">HUMSS (Academic)</option>
+              <option value="stem">STEM (Academic)</option>
+              <option value="ict">ICT (TVL)</option>
             </select>
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" variant="outline">
-            Close
-          </Button>
+          <Button type="submit">Save changes</Button>
         </DialogFooter>
       </form>
     </DialogContent>
