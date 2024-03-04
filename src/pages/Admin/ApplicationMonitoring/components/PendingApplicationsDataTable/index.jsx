@@ -259,11 +259,19 @@ const PendingApplicationsDataTable = () => {
     <div className="w-full px-4">
       <div className="flex items-center justify-between gap-2 py-4">
         <section className="flex w-full gap-2">
-          <Input
+          {/* <Input
             placeholder="Filter lrns..."
             value={table.getColumn("lrn")?.getFilterValue() || ""}
             onChange={(event) =>
               table.getColumn("lrn")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          /> */}
+          <Input
+            placeholder="Search by Last Name..."
+            value={table.getColumn("lastName")?.getFilterValue() || ""}
+            onChange={(event) =>
+              table.getColumn("lastName")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
