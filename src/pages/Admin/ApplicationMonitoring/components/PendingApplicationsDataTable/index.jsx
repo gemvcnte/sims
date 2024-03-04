@@ -59,6 +59,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -251,7 +252,7 @@ const PendingApplicationsDataTable = () => {
   };
 
   if (loading) {
-    return <div>loading</div>;
+    return <SkeletonApplicationsDataTable />;
   }
 
   return (
