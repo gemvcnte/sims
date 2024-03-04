@@ -33,7 +33,7 @@ import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/View
 import { usePendingApplications } from "../../hooks/usePendingApplications";
 
 const StudentApplicationsDataTable = () => {
-  const { pendingApplications, filterBySchoolYear } = usePendingApplications();
+  const { pendingApplications, filterApplications } = usePendingApplications();
 
   const columns = [
     {
@@ -102,10 +102,28 @@ const StudentApplicationsDataTable = () => {
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
 
+  const [selectedSchoolYear, setSelectedSchoolYear] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
+  const [selectedGradeLevel, setSelectedGradeLevel] = useState("");
+
   const handleSchoolYearChange = (event) => {
-    const selectedYear = event.target.value;
-    filterBySchoolYear(selectedYear);
-    console.log(pendingApplications);
+    setSelectedSchoolYear(event.target.value);
+  };
+
+  const handleSemesterChange = (event) => {
+    setSelectedSemester(event.target.value);
+  };
+
+  const handleGradeLevelChange = (event) => {
+    setSelectedGradeLevel(event.target.value);
+  };
+
+  const handleFilterClick = () => {
+    filterApplications(
+      selectedSchoolYear,
+      selectedSemester,
+      //   selectedGradeLevel,
+    );
   };
 
   const table = useReactTable({
@@ -152,8 +170,28 @@ const StudentApplicationsDataTable = () => {
           <option value="2023-2024">2023-2024</option>
           <option value="2024-2025">2024-2025</option>
           <option value="2025-2026">2025-2026</option>
+          <option value="2026-2027">2026-2027</option>
         </select>
       </section>
+
+      <div className="grid grid-cols-4 items-center gap-4">
+        <select
+          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          id="semester"
+          onChange={handleSemesterChange}
+          //   value={editedApplication.semester}
+          //   onChange={(e) => handleInputChange("semester", e.target.value)}
+        >
+          <option value="">Select Semester</option>
+          <option value="first semester">1st Semester</option>
+          <option value="second semester">2nd Semester</option>
+        </select>
+      </div>
+
+      <div className="grid grid-cols-4 items-center gap-4">
+        <Button onClick={handleFilterClick}>filter</Button>
+      </div>
+
       <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter lrns..."

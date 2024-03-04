@@ -40,30 +40,13 @@ export const PendingApplicationsProvider = ({ children }) => {
     fetchData(); // Re-fetch data
   };
 
-  const filterBySchoolYear = (year) => {
-    if (year === "all") {
-      setPendingApplications(originalPendingApplications);
-    } else {
-      const filtered = originalPendingApplications.filter((application) =>
-        application.schoolYear.some((schoolYear) => schoolYear.year === year),
-      );
-      setPendingApplications(filtered);
-    }
-  };
-
-  const filterBySemester = (semester) => {
-    const filtered = pendingApplications.filter((application) =>
+  const filterApplications = (year, semester) => {
+    const filtered = originalPendingApplications.filter((application) =>
       application.schoolYear.some(
-        (schoolYear) => schoolYear.semester === semester,
-      ),
-    );
-    setPendingApplications(filtered);
-  };
-
-  const filterByGradeLevel = (gradeLevel) => {
-    const filtered = pendingApplications.filter((application) =>
-      application.schoolYear.some(
-        (schoolYear) => schoolYear.gradeLevel === gradeLevel,
+        (schoolYear) =>
+          schoolYear.year === year &&
+          schoolYear.semester === semester,
+        //   schoolYear.gradeLevel === gradeLevel,
       ),
     );
     setPendingApplications(filtered);
@@ -81,9 +64,7 @@ export const PendingApplicationsProvider = ({ children }) => {
       value={{
         pendingApplications,
         refetchData,
-        filterBySchoolYear,
-        filterBySemester,
-        filterByGradeLevel,
+        filterApplications,
         filterByStrand,
       }}
     >
