@@ -102,28 +102,21 @@ const StudentApplicationsDataTable = () => {
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const [selectedSchoolYear, setSelectedSchoolYear] = useState("");
-  const [selectedSemester, setSelectedSemester] = useState("");
-  const [selectedGradeLevel, setSelectedGradeLevel] = useState("");
+  const [filters, setFilters] = useState({
+    schoolYear: "all",
+    semester: "all",
+    gradeLevel: "",
+  });
 
-  const handleSchoolYearChange = (event) => {
-    setSelectedSchoolYear(event.target.value);
-  };
-
-  const handleSemesterChange = (event) => {
-    setSelectedSemester(event.target.value);
-  };
-
-  const handleGradeLevelChange = (event) => {
-    setSelectedGradeLevel(event.target.value);
+  const handleFilterChange = (filterName, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterName]: value,
+    }));
   };
 
   const handleFilterClick = () => {
-    filterApplications(
-      selectedSchoolYear,
-      selectedSemester,
-      //   selectedGradeLevel,
-    );
+    filterApplications(filters);
   };
 
   const table = useReactTable({
@@ -160,33 +153,40 @@ const StudentApplicationsDataTable = () => {
 
   return (
     <div className="w-full px-4">
-      <section className="" id="filter">
-        <select
-          className=" col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          id="schoolYear"
-          onChange={handleSchoolYearChange}
-        >
-          <option value="all">All School Year</option>
-          <option value="2023-2024">2023-2024</option>
-          <option value="2024-2025">2024-2025</option>
-          <option value="2025-2026">2025-2026</option>
-          <option value="2026-2027">2026-2027</option>
-        </select>
-      </section>
+      <select
+        className=" col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="schoolYear"
+        value={filters.schoolYear}
+        onChange={(e) => handleFilterChange("schoolYear", e.target.value)}
+      >
+        <option value="all">All School Year</option>
+        <option value="2023-2024">2023-2024</option>
+        <option value="2024-2025">2024-2025</option>
+        <option value="2025-2026">2025-2026</option>
+        <option value="2026-2027">2026-2027</option>
+      </select>
 
-      <div className="grid grid-cols-4 items-center gap-4">
-        <select
-          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          id="semester"
-          onChange={handleSemesterChange}
-          //   value={editedApplication.semester}
-          //   onChange={(e) => handleInputChange("semester", e.target.value)}
-        >
-          <option value="">Select Semester</option>
-          <option value="first semester">1st Semester</option>
-          <option value="second semester">2nd Semester</option>
-        </select>
-      </div>
+      <select
+        className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="semester"
+        value={filters.semester}
+        onChange={(e) => handleFilterChange("semester", e.target.value)}
+      >
+        <option value="all">All Semester</option>
+        <option value="first semester">1st Semester</option>
+        <option value="second semester">2nd Semester</option>
+      </select>
+
+      <select
+        className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        id="gradeLevel"
+        value={filters.gradeLevel}
+        onChange={(e) => handleFilterChange("gradeLevel", e.target.value)}
+      >
+        <option value="">All Grade Level</option>
+        <option value="11">Grade 11</option>
+        <option value="12">Grade 12</option>
+      </select>
 
       <div className="grid grid-cols-4 items-center gap-4">
         <Button onClick={handleFilterClick}>filter</Button>

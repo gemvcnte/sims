@@ -40,15 +40,37 @@ export const PendingApplicationsProvider = ({ children }) => {
     fetchData(); // Re-fetch data
   };
 
-  const filterApplications = (year, semester) => {
-    const filtered = originalPendingApplications.filter((application) =>
-      application.schoolYear.some(
-        (schoolYear) =>
-          schoolYear.year === year &&
-          schoolYear.semester === semester,
-        //   schoolYear.gradeLevel === gradeLevel,
-      ),
-    );
+  const filterApplications = ({ schoolYear, semester, gradeLevel }) => {
+    let filtered = originalPendingApplications;
+
+    if (schoolYear !== "all") {
+      filtered = filtered.filter((application) =>
+        application.schoolYear.some(
+          (schoolYearItem) => schoolYearItem.year === schoolYear,
+        ),
+      );
+    }
+
+    if (semester !== "all") {
+      filtered = filtered.filter((application) =>
+        application.schoolYear.some(
+          (schoolYearItem) => schoolYearItem.semester === semester,
+        ),
+      );
+    }
+
+    if (gradeLevel !== "") {
+      const gradeLevelNum = parseInt(gradeLevel, 10);
+      console.log("Filter Grade Level:", gradeLevelNum); // Log the filter value
+      filtered = filtered.filter((application) =>
+        application.schoolYear.some((schoolYearItem) => {
+          console.log("Data Grade Level:", schoolYearItem.gradeLevel); // Log the data value
+          return schoolYearItem.gradeLevel === gradeLevelNum;
+        }),
+      );
+    }
+
+    console.log(filtered);
     setPendingApplications(filtered);
   };
 
