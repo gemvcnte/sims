@@ -654,6 +654,23 @@ const getAllPending = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllApplications = asyncHandler(async (req, res) => {
+  try {
+    const allApplications = await StudentApplication.find({})
+    .sort({ lastName: 1 }); 
+
+    if (!allApplications || allApplications.length === 0) {
+      return res.status(404).json({ message: "No applications found." });
+    }
+    res.status(200).json({
+      message: "All applications retrieved successfully.",
+      data: allApplications,
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
 const createClassroom = asyncHandler(async (req, res) => {
   try {
     const { sectionName, gradeLevel, adviser, strand } = req.body;
@@ -1618,6 +1635,7 @@ module.exports = {
   getAllApproved,
   getAllPending,
   getAllRejected,
+  getAllApplications,
   createClassAnnouncement,
   createSchoolAnnouncement,
   updateSchoolAnnouncement,

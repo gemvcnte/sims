@@ -27,6 +27,7 @@ router.get("/get-all-students", verifyToken, adminController.getAllStudents); //
 router.get("/get-pending", verifyToken, adminController.getAllPending); // /pending
 router.get("/get-approved", verifyToken, adminController.getAllApproved); // /approved
 router.get("/get-rejected", verifyToken, adminController.getAllRejected); // /rejected
+router.get("/all-applications", verifyToken, adminController.getAllApplications); // /all
 router.get(
   "/get-specific-student",
   verifyToken,
