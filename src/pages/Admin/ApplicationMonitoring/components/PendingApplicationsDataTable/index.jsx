@@ -42,6 +42,17 @@ import {
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { toast } from "react-toastify";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -148,16 +159,39 @@ const PendingApplicationsDataTable = () => {
       header: "",
       cell: ({ row }) => (
         <span className="flex gap-4">
-          <Button
-            className="my-1 h-8 px-4 py-0"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleReject(row.original);
-            }}
-            variant="outline"
-          >
-            Reject
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                className="my-1 h-8 px-4 py-0"
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                Reject
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone and will permanently reject the
+                  student's application status.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleReject(row.original);
+                  }}
+                >
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           <Button
             className="my-1 h-8 px-4 py-0"
