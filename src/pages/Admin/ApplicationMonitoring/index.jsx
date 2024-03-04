@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Topbar from "@/components/layout/Topbar";
 import { PendingApplicationsProvider } from "./hooks/usePendingApplications";
-import StudentApplicationsDataTable from "./components/StudentApplicationsDataTable";
+import PendingApplicationsDataTable from "./components/PendingApplicationsDataTable";
 
 export default function ApplicationMonitoring() {
   return (
@@ -11,7 +11,7 @@ export default function ApplicationMonitoring() {
           <Topbar>STUDENT APPLICATION MONITORING</Topbar>
 
           <section>
-            <StudentApplicationsDataTable />
+            <PendingApplicationsDataTable />
           </section>
         </main>
       </PendingApplicationsProvider>
