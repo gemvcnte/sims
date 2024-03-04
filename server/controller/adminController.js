@@ -584,9 +584,13 @@ const getSpecificStudent = asyncHandler(async (req, res) => {
 
 const getAllApproved = asyncHandler(async (req, res) => {
   try {
+    // const findApproved = await StudentApplication.find({
+    //   status: "APPROVED" || "approved",
+    // });
     const findApproved = await StudentApplication.find({
-      status: "APPROVED" || "approved",
-    });
+      status: { $in: ["APPROVED", "approved"] }, 
+    }).sort({ lastName: 1 }); 
+
 
     if (!findApproved) {
       return res
@@ -608,7 +612,7 @@ const getAllRejected = asyncHandler(async (req, res) => {
     // const findRejected = await StudentApplication.find({
     //   status: "REJECTED" || "rejected",
     // });
-    const findPending = await StudentApplication.find({
+    const findRejected = await StudentApplication.find({
       status: { $in: ["REJECTED", "rejected"] }, 
     }).sort({ lastName: 1 }); 
 
