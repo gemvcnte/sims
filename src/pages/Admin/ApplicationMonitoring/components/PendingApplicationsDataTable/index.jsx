@@ -90,13 +90,13 @@ const PendingApplicationsDataTable = () => {
         autoClose: 1000,
       });
       setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
-      hideCard();
     } catch (error) {
       console.error("Error rejecting student:", error.message);
     }
   };
 
-  const { pendingApplications, filterApplications } = usePendingApplications();
+  const { pendingApplications, loading, refetchData } =
+    usePendingApplications();
 
   const columns = [
     {
@@ -243,6 +243,10 @@ const PendingApplicationsDataTable = () => {
     setIsModalOpen(false);
     setSelectedRow(null);
   };
+
+  if (loading) {
+    return <div>loading</div>;
+  }
 
   return (
     <div className="w-full px-4">

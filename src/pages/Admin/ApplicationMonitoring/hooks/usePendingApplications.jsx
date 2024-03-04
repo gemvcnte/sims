@@ -17,12 +17,16 @@ export const PendingApplicationsProvider = ({ children }) => {
   const [originalPendingApplications, setOriginalPendingApplications] =
     useState([]);
   const [pendingApplications, setPendingApplications] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
   }, []); // Fetch data on mount
 
   const fetchData = async () => {
+    setLoading(true);
+
     try {
       const response = await axiosInstance.get(
         "http://localhost:5000/admin/get-pending",
@@ -33,6 +37,8 @@ export const PendingApplicationsProvider = ({ children }) => {
       setPendingApplications(responseData);
     } catch (error) {
       console.error("Error fetching pending applications:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,6 +94,8 @@ export const PendingApplicationsProvider = ({ children }) => {
         pendingApplications,
         refetchData,
         filterApplications,
+        loading,
+        error,
       }}
     >
       {children}
