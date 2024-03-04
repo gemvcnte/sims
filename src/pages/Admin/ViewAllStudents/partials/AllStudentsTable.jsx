@@ -212,7 +212,7 @@ const AllStudentsTable = () => {
           Total of {""}
           {table.getFilteredRowModel().rows.length} student(s).
         </div>
-        {/* <div className="space-x-2">
+        <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
@@ -229,7 +229,7 @@ const AllStudentsTable = () => {
           >
             Next
           </Button>
-        </div> */}
+        </div>
       </footer>
     </div>
   );
