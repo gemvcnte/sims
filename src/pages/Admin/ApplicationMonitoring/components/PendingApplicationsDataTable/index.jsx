@@ -148,7 +148,7 @@ const PendingApplicationsDataTable = () => {
           className="max-w-sm"
         />
 
-        <Drawer>
+        <Drawer dismissible={true}>
           <DrawerTrigger>
             <Button variant="outline">Filters</Button>
           </DrawerTrigger>
