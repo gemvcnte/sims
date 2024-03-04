@@ -82,20 +82,12 @@ export const PendingApplicationsProvider = ({ children }) => {
     setPendingApplications(filtered);
   };
 
-  const filterByStrand = (strand) => {
-    const filtered = pendingApplications.filter((application) =>
-      application.schoolYear.some((schoolYear) => schoolYear.strand === strand),
-    );
-    setPendingApplications(filtered);
-  };
-
   return (
     <PendingApplicationsContext.Provider
       value={{
         pendingApplications,
         refetchData,
         filterApplications,
-        filterByStrand,
       }}
     >
       {children}
