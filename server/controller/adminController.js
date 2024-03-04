@@ -312,8 +312,8 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
      studentProfile.guardianContactNumber = originalStudentApplication.guardianContactNumber;
      studentProfile.guardianRelationship = originalStudentApplication.guardianRelationship;
 
-     // Add schoolYear object to the schoolYear array
-     studentProfile.schoolYear.push(originalStudentApplication.schoolYear[0]);
+    // Add schoolYear object to the beginning of the schoolYear array
+    studentProfile.schoolYear.unshift(originalStudentApplication.schoolYear[0]);
 
      studentProfile.status = "enrolled";
     }
