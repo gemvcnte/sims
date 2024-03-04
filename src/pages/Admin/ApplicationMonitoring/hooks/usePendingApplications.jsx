@@ -40,7 +40,7 @@ export const PendingApplicationsProvider = ({ children }) => {
     fetchData(); // Re-fetch data
   };
 
-  const filterApplications = ({ schoolYear, semester, gradeLevel }) => {
+  const filterApplications = ({ schoolYear, semester, gradeLevel, strand }) => {
     let filtered = originalPendingApplications;
 
     if (schoolYear !== "all") {
@@ -67,6 +67,14 @@ export const PendingApplicationsProvider = ({ children }) => {
           console.log("Data Grade Level:", schoolYearItem.gradeLevel); // Log the data value
           return schoolYearItem.gradeLevel === gradeLevelNum;
         }),
+      );
+    }
+
+    if (strand !== "all") {
+      filtered = filtered.filter((application) =>
+        application.schoolYear.some(
+          (schoolYearItem) => schoolYearItem.strand === strand,
+        ),
       );
     }
 
