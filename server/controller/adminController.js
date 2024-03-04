@@ -605,9 +605,12 @@ const getAllApproved = asyncHandler(async (req, res) => {
 
 const getAllRejected = asyncHandler(async (req, res) => {
   try {
-    const findRejected = await StudentApplication.find({
-      status: "REJECTED" || "rejected",
-    });
+    // const findRejected = await StudentApplication.find({
+    //   status: "REJECTED" || "rejected",
+    // });
+    const findPending = await StudentApplication.find({
+      status: { $in: ["REJECTED", "rejected"] }, 
+    }).sort({ lastName: 1 }); 
 
     if (!findRejected) {
       return res
