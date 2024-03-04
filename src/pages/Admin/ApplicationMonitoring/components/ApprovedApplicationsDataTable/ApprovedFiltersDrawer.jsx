@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { usePendingApplications } from "../../hooks/usePendingApplications";
 import {
   DrawerClose,
   DrawerContent,
@@ -8,9 +7,10 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import { useApprovedApplications } from "../../hooks/useApprovedApplications";
 
-export default function PendingFiltersDrawer() {
-  const { filterApplications } = usePendingApplications();
+export default function ApprovedFiltersDrawer() {
+  const { filterApplications } = useApprovedApplications();
 
   const [filters, setFilters] = useState({
     schoolYear: "all",
