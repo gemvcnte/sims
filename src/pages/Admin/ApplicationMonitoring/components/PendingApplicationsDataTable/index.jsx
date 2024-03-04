@@ -100,6 +100,7 @@ const PendingApplicationsDataTable = () => {
       header: "",
       cell: ({ row }) => (
         <Button
+          className="my-1 h-8 px-4 py-0"
           onClick={(e) => {
             e.stopPropagation();
             handleReject();
@@ -115,6 +116,7 @@ const PendingApplicationsDataTable = () => {
       header: "",
       cell: ({ row }) => (
         <Button
+          className="my-1 h-8 px-4 py-0"
           onClick={(e) => {
             e.stopPropagation();
             handleEnroll(row.original);
@@ -248,7 +250,7 @@ const PendingApplicationsDataTable = () => {
                     }}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="py-0">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
