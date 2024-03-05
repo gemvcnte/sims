@@ -133,5 +133,11 @@ router.get('/global-settings', adminController.getGlobalSettings);
 router.patch('/global-settings', verifyToken, adminController.updateGlobalSettings);
 
 
+// updating students in class
+router.get('/students-in-specific-class', adminController.getStudentsInSpecificClass);
+router.get('/students-in-class-and-no-class', adminController.getStudentsInClassAndHaveNoClass);
+
+
+
 
 module.exports = router;

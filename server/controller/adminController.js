@@ -1615,6 +1615,67 @@ console.log(globalSettings)
 
 
 
+const getStudentsInSpecificClass = async (req, res) => {
+  try {
+    const { sectionId } = req.body;
+
+    // Find the classroom with the given sectionId
+    const classroom = await Classroom.findById(sectionId);
+
+    if (!classroom) {
+      return res.status(404).json({ message: 'Classroom not found.' });
+    }
+
+    // Extract LRNs of students in the classroom
+    const lrns = classroom.students.map(student => student.lrn);
+    console.log(lrns)
+
+    // Find students based on LRNs within the specified school year and semester
+    const students = await Student.find({ lrn: { $in: lrns } });
+    console.log(students)
+
+    // Return the sorted students
+    return res.status(200).json({ message: 'Students retrieved successfully.', students });
+  } catch (error) {
+    return res.status(500).json({ message: `Error retrieving students: ${error}` });
+  }
+};
+
+
+const getStudentsInClassAndHaveNoClass = async (req, res) => {
+  try {
+    const { sectionSchoolYear, sectionSemester, sectionId } = req.body;
+
+    // Find students in the given section with the specified school year and semester
+    const studentsInSection = await Student.find({
+      'schoolYear.year': sectionSchoolYear,
+      'schoolYear.semester': sectionSemester,
+      sectionId
+    }).sort({ lastName: 1 });
+
+    // Find students with no class for the specified school year and semester
+    const studentsWithNoClass = await Student.find({
+      'schoolYear.year': sectionSchoolYear,
+      'schoolYear.semester': sectionSemester,
+      $or: [
+        { sectionId: { $eq: null } },
+        { sectionId: '' }
+      ]
+    }).sort({ lastName: 1 });
+
+    // Merge the two arrays of students
+    const mergedStudents = [...studentsInSection, ...studentsWithNoClass];
+
+    // Return the merged and sorted students
+    return res.status(200).json({ message: 'Students retrieved successfully.', students: mergedStudents });
+  } catch (error) {
+    return res.status(500).json({ message: `Error retrieving students: ${error}` });
+  }
+};
+
+
+
+
 
 module.exports = {
   getAllAdmins,
@@ -1678,6 +1739,8 @@ module.exports = {
   getAllAdminsAccounts,
   getGlobalSettings,
   updateGlobalSettings,
+  getStudentsInSpecificClass,
+  getStudentsInClassAndHaveNoClass,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
