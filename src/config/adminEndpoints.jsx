@@ -57,3 +57,7 @@ export const pendingApplicationsEndpoint = `${baseUrl}/admin/get-pending`;
 export const rejectedApplicationsEndpoint = `${baseUrl}/admin/get-rejected`;
 export const approvedApplicationsEndpoint = `${baseUrl}/admin/get-approved`;
 export const allApplicationsEndpoint = `${baseUrl}/admin/all-applications`;
+
+// updating students in class
+export const getStudentsInSpecificClassEndpoint = `${baseUrl}/admin/students-in-specific-class`;
+export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/students-in-class-and-no-class`;

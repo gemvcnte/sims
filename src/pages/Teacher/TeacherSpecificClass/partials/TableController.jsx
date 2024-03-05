@@ -1,9 +1,9 @@
 import React from "react";
 import { useClassNav } from "../contexts/ClassNavContext";
-import StudentsTable from "./StudentsTable";
 import SubjectsTable from "./SubjectsTable";
 import ScheduleTable from "./ScheduleTable";
 import GradesTable from "./GradesTable";
+import StudentsTable from "./StudentsTable";
 
 export default function TableController() {
   const { selectedTab, setTab } = useClassNav();
