@@ -57,6 +57,18 @@ const EditingStudentsInClassDataTable = () => {
     fetchStudentsInClassAndNoClass(sectionId);
   };
 
+  const getStrand = (student) => {
+    // Assuming you want to access the first schoolYear entry
+    const schoolYear = student.schoolYear[0];
+    return schoolYear ? schoolYear.strand : "";
+  };
+
+  const getGradeLevel = (student) => {
+    // Assuming you want to access the first schoolYear entry
+    const schoolYear = student.schoolYear[0];
+    return schoolYear ? schoolYear.gradeLevel : "";
+  };
+
   const columns = [
     {
       accessorKey: "lastName",
@@ -72,6 +84,17 @@ const EditingStudentsInClassDataTable = () => {
       accessorKey: "lrn",
       header: "LRN",
       cell: ({ row }) => <div>{row.getValue("lrn")}</div>,
+    },
+    {
+      accessorKey: "gradeLevel",
+      header: "Grade Level",
+      cell: ({ row }) => <div>{getGradeLevel(row.original)}</div>,
+    },
+
+    {
+      accessorKey: "strand",
+      header: "Strand",
+      cell: ({ row }) => <div>{getStrand(row.original)}</div>,
     },
 
     {
