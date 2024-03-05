@@ -138,8 +138,8 @@ const StudentsInClassDataTable = () => {
   }
 
   return (
-    <div className="w-full px-4">
-      <div className="flex items-center justify-between gap-2 py-4">
+    <div className="w-full">
+      <div className="flex items-center justify-between gap-2 pb-4">
         <section className="flex w-full gap-2">
           {/* <Input
             placeholder="Filter lrns..."
