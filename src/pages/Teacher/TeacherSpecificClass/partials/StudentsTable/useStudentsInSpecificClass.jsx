@@ -22,9 +22,12 @@ export const StudentsInSpecificClassProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`/students-in-specific-class`, {
-        sectionId,
-      });
+      const response = await axios.post(
+        `http://localhost:5000/admin/students-in-specific-class`,
+        {
+          sectionId,
+        },
+      );
       setStudents(response.data.students);
     } catch (error) {
       setError(error.message);
