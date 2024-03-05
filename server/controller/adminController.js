@@ -673,7 +673,7 @@ const getAllApplications = asyncHandler(async (req, res) => {
 
 const createClassroom = asyncHandler(async (req, res) => {
   try {
-    const { sectionName, gradeLevel, adviser, strand } = req.body;
+    const { schoolYear, semester, sectionName, gradeLevel, adviser, strand } = req.body;
 
     const existingClass = await Classroom.findOne({ sectionName, adviser });
 
@@ -684,6 +684,8 @@ const createClassroom = asyncHandler(async (req, res) => {
     }
 
     const classroom = new Classroom({
+      schoolYear,
+      semester,
       sectionName,
       gradeLevel,
       adviser,
