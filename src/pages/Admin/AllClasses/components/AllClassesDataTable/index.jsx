@@ -68,17 +68,20 @@ const AllClassesDataTable = () => {
     },
     {
       accessorKey: "gradeLevel",
-      header: "Grade",
+      header: "Grade Level",
+      // header: "Grade",
       cell: ({ row }) => <div>{row.getValue("gradeLevel")}</div>,
     },
     {
       accessorKey: "totalStudents",
-      header: "Students",
+      header: "Total Students",
+      // header: "Students",
       cell: ({ row }) => <div className="">{row.original.students.length}</div>,
     },
     {
       accessorKey: "totalSubjects",
-      header: "Subjects",
+      header: "Total Subjects",
+      // header: "Subjects",
       cell: ({ row }) => <div className="">{row.original.subjects.length}</div>,
     },
 
@@ -298,7 +301,7 @@ const AllClassesDataTable = () => {
         <div className="flex-1 text-sm text-muted-foreground">
           Total of {""}
           {table.getFilteredRowModel().rows.length} {""}
-          student(s).
+          section(s).
         </div>
         <div className="space-x-2">
           <Button
