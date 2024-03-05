@@ -30,7 +30,7 @@ function ClassNav({ className, ...props }) {
         Students
       </p>
 
-      <p
+      {/* <p
         className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
           selectedTab === "grades" &&
           "border-b-2 border-foreground !text-foreground"
@@ -38,7 +38,7 @@ function ClassNav({ className, ...props }) {
         onClick={() => handleTabClick("grades")}
       >
         Grades
-      </p>
+      </p> */}
 
       {/* {isAdviser && ( */}
       <p

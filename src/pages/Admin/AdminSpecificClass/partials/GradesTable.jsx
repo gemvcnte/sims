@@ -162,34 +162,6 @@ export default function GradesTable() {
 
   return (
     <main className="p-4">
-      <header className="mb-4 flex justify-between gap-4">
-        <div className="flex gap-4">
-          <Button
-            variant="outline"
-            onClick={() => setIsEditing((prev) => !prev)}
-          >
-            {isEditing ? "Cancel Editing" : "Edit Grades"}
-          </Button>
-          {isEditing && (
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
-          )}
-        </div>
-        <div>
-          <select
-            onChange={(e) => setSelectedSubject(e.target.value)}
-            value={selectedSubject}
-            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <option value="">Select Subject</option>
-            {filteredSubjects.map((subject) => (
-              <option key={subject._id} value={subject.subjectName}>
-                {subject.subjectName}
-              </option>
-            ))}
-          </select>
-        </div>
-      </header>
-
       <Table>
         {classDetails?.students.length === 0 && !isEditing && (
           <TableCaption className="pb-4">No Students Found</TableCaption>

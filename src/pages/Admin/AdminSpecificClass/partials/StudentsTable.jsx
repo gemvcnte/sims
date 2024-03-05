@@ -81,20 +81,6 @@ export default function StudentsTable() {
 
   return (
     <main className="p-4">
-      {isAdviser && (
-        <div className="mb-4 flex gap-4">
-          <Button
-            variant="outline"
-            onClick={() => setIsEditing((prev) => !prev)}
-          >
-            {isEditing ? "Cancel Editing" : "Edit Students"}
-          </Button>
-          {isEditing && (
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
-          )}
-        </div>
-      )}
-
       <Table>
         {classDetails?.students.length === 0 && !isEditing && (
           <TableCaption className="pb-4">No Students Found</TableCaption>
