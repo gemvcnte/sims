@@ -62,46 +62,6 @@ import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useSections } from "../../hooks/useSections";
 
 const AllClassesDataTable = () => {
-  const [enrolledRowIds, setEnrolledRowIds] = useState([]);
-
-  const handleEnroll = async (application) => {
-    try {
-      const response = await axios.post(
-        enrollApplicationEndpoint,
-        { studentApplicationId: application._id },
-        getAuthHeaders(),
-      );
-
-      // showSuccessNotification("");
-      toast.success("Student Enrolled Successfully", {
-        position: "top-right",
-        autoClose: 1000,
-      });
-      setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
-    } catch (error) {
-      showErrorNotification(error.response.data.message);
-    }
-  };
-
-  const handleReject = async (application) => {
-    try {
-      const response = await axios.patch(
-        rejectApplicationEndpoint,
-        { studentApplicationId: application._id },
-        getAuthHeaders(),
-      );
-
-      // showSuccessNotification("Application Rejected");
-      toast.success("Application Rejected", {
-        position: "top-right",
-        autoClose: 1000,
-      });
-      setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
-    } catch (error) {
-      console.error("Error rejecting student:", error.message);
-    }
-  };
-
   const { pendingApplications, loading, refetchData } = useSections();
 
   const columns = [
@@ -119,6 +79,11 @@ const AllClassesDataTable = () => {
       accessorKey: "totalStudents",
       header: "Total Students",
       cell: ({ row }) => <div>{row.getValue("totalStudents")}</div>,
+    },
+    {
+      accessorKey: "schoolYear",
+      header: "School Year",
+      cell: ({ row }) => <div>{row.getValue("schoolYear")}</div>,
     },
     {
       accessorKey: "strand",
@@ -306,12 +271,6 @@ const AllClassesDataTable = () => {
                       setSelectedRow(row.original);
                     }}
                     data-state={row.getIsSelected() ? "selected" : ""}
-                    // Add conditional rendering based on enrolledRowIds array
-                    style={{
-                      display: enrolledRowIds.includes(row.original._id)
-                        ? "none"
-                        : "table-row",
-                    }}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="py-2">
@@ -347,7 +306,7 @@ const AllClassesDataTable = () => {
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total of {""}
-          {table.getFilteredRowModel().rows.length - enrolledRowIds.length}{" "}
+          {table.getFilteredRowModel().rows.length}
           student(s).
         </div>
         <div className="space-x-2">
