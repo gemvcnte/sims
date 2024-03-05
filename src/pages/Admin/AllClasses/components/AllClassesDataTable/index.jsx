@@ -55,11 +55,7 @@ const AllClassesDataTable = () => {
       header: "Adviser",
       cell: ({ row }) => <div>{row.getValue("adviser")}</div>,
     },
-    {
-      accessorKey: "totalStudents",
-      header: "Students",
-      cell: ({ row }) => <div>{row.original.students.length}</div>,
-    },
+
     {
       accessorKey: "schoolYear",
       header: "School Year",
@@ -69,6 +65,21 @@ const AllClassesDataTable = () => {
       accessorKey: "strand",
       header: "Strand",
       cell: ({ row }) => <div>{row.getValue("strand")}</div>,
+    },
+    {
+      accessorKey: "gradeLevel",
+      header: "Grade",
+      cell: ({ row }) => <div>{row.getValue("gradeLevel")}</div>,
+    },
+    {
+      accessorKey: "totalStudents",
+      header: "Students",
+      cell: ({ row }) => <div className="">{row.original.students.length}</div>,
+    },
+    {
+      accessorKey: "totalSubjects",
+      header: "Subjects",
+      cell: ({ row }) => <div className="">{row.original.subjects.length}</div>,
     },
 
     {
