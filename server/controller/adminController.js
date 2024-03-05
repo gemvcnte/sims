@@ -723,7 +723,8 @@ const getSpecificClass = asyncHandler(async (req, res) => {
 
 const getAllClasses = asyncHandler(async (req, res) => {
   try {
-    const retrieveClasses = await Classroom.find();
+    // Retrieve classes from the database and sort them by sectionName in ascending order
+    const retrieveClasses = await Classroom.find().sort({ sectionName: 1 });
 
     if (!retrieveClasses) {
       return res.status(404).json({ message: "There are nothing here." });
