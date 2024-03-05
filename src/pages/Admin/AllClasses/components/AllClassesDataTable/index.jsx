@@ -40,8 +40,11 @@ import {
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useSections } from "../../hooks/useSections";
 import AllClassesFiltersDrawer from "./AllClassesFiltersDrawer";
+import { useNavigate } from "react-router-dom";
 
 const AllClassesDataTable = () => {
+  const navigate = useNavigate();
+
   const { pendingApplications, loading, refetchData } = useSections();
 
   const columns = [
@@ -142,6 +145,10 @@ const AllClassesDataTable = () => {
   if (loading) {
     return <SkeletonApplicationsDataTable />;
   }
+
+  const navigateToClass = (classId) => {
+    navigate(`${classId}`);
+  };
 
   return (
     <div className="w-full px-4">
@@ -263,6 +270,7 @@ const AllClassesDataTable = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setSelectedRow(row.original);
+                      navigateToClass(row.original._id);
                     }}
                     data-state={row.getIsSelected() ? "selected" : ""}
                   >
