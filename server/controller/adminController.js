@@ -1628,11 +1628,11 @@ const getStudentsInSpecificClass = async (req, res) => {
 
     // Extract LRNs of students in the classroom
     const lrns = classroom.students.map(student => student.lrn);
-    console.log(lrns)
+    // console.log(lrns)
 
     // Find students based on LRNs within the specified school year and semester
     const students = await Student.find({ lrn: { $in: lrns } }).sort({ lastName: 1 });
-    console.log(students)
+    // console.log(students)
 
     // Return the sorted students
     return res.status(200).json({ message: 'Students retrieved successfully.', students });
@@ -1672,13 +1672,12 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
         { sectionId: '' }
       ]
     }).sort({ lastName: 1 });
-    console.log(studentsWithNoClass)
 
     // Merge the two arrays of students
     const mergedStudents = [...studentsInSection, ...studentsWithNoClass];
 
     // Return the merged and sorted students
-    return res.status(200).json({ message: 'Students retrieved successfully.', students: mergedStudents });
+    return res.status(200).json({ message: 'Students retrieved successfully.', students: studentsWithNoClass });
   } catch (error) {
     return res.status(500).json({ message: `Error retrieving students: ${error}` });
   }

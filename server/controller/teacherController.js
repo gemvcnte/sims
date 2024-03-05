@@ -505,6 +505,9 @@ const getAllTeachers = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
 const updateStudentsInClass = asyncHandler(async (req, res) => {
   try {
     const { classId, studentLrns } = req.body;
@@ -539,17 +542,28 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
         .json({ message: "One or more students not found." });
     }
 
-     // Extract the existing grades
-     const existingGrades = {};
-     classroom.subjects.forEach((subject) => {
-       subject.grades.forEach((grade) => {
-         existingGrades[grade.lrn] = existingGrades[grade.lrn] || {};
-         existingGrades[grade.lrn][subject.subjectName] = {
-           p1Grade: grade.p1Grade,
-           p2Grade: grade.p2Grade,
-         };
-       });
-     });
+    // Extract the original LRNs before updating classroom
+    const originalLRNs = classroom.students.map((student) => student.lrn);
+    console.log(`Original lrns: `, originalLRNs);
+
+    // Update the students in the class
+    const updatedStudents = students.map((student) => ({
+      firstName: student.firstName,
+      lastName: student.lastName,
+      lrn: student.lrn,
+    }));
+
+    // Extract the existing grades
+    const existingGrades = {};
+    classroom.subjects.forEach((subject) => {
+      subject.grades.forEach((grade) => {
+        existingGrades[grade.lrn] = existingGrades[grade.lrn] || {};
+        existingGrades[grade.lrn][subject.subjectName] = {
+          p1Grade: grade.p1Grade,
+          p2Grade: grade.p2Grade,
+        };
+      });
+    });
 
     // Update the students in the class
     classroom.students = students.map((student) => ({
@@ -567,15 +581,78 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
       }));
     });
 
+    // Find removed LRNs
+    const removedLRNs = originalLRNs.filter(
+      (lrn) => !studentLrns.includes(lrn)
+    );
+    console.log("Removed LRNs:", removedLRNs);
+
+    // Remove sectionId and sectionName for removed LRNs
+
+    await Promise.all(
+      students.map(async (student) => {
+        console.log("Removed LRNs:", removedLRNs);
+        console.log("Student LRN:", student.lrn);
+        student.schoolYear.forEach((year) => {
+          if (
+            String(year.year) === String(classroom.schoolYear) &&
+            year.semester === classroom.semester
+          ) {
+            if (removedLRNs.includes(student.lrn)) {
+              // If the LRN is in the removed LRNs array, set sectionId and sectionName to empty string
+              // year.sectionId = "";
+              // year.sectionName = "";
+              console.log("included");
+            } else {
+              // If not in the removed LRNs array, set sectionId and sectionName accordingly
+              year.sectionId = classroom._id.toString(); // Convert ObjectId to string
+              year.sectionName = classroom.sectionName;
+            }
+          }
+        });
+
+        await student.save(); // Save the changes to the student document
+      })
+    );
+
+    const removedStudents = await Promise.all(
+      removedLRNs.map(async (lrn) => {
+        const removedStudent = await Student.findOne({ lrn });
+        if (removedStudent) {
+          return removedStudent;
+        }
+      })
+    );
+
+    await Promise.all(
+      removedStudents.map(async (student) => {
+        student.schoolYear.forEach((year) => {
+          if (
+            String(year.year) === String(classroom.schoolYear) &&
+            year.semester === classroom.semester
+          ) {
+            year.sectionId = "";
+            year.sectionName = "";
+          }
+        });
+        await student.save();
+      })
+    );
+
     // Save the updated class
     const updatedClassroom = await classroom.save();
 
     // Restore the existing grades for the updated students
     updatedClassroom.subjects.forEach((subject) => {
       subject.grades.forEach((grade) => {
-        if (existingGrades[grade.lrn] && existingGrades[grade.lrn][subject.subjectName]) {
-          grade.p1Grade = existingGrades[grade.lrn][subject.subjectName].p1Grade;
-          grade.p2Grade = existingGrades[grade.lrn][subject.subjectName].p2Grade;
+        if (
+          existingGrades[grade.lrn] &&
+          existingGrades[grade.lrn][subject.subjectName]
+        ) {
+          grade.p1Grade =
+            existingGrades[grade.lrn][subject.subjectName].p1Grade;
+          grade.p2Grade =
+            existingGrades[grade.lrn][subject.subjectName].p2Grade;
         }
       });
     });
@@ -595,6 +672,10 @@ const updateStudentsInClass = asyncHandler(async (req, res) => {
     });
   }
 });
+
+
+
+
 
 const addSubjectToClass = asyncHandler(async (req, res) => {
   const { classId, subjectName, subjectTeacher, schedules } = req.body;

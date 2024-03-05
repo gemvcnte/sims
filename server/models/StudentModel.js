@@ -60,8 +60,7 @@ const studentSchema = new mongoose.Schema(
           uppercase: true,
         },
         sectionId: {
-          type: mongoose.Types.ObjectId,
-          ref: "Classroom",
+          type: String,
           required: false,
         },
         sectionName: {
