@@ -185,11 +185,13 @@ router.patch(
 
 // updating students in class
 router.post(
-  "/students-in-specific-class",
+  "/students-in-specific-class",   
+  verifyToken,
   adminController.getStudentsInSpecificClass
 );
 router.post(
   "/students-in-class-and-no-class",
+  verifyToken,
   adminController.getStudentsInClassAndHaveNoClass
 );
 
