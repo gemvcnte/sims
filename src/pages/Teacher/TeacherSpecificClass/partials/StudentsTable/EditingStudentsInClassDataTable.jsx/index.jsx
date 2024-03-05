@@ -75,10 +75,9 @@ const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
 
   // Function to add LRNs of students in class to lrnInClass array
   const addTheStudentsInClassLrnsToLrnInClassOnMount = () => {
-    setLrnInClass((prev) => [
-      ...prev,
-      ...studentsInClass.map((student) => student.lrn),
-    ]);
+    const lrnsToAdd = studentsInClass.map((student) => student.lrn);
+    setLrnInClass((prev) => [...prev, ...lrnsToAdd]);
+    setSelectedLrns((prev) => [...prev, ...lrnsToAdd]);
   };
 
   // Function to toggle LRN selection

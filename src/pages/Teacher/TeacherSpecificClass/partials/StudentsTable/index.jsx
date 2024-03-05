@@ -18,11 +18,9 @@ export default function StudentsTable() {
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
   const isAdviser = isClassAdviser(classDetails);
 
-  const { id } = useParams();
-  const sectionId = id;
-
   const consoleLogAllLrns = () => {
     console.log(selectedLrns);
+    setSelectedLrns([]);
     setIsEditing(false);
   };
 
