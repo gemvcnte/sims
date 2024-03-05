@@ -15,6 +15,7 @@ import ViewAllAdmins from "@/pages/Admin/ViewAllAdmins";
 import Registration from "@/pages/Registration";
 import ViewAllStudents from "@/pages/Admin/ViewAllStudents";
 import RegistrationRoutes from "../RegistrationRoutes";
+import AdminSpecificClass from "@/pages/Admin/AdminSpecificClass";
 
 export default function AdminRouter() {
   return (
@@ -53,6 +54,7 @@ export default function AdminRouter() {
           <Route path="/class/:id" element={<TeacherSpecificClass />} />
 
           <Route path="/all-classes" element={<AllClasses />} />
+          <Route path="/all-classes/:id" element={<AdminSpecificClass />} />
         </Routes>
       </div>
     </>

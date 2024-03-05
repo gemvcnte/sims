@@ -22,11 +22,11 @@ export default function TeacherClassesFilter() {
     <main className="p-4">
       <Select value={filter} onValueChange={handleFilterChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="All Classes" />
+          <SelectValue placeholder="All Sections" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="all">All Classes</SelectItem>
+            <SelectItem value="all">All Sections</SelectItem>
             <SelectItem value="advisory">Advisory</SelectItem>
             <SelectItem value="subjectTeacher">Subject Teacher</SelectItem>
           </SelectGroup>

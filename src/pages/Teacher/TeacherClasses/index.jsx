@@ -11,7 +11,7 @@ const TeacherClasses = () => {
     <AssignedClassesProvider>
       <FilteredClassesProvider>
         <main className="w-full">
-          <Topbar>CLASSES</Topbar>
+          <Topbar>MY SECTIONS</Topbar>
           <TeacherClassesFilter />
           <TeacherClassesTable />
         </main>
