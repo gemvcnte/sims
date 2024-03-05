@@ -1631,7 +1631,7 @@ const getStudentsInSpecificClass = async (req, res) => {
     console.log(lrns)
 
     // Find students based on LRNs within the specified school year and semester
-    const students = await Student.find({ lrn: { $in: lrns } });
+    const students = await Student.find({ lrn: { $in: lrns } }).sort({ lastName: 1 });
     console.log(students)
 
     // Return the sorted students
@@ -1644,14 +1644,24 @@ const getStudentsInSpecificClass = async (req, res) => {
 
 const getStudentsInClassAndHaveNoClass = async (req, res) => {
   try {
-    const { sectionSchoolYear, sectionSemester, sectionId } = req.body;
+    const { sectionId } = req.body;
 
-    // Find students in the given section with the specified school year and semester
-    const studentsInSection = await Student.find({
-      'schoolYear.year': sectionSchoolYear,
-      'schoolYear.semester': sectionSemester,
-      sectionId
-    }).sort({ lastName: 1 });
+   // Find the classroom with the given sectionId
+   const classroom = await Classroom.findById(sectionId);
+   const sectionSchoolYear = classroom.schoolYear;
+   const sectionSemester = classroom.semester;
+
+
+   if (!classroom) {
+     return res.status(404).json({ message: 'Classroom not found.' });
+   }
+
+   // Extract LRNs of students in the classroom
+   const lrns = classroom.students.map(student => student.lrn);
+
+   // Find students based on LRNs within the specified school year and semester
+   const studentsInSection = await Student.find({ lrn: { $in: lrns } });
+
 
     // Find students with no class for the specified school year and semester
     const studentsWithNoClass = await Student.find({
@@ -1662,6 +1672,7 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
         { sectionId: '' }
       ]
     }).sort({ lastName: 1 });
+    console.log(studentsWithNoClass)
 
     // Merge the two arrays of students
     const mergedStudents = [...studentsInSection, ...studentsWithNoClass];
