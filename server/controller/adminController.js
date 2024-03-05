@@ -1650,6 +1650,8 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
    const classroom = await Classroom.findById(sectionId);
    const sectionSchoolYear = classroom.schoolYear;
    const sectionSemester = classroom.semester;
+   const sectionGradeLevel = classroom.gradeLevel;
+   const sectionStrand = classroom.strand;
 
 
    if (!classroom) {
@@ -1667,6 +1669,8 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
     const studentsWithNoClass = await Student.find({
       'schoolYear.year': sectionSchoolYear,
       'schoolYear.semester': sectionSemester,
+      'schoolYear.gradeLevel': sectionGradeLevel,
+      'schoolYear.strand': sectionStrand,
       $or: [
         { sectionId: { $eq: null } },
         { sectionId: '' }
