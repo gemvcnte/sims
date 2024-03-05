@@ -31,27 +31,6 @@ import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/ViewStudentProfileModal";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import PendingFiltersDrawer from "./PendingFiltersDrawer";
-import axios from "axios";
-import getAuthHeaders from "@/utils/getAuthHeaders";
-import {
-  enrollApplicationEndpoint,
-  rejectApplicationEndpoint,
-} from "@/config/adminEndpoints";
-import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import showErrorNotification from "@/utils/ShowErrorNotification";
-import { toast } from "react-toastify";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import {
   Tooltip,
   TooltipContent,
@@ -60,6 +39,7 @@ import {
 } from "@/components/ui/tooltip";
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useSections } from "../../hooks/useSections";
+import AllClassesFiltersDrawer from "./AllClassesFiltersDrawer";
 
 const AllClassesDataTable = () => {
   const { pendingApplications, loading, refetchData } = useSections();
@@ -173,7 +153,7 @@ const AllClassesDataTable = () => {
             <DrawerTrigger>
               <Button variant="outline">Filters</Button>
             </DrawerTrigger>
-            <PendingFiltersDrawer />
+            <AllClassesFiltersDrawer />
           </Drawer>
         </section>
 

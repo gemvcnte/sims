@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useSections } from "../../hooks/useSections";
 
-export default function PendingFiltersDrawer() {
+export default function AllClassesFiltersDrawer() {
   const { filterApplications } = useSections();
 
   const [filters, setFilters] = useState({
