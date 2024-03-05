@@ -34,7 +34,6 @@ const classroomSchema = mongoose.Schema(
     strand: {
       type: String,
       required: true,
-      uppercase: true,
     },
 
     students: [
