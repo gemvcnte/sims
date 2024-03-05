@@ -41,6 +41,7 @@ import {
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useParams } from "react-router-dom";
 import { useStudentsInClassAndNoClass } from "../useStudentsInClassAndNoClass";
+import { useStudentsInSpecificClass } from "../useStudentsInSpecificClass";
 
 const EditingStudentsInClassDataTable = () => {
   const { students, loading, error, fetchStudentsInClassAndNoClass } =
@@ -51,6 +52,7 @@ const EditingStudentsInClassDataTable = () => {
 
   useEffect(() => {
     fetchStudentsInClassAndNoClass(sectionId);
+    addTheStudentsInClassLrnsToLrnInClassOnMount();
   }, [sectionId]);
 
   const refetchData = () => {
@@ -71,6 +73,16 @@ const EditingStudentsInClassDataTable = () => {
 
   // State to store selected LRNs
   const [lrnInClass, setLrnInClass] = useState([]);
+
+  const { students: studentsInClass } = useStudentsInSpecificClass();
+
+  // Function to add LRNs of students in class to lrnInClass array
+  const addTheStudentsInClassLrnsToLrnInClassOnMount = () => {
+    setLrnInClass((prev) => [
+      ...prev,
+      ...studentsInClass.map((student) => student.lrn),
+    ]);
+  };
 
   // Function to toggle LRN selection
   const toggleLrnInClass = (lrn) => {
