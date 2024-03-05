@@ -69,7 +69,32 @@ const EditingStudentsInClassDataTable = () => {
     return schoolYear ? schoolYear.gradeLevel : "";
   };
 
+  // State to store selected LRNs
+  const [lrnInClass, setLrnInClass] = useState([]);
+
+  // Function to toggle LRN selection
+  const toggleLrnInClass = (lrn) => {
+    setLrnInClass((prev) =>
+      prev.includes(lrn) ? prev.filter((item) => item !== lrn) : [...prev, lrn],
+    );
+  };
+
   const columns = [
+    {
+      accessorKey: "inClass",
+      header: "In Class",
+      cell: ({ row }) => (
+        <input
+          type="checkbox"
+          checked={lrnInClass.includes(row.getValue("lrn"))}
+          onChange={(e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            toggleLrnInClass(row.getValue("lrn"));
+          }}
+        />
+      ),
+    },
+
     {
       accessorKey: "lastName",
       header: "Last Name",
