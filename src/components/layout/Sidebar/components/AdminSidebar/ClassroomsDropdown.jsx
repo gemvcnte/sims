@@ -36,7 +36,7 @@ export function ClassroomsDropdown({}) {
         <Button variant="ghost" className="w-full justify-between ">
           <span className="flex items-center">
             <Icon icon="mdi:google-classroom" className="mr-2" />
-            Classes
+            Sections
           </span>
           <span>
             {!isDropdownOpen ? (
@@ -48,19 +48,19 @@ export function ClassroomsDropdown({}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Classes</DropdownMenuLabel>
+        <DropdownMenuLabel>Sections</DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="classes">
-            My Classes
+            My Sections
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="all-classes">
-            View All Classes
+            View All Sections
           </Link>
         </DropdownMenuItem>
 
@@ -71,7 +71,7 @@ export function ClassroomsDropdown({}) {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger>
             <DropdownMenuItem>
-              <Link onClick={handleDialogClick}>Create a New Section</Link>
+              <Link onClick={handleDialogClick}>Create New Section</Link>
             </DropdownMenuItem>
           </DialogTrigger>
           <CreateNewSection onClose={handleDialogClick} />

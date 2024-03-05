@@ -6,7 +6,7 @@ import { SectionsProvider, useSections } from "./hooks/useSections";
 export default function AllClasses() {
   return (
     <main className="w-full">
-      <Topbar>ALL CLASSES</Topbar>
+      <Topbar>ALL SECTIONS</Topbar>
 
       {/* <SectionAnalytics /> */}
       {/* <SectionFilter /> */}
