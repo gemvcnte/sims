@@ -60,12 +60,13 @@ const studentSchema = new mongoose.Schema(
           uppercase: true,
         },
         sectionId: {
-          type: mongoose.Types.ObjectId,
-          ref: "Classroom",
+          type: String,
+          default: "",
           required: false,
         },
         sectionName: {
           type: String,
+          default: "",
           required: false,
         },
       },

@@ -16,7 +16,7 @@ router.get("/get-admins", verifyToken, adminController.getAllAdmins);
 router.post("/create-teacher", verifyToken, adminController.createTeacher); // /createTeacher
 router.patch("/update-teacher", verifyToken, adminController.updateTeacher); // /updateTeacher
 router.get("/get-all-teachers", verifyToken, adminController.getAllTeachers); // /getAllTeachers
-router.get("/get-teachers", verifyToken, adminController.getAllTeachersAccount); 
+router.get("/get-teachers", verifyToken, adminController.getAllTeachersAccount);
 router.delete("/delete-teacher", verifyToken, adminController.deleteTeacher); // /deleteTeacher
 
 // reference only ⬇
@@ -27,7 +27,11 @@ router.get("/get-all-students", verifyToken, adminController.getAllStudents); //
 router.get("/get-pending", verifyToken, adminController.getAllPending); // /pending
 router.get("/get-approved", verifyToken, adminController.getAllApproved); // /approved
 router.get("/get-rejected", verifyToken, adminController.getAllRejected); // /rejected
-router.get("/all-applications", verifyToken, adminController.getAllApplications); // /all
+router.get(
+  "/all-applications",
+  verifyToken,
+  adminController.getAllApplications
+); // /all
 router.get(
   "/get-specific-student",
   verifyToken,
@@ -51,22 +55,23 @@ router.patch(
   adminController.rejectStudentApplication
 );
 
-router.get(
-  "/get-announcements",
-  verifyToken,
-  adminController.getAnnouncements);
+router.get("/get-announcements", verifyToken, adminController.getAnnouncements);
 
 router.post(
   "/announcement/create-class-announcement",
   verifyToken,
-  adminController.createClassAnnouncement);
+  adminController.createClassAnnouncement
+);
 
 router.post(
   "/announcement/create-school-announcement",
   // verifyToken,
   adminController.createSchoolAnnouncement
-);// or /announcement/createSchoolAnnouncement
-router.patch("/announcement/update-school-announcement", adminController.updateSchoolAnnouncement);
+); // or /announcement/createSchoolAnnouncement
+router.patch(
+  "/announcement/update-school-announcement",
+  adminController.updateSchoolAnnouncement
+);
 
 // or /announcement/updateSchoolAnnouncement
 router.delete(
@@ -75,8 +80,16 @@ router.delete(
   adminController.deleteSchoolAnnouncement
 ); // or /announcement/deleteSchoolAnnouncement
 
-router.patch("/announcement/update", verifyToken, adminController.updateAnnouncement);
-router.delete("/announcement/delete", verifyToken, adminController.deleteAnnouncement);
+router.patch(
+  "/announcement/update",
+  verifyToken,
+  adminController.updateAnnouncement
+);
+router.delete(
+  "/announcement/delete",
+  verifyToken,
+  adminController.deleteAnnouncement
+);
 
 // Admin Profile
 router.get("/profile", verifyToken, adminController.getAdminProfile);
@@ -98,40 +111,88 @@ router.delete("/class/delete", verifyToken, adminController.deleteClassroom);
 // router.patch("/announcement/update-faculty-announcement")
 // router.delete("/announcement/delete-faculty-announcement")
 
-
 // analytics
 
-router.get('/analytics/total-students', adminController.getTotalStudents);
-router.get('/analytics/total-teachers', adminController.getTotalTeachers);
-router.get('/analytics/total-male-students', adminController.getTotalMaleStudents);
-router.get('/analytics/total-female-students', adminController.getTotalFemaleStudents);
-router.get('/analytics/total-acad-students', adminController.getTotalAcadTrack);
-router.get('/analytics/total-tvl-students', adminController.getTotalTVLTrack);
-router.get('/analytics/total-abm-students', adminController.getTotalStudentsInABM);
-router.get('/analytics/total-stem-students', adminController.getTotalStudentsInSTEM);
-router.get('/analytics/total-humss-students', adminController.getTotalStudentsInHUMSS);
-router.get('/analytics/total-ict-students', adminController.getTotalStudentsInICT);
-router.get('/analytics/total-he-students', adminController.getTotalStudentsInHE);
-router.get('/analytics/all', verifyToken, adminController.getAllAnalytics);
-
+router.get("/analytics/total-students", adminController.getTotalStudents);
+router.get("/analytics/total-teachers", adminController.getTotalTeachers);
+router.get(
+  "/analytics/total-male-students",
+  adminController.getTotalMaleStudents
+);
+router.get(
+  "/analytics/total-female-students",
+  adminController.getTotalFemaleStudents
+);
+router.get("/analytics/total-acad-students", adminController.getTotalAcadTrack);
+router.get("/analytics/total-tvl-students", adminController.getTotalTVLTrack);
+router.get(
+  "/analytics/total-abm-students",
+  adminController.getTotalStudentsInABM
+);
+router.get(
+  "/analytics/total-stem-students",
+  adminController.getTotalStudentsInSTEM
+);
+router.get(
+  "/analytics/total-humss-students",
+  adminController.getTotalStudentsInHUMSS
+);
+router.get(
+  "/analytics/total-ict-students",
+  adminController.getTotalStudentsInICT
+);
+router.get(
+  "/analytics/total-he-students",
+  adminController.getTotalStudentsInHE
+);
+router.get("/analytics/all", verifyToken, adminController.getAllAnalytics);
 
 // password
-router.patch('/update-password', verifyToken, adminController.updateAdminPassword);
+router.patch(
+  "/update-password",
+  verifyToken,
+  adminController.updateAdminPassword
+);
 
 // reset password
-router.patch('/reset-teacher-password', verifyToken, adminController.resetTeacherPassword);
-router.patch('/reset-admin-password', verifyToken, adminController.resetAdminPassword);
-router.patch('/reset-student-password', verifyToken, adminController.resetStudentPassword);
+router.patch(
+  "/reset-teacher-password",
+  verifyToken,
+  adminController.resetTeacherPassword
+);
+router.patch(
+  "/reset-admin-password",
+  verifyToken,
+  adminController.resetAdminPassword
+);
+router.patch(
+  "/reset-student-password",
+  verifyToken,
+  adminController.resetStudentPassword
+);
 
 // get all accounts
-router.get('/students', verifyToken, adminController.getAllStudentsAccounts);
-router.get('/teachers', verifyToken, adminController.getAllTeachersAccounts);
-router.get('/admins', verifyToken, adminController.getAllAdminsAccounts);
+router.get("/students", verifyToken, adminController.getAllStudentsAccounts);
+router.get("/teachers", verifyToken, adminController.getAllTeachersAccounts);
+router.get("/admins", verifyToken, adminController.getAllAdminsAccounts);
 
+router.get("/global-settings", adminController.getGlobalSettings);
+router.patch(
+  "/global-settings",
+  verifyToken,
+  adminController.updateGlobalSettings
+);
 
-router.get('/global-settings', adminController.getGlobalSettings);
-router.patch('/global-settings', verifyToken, adminController.updateGlobalSettings);
-
-
+// updating students in class
+router.post(
+  "/students-in-specific-class",   
+  verifyToken,
+  adminController.getStudentsInSpecificClass
+);
+router.post(
+  "/students-in-class-and-no-class",
+  verifyToken,
+  adminController.getStudentsInClassAndHaveNoClass
+);
 
 module.exports = router;
