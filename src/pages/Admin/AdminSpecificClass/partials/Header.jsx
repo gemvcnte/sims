@@ -7,7 +7,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const navigateToClasses = () => {
-    navigate("/classes");
+    navigate("/all-classes");
   };
 
   return (
@@ -20,7 +20,7 @@ export default function Header() {
           className="mr-2 inline-block text-muted-foreground"
         />
         <span className="hidden text-sm text-muted-foreground sm:inline">
-          View All Classes
+          View All Sections
         </span>
       </div>
     </header>
