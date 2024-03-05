@@ -40,7 +40,7 @@ import { useParams } from "react-router-dom";
 import { useStudentsInClassAndNoClass } from "../useStudentsInClassAndNoClass";
 import { useStudentsInSpecificClass } from "../useStudentsInSpecificClass";
 
-const EditingStudentsInClassDataTable = () => {
+const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
   const { students, loading, error, fetchStudentsInClassAndNoClass } =
     useStudentsInClassAndNoClass();
 
@@ -84,6 +84,9 @@ const EditingStudentsInClassDataTable = () => {
   // Function to toggle LRN selection
   const toggleLrnInClass = (lrn) => {
     setLrnInClass((prev) =>
+      prev.includes(lrn) ? prev.filter((item) => item !== lrn) : [...prev, lrn],
+    );
+    setSelectedLrns((prev) =>
       prev.includes(lrn) ? prev.filter((item) => item !== lrn) : [...prev, lrn],
     );
   };

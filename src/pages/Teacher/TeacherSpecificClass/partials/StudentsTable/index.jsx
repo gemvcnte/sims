@@ -12,10 +12,19 @@ import EditingStudentsInClassDataTable from "./EditingStudentsInClassDataTable.j
 
 export default function StudentsTable() {
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedLrns, setSelectedLrns] = useState([]);
 
   const classDetailsContext = useClassDetails();
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
   const isAdviser = isClassAdviser(classDetails);
+
+  const { id } = useParams();
+  const sectionId = id;
+
+  const consoleLogAllLrns = () => {
+    console.log(selectedLrns);
+    setIsEditing(false);
+  };
 
   return (
     <main className="p-4">
@@ -29,12 +38,16 @@ export default function StudentsTable() {
               >
                 {isEditing ? "Cancel Editing" : "Edit Students"}
               </Button>
-              {isEditing && <Button>Save Changes</Button>}
+              {isEditing && (
+                <Button onClick={consoleLogAllLrns}>Save Changes</Button>
+              )}
             </div>
           )}
 
           {isEditing ? (
-            <EditingStudentsInClassDataTable />
+            <EditingStudentsInClassDataTable
+              setSelectedLrns={setSelectedLrns}
+            />
           ) : (
             <StudentsInClassDataTable />
           )}
