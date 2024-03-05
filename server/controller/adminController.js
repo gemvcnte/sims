@@ -1671,17 +1671,14 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
       'schoolYear.semester': sectionSemester,
       'schoolYear.gradeLevel': sectionGradeLevel,
       'schoolYear.strand': sectionStrand,
-      $or: [
-        { sectionId: { $eq: null } },
-        { sectionId: '' }
-      ]
+      'schoolYear.sectionName': "",
     }).sort({ lastName: 1 });
 
     // Merge the two arrays of students
     const mergedStudents = [...studentsInSection, ...studentsWithNoClass];
 
     // Return the merged and sorted students
-    return res.status(200).json({ message: 'Students retrieved successfully.', students: studentsWithNoClass });
+    return res.status(200).json({ message: 'Students retrieved successfully.', students: mergedStudents });
   } catch (error) {
     return res.status(500).json({ message: `Error retrieving students: ${error}` });
   }

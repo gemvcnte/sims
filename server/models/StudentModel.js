@@ -61,10 +61,12 @@ const studentSchema = new mongoose.Schema(
         },
         sectionId: {
           type: String,
+          default: "",
           required: false,
         },
         sectionName: {
           type: String,
+          default: "",
           required: false,
         },
       },
