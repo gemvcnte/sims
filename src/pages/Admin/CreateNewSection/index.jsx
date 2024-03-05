@@ -14,8 +14,11 @@ import { Label } from "@/components/ui/label";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { createSectionApi, SelectAdviserCombobox } from "./helpers";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import useGlobalSettings from "@/pages/Registration/useGlobalSettings";
 
 export default function CreateNewSection({ onClose }) {
+  const { globalSettings } = useGlobalSettings();
+
   const [sectionName, setSectionName] = useState("");
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
@@ -24,6 +27,8 @@ export default function CreateNewSection({ onClose }) {
   const handleCreateSectionButton = async (e) => {
     e.preventDefault();
     const sectionDetails = {
+      schoolYear: globalSettings.schoolYear,
+      semester: globalSettings.semester,
       sectionName: sectionName,
       adviser: selectedTeacher ? selectedTeacher.username : "",
       gradeLevel: selectedGradeLevel,
@@ -35,6 +40,7 @@ export default function CreateNewSection({ onClose }) {
       return;
     }
 
+    console.log(sectionDetails);
     const result = await createSectionApi(sectionDetails);
 
     result.success
@@ -77,11 +83,11 @@ export default function CreateNewSection({ onClose }) {
               onChange={(e) => setSelectedStrand(e.target.value)}
             >
               <option value="">Strand</option>
-              <option value="ABM">ABM</option>
-              <option value="STEM">STEM</option>
-              <option value="HUMSS">HUMSS</option>
-              <option value="TVL-ICT">TVL-ICT</option>
-              <option value="TVL-HE">TVL-HE</option>
+              <option value="abm">ABM</option>
+              <option value="stem">STEM</option>
+              <option value="humss">HUMSS</option>
+              <option value="ict">TVL-ICT</option>
+              <option value="he">TVL-HE</option>
             </select>
           </div>
 
