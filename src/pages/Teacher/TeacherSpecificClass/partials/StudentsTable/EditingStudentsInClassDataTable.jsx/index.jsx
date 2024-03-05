@@ -27,9 +27,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Icon } from "@iconify/react";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewStudentProfileModal from "@/pages/Admin/ViewAllStudents/partials/ViewStudentProfileModal";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 import {
@@ -159,19 +156,6 @@ const EditingStudentsInClassDataTable = () => {
     },
   });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const onClose = () => {
-    setIsModalOpen(false);
-    setSelectedRow(null);
-  };
-
-  const onSave = () => {
-    setIsModalOpen(false);
-    setSelectedRow(null);
-  };
-
   if (loading) {
     return <SkeletonApplicationsDataTable />;
   }
@@ -262,63 +246,54 @@ const EditingStudentsInClassDataTable = () => {
         </section>
       </div>
       <div className="rounded-md ">
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  as={TableRow}
+                  className="group transition-all duration-700 hover:cursor-pointer"
+                  data-state={row.getIsSelected() ? "selected" : ""}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="py-2">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    as={TableRow}
-                    className="group transition-all duration-700 hover:cursor-pointer"
-                    data-state={row.getIsSelected() ? "selected" : ""}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="py-2">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          {selectedRow && (
-            <ViewStudentProfileModal
-              application={selectedRow}
-              onSave={onSave}
-              onClose={onClose}
-            />
-          )}
-        </Dialog>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
