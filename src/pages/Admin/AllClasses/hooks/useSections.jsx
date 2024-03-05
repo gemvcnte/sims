@@ -47,37 +47,27 @@ export const SectionsProvider = ({ children }) => {
     let filtered = originalPendingApplications;
 
     if (schoolYear !== "all") {
-      filtered = filtered.filter((application) =>
-        application.schoolYear.some(
-          (schoolYearItem) => schoolYearItem.year === schoolYear,
-        ),
+      filtered = filtered.filter(
+        (application) => application.schoolYear === schoolYear,
       );
     }
 
     if (semester !== "all") {
-      filtered = filtered.filter((application) =>
-        application.schoolYear.some(
-          (schoolYearItem) => schoolYearItem.semester === semester,
-        ),
+      filtered = filtered.filter(
+        (application) => application.semester === semester,
       );
     }
 
     if (gradeLevel !== "") {
       const gradeLevelNum = parseInt(gradeLevel, 10);
-      console.log("Filter Grade Level:", gradeLevelNum); // Log the filter value
-      filtered = filtered.filter((application) =>
-        application.schoolYear.some((schoolYearItem) => {
-          console.log("Data Grade Level:", schoolYearItem.gradeLevel); // Log the data value
-          return schoolYearItem.gradeLevel === gradeLevelNum;
-        }),
+      filtered = filtered.filter(
+        (application) => application.gradeLevel === gradeLevelNum,
       );
     }
 
     if (strand !== "all") {
-      filtered = filtered.filter((application) =>
-        application.schoolYear.some(
-          (schoolYearItem) => schoolYearItem.strand === strand,
-        ),
+      filtered = filtered.filter(
+        (application) => application.strand === strand,
       );
     }
 
