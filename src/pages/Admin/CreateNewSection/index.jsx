@@ -77,11 +77,11 @@ export default function CreateNewSection({ onClose }) {
               onChange={(e) => setSelectedStrand(e.target.value)}
             >
               <option value="">Strand</option>
-              <option value="ABM">ABM</option>
-              <option value="STEM">STEM</option>
-              <option value="HUMSS">HUMSS</option>
-              <option value="TVL-ICT">TVL-ICT</option>
-              <option value="TVL-HE">TVL-HE</option>
+              <option value="abm">ABM</option>
+              <option value="stem">STEM</option>
+              <option value="humss">HUMSS</option>
+              <option value="ict">TVL-ICT</option>
+              <option value="he">TVL-HE</option>
             </select>
           </div>
 
