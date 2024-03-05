@@ -63,23 +63,24 @@ body {
   height: -webkit-fill-available;
 }
 
-/* Scrollbar.css */
-
-/* Width */
-::-webkit-scrollbar {
-  width: 2px; /* Adjust the width as needed */
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #7a7a7a #ffffff;
 }
 
-Track ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Change the background color */
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; /* Change the color of the scrollbar handle */
+*::-webkit-scrollbar-track {
+  background: #ffffff;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Change the color of the scrollbar handle on hover */
+*::-webkit-scrollbar-thumb {
+  background-color: #7a7a7a;
+  border-radius: 8px;
+  border: 3px solid #ffffff;
 }
