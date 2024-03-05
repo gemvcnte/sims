@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
+import axiosInstance from "@/utils/axios";
+import { getStudentsInSpecificClassAndNoClassEndpoint } from "@/config/adminEndpoints";
 
 const StudentsInClassAndNoClassContext = createContext();
 
@@ -21,8 +23,8 @@ export const StudentsInClassAndNoClassProvider = ({ children }) => {
   const fetchStudentsInClassAndNoClass = async (sectionId) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        `http://localhost:5000/admin/students-in-class-and-no-class`,
+      const response = await axiosInstance.post(
+        getStudentsInSpecificClassAndNoClassEndpoint,
         {
           sectionId,
         },
