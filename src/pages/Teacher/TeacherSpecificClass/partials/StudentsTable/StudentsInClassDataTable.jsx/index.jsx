@@ -58,6 +58,10 @@ const StudentsInClassDataTable = () => {
     fetchStudentsInSpecificClass(sectionId);
   }, [sectionId]);
 
+  const refetchData = () => {
+    fetchStudentsInSpecificClass(sectionId);
+  };
+
   const columns = [
     {
       accessorKey: "lastName",
