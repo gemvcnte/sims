@@ -82,12 +82,13 @@ const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
 
   // Function to toggle LRN selection
   const toggleLrnInClass = (lrn) => {
-    setLrnInClass((prev) =>
-      prev.includes(lrn) ? prev.filter((item) => item !== lrn) : [...prev, lrn],
-    );
-    setSelectedLrns((prev) =>
-      prev.includes(lrn) ? prev.filter((item) => item !== lrn) : [...prev, lrn],
-    );
+    setLrnInClass((prev) => {
+      const updatedLrns = prev.includes(lrn)
+        ? prev.filter((item) => item !== lrn)
+        : [...prev, lrn];
+      setSelectedLrns(updatedLrns); // Update selectedLrns array
+      return updatedLrns;
+    });
   };
 
   const columns = [

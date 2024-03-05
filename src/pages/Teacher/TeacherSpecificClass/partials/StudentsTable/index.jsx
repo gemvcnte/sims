@@ -9,6 +9,8 @@ import {
   useStudentsInClassAndNoClass,
 } from "./useStudentsInClassAndNoClass";
 import EditingStudentsInClassDataTable from "./EditingStudentsInClassDataTable.jsx";
+import updateStudentsInClassApi from "../../helpers/updateStudentsInClassApi";
+import showSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export default function StudentsTable() {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +26,25 @@ export default function StudentsTable() {
     setIsEditing(false);
   };
 
+  const handleSaveChanges = async () => {
+    console.log(selectedLrns);
+    try {
+      if (classDetails) {
+        // Remove duplicates from selectedLrns array
+        const uniqueLrns = Array.from(new Set(selectedLrns));
+
+        await updateStudentsInClassApi(classDetails._id, uniqueLrns);
+
+        showSuccessNotification("Updated Successfully");
+        // fetchClassDetails();
+        setIsEditing(false);
+        setSelectedStudents([]);
+      }
+    } catch (error) {
+      console.error("Error updating students in class:", error);
+    }
+  };
+
   return (
     <main className="p-4">
       <StudentsInSpecificClassProvider>
@@ -37,7 +58,7 @@ export default function StudentsTable() {
                 {isEditing ? "Cancel Editing" : "Edit Students"}
               </Button>
               {isEditing && (
-                <Button onClick={consoleLogAllLrns}>Save Changes</Button>
+                <Button onClick={handleSaveChanges}>Save Changes</Button>
               )}
             </div>
           )}
