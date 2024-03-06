@@ -59,7 +59,7 @@ function Step1({ onNext, fullFormData }) {
     lastName: "",
     firstName: "",
     middleName: "",
-    extensionName: "",
+    extensionName: "none",
     birthDate: "",
     gender: "",
     currentAddress: "",
