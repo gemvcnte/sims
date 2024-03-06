@@ -270,7 +270,6 @@ export default function ReviewStudentInformationModal({
               value={application.guardianRelationship}
             >
               <option value="">Relationship with Guardian</option>
-              <option value="Parent">Parent</option>
               <option value="Relative">Relative</option>
               <option value="Non-relative">Non-relative</option>
             </select>
