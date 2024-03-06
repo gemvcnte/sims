@@ -80,7 +80,7 @@ export default function CreateAnnouncementModal({ onClose }) {
               <Input
                 id="title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value.slice(0, 50))}
                 placeholder="Enter announcement title..."
                 required
               />
@@ -90,7 +90,7 @@ export default function CreateAnnouncementModal({ onClose }) {
               <Textarea
                 id="content"
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={(e) => setContent(e.target.value.slice(0, 255))}
                 placeholder="Enter announcement content..."
                 required
               />
