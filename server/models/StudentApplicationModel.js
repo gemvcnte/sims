@@ -53,6 +53,7 @@ const studentApplicationSchema = new mongoose.Schema(
         },
         gradeLevel: {
           type: Number,
+          enum: [11, 12], 
           required: true,
         },
         track: {
@@ -61,6 +62,7 @@ const studentApplicationSchema = new mongoose.Schema(
         },
         strand: {
           type: String,
+          enum: ["humss", "abm", "stem", "ict", "he"],
           required: true,
         },
       },
