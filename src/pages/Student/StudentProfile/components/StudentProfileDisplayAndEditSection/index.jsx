@@ -18,6 +18,15 @@ const StudentProfileDisplayAndEditSection = () => {
   const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
+    // Limit the input value of contact numbers to 11 (09xxxxxxxxx)
+    if (
+      field === "fatherContactNumber" ||
+      field === "motherContactNumber" ||
+      field === "guardianContactNumber"
+    ) {
+      value = value.slice(0, 11);
+    }
+
     setStudentProfile({
       ...studentProfile,
       [field]: value,
