@@ -70,6 +70,44 @@ const AllStudentsTable = () => {
       cell: ({ row }) => <div>{row.getValue("lrn")}</div>,
     },
     {
+      accessorKey: "gradeLevel",
+      header: "Current Grade Level",
+      cell: ({ row }) => (
+        <div className="">{row.original.schoolYear[0].gradeLevel}</div>
+      ),
+    },
+    {
+      accessorKey: "strand",
+      header: "Current Strand",
+      cell: ({ row }) => (
+        <div className="">{row.original.schoolYear[0].strand}</div>
+      ),
+    },
+    {
+      accessorKey: "CurrentSection",
+      header: "Current Section",
+      // header: "Students",
+      cell: ({ row }) => (
+        <div className="">{row.original.schoolYear[0].sectionName}</div>
+      ),
+    },
+    {
+      accessorKey: "CurrentSchoolYear",
+      header: "Current School Year",
+      // header: "Students",
+      cell: ({ row }) => (
+        <div className="">{row.original.schoolYear[0].year}</div>
+      ),
+    },
+    {
+      accessorKey: "CurrentSemester",
+      header: "Current Semester",
+      // header: "Students",
+      cell: ({ row }) => (
+        <div className="">{row.original.schoolYear[0].semester}</div>
+      ),
+    },
+    {
       accessorKey: "viewProfile",
       header: "",
       cell: ({ row }) => (
