@@ -32,6 +32,9 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherProfileModal from "./ViewStudentProfileModal";
 import ViewStudentProfileModal from "./ViewStudentProfileModal";
 import useAllStudents from "../hooks/useAllStudents";
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import PendingFiltersDrawer from "../../ApplicationMonitoring/components/PendingApplicationsDataTable/PendingFiltersDrawer";
+import StudentsFiltersDrawer from "./StudentsFiltersDrawer";
 
 const AllStudentsTable = () => {
   const { allStudents, loading, error } = useAllStudents();
@@ -117,6 +120,14 @@ const AllStudentsTable = () => {
           }
           className="max-w-sm"
         />
+
+        <Drawer dismissible={true}>
+          <DrawerTrigger>
+            <Button variant="outline">Filters</Button>
+          </DrawerTrigger>
+          <StudentsFiltersDrawer />
+        </Drawer>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
