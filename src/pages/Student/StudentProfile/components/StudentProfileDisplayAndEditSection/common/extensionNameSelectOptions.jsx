@@ -1,7 +1,7 @@
 import React from "react";
 
 const extensionNameSelectOptions = [
-  { value: "", label: "Select Extension Name" },
+  { value: "", label: "None" },
   { value: "JR", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
