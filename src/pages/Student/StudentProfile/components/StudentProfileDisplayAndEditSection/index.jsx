@@ -11,9 +11,11 @@ import { useStudentProfile } from "./hooks";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const StudentProfileDisplayAndEditSection = () => {
   const { studentProfile, error, setStudentProfile } = useStudentProfile();
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
     setStudentProfile({
@@ -31,6 +33,8 @@ const StudentProfileDisplayAndEditSection = () => {
       response.status === 200
         ? showSuccessNotification(response.data.message)
         : showErrorNotification(response.data.message);
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error in component:", error);
     }
