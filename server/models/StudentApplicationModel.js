@@ -19,7 +19,8 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     extensionName: {
       type: String,
-      required: true,
+      // required: true,
+      enum: ["", "JR", "II", "III", "IV", "V"], 
       uppercase: true,
     },
     birthDate: {
@@ -28,6 +29,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
+      enum: ["MALE", "FEMALE"],
       required: true,
       uppercase: true,
     },
@@ -52,6 +54,7 @@ const studentApplicationSchema = new mongoose.Schema(
         },
         gradeLevel: {
           type: Number,
+          enum: [11, 12], 
           required: true,
         },
         track: {
@@ -60,6 +63,7 @@ const studentApplicationSchema = new mongoose.Schema(
         },
         strand: {
           type: String,
+          enum: ["humss", "abm", "stem", "ict", "he"],
           required: true,
         },
       },
@@ -95,6 +99,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     guardianRelationship: {
       type: String,
+      enum: ["Non-relative", "Relative"],
       default: "",
     },
     status: {

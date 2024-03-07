@@ -17,7 +17,7 @@ const studentSchema = new mongoose.Schema(
     },
     extensionName: {
       type: String,
-      required: true,
+      // required: true,
     },
     birthDate: {
       type: String,
