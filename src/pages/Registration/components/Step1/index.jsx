@@ -27,13 +27,12 @@ const InputField = ({
 );
 
 const selectOptions = [
-  { value: "", label: "Select Extension Name" },
+  { value: "", label: "None" },
   { value: "Jr", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
   { value: "IV", label: "IV" },
   { value: "V", label: "V" },
-  { value: "none", label: "None" },
 ];
 
 function Step1({ onNext, fullFormData }) {
@@ -59,7 +58,7 @@ function Step1({ onNext, fullFormData }) {
     lastName: "",
     firstName: "",
     middleName: "",
-    extensionName: "none",
+    extensionName: "",
     birthDate: "",
     gender: "",
     currentAddress: "",
@@ -173,7 +172,6 @@ function Step1({ onNext, fullFormData }) {
               Extension Name <span className="text-destructive">*</span>
             </label>
             <select
-              required
               className={`border-white-700 rounded-lg border p-2 py-3 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                 formData.extensionName &&
                 "!border-blue-400 bg-blue-400 text-white"

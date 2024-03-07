@@ -6,7 +6,6 @@ const FormValidator = (formData, step) => {
       "lastName",
       "firstName",
       "middleName",
-      "extensionName",
       "birthDate",
       "gender",
       "currentAddress",
