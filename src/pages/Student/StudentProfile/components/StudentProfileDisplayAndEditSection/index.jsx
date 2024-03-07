@@ -11,11 +11,22 @@ import { useStudentProfile } from "./hooks";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const StudentProfileDisplayAndEditSection = () => {
   const { studentProfile, error, setStudentProfile } = useStudentProfile();
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
+    // Limit the input value of contact numbers to 11 (09xxxxxxxxx)
+    if (
+      field === "fatherContactNumber" ||
+      field === "motherContactNumber" ||
+      field === "guardianContactNumber"
+    ) {
+      value = value.slice(0, 11);
+    }
+
     setStudentProfile({
       ...studentProfile,
       [field]: value,
@@ -31,6 +42,8 @@ const StudentProfileDisplayAndEditSection = () => {
       response.status === 200
         ? showSuccessNotification(response.data.message)
         : showErrorNotification(response.data.message);
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error in component:", error);
     }

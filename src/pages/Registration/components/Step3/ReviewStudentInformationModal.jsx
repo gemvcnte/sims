@@ -33,7 +33,7 @@ const InputField = ({
 );
 
 const selectOptions = [
-  { value: "", label: "Select Extension Name" },
+  { value: "", label: "None" },
   { value: "JR", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
@@ -150,8 +150,8 @@ export default function ReviewStudentInformationModal({
               name="gender"
             >
               <option value="">Select Gender</option>
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
           </div>
 
@@ -270,7 +270,6 @@ export default function ReviewStudentInformationModal({
               value={application.guardianRelationship}
             >
               <option value="">Relationship with Guardian</option>
-              <option value="Parent">Parent</option>
               <option value="Relative">Relative</option>
               <option value="Non-relative">Non-relative</option>
             </select>
@@ -287,6 +286,22 @@ export default function ReviewStudentInformationModal({
               value={application.lrn}
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="track" className="text-right">
+              Grade Level
+            </Label>
+            <select
+              disabled
+              className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              id="gradeLevel"
+              value={application.gradeLevel}
+            >
+              <option value="">Grade Level</option>
+              <option value="11">Grade 11</option>
+              <option value="12">Grade 12</option>
+            </select>
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
@@ -317,10 +332,11 @@ export default function ReviewStudentInformationModal({
               value={application.strand}
             >
               <option value="">Select Strand</option>
-              <option value="gas">GAS (Academic)</option>
               <option value="humss">HUMSS (Academic)</option>
+              <option value="abm">ABM (Academic)</option>
               <option value="stem">STEM (Academic)</option>
               <option value="ict">ICT (TVL)</option>
+              <option value="he">HE (TVL)</option>
             </select>
           </div>
         </div>

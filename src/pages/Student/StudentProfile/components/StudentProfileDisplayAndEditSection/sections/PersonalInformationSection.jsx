@@ -26,7 +26,6 @@ export function PersonalInformationSection({
             disabled
             id="lastName"
             type="text"
-            placeholder="Input Your Last Name"
             defaultValue={studentProfile?.lastName}
             name="lastName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -42,7 +41,6 @@ export function PersonalInformationSection({
             disabled
             id="firstName"
             type="text"
-            placeholder="Input Your First Name"
             defaultValue={studentProfile?.firstName}
             name="firstName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -58,7 +56,6 @@ export function PersonalInformationSection({
             disabled
             id="middleName"
             type="text"
-            placeholder="Input Your Middle Name"
             defaultValue={studentProfile?.middleName}
             name="middleName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -96,7 +93,6 @@ export function PersonalInformationSection({
           <InputField
             disabled
             type="date"
-            placeholder="Input Your Birthdate (MM/DD/YY)"
             value={studentProfile?.birthDate}
             name="birthDate"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -131,7 +127,6 @@ export function PersonalInformationSection({
           <InputField
             disabled
             type="text"
-            placeholder="E.g., 123 Purok St, Barangay, Municipality"
             value={studentProfile?.currentAddress}
             name="currentAddress"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -145,7 +140,6 @@ export function PersonalInformationSection({
           <InputField
             disabled
             type="email"
-            placeholder="Input Your Email"
             value={studentProfile?.emailAddress}
             name="emailAddress"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}

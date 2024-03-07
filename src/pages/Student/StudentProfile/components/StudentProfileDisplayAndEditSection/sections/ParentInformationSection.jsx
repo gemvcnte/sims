@@ -22,7 +22,6 @@ export function ParentInformationSection({
             Father's Name
           </Label>
           <InputField
-            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -37,7 +36,6 @@ export function ParentInformationSection({
             Mother's Name
           </Label>
           <InputField
-            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -52,13 +50,13 @@ export function ParentInformationSection({
             htmlFor="FatherContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Father's Tel. No.
+            Father's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
-            disabled
             required
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.fatherContactNumber}
             onChange={(e) =>
               handleInputChange("fatherContactNumber", e.target.value)
@@ -72,13 +70,13 @@ export function ParentInformationSection({
             htmlFor="motherContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Mother's Tel. No.
+            Mother's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
-            disabled
             required
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.motherContactNumber}
             onChange={(e) =>
               handleInputChange("motherContactNumber", e.target.value)
@@ -108,11 +106,12 @@ export function ParentInformationSection({
             htmlFor="guardianContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Guardian's Tel. No.
+            Guardian's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.guardianContactNumber}
             onChange={(e) =>
               handleInputChange("guardianContactNumber", e.target.value)

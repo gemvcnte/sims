@@ -38,12 +38,17 @@ export function AcademicInformationSection({
             disabled={true}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="schoolYear"
-            value={studentProfile?.schoolYear}
+            value={studentProfile?.schoolYear[0].year}
             onChange={(e) => handleInputChange("schoolYear", e.target.value)}
           >
             <option value="">Select School Year</option>
             <option value="2023-2024">2023-2024</option>
             <option value="2024-2025">2024-2025</option>
+            <option value="2025-2026">2025-2026</option>
+            <option value="2026-2027">2026-2027</option>
+            <option value="2027-2028">2027-2028</option>
+            <option value="2028-2029">2028-2029</option>
+            <option value="2029-2030">2029-2030</option>
           </select>
         </div>
 
@@ -55,12 +60,12 @@ export function AcademicInformationSection({
             disabled={true}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="semester"
-            value={studentProfile?.semester}
+            value={studentProfile?.schoolYear[0].semester}
             onChange={(e) => handleInputChange("semester", e.target.value)}
           >
             <option value="">Select Semester</option>
-            <option value="FIRST SEMESTER">1st Semester</option>
-            <option value="SECOND SEMESTER">2nd Semester</option>
+            <option value="first semester">1st Semester</option>
+            <option value="second semester">2nd Semester</option>
           </select>
         </div>
 
@@ -72,7 +77,7 @@ export function AcademicInformationSection({
             disabled={true}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="track"
-            value={studentProfile?.track}
+            value={studentProfile?.schoolYear[0].track}
             onChange={(e) => handleInputChange("track", e.target.value)}
           >
             <option value="">Select Track</option>
@@ -89,14 +94,15 @@ export function AcademicInformationSection({
             disabled={true}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="strand"
-            value={studentProfile?.strand}
+            value={studentProfile?.schoolYear[0].strand}
             onChange={(e) => handleInputChange("strand", e.target.value)}
           >
             <option value="">Select Strand</option>
-            <option value="GAS">GAS (Academic)</option>
-            <option value="HUMSS">HUMSS (Academic)</option>
-            <option value="STEM">STEM (Academic)</option>
-            <option value="ICT">ICT (TVL)</option>
+            <option value="ABM">ABM</option>
+            <option value="HUMSS">HUMSS</option>
+            <option value="STEM">STEM</option>
+            <option value="ICT">ICT</option>
+            <option value="HE">HE</option>
           </select>
         </div>
       </main>

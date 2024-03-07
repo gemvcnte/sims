@@ -11,6 +11,7 @@ import { useTheme } from "@/components/theme-provider";
 import useGlobalSettings from "./useGlobalSettings";
 import ReviewStudentInformationModal from "./components/Step3/ReviewStudentInformationModal";
 import { Dialog } from "@/components/ui/dialog";
+import showErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -72,7 +73,11 @@ export default function Registration() {
         setStep(1);
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
+      showErrorNotification(
+        "Error submitting data: " + error.response.data.message,
+      );
+
+      setLoading(false);
     }
   };
 

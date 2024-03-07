@@ -33,7 +33,7 @@ const InputField = ({
 );
 
 const selectOptions = [
-  { value: "", label: "Select Extension Name" },
+  { value: "", label: "None" },
   { value: "JR", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
@@ -51,6 +51,8 @@ export default function ViewStudentProfileModal({
     onSave();
     onClose();
   };
+
+  console.log(application);
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
@@ -288,7 +290,6 @@ export default function ViewStudentProfileModal({
               }
             >
               <option value="">Relationship with Guardian</option>
-              <option value="Parent">Parent</option>
               <option value="Relative">Relative</option>
               <option value="Non-relative">Non-relative</option>
             </select>
@@ -375,8 +376,8 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("track", e.target.value)}
             >
               <option value="">Select Track</option>
-              <option value="academic">Academic Track</option>
-              <option value="tvl">TVL Track</option>
+              <option value="ACADEMIC">Academic Track</option>
+              <option value="TVL">TVL Track</option>
             </select>
           </div>
 
@@ -393,11 +394,11 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("strand", e.target.value)}
             >
               <option value="">Select Strand</option>
-              <option value="gas">GAS</option>
-              <option value="abm">ABM</option>
-              <option value="humss">HUMSS</option>
-              <option value="stem">STEM</option>
-              <option value="ict">ICT</option>
+              <option value="ABM">ABM</option>
+              <option value="HUMSS">HUMSS</option>
+              <option value="STEM">STEM</option>
+              <option value="ICT">ICT</option>
+              <option value="HE">HE</option>
             </select>
           </div>
         </div>
