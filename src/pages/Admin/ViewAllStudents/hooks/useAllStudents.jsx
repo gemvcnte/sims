@@ -3,17 +3,17 @@ import axiosInstance from "@/utils/axios";
 import { useEffect, useState } from "react";
 
 export default function useAllStudents() {
-  const [allTeachers, setAllTeachers] = useState([]);
+  const [allStudents, setAllStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTeachers = async () => {
+    const fetchStudents = async () => {
       try {
         const response = await axiosInstance.get(getAllStudentsEndpoint);
 
         if (response.status === 200) {
-          setAllTeachers(response.data.data);
+          setAllStudents(response.data.data);
         } else {
           setError(response.data.message);
         }
@@ -24,8 +24,8 @@ export default function useAllStudents() {
       }
     };
 
-    fetchTeachers();
+    fetchStudents();
   }, []);
 
-  return { allTeachers, loading, error };
+  return { allStudents, loading, error };
 }
