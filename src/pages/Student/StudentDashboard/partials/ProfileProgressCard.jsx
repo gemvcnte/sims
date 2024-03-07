@@ -21,13 +21,8 @@ export default function ProfileProgressCard() {
 
     const fieldsToCheck = [
       "lrn",
-      "schoolYear",
-      "semester",
-      "strand",
       "lastName",
       "firstName",
-      "middleName",
-      "extensionName",
       "birthDate",
       "gender",
       "currentAddress",
