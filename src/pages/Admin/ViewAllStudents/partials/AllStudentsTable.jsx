@@ -13,9 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -29,10 +26,8 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewTeacherProfileModal from "./ViewStudentProfileModal";
 import ViewStudentProfileModal from "./ViewStudentProfileModal";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
-import PendingFiltersDrawer from "../../ApplicationMonitoring/components/PendingApplicationsDataTable/PendingFiltersDrawer";
 import StudentsFiltersDrawer from "./StudentsFiltersDrawer";
 import {
   Tooltip,
@@ -41,6 +36,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useAllStudents } from "../hooks/useAllStudents";
+import AllStudentsTableSkeleton from "./AllStudentsTableSkeleton";
 
 const AllStudentsTable = () => {
   const { allStudents, refetchStudents, loading, error } = useAllStudents();
@@ -50,7 +46,7 @@ const AllStudentsTable = () => {
   };
 
   if (loading) {
-    return <div>loading...</div>;
+    return <AllStudentsTableSkeleton />;
   }
 
   const columns = [
