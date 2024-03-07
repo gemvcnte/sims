@@ -127,10 +127,10 @@ const AllStudentsTable = () => {
     <div className="w-full px-4">
       <div className="flex items-center gap-2 py-4">
         <Input
-          placeholder="Filter lrns..."
-          value={table.getColumn("lrn")?.getFilterValue() || ""}
+          placeholder="Search by Last Name..."
+          value={table.getColumn("lastName")?.getFilterValue() || ""}
           onChange={(event) =>
-            table.getColumn("lrn")?.setFilterValue(event.target.value)
+            table.getColumn("lastName")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

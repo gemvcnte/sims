@@ -70,7 +70,7 @@ export default function ReviewStudentInformationModal({
             <Input
               id="lastName"
               type="text"
-              placeholder="Input Your Last Name"
+              // placeholder="Input Your Last Name"
               defaultValue={application.lastName}
               name="lastName"
               disabled
@@ -86,7 +86,7 @@ export default function ReviewStudentInformationModal({
               disabled
               id="firstName"
               type="text"
-              placeholder="Input Your First Name"
+              // placeholder="Input Your First Name"
               defaultValue={application.firstName}
               name="firstName"
               className="col-span-3"
@@ -101,7 +101,6 @@ export default function ReviewStudentInformationModal({
               disabled
               id="middleName"
               type="text"
-              placeholder="Input Your Middle Name"
               defaultValue={application.middleName}
               name="middleName"
               className="col-span-3"
@@ -132,7 +131,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="date"
-              placeholder="Input Your Birthdate (MM/DD/YY)"
+              // placeholder="Input Your Birthdate (MM/DD/YY)"
               value={application.birthDate}
               name="birthDate"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -162,7 +161,7 @@ export default function ReviewStudentInformationModal({
             <InputField
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="text"
-              placeholder="E.g., 123 Purok St, Barangay, Municipality"
+              // placeholder="E.g., 123 Purok St, Barangay, Municipality"
               value={application.currentAddress}
               name="currentAddress"
             />
@@ -175,7 +174,7 @@ export default function ReviewStudentInformationModal({
             <InputField
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               type="email"
-              placeholder="Input Your Email"
+              // placeholder="Input Your Email"
               value={application.emailAddress}
               name="emailAddress"
             />
@@ -187,7 +186,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="text"
-              placeholder="Firstname Middlename Lastname"
+              // placeholder="Firstname Middlename Lastname"
               value={application.fatherName}
               name="fatherName"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -200,7 +199,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="text"
-              placeholder="Firstname Middlename Lastname"
+              // placeholder="Firstname Middlename Lastname"
               value={application.motherName}
               name="motherName"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -213,7 +212,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="number"
-              placeholder="+639xxxxxxxxx"
+              // placeholder="+639xxxxxxxxx"
               value={application.fatherContactNumber}
               name="fatherContactNumber"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -226,7 +225,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="number"
-              placeholder="+639xxxxxxxxx"
+              // placeholder="+639xxxxxxxxx"
               value={application.motherContactNumber}
               name="motherContactNumber"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -239,7 +238,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="text"
-              placeholder="Firstname Middlename Lastname"
+              // placeholder="Firstname Middlename Lastname"
               value={application.guardianName}
               name="guardianName"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -252,7 +251,7 @@ export default function ReviewStudentInformationModal({
             </Label>
             <InputField
               type="number"
-              placeholder="+639xxxxxxxxx"
+              // placeholder="+639xxxxxxxxx"
               value={application.guardianContactNumber}
               name="guardianContactNumber"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -282,7 +281,7 @@ export default function ReviewStudentInformationModal({
             <input
               disabled
               type="number"
-              placeholder="Input Your LRN"
+              // placeholder="Input Your LRN"
               value={application.lrn}
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
