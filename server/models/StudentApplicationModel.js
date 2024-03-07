@@ -20,6 +20,7 @@ const studentApplicationSchema = new mongoose.Schema(
     extensionName: {
       type: String,
       // required: true,
+      enum: ["", "JR", "II", "III", "IV", "V"], 
       uppercase: true,
     },
     birthDate: {
