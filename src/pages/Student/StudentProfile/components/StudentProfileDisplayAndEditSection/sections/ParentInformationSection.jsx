@@ -50,7 +50,8 @@ export function ParentInformationSection({
             htmlFor="FatherContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Father's Tel. No.
+            Father's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
             required
@@ -69,7 +70,8 @@ export function ParentInformationSection({
             htmlFor="motherContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Mother's Tel. No.
+            Mother's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
             required
@@ -104,7 +106,8 @@ export function ParentInformationSection({
             htmlFor="guardianContactNumber"
             className="text-right text-xs sm:text-sm"
           >
-            Guardian's Tel. No.
+            Guardian's Mobile <span className="xl:hidden">No.</span>{" "}
+            <span className="hidden xl:inline">Number</span>
           </Label>
           <InputField
             type="number"
