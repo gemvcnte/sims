@@ -377,7 +377,9 @@ export default function ViewStudentProfileModal({
             >
               <option value="">Select Track</option>
               <option value="ACADEMIC">Academic Track</option>
+              <option value="academic">Academic Track</option>
               <option value="TVL">TVL Track</option>
+              <option value="tvl">TVL Track</option>
             </select>
           </div>
 
@@ -395,10 +397,15 @@ export default function ViewStudentProfileModal({
             >
               <option value="">Select Strand</option>
               <option value="ABM">ABM</option>
+              <option value="abm">ABM</option>
               <option value="HUMSS">HUMSS</option>
+              <option value="humss">HUMSS</option>
               <option value="STEM">STEM</option>
+              <option value="stem">STEM</option>
               <option value="ICT">ICT</option>
+              <option value="ict">ICT</option>
               <option value="HE">HE</option>
+              <option value="he">HE</option>
             </select>
           </div>
         </div>
