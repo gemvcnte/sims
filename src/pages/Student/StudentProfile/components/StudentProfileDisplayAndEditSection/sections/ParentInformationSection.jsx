@@ -22,7 +22,6 @@ export function ParentInformationSection({
             Father's Name
           </Label>
           <InputField
-            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -37,7 +36,6 @@ export function ParentInformationSection({
             Mother's Name
           </Label>
           <InputField
-            disabled
             required
             type="text"
             placeholder="Firstname Middlename Lastname"
@@ -55,10 +53,9 @@ export function ParentInformationSection({
             Father's Tel. No.
           </Label>
           <InputField
-            disabled
             required
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.fatherContactNumber}
             onChange={(e) =>
               handleInputChange("fatherContactNumber", e.target.value)
@@ -75,10 +72,9 @@ export function ParentInformationSection({
             Mother's Tel. No.
           </Label>
           <InputField
-            disabled
             required
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.motherContactNumber}
             onChange={(e) =>
               handleInputChange("motherContactNumber", e.target.value)
@@ -112,7 +108,7 @@ export function ParentInformationSection({
           </Label>
           <InputField
             type="number"
-            placeholder="+639xxxxxxxxx"
+            placeholder="09xxxxxxxxx"
             value={studentProfile?.guardianContactNumber}
             onChange={(e) =>
               handleInputChange("guardianContactNumber", e.target.value)
