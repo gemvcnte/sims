@@ -19,7 +19,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     extensionName: {
       type: String,
-      required: true,
+      // required: true,
       uppercase: true,
     },
     birthDate: {
@@ -28,7 +28,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["Male", "Female"],
+      enum: ["MALE", "FEMALE"],
       required: true,
       uppercase: true,
     },
