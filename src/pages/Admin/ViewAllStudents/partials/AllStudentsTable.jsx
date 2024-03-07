@@ -31,7 +31,6 @@ import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherProfileModal from "./ViewStudentProfileModal";
 import ViewStudentProfileModal from "./ViewStudentProfileModal";
-import useAllStudents from "../hooks/useAllStudents";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import PendingFiltersDrawer from "../../ApplicationMonitoring/components/PendingApplicationsDataTable/PendingFiltersDrawer";
 import StudentsFiltersDrawer from "./StudentsFiltersDrawer";
@@ -41,6 +40,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAllStudents } from "../hooks/useAllStudents";
 
 const AllStudentsTable = () => {
   const { allStudents, refetchStudents, loading, error } = useAllStudents();
@@ -48,6 +48,10 @@ const AllStudentsTable = () => {
   const refetchData = () => {
     refetchStudents();
   };
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
 
   const columns = [
     {

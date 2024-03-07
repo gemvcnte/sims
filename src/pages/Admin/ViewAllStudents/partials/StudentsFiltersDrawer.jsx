@@ -7,7 +7,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import useAllStudents from "../hooks/useAllStudents";
+import { useAllStudents } from "../hooks/useAllStudents";
 
 export default function StudentsFiltersDrawer() {
   const { filterStudents: filterApplications } = useAllStudents();
