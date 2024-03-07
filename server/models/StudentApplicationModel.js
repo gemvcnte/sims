@@ -28,6 +28,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
+      enum: ["Male", "Female"],
       required: true,
       uppercase: true,
     },
@@ -95,6 +96,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     guardianRelationship: {
       type: String,
+      enum: ["Non-relative", "Relative"],
       default: "",
     },
     status: {

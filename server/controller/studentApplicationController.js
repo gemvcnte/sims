@@ -34,7 +34,7 @@ const applyStudent = asyncHandler(async (req, res) => {
     console.error(err);
     return res
       .status(500)
-      .json({ error: "Failed to save personal information" });
+      .json({ error: "Failed to save personal information", message: err.message });
   }
 });
 
