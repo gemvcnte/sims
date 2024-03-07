@@ -33,7 +33,7 @@ const InputField = ({
 );
 
 const selectOptions = [
-  { value: "", label: "Select Extension Name" },
+  { value: "", label: "None" },
   { value: "JR", label: "Jr" },
   { value: "II", label: "II" },
   { value: "III", label: "III" },
@@ -288,7 +288,6 @@ export default function ViewStudentProfileModal({
               }
             >
               <option value="">Relationship with Guardian</option>
-              <option value="Parent">Parent</option>
               <option value="Relative">Relative</option>
               <option value="Non-relative">Non-relative</option>
             </select>
@@ -393,11 +392,11 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("strand", e.target.value)}
             >
               <option value="">Select Strand</option>
-              <option value="gas">GAS</option>
               <option value="abm">ABM</option>
               <option value="humss">HUMSS</option>
               <option value="stem">STEM</option>
               <option value="ict">ICT</option>
+              <option value="he">HE</option>
             </select>
           </div>
         </div>
