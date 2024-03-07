@@ -548,7 +548,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
         });
     }
 
-    const retrieveStudents = await Student.find().sort({ lastName: 1 });
+    const retrieveStudents = await Student.find().sort({ lastName: 1, firstName: 1 });
 
     if (!retrieveStudents) {
       res.status(404).json({ message: "There is nothing here." });
