@@ -52,6 +52,8 @@ export default function ViewStudentProfileModal({
     onClose();
   };
 
+  console.log(application);
+
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
       <form onSubmit={handleSaveChanges}>
@@ -374,8 +376,8 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("track", e.target.value)}
             >
               <option value="">Select Track</option>
-              <option value="academic">Academic Track</option>
-              <option value="tvl">TVL Track</option>
+              <option value="ACADEMIC">Academic Track</option>
+              <option value="TVL">TVL Track</option>
             </select>
           </div>
 
@@ -392,11 +394,11 @@ export default function ViewStudentProfileModal({
               onChange={(e) => handleInputChange("strand", e.target.value)}
             >
               <option value="">Select Strand</option>
-              <option value="abm">ABM</option>
-              <option value="humss">HUMSS</option>
-              <option value="stem">STEM</option>
-              <option value="ict">ICT</option>
-              <option value="he">HE</option>
+              <option value="ABM">ABM</option>
+              <option value="HUMSS">HUMSS</option>
+              <option value="STEM">STEM</option>
+              <option value="ICT">ICT</option>
+              <option value="HE">HE</option>
             </select>
           </div>
         </div>
