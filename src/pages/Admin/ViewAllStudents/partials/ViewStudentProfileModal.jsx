@@ -502,7 +502,7 @@ export default function ViewStudentProfileModal({
                   </div>
                 </section>
               ) : (
-                <div className="py-4 text-center text-gray-500">
+                <div className="py-4 text-center text-muted-foreground">
                   No past academic records found.
                 </div>
               )}
