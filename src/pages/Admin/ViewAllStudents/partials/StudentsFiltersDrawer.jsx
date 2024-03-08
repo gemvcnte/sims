@@ -34,9 +34,9 @@ export default function StudentsFiltersDrawer() {
     <DrawerContent>
       <main className="mx-auto w-full max-w-sm">
         <DrawerHeader>
-          <DrawerTitle>Filter Applications</DrawerTitle>
+          <DrawerTitle>Filter Students</DrawerTitle>
           <DrawerDescription className="">
-            Select filters to narrow down the list of pending applications
+            Select filters to narrow down the list of students
           </DrawerDescription>
         </DrawerHeader>
         <section className="mb-4 flex flex-col gap-4 px-4">

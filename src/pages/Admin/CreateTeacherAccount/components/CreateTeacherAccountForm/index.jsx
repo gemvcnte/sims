@@ -68,7 +68,9 @@ const CreateTeacherAccountForm = () => {
         /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">
+            Create <span className="hidden sm:inline">teacher</span> account
+          </Button>
         </footer>
       </form>
     </>
