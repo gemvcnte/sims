@@ -420,14 +420,14 @@ export default function ViewStudentProfileModal({
 
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1" className="mb-2 border-none">
-            <AccordionTrigger className="ml-auto max-w-[18ch]">
-              View History
+            <AccordionTrigger className="ml-auto max-w-[30ch]">
+              View Past Academic Records
             </AccordionTrigger>
             <AccordionContent>
               <section>
-                <div className="grid gap-4 py-4 ">
+                <div className="flex flex-col gap-12">
                   {application.schoolYear.slice(1).map((yearData, index) => (
-                    <div key={index} className="mb-12 flex flex-col gap-2">
+                    <div key={index} className="flex flex-col gap-2">
                       <div className="text-right italic">
                         <span>
                           SY {yearData.year} - {yearData.semester.toUpperCase()}
