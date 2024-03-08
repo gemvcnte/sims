@@ -58,8 +58,6 @@ export default function ViewStudentProfileModal({
     onClose();
   };
 
-  console.log(application);
-
   return (
     <DialogContent
       className={"max-h-[80%] overflow-y-scroll px-10 lg:max-w-[720px]"}
@@ -424,33 +422,35 @@ export default function ViewStudentProfileModal({
               View Past Academic Records
             </AccordionTrigger>
             <AccordionContent>
-              <section>
-                <div className="flex flex-col gap-12">
-                  {application.schoolYear.slice(1).map((yearData, index) => (
-                    <div key={index} className="flex flex-col gap-2">
-                      <div className="text-right italic">
-                        <span>
-                          SY {yearData.year} - {yearData.semester.toUpperCase()}
-                        </span>
-                      </div>
+              {application.schoolYear.length > 1 ? (
+                <section>
+                  <div className="flex flex-col gap-12">
+                    {application.schoolYear.slice(1).map((yearData, index) => (
+                      <div key={index} className="flex flex-col gap-2">
+                        <div className="text-right italic">
+                          <span>
+                            SY {yearData.year} -{" "}
+                            {yearData.semester.toUpperCase()}
+                          </span>
+                        </div>
 
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label
-                          htmlFor={`gradeLevel-${index}`}
-                          className="text-right"
-                        >
-                          Grade Level
-                        </Label>
-                        <InputField
-                          disabled
-                          type="text"
-                          value={yearData.gradeLevel}
-                          name={`gradeLevel-${index}`}
-                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        />
-                      </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                          <Label
+                            htmlFor={`gradeLevel-${index}`}
+                            className="text-right"
+                          >
+                            Grade Level
+                          </Label>
+                          <InputField
+                            disabled
+                            type="text"
+                            value={yearData.gradeLevel}
+                            name={`gradeLevel-${index}`}
+                            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          />
+                        </div>
 
-                      {/* <div className="grid grid-cols-4 items-center gap-4">
+                        {/* <div className="grid grid-cols-4 items-center gap-4">
                         <Label
                           htmlFor={`track-${index}`}
                           className="text-right"
@@ -466,41 +466,46 @@ export default function ViewStudentProfileModal({
                         />
                       </div> */}
 
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label
-                          htmlFor={`strand-${index}`}
-                          className="text-right"
-                        >
-                          Strand
-                        </Label>
-                        <InputField
-                          disabled
-                          type="text"
-                          value={yearData.strand}
-                          name={`strand-${index}`}
-                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        />
-                      </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                          <Label
+                            htmlFor={`strand-${index}`}
+                            className="text-right"
+                          >
+                            Strand
+                          </Label>
+                          <InputField
+                            disabled
+                            type="text"
+                            value={yearData.strand}
+                            name={`strand-${index}`}
+                            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          />
+                        </div>
 
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label
-                          htmlFor={`strand-${index}`}
-                          className="text-right"
-                        >
-                          Section Name
-                        </Label>
-                        <InputField
-                          disabled
-                          type="text"
-                          value={yearData.sectionName}
-                          name={`strand-${index}`}
-                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        />
+                        <div className="grid grid-cols-4 items-center gap-4">
+                          <Label
+                            htmlFor={`strand-${index}`}
+                            className="text-right"
+                          >
+                            Section Name
+                          </Label>
+                          <InputField
+                            disabled
+                            type="text"
+                            value={yearData.sectionName}
+                            name={`strand-${index}`}
+                            className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </section>
+              ) : (
+                <div className="py-4 text-center text-gray-500">
+                  No past academic records found.
                 </div>
-              </section>
+              )}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
