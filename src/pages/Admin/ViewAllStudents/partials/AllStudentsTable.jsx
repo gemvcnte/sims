@@ -67,40 +67,44 @@ const AllStudentsTable = () => {
     },
     {
       accessorKey: "gradeLevel",
-      header: "Current Grade Level",
+      header: "Grade",
       cell: ({ row }) => (
         <div className="">{row.original.schoolYear[0].gradeLevel}</div>
       ),
     },
     {
       accessorKey: "strand",
-      header: "Current Strand",
+      header: "Strand",
       cell: ({ row }) => (
         <div className="">{row.original.schoolYear[0].strand}</div>
       ),
     },
     {
-      accessorKey: "CurrentSection",
-      header: "Current Section",
+      accessorKey: "section",
+      header: "Section",
       // header: "Students",
       cell: ({ row }) => (
         <div className="">{row.original.schoolYear[0].sectionName}</div>
       ),
     },
     {
-      accessorKey: "CurrentSchoolYear",
-      header: "Current School Year",
+      accessorKey: "schoolYear",
+      header: "SY",
       // header: "Students",
       cell: ({ row }) => (
         <div className="">{row.original.schoolYear[0].year}</div>
       ),
     },
     {
-      accessorKey: "CurrentSemester",
-      header: "Current Semester",
+      accessorKey: "semester",
+      header: "Semester",
       // header: "Students",
       cell: ({ row }) => (
-        <div className="">{row.original.schoolYear[0].semester}</div>
+        <div className="">
+          {row.original.schoolYear[0].semester == "first semester"
+            ? "1st Semester"
+            : "2nd Semester"}
+        </div>
       ),
     },
     {
@@ -171,7 +175,23 @@ const AllStudentsTable = () => {
 
         <Drawer dismissible={true}>
           <DrawerTrigger>
-            <Button variant="outline">Filters</Button>
+            <Button variant="outline" className="flex gap-2">
+              <span className="hidden sm:inline">Filters</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-filter"
+              >
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+              </svg>
+            </Button>
           </DrawerTrigger>
           <StudentsFiltersDrawer />
         </Drawer>
@@ -184,7 +204,9 @@ const AllStudentsTable = () => {
                 onClick={() => {
                   refetchData();
                 }}
+                className="flex gap-2"
               >
+                <span className="hidden sm:inline">Refresh Data</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="15"
