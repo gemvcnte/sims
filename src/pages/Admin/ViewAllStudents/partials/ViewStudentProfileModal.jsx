@@ -12,6 +12,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const InputField = ({
   type,
@@ -55,7 +61,9 @@ export default function ViewStudentProfileModal({
   console.log(application);
 
   return (
-    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
+    <DialogContent
+      className={"max-h-[80%] overflow-y-scroll px-10 lg:max-w-[720px]"}
+    >
       <form onSubmit={handleSaveChanges}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -409,8 +417,96 @@ export default function ViewStudentProfileModal({
             </select>
           </div>
         </div>
+
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1" className="mb-2 border-none">
+            <AccordionTrigger className="ml-auto max-w-[18ch]">
+              View History
+            </AccordionTrigger>
+            <AccordionContent>
+              <section>
+                <div className="grid gap-4 py-4 ">
+                  {application.schoolYear.slice(1).map((yearData, index) => (
+                    <div key={index} className="mb-12 flex flex-col gap-2">
+                      <div className="text-right italic">
+                        <span>
+                          SY {yearData.year} - {yearData.semester.toUpperCase()}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label
+                          htmlFor={`gradeLevel-${index}`}
+                          className="text-right"
+                        >
+                          Grade Level
+                        </Label>
+                        <InputField
+                          disabled
+                          type="text"
+                          value={yearData.gradeLevel}
+                          name={`gradeLevel-${index}`}
+                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div>
+
+                      {/* <div className="grid grid-cols-4 items-center gap-4">
+                        <Label
+                          htmlFor={`track-${index}`}
+                          className="text-right"
+                        >
+                          Track
+                        </Label>
+                        <InputField
+                          disabled
+                          type="text"
+                          value={yearData.track}
+                          name={`track-${index}`}
+                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div> */}
+
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label
+                          htmlFor={`strand-${index}`}
+                          className="text-right"
+                        >
+                          Strand
+                        </Label>
+                        <InputField
+                          disabled
+                          type="text"
+                          value={yearData.strand}
+                          name={`strand-${index}`}
+                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label
+                          htmlFor={`strand-${index}`}
+                          className="text-right"
+                        >
+                          Section Name
+                        </Label>
+                        <InputField
+                          disabled
+                          type="text"
+                          value={yearData.sectionName}
+                          name={`strand-${index}`}
+                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
         <DialogFooter>
-          <Button type="submit" variant="outline">
+          <Button type="submit" variant="outline" className="w-full">
             Close
           </Button>
         </DialogFooter>
