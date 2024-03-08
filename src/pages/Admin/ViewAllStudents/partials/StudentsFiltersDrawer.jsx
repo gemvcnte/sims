@@ -7,10 +7,10 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { useRejectedApplications } from "../../hooks/useRejectedApplications";
+import { useAllStudents } from "../hooks/useAllStudents";
 
-export default function RejectedFiltersDrawer() {
-  const { filterApplications } = useRejectedApplications();
+export default function StudentsFiltersDrawer() {
+  const { filterStudents: filterApplications } = useAllStudents();
 
   const [filters, setFilters] = useState({
     schoolYear: "all",
@@ -34,9 +34,9 @@ export default function RejectedFiltersDrawer() {
     <DrawerContent>
       <main className="mx-auto w-full max-w-sm">
         <DrawerHeader>
-          <DrawerTitle>Filter Applications</DrawerTitle>
+          <DrawerTitle>Filter Students</DrawerTitle>
           <DrawerDescription className="">
-            Select filters to narrow down the list of rejected applications
+            Select filters to narrow down the list of students
           </DrawerDescription>
         </DrawerHeader>
         <section className="mb-4 flex flex-col gap-4 px-4">
@@ -54,7 +54,7 @@ export default function RejectedFiltersDrawer() {
             <option value="2026-2027">2026-2027</option>
             <option value="2027-2028">2027-2028</option>
             <option value="2028-2029">2028-2029</option>
-            <option value="2029-20230">2029-2030</option>
+            <option value="2029-2030">2029-2030</option>
           </select>
           <select
             data-vaul-no-drag
