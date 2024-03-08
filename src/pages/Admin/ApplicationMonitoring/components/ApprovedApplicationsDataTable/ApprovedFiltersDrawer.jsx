@@ -36,7 +36,7 @@ export default function ApprovedFiltersDrawer() {
         <DrawerHeader>
           <DrawerTitle>Filter Applications</DrawerTitle>
           <DrawerDescription className="">
-            Select filters to narrow down the list of pending applications
+            Select filters to narrow down the list of enrolled applications
           </DrawerDescription>
         </DrawerHeader>
         <section className="mb-4 flex flex-col gap-4 px-4">
