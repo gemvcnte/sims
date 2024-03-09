@@ -100,7 +100,12 @@ export default function Registration() {
     handleSubmit(objectWithBackendSchemaStructure); // Submit the form data to the API
   };
 
-  const [hasAccount, setHasAccount] = useState(null); // State to hold the selected option
+  const [hasAccount, setHasAccount] = useState(null);
+
+  const handleStepBackToZero = () => {
+    setStep(0);
+    setFormData({});
+  };
 
   return (
     <>
@@ -235,7 +240,13 @@ export default function Registration() {
           </main>
         )}
 
-        {step === 1 && <Step1 onNext={handleNext} fullFormData={formData} />}
+        {step === 1 && (
+          <Step1
+            onBack={handleStepBackToZero}
+            onNext={handleNext}
+            fullFormData={formData}
+          />
+        )}
 
         {step === 2 && (
           <Step2 onNext={handleNext} onBack={handleBack} formData={formData} />
