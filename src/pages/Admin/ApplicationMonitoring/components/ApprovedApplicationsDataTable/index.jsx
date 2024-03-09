@@ -61,6 +61,7 @@ import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useApprovedApplications } from "../../hooks/useApprovedApplications";
 import ApprovedFiltersDrawer from "./ApprovedFiltersDrawer";
 import AllStudentsTableSkeleton from "@/pages/Admin/ViewAllStudents/partials/AllStudentsTableSkeleton";
+import ViewStudentApplicationModal from "../ViewStudentApplicationModal";
 
 const ApprovedApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -370,7 +371,7 @@ const ApprovedApplicationsDataTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewStudentProfileModal
+            <ViewStudentApplicationModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}

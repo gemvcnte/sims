@@ -61,6 +61,7 @@ import {
 } from "@/components/ui/tooltip";
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import AllStudentsTableSkeleton from "@/pages/Admin/ViewAllStudents/partials/AllStudentsTableSkeleton";
+import ViewStudentApplicationModal from "../ViewStudentApplicationModal";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -422,7 +423,7 @@ const PendingApplicationsDataTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewStudentProfileModal
+            <ViewStudentApplicationModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}
