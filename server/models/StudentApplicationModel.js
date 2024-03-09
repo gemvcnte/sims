@@ -99,7 +99,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     guardianRelationship: {
       type: String,
-      enum: ["Non-relative", "Relative"],
+      enum: ["", "Non-relative", "Relative"],
       default: "",
     },
     status: {
@@ -112,6 +112,12 @@ const studentApplicationSchema = new mongoose.Schema(
       // need nalang lagyan ng image
       default: "",
     },
+    hasAccount: {
+      type: Boolean,
+      default: false,
+    },
+    
+    
 
     //if want to hash the password only remove the password attribute
     // password: {

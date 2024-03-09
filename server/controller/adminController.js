@@ -284,6 +284,7 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: "LRN was already used by a student with a different last name." });
     }
 
+
     // Retrieve the student profile based on LRN
     let studentProfile = await Student.findOne({ lrn: originalStudentApplication.lrn });
 
@@ -295,7 +296,11 @@ const acceptStudentApplication = asyncHandler(async (req, res) => {
         password: hashedPassword,
         status: "enrolled",
       });
-    } else {
+    } else if (originalStudentApplication.hasAccount) {
+     // Add schoolYear object to the beginning of the schoolYear array
+     studentProfile.schoolYear.unshift(originalStudentApplication.schoolYear[0]);
+     studentProfile.status = "enrolled";
+   } else  {
      // Update existing fields
      studentProfile.firstName = originalStudentApplication.firstName;
      studentProfile.middleName = originalStudentApplication.middleName;
