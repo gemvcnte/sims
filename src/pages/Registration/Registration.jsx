@@ -15,6 +15,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
+import Step5 from "./components/Step5";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -107,6 +108,14 @@ export default function Registration() {
     setFormData({});
   };
 
+  const handleStepZeroNextButton = () => {
+    if (!hasAccount) {
+      setStep(step + 1);
+    } else {
+      setStep(step + 5);
+    }
+  };
+
   return (
     <>
       {loading && <LoadingSpinner />}
@@ -115,7 +124,7 @@ export default function Registration() {
       </div>
       {/* <ToastContainer /> */}
 
-      {step > 0 && <Header step={step} />}
+      {step > 0 && step < 5 ? <Header step={step} /> : null}
 
       <main className="">
         {step === 0 && (
@@ -135,10 +144,10 @@ export default function Registration() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class={`lucide lucide-circle-check text-blue-400 ${
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`lucide lucide-circle-check text-blue-400 ${
                       hasAccount ? "opacity-100" : "opacity-0"
                     }`}
                   >
@@ -158,10 +167,10 @@ export default function Registration() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-user-round-check"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-user-round-check"
                   >
                     <path d="M2 21a8 8 0 0 1 13.292-6" />
                     <circle cx="10" cy="8" r="5" />
@@ -185,10 +194,10 @@ export default function Registration() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class={`lucide lucide-circle-check text-blue-400 ${
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`lucide lucide-circle-check text-blue-400 ${
                       !hasAccount ? "opacity-100" : "opacity-0"
                     }`}
                   >
@@ -208,10 +217,10 @@ export default function Registration() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-user-round-x "
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-user-round-x "
                   >
                     <path d="M2 21a8 8 0 0 1 11.873-7" />
                     <circle cx="10" cy="8" r="5" />
@@ -225,7 +234,7 @@ export default function Registration() {
 
             <section className="flex w-[70ch] items-end justify-end pt-8">
               <button
-                onClick={() => handleNext()}
+                onClick={() => handleStepZeroNextButton()}
                 className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
               >
                 Next Step
@@ -257,6 +266,15 @@ export default function Registration() {
             fullFormData={formData}
             onBack={handleBack}
             onNext={handleNext}
+          />
+        )}
+
+        {step === 5 && (
+          <Step5
+            setStep={setStep}
+            onNext={handleNext}
+            onBack={handleBack}
+            fullFormData={formData}
           />
         )}
       </main>
