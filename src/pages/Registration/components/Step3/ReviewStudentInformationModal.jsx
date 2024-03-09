@@ -54,7 +54,7 @@ export default function ReviewStudentInformationModal({
   };
 
   return (
-    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
+    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
       <form onSubmit={handleSaveChanges}>
         <DialogHeader>
           <DialogTitle>Review Information</DialogTitle>
@@ -340,7 +340,9 @@ export default function ReviewStudentInformationModal({
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" size="lg" className="px-12">
+            Submit
+          </Button>
         </DialogFooter>
       </form>
     </DialogContent>

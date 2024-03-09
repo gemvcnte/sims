@@ -152,7 +152,10 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
 
         <div className="flex items-end justify-end gap-4 py-16">
           <button
-            onClick={() => setStep(0)}
+            onClick={() => {
+              setStep(0);
+              setAcademicData({});
+            }}
             className="border-white-700 rounded-lg border px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
           >
             Back
