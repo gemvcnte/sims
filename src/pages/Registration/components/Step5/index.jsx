@@ -54,9 +54,12 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
     <div className="px-36 lg:px-[12.5rem]">
       {/* <ToastContainer /> */}
 
-      <header className="py-6 text-center">
-        <h4 className="text-black-300">Step 3</h4>
-        <h1 className="text-2xl">Academic Information</h1>
+      <header className="py-12 text-center">
+        {/* <h4 className="text-black-300">Step 3</h4> */}
+        {/* <h1 className="text-2xl">
+          Form for Students with Existing Accounts from Previous
+          Semesters/School Years
+        </h1> */}
       </header>
 
       <form onSubmit={handleSubmit} className="gap-24">
