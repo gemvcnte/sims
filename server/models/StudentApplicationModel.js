@@ -4,7 +4,7 @@ const studentApplicationSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      // required: true,
       uppercase: true,
     },
     middleName: {
@@ -25,17 +25,17 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     birthDate: {
       type: String,
-      required: true,
+      // required: true,
     },
     gender: {
       type: String,
       enum: ["MALE", "FEMALE"],
-      required: true,
+      // required: true,
       uppercase: true,
     },
     currentAddress: {
       type: String,
-      required: false,
+      // required: false,
       uppercase: true,
     },
     lrn: {
@@ -70,7 +70,7 @@ const studentApplicationSchema = new mongoose.Schema(
     ],
     emailAddress: {
       type: String,
-      required: true,
+      // required: true,
       validate(value) {
         if (!value.match(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/)) {
           throw new Error("Email is not valid.");
