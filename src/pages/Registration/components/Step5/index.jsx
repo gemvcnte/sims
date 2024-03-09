@@ -40,8 +40,8 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const isFormValid = FormValidator(academicData, 5);
-    // isFormValid ? onNext(academicData) : notify();
+    const isFormValid = FormValidator(academicData, 5);
+    isFormValid ? onNext(academicData) : notify();
     console.log(academicData);
   };
 
@@ -88,7 +88,9 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
                 className={`border-white-700 rounded-lg border p-2 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
                   academicData.lastName && "!border-blue-400 text-blue-400"
                 }`}
-                onChange={(e) => handleFieldChange("lastName", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("lastName", e.target.value.toUpperCase())
+                }
               />
             </div>
           </div>
@@ -139,29 +141,29 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
             </div>
           </div>
         </div>
-      </form>
 
-      <div className="flex items-end justify-end gap-4 py-16">
-        <button
-          onClick={() => setStep(0)}
-          className="border-white-700 rounded-lg border px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
-        >
-          Back
-        </button>
-        <button
-          onClick={handleSubmit}
-          type="submit"
-          className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
-        >
-          Next Step
-          <Icon
-            className="transform-gpu transition-transform duration-300 group-hover:translate-x-8 group-focus:translate-x-8"
-            icon="ep:arrow-up-bold"
-            color="white"
-            rotate={1}
-          />
-        </button>
-      </div>
+        <div className="flex items-end justify-end gap-4 py-16">
+          <button
+            onClick={() => setStep(0)}
+            className="border-white-700 rounded-lg border px-16 py-4 text-right hover:border-blue-400 hover:text-blue-400"
+          >
+            Back
+          </button>
+          <button
+            type="submit"
+            // onClick={handleSubmit}
+            className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+          >
+            Next Step
+            <Icon
+              className="transform-gpu transition-transform duration-300 group-hover:translate-x-8 group-focus:translate-x-8"
+              icon="ep:arrow-up-bold"
+              color="white"
+              rotate={1}
+            />
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

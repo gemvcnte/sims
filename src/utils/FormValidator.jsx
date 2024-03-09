@@ -21,6 +21,8 @@ const FormValidator = (formData, step) => {
     requiredFields = ["lrn", "gradeLevel", "track", "strand"];
   } else if (step === 4) {
     requiredFields = ["username", "password"];
+  } else if (step === 5) {
+    requiredFields = ["lrn", "lastName", "gradeLevel", "track", "strand"];
   }
 
   const isFormDataValid = () => {

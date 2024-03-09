@@ -16,6 +16,7 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import Step5 from "./components/Step5";
+import StepFiveReviewStudentInformationModal from "./components/Step5/StepFiveReviewStudentInformationModal";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -34,7 +35,7 @@ export default function Registration() {
 
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
-    if (step === 3) {
+    if (step === 3 || 5) {
       setShowDialog(true); // Show the dialog before proceeding to the next step
       const objectWithBackendSchemaStructure = {
         schoolYear: {
@@ -280,10 +281,17 @@ export default function Registration() {
       </main>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <ReviewStudentInformationModal
-          application={formData}
-          onSave={handleConfirmSubmission}
-        />
+        {step === 3 ? (
+          <ReviewStudentInformationModal
+            application={formData}
+            onSave={handleConfirmSubmission}
+          />
+        ) : (
+          <StepFiveReviewStudentInformationModal
+            application={formData}
+            onSave={handleConfirmSubmission}
+          />
+        )}
       </Dialog>
     </>
   );
