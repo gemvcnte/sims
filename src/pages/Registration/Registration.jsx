@@ -35,7 +35,7 @@ export default function Registration() {
 
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
-    if (step === 3 || 5) {
+    if (step === 3 || step === 5) {
       setShowDialog(true); // Show the dialog before proceeding to the next step
       const objectWithBackendSchemaStructure = {
         schoolYear: {
