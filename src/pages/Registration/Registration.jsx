@@ -12,7 +12,7 @@ import useGlobalSettings from "./useGlobalSettings";
 import ReviewStudentInformationModal from "./components/Step3/ReviewStudentInformationModal";
 import { Dialog } from "@/components/ui/dialog";
 import showErrorNotification from "@/utils/ShowErrorNotification";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 
@@ -100,6 +100,8 @@ export default function Registration() {
     handleSubmit(objectWithBackendSchemaStructure); // Submit the form data to the API
   };
 
+  const [hasAccount, setHasAccount] = useState(null); // State to hold the selected option
+
   return (
     <>
       {loading && <LoadingSpinner />}
@@ -114,8 +116,36 @@ export default function Registration() {
         {step === 0 && (
           <main className="flex h-[100svh] flex-col items-center justify-center gap-2">
             <section className="flex gap-8">
-              <Card className="flex aspect-square w-[35ch] items-center justify-center">
-                <CardContent className=" flex flex-col items-center justify-center gap-2 text-center">
+              <Card
+                className={`flex aspect-square w-[35ch] cursor-pointer flex-col ${
+                  hasAccount ? "border-blue-400" : ""
+                }`}
+                onClick={() => setHasAccount(true)}
+              >
+                <CardTitle className="flex justify-end p-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class={`lucide lucide-circle-check text-blue-400 ${
+                      hasAccount ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </CardTitle>
+                <CardContent
+                  className={`flex h-full flex-col items-center justify-center gap-2 text-center ${
+                    hasAccount ? "text-blue-400" : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="48"
@@ -126,7 +156,7 @@ export default function Registration() {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-user-round-check text-muted-foreground"
+                    class="lucide lucide-user-round-check"
                   >
                     <path d="M2 21a8 8 0 0 1 13.292-6" />
                     <circle cx="10" cy="8" r="5" />
@@ -136,8 +166,36 @@ export default function Registration() {
                 </CardContent>
               </Card>
 
-              <Card className="flex aspect-square w-[35ch] items-center justify-center">
-                <CardContent className="flex flex-col items-center justify-center gap-2 text-center">
+              <Card
+                className={`flex aspect-square w-[35ch] cursor-pointer flex-col ${
+                  !hasAccount ? "border-blue-400" : ""
+                }`}
+                onClick={() => setHasAccount(false)}
+              >
+                <CardTitle className="flex justify-end p-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class={`lucide lucide-circle-check text-blue-400 ${
+                      !hasAccount ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </CardTitle>
+                <CardContent
+                  className={`flex h-full flex-col items-center justify-center gap-2 text-center ${
+                    !hasAccount ? "text-blue-400" : ""
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="48"
@@ -148,7 +206,7 @@ export default function Registration() {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-user-round-x text-muted-foreground"
+                    class="lucide lucide-user-round-x "
                   >
                     <path d="M2 21a8 8 0 0 1 11.873-7" />
                     <circle cx="10" cy="8" r="5" />
