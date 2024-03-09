@@ -75,13 +75,25 @@ export default function Registration() {
         });
         setLoading(false);
         setFormData({});
-        setStep(1);
+        if (data.hasAccount) {
+          setStep(0);
+          setHasAccount(null);
+        } else {
+          setStep(1);
+          setHasAccount(null);
+        }
       }
     } catch (error) {
-      showErrorNotification(
-        "Error submitting data: " + error.response.data.message,
-      );
-
+      if (error.response && error.response.data && error.response.data.error) {
+        // Server response error with 'error' field
+        showErrorNotification(error.response.data.error);
+      } else if (error.message) {
+        // Other types of errors with a 'message' field
+        showErrorNotification(error.response.data.message);
+      } else {
+        // Fallback for any other unexpected errors
+        showErrorNotification("Unexpected error occurred.");
+      }
       setLoading(false);
     }
   };

@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 
 function Step5({ setStep, fullFormData, onBack, onNext }) {
   const [academicData, setAcademicData] = useState({
+    hasAccount: null,
     lrn: "",
     lastName: "",
     track: "",
@@ -18,6 +19,10 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
     if (fullFormData) {
       setAcademicData(fullFormData);
     }
+    setAcademicData({
+      ...fullFormData,
+      hasAccount: true,
+    });
   }, [fullFormData]);
 
   const handleFieldChange = (field, value) => {
