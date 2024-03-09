@@ -4,7 +4,7 @@ const studentApplicationSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      // required: true,
       uppercase: true,
     },
     middleName: {
@@ -25,17 +25,17 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     birthDate: {
       type: String,
-      required: true,
+      // required: true,
     },
     gender: {
       type: String,
       enum: ["MALE", "FEMALE"],
-      required: true,
+      // required: true,
       uppercase: true,
     },
     currentAddress: {
       type: String,
-      required: false,
+      // required: false,
       uppercase: true,
     },
     lrn: {
@@ -70,7 +70,7 @@ const studentApplicationSchema = new mongoose.Schema(
     ],
     emailAddress: {
       type: String,
-      required: true,
+      // required: true,
       validate(value) {
         if (!value.match(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/)) {
           throw new Error("Email is not valid.");
@@ -99,7 +99,7 @@ const studentApplicationSchema = new mongoose.Schema(
     },
     guardianRelationship: {
       type: String,
-      enum: ["Non-relative", "Relative"],
+      enum: ["", "Non-relative", "Relative"],
       default: "",
     },
     status: {
@@ -112,6 +112,12 @@ const studentApplicationSchema = new mongoose.Schema(
       // need nalang lagyan ng image
       default: "",
     },
+    hasAccount: {
+      type: Boolean,
+      default: false,
+    },
+    
+    
 
     //if want to hash the password only remove the password attribute
     // password: {
