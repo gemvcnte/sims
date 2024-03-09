@@ -35,7 +35,7 @@ const selectOptions = [
   { value: "V", label: "V" },
 ];
 
-function Step1({ onNext, fullFormData }) {
+function Step1({ onBack, onNext, fullFormData }) {
   const [hasMiddleName, setHasMiddleName] = useState(false);
 
   const handleMiddleNameToggle = (e) => {
@@ -261,10 +261,17 @@ function Step1({ onNext, fullFormData }) {
             />
           </div>
 
-          <div className="flex items-end justify-end ">
+          <div className="flex items-end justify-end">
+            <button
+              onClick={() => onBack()}
+              type="submit"
+              className="border-white-700 mr-4 rounded-lg border px-12 py-4 text-right hover:border-blue-400 hover:text-blue-400"
+            >
+              Back
+            </button>
             <button
               type="submit"
-              className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+              className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-12 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
             >
               Next Step
               <Icon
