@@ -8,28 +8,44 @@ const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
-    // Find the student by LRN (Learning Reference Number)
-    const existingStudent = await Student.findOne({
-      lrn: registrationData.lrn,
-    });
-
-    if (!existingStudent) {
-      return res
-        .status(404)
-        .json({ error: "Student with this LRN was not found." });
-    }
-
-    // Check for LRN conflict with different last name
-    const existingEnrolledStudentWithLastnameConflict = await Student.findOne({
-      lrn: registrationData.lrn,
-      lastName: { $ne: registrationData.lastName },
-    });
-
-    if (existingEnrolledStudentWithLastnameConflict) {
-      return res.status(400).json({
-        message:
-          "LRN was already used by a student with a different last name.",
+    if (registrationData.hasAccount) {
+      // Find the student by LRN (Learning Reference Number)
+      const existingStudent = await Student.findOne({
+        lrn: registrationData.lrn,
       });
+
+      if (!existingStudent) {
+        return res.status(404).json({
+          error:
+            "The LRN provided does not match any student records in our system",
+        });
+      }
+
+      // Check for LRN conflict with different last name
+      const existingEnrolledStudentWithLastnameConflict = await Student.findOne(
+        {
+          lrn: registrationData.lrn,
+          lastName: { $ne: registrationData.lastName },
+        }
+      );
+
+      if (existingEnrolledStudentWithLastnameConflict) {
+        return res.status(400).json({
+          message:
+            "The LRN provided is already associated with a student who has a different last name",
+        });
+      }
+    } else {
+      // Find the student by LRN (Learning Reference Number)
+      const existingStudent = await Student.findOne({
+        lrn: registrationData.lrn,
+      });
+
+      if (existingStudent) {
+        return res.status(404).json({
+          error: "A student with this LRN is already registered in our system",
+        });
+      }
     }
 
     // Check if there is an existing pending application for the LRN with the same school year and semester
