@@ -12,6 +12,9 @@ import useGlobalSettings from "./useGlobalSettings";
 import ReviewStudentInformationModal from "./components/Step3/ReviewStudentInformationModal";
 import { Dialog } from "@/components/ui/dialog";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Icon } from "@iconify/react";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -24,7 +27,7 @@ export default function Registration() {
 
   const [loading, setLoading] = useState(false);
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({});
   const [showDialog, setShowDialog] = useState(false); // State for controlling the visibility of the dialog
 
@@ -104,13 +107,82 @@ export default function Registration() {
         <p>Registration Only Available on Desktop</p>
       </div>
       {/* <ToastContainer /> */}
-      <Header step={step} />
+
+      {step > 0 && <Header step={step} />}
 
       <main className="">
+        {step === 0 && (
+          <main className="flex h-[100svh] flex-col items-center justify-center gap-2">
+            <section className="flex gap-8">
+              <Card className="flex aspect-square w-[35ch] items-center justify-center">
+                <CardContent className=" flex flex-col items-center justify-center gap-2 text-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-user-round-check text-muted-foreground"
+                  >
+                    <path d="M2 21a8 8 0 0 1 13.292-6" />
+                    <circle cx="10" cy="8" r="5" />
+                    <path d="m16 19 2 2 4-4" />
+                  </svg>
+                  <span>I have a SIMS account from previous semesters</span>
+                </CardContent>
+              </Card>
+
+              <Card className="flex aspect-square w-[35ch] items-center justify-center">
+                <CardContent className="flex flex-col items-center justify-center gap-2 text-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-user-round-x text-muted-foreground"
+                  >
+                    <path d="M2 21a8 8 0 0 1 11.873-7" />
+                    <circle cx="10" cy="8" r="5" />
+                    <path d="m17 17 5 5" />
+                    <path d="m22 17-5 5" />
+                  </svg>
+                  <span>I'm new to SIMS and don't have an account yet</span>
+                </CardContent>
+              </Card>
+            </section>
+
+            <section className="flex w-[70ch] items-end justify-end pt-8">
+              <button
+                onClick={() => handleNext()}
+                className="group flex w-fit transform-gpu items-center gap-2 rounded-lg bg-blue-400 px-16 py-4 text-right text-white transition-transform hover:-translate-x-[-16px] focus:-translate-x-[-16px] focus:outline-none"
+              >
+                Next Step
+                <Icon
+                  className="transform-gpu transition-transform duration-300 group-hover:translate-x-8 group-focus:translate-x-8"
+                  icon="ep:arrow-up-bold"
+                  color="white"
+                  rotate={1}
+                />
+              </button>
+            </section>
+          </main>
+        )}
+
         {step === 1 && <Step1 onNext={handleNext} fullFormData={formData} />}
+
         {step === 2 && (
           <Step2 onNext={handleNext} onBack={handleBack} formData={formData} />
         )}
+
         {step === 3 && (
           <Step3
             fullFormData={formData}
