@@ -20,7 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 
-export default function AdminSidebar() {
+export default function AdminSidebarTeacherMode() {
   const location = useLocation();
   const isOnRegistrationPage = location.pathname === "/registration";
   const { toggleSidebar } = useSidebarContext();
@@ -35,7 +35,7 @@ export default function AdminSidebar() {
 
   return (
     !isOnRegistrationPage &&
-    isAdminMode && (
+    !isAdminMode && (
       <SidebarContainer overflow={true}>
         <SidebarItem to="dashboard" icon="material-symbols:dashboard">
           Dashboard
@@ -57,17 +57,6 @@ export default function AdminSidebar() {
         </SidebarItem>
 
         <ChangePasswordDrawer userType="admin" />
-
-        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <DrawerTrigger>
-            <span onClick={handleDrawerClick}>
-              <SidebarItem icon="simple-line-icons:settings">
-                Settings
-              </SidebarItem>
-            </span>
-          </DrawerTrigger>
-          <GlobalSetttingsDrawer onClose={handleDrawerClick} />
-        </Drawer>
 
         <div className="flex items-center space-x-2 px-4">
           <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
