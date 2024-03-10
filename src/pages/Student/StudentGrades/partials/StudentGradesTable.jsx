@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableHead,
   TableRow,
+  TableCaption,
 } from "@/components/ui/table";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -83,6 +84,9 @@ export default function StudentGradesTable({ setSectionName }) {
   return (
     <main className="m-4">
       <Table>
+        {!classDetails && (
+          <TableCaption className="pb-6 pt-4">No Grades Found</TableCaption>
+        )}
         <TableHeader>
           <TableRow>
             <TableHead>Subject Name</TableHead>
@@ -93,9 +97,7 @@ export default function StudentGradesTable({ setSectionName }) {
             <TableHead>Remarks</TableHead>
           </TableRow>
         </TableHeader>
-
         <TableBody>{renderSubjects()}</TableBody>
-
         <TableFooter></TableFooter>
       </Table>
     </main>
