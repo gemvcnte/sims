@@ -16,6 +16,9 @@ import AnalyticsDrawer from "@/pages/Admin/AnalyticsDrawer";
 import { GlobalSetttingsDrawer } from "@/pages/Admin/GlobalSettingsDrawer";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import { Global } from "recharts";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -27,6 +30,8 @@ export default function AdminSidebar() {
     // event.preventDefault();
     setIsDrawerOpen(!isDrawerOpen);
   };
+
+  const { isAdminMode, toggleMode } = useTeacherAdminMode();
 
   return (
     !isOnRegistrationPage && (
@@ -62,6 +67,11 @@ export default function AdminSidebar() {
           </DrawerTrigger>
           <GlobalSetttingsDrawer onClose={handleDrawerClick} />
         </Drawer>
+
+        <div className="flex items-center space-x-2 px-4">
+          <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
+          <Label>Admin Mode</Label>
+        </div>
       </SidebarContainer>
     )
   );
