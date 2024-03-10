@@ -34,8 +34,8 @@ export default function SidebarFooter() {
           </Avatar>{" "}
           <div className="flex flex-col items-start justify-around">
             <span>
-              {user?.username && user.username.length > 12
-                ? `${user.username.slice(0, 12)}..`
+              {user?.username && user.username.length > 15
+                ? `${user.username.slice(0, 15)}..`
                 : user.username || "username"}
             </span>
             <span className="text-muted-foreground">{user?.role}</span>
