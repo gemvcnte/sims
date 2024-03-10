@@ -4,8 +4,13 @@ import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import SidebarItem from "@/components/layout/Sidebar/components/SidebarContainer/components/SidebarItem";
 import { AnnouncementsDropdown } from "./AnnouncementsDropdown";
 import ChangePasswordDrawer from "../ChangePasswordDrawer";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { Icon } from "@iconify/react";
 
 export default function TeacherSidebar() {
+  const { logout } = useAuth();
+
   return (
     <SidebarContainer>
       <SidebarItem to="dashboard" icon="material-symbols:dashboard">
@@ -33,6 +38,11 @@ export default function TeacherSidebar() {
       </SidebarItem>
 
       <ChangePasswordDrawer userType="teacher" />
+
+      <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+        <Icon icon="material-symbols:logout" className="mr-2" />
+        Logout
+      </Button>
     </SidebarContainer>
   );
 }

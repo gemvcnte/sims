@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import ViewStudentAnnouncementsModal from "@/pages/Student/ViewStudentAnnouncementsModal";
 import { Icon } from "@iconify/react";
 import ChangePasswordDrawer from "../ChangePasswordDrawer";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function StudentSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -19,6 +21,8 @@ export default function StudentSidebar() {
     // event.preventDefault();
     setIsDialogOpen(!isDialogOpen);
   };
+
+  const { logout } = useAuth();
 
   return (
     <SidebarContainer>
@@ -53,6 +57,11 @@ export default function StudentSidebar() {
       </SidebarItem>
 
       <ChangePasswordDrawer userType="student" />
+
+      <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+        <Icon icon="material-symbols:logout" className="mr-2" />
+        Logout
+      </Button>
     </SidebarContainer>
   );
 }

@@ -42,7 +42,7 @@ export default function SidebarFooter() {
           </div>
         </section>
         <section>
-          <Button
+          {/* <Button
             variant="ghost"
             onClick={(e) => {
               e.stopPropagation();
@@ -56,7 +56,7 @@ export default function SidebarFooter() {
               height="20"
               className="z-20 ml-4 text-muted-foreground"
             />
-          </Button>
+          </Button> */}
         </section>
       </Button>
     </Link>
