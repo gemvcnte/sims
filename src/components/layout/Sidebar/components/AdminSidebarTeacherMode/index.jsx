@@ -41,16 +41,20 @@ export default function AdminSidebarTeacherMode() {
           Dashboard
         </SidebarItem>
 
-        <StudentsDropdown />
+        <SidebarItem to="/classes" icon="mdi:google-classroom">
+          Classes
+        </SidebarItem>
+
+        {/* <StudentsDropdown />
         <TeachersDropdown />
         <ClassroomsDropdown />
-        <AdminsDropdown />
+        <AdminsDropdown /> */}
 
         <DropdownMenuSeparator />
 
         <AnnouncementsDropdown />
 
-        <AnalyticsDrawer />
+        {/* <AnalyticsDrawer /> */}
 
         <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile

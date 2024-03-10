@@ -54,7 +54,7 @@ export function AnnouncementsDropdown({}) {
         <DropdownMenuSeparator />
 
         <div className="flex flex-col">
-          <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} />
+          {/* <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} /> */}
 
           <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} />
 
