@@ -8,6 +8,12 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Topbar({ children }) {
   const { toggleSidebar } = useSidebarContext();
@@ -29,11 +35,23 @@ export default function Topbar({ children }) {
         />
         <span>{children}</span>
         <span className="flex justify-center gap-2">
-          {user.role === "admin" && (
-            <div className="flex items-center space-x-2 px-4">
-              <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
-              <Label>Admin Mode</Label>
-            </div>
+          {user?.role === "admin" && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center space-x-2 px-4">
+                    <Switch
+                      checked={isAdminMode}
+                      onCheckedChange={toggleMode}
+                    />
+                    <Label>Admin Mode</Label>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Toggle between Teacher Mode and Admin Mode</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
 
           <ModeToggle />
