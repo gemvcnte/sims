@@ -11,12 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
-
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import CreateNewSection from "@/pages/Admin/CreateNewSection";
-import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import ResetPasswordModal from "@/components/reset-password-modal";
 
-export function ClassroomsDropdown({}) {
+export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -35,8 +33,8 @@ export function ClassroomsDropdown({}) {
       <DropdownMenuTrigger>
         <Button variant="ghost" className="w-full justify-between ">
           <span className="flex items-center">
-            <Icon icon="mdi:google-classroom" className="mr-2" />
-            Sections
+            <Icon icon="ph-student" className="mr-2" />
+            Students
           </span>
           <span>
             {!isDropdownOpen ? (
@@ -48,34 +46,51 @@ export function ClassroomsDropdown({}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Sections</DropdownMenuLabel>
-
+        <DropdownMenuLabel>Students</DropdownMenuLabel>
         <DropdownMenuSeparator />
-
         {/* <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="classes">
-            My Sections
+          <Link onClick={handleDropdownClick} className="w-full">
+            Create Student Account
           </Link>
         </DropdownMenuItem> */}
 
         <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="all-classes">
-            View All Sections
+          <Link
+            onClick={handleDropdownClick}
+            to="student-application-monitoring"
+            className="w-full"
+          >
+            Student Application Monitoring
           </Link>
         </DropdownMenuItem>
 
-        {/* <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>View Section Schedule</Link>
-        </DropdownMenuItem> */}
+        <DropdownMenuItem>
+          <Link
+            to="registration"
+            // target="_blank"
+            className="w-full"
+            onClick={handleDropdownClick}
+          >
+            Student Registration Form
+          </Link>
+        </DropdownMenuItem>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <DropdownMenuItem>
-              <Link onClick={handleDialogClick}>Create New Section</Link>
+              <Link className="w-full" onClick={handleDialogClick}>
+                Reset Student Password
+              </Link>
             </DropdownMenuItem>
           </DialogTrigger>
-          <CreateNewSection onClose={handleDialogClick} />
+          <ResetPasswordModal onClose={setIsDialogOpen} userType="Student" />
         </Dialog>
+
+        <DropdownMenuItem>
+          <Link onClick={handleDropdownClick} to="students" className="w-full">
+            View All Students
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

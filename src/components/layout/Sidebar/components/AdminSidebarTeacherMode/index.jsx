@@ -21,7 +21,7 @@ import { Switch } from "@/components/ui/switch";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function AdminSidebar() {
+export default function AdminSidebarTeacherMode() {
   const location = useLocation();
   const isOnRegistrationPage = location.pathname === "/registration";
   const { toggleSidebar } = useSidebarContext();
@@ -38,7 +38,7 @@ export default function AdminSidebar() {
 
   return (
     !isOnRegistrationPage &&
-    isAdminMode && (
+    !isAdminMode && (
       <SidebarContainer overflow={true}>
         {/* <div className="flex items-center space-x-2 px-4">
           <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
@@ -49,33 +49,26 @@ export default function AdminSidebar() {
           Dashboard
         </SidebarItem>
 
-        <StudentsDropdown />
+        <SidebarItem to="/classes" icon="mdi:google-classroom">
+          Classes
+        </SidebarItem>
+
+        {/* <StudentsDropdown />
         <TeachersDropdown />
         <ClassroomsDropdown />
-        <AdminsDropdown />
+        <AdminsDropdown /> */}
 
         <DropdownMenuSeparator />
 
         <AnnouncementsDropdown />
 
-        <AnalyticsDrawer />
+        {/* <AnalyticsDrawer /> */}
 
-        {/* <SidebarItem to="profile" icon="teenyicons:user-outline">
+        <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile
-        </SidebarItem> */}
+        </SidebarItem>
 
-        {/* <ChangePasswordDrawer userType="admin" /> */}
-
-        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <DrawerTrigger>
-            <span onClick={handleDrawerClick}>
-              <SidebarItem icon="simple-line-icons:settings">
-                Settings
-              </SidebarItem>
-            </span>
-          </DrawerTrigger>
-          <GlobalSetttingsDrawer onClose={handleDrawerClick} />
-        </Drawer>
+        <ChangePasswordDrawer userType="admin" />
 
         <Button
           variant="ghost"

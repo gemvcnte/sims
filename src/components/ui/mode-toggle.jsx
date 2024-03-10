@@ -11,7 +11,12 @@ export function ModeToggle() {
   };
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleTheme}
+      className="rounded-full"
+    >
       {theme === "light" ? (
         <Sun className="h-[1rem] w-[1rem]" />
       ) : (

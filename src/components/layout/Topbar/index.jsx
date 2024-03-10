@@ -3,9 +3,24 @@ import { Icon } from "@iconify/react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { ToastContainer } from "react-toastify";
+import { UserNav } from "@/components/user-nav";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Topbar({ children }) {
   const { toggleSidebar } = useSidebarContext();
+
+  const { isAdminMode, toggleMode } = useTeacherAdminMode();
+
+  const { user } = useAuth();
 
   return (
     <>
@@ -19,8 +34,28 @@ export default function Topbar({ children }) {
           onClick={toggleSidebar}
         />
         <span>{children}</span>
-        <span>
+        <span className="flex justify-center gap-2">
+          {user?.role === "admin" && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center space-x-2 px-4">
+                    <Switch
+                      checked={isAdminMode}
+                      onCheckedChange={toggleMode}
+                    />
+                    <Label>Admin Mode</Label>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Toggle between Teacher Mode and Admin Mode</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+
           <ModeToggle />
+          <UserNav />
         </span>
       </header>
     </>

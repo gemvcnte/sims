@@ -18,7 +18,11 @@ export default function SidebarFooter() {
   const abbreviatedText = displayText.slice(0, 2).toUpperCase();
 
   return (
-    <Link to="profile" onClick={() => toggleSidebar()}>
+    <Link
+      to="profile"
+      onClick={() => toggleSidebar()}
+      className="block lg:hidden"
+    >
       <Button
         variant="ghost"
         className="mb-8 flex w-full items-center justify-between py-8"
@@ -30,15 +34,15 @@ export default function SidebarFooter() {
           </Avatar>{" "}
           <div className="flex flex-col items-start justify-around">
             <span>
-              {user?.username && user.username.length > 12
-                ? `${user.username.slice(0, 12)}..`
+              {user?.username && user.username.length > 15
+                ? `${user.username.slice(0, 15)}..`
                 : user.username || "username"}
             </span>
             <span className="text-muted-foreground">{user?.role}</span>
           </div>
         </section>
         <section>
-          <Button
+          {/* <Button
             variant="ghost"
             onClick={(e) => {
               e.stopPropagation();
@@ -52,7 +56,7 @@ export default function SidebarFooter() {
               height="20"
               className="z-20 ml-4 text-muted-foreground"
             />
-          </Button>
+          </Button> */}
         </section>
       </Button>
     </Link>

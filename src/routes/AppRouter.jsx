@@ -7,20 +7,24 @@ import { SidebarProvider } from "@src/contexts/SidebarContext";
 import { ThemeProvider } from "@/components/theme-provider";
 import AutoLogout from "@/utils/AutoLogout";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { TeacherAdminModeProvider } from "@/hooks/useTeacherAdminMode";
 
 const AppRouter = () => {
   return (
     <Router>
       <AuthProvider>
-        <AutoLogout />
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <SidebarProvider>
-            <RegistrationRoutes />
-            <Routes>
-              <Route path="*" element={<HomeRoutes />} />
-            </Routes>
-          </SidebarProvider>
-        </ThemeProvider>
+        <TeacherAdminModeProvider>
+          <AutoLogout />
+
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <SidebarProvider>
+              <RegistrationRoutes />
+              <Routes>
+                <Route path="*" element={<HomeRoutes />} />
+              </Routes>
+            </SidebarProvider>
+          </ThemeProvider>
+        </TeacherAdminModeProvider>
       </AuthProvider>
     </Router>
   );

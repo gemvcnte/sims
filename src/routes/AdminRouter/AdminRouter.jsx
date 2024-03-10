@@ -16,12 +16,15 @@ import Registration from "@/pages/Registration";
 import ViewAllStudents from "@/pages/Admin/ViewAllStudents";
 import RegistrationRoutes from "../RegistrationRoutes";
 import AdminSpecificClass from "@/pages/Admin/AdminSpecificClass";
+import { TeacherAdminModeProvider } from "@/hooks/useTeacherAdminMode";
+import AdminSidebarTeacherMode from "@/components/layout/Sidebar/components/AdminSidebarTeacherMode";
 
 export default function AdminRouter() {
   return (
     <>
       <div className="md:flex">
         <AdminSidebar />
+        <AdminSidebarTeacherMode />
 
         <Routes>
           <Route path="/" element={<Admin />} />

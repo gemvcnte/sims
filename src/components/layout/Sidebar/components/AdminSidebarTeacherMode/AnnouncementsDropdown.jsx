@@ -12,11 +12,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import CreateNewSection from "@/pages/Admin/CreateNewSection";
-import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import CreateClassAnnouncementItem from "./CreateClassAnnouncementItem";
+import CreatePublicAnnouncementItem from "./CreatePublicAnnouncementItem";
+import ViewTeacherAnnouncementsItem from "../TeacherSidebar/ViewTeacherAnnouncementsItem";
 
-export function ClassroomsDropdown({}) {
+export function AnnouncementsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -26,7 +26,8 @@ export function ClassroomsDropdown({}) {
     toggleSidebar();
   };
 
-  const handleDialogClick = () => {
+  const handleDialogClick = (event) => {
+    // event.preventDefault();
     setIsDialogOpen(!isDialogOpen);
   };
 
@@ -35,8 +36,8 @@ export function ClassroomsDropdown({}) {
       <DropdownMenuTrigger>
         <Button variant="ghost" className="w-full justify-between ">
           <span className="flex items-center">
-            <Icon icon="mdi:google-classroom" className="mr-2" />
-            Sections
+            <Icon icon="mingcute:announcement-line" className="mr-2" />
+            Announcements
           </span>
           <span>
             {!isDropdownOpen ? (
@@ -48,34 +49,17 @@ export function ClassroomsDropdown({}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuLabel>Sections</DropdownMenuLabel>
+        <DropdownMenuLabel>Announcements</DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
-        {/* <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="classes">
-            My Sections
-          </Link>
-        </DropdownMenuItem> */}
+        <div className="flex flex-col">
+          {/* <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} /> */}
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="all-classes">
-            View All Sections
-          </Link>
-        </DropdownMenuItem>
+          <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} />
 
-        {/* <DropdownMenuItem>
-          <Link onClick={handleDropdownClick}>View Section Schedule</Link>
-        </DropdownMenuItem> */}
-
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
-            <DropdownMenuItem>
-              <Link onClick={handleDialogClick}>Create New Section</Link>
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <CreateNewSection onClose={handleDialogClick} />
-        </Dialog>
+          <ViewTeacherAnnouncementsItem />
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
