@@ -56,7 +56,7 @@ export function AnnouncementsDropdown({}) {
         <div className="flex flex-col">
           <CreatePublicAnnouncementItem handleDialogClick={handleDialogClick} />
 
-          <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} />
+          {/* <CreateClassAnnouncementItem handleDialogClick={handleDialogClick} /> */}
 
           <ViewTeacherAnnouncementsItem />
         </div>

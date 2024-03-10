@@ -52,11 +52,11 @@ export function ClassroomsDropdown({}) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="classes">
             My Sections
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuItem>
           <Link onClick={handleDropdownClick} to="all-classes">

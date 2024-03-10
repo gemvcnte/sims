@@ -52,11 +52,11 @@ export default function AdminSidebar() {
 
         <AnalyticsDrawer />
 
-        <SidebarItem to="profile" icon="teenyicons:user-outline">
+        {/* <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile
-        </SidebarItem>
+        </SidebarItem> */}
 
-        <ChangePasswordDrawer userType="admin" />
+        {/* <ChangePasswordDrawer userType="admin" /> */}
 
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
           <DrawerTrigger>
