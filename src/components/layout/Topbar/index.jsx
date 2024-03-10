@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { ToastContainer } from "react-toastify";
+import { UserNav } from "@/components/user-nav";
 
 export default function Topbar({ children }) {
   const { toggleSidebar } = useSidebarContext();
@@ -19,8 +20,9 @@ export default function Topbar({ children }) {
           onClick={toggleSidebar}
         />
         <span>{children}</span>
-        <span>
+        <span className="flex justify-center gap-2">
           <ModeToggle />
+          <UserNav />
         </span>
       </header>
     </>

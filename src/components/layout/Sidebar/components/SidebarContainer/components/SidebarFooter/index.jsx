@@ -18,7 +18,11 @@ export default function SidebarFooter() {
   const abbreviatedText = displayText.slice(0, 2).toUpperCase();
 
   return (
-    <Link to="profile" onClick={() => toggleSidebar()}>
+    <Link
+      to="profile"
+      onClick={() => toggleSidebar()}
+      className="block lg:hidden"
+    >
       <Button
         variant="ghost"
         className="mb-8 flex w-full items-center justify-between py-8"
