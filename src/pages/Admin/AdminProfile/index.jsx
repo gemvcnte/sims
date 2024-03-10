@@ -5,7 +5,7 @@ import AdminProfileDisplayAndEditSection from "./components";
 export default function AdminProfile() {
   return (
     <main className="w-full">
-      <Topbar>PROFILE</Topbar>
+      <Topbar>ADMIN PROFILE</Topbar>
 
       <AdminProfileDisplayAndEditSection />
     </main>

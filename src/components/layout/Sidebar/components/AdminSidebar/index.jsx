@@ -19,6 +19,7 @@ import { Global } from "recharts";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -33,10 +34,17 @@ export default function AdminSidebar() {
 
   const { isAdminMode, toggleMode } = useTeacherAdminMode();
 
+  const { logout } = useAuth();
+
   return (
     !isOnRegistrationPage &&
     isAdminMode && (
       <SidebarContainer overflow={true}>
+        <div className="flex items-center space-x-2 px-4">
+          <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
+          <Label>Admin Mode</Label>
+        </div>
+
         <SidebarItem to="dashboard" icon="material-symbols:dashboard">
           Dashboard
         </SidebarItem>
@@ -69,10 +77,14 @@ export default function AdminSidebar() {
           <GlobalSetttingsDrawer onClose={handleDrawerClick} />
         </Drawer>
 
-        <div className="flex items-center space-x-2 px-4">
-          <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
-          <Label>Admin Mode</Label>
-        </div>
+        <Button
+          variant="ghost"
+          className="w-full justify-start"
+          onClick={logout}
+        >
+          <Icon icon="material-symbols:logout" className="mr-2" />
+          Logout
+        </Button>
       </SidebarContainer>
     )
   );
