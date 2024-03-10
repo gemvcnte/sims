@@ -40,10 +40,10 @@ export default function AdminSidebarTeacherMode() {
     !isOnRegistrationPage &&
     !isAdminMode && (
       <SidebarContainer overflow={true}>
-        <div className="flex items-center space-x-2 px-4">
+        {/* <div className="flex items-center space-x-2 px-4">
           <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
           <Label>Admin Mode</Label>
-        </div>
+        </div> */}
 
         <SidebarItem to="dashboard" icon="material-symbols:dashboard">
           Dashboard
