@@ -23,10 +23,8 @@ export default function AdminRouter() {
   return (
     <>
       <div className="md:flex">
-        <TeacherAdminModeProvider>
-          <AdminSidebar />
-          <AdminSidebarTeacherMode />
-        </TeacherAdminModeProvider>
+        <AdminSidebar />
+        <AdminSidebarTeacherMode />
 
         <Routes>
           <Route path="/" element={<Admin />} />
