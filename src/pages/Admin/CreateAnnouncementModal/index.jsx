@@ -66,6 +66,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                 id="title"
                 {...register("title")}
                 placeholder="Enter announcement title..."
+                maxLength={51} // Set maximum length to 51 characters
               />
               {errors.title && (
                 <span className="text-red-500">{errors.title.message}</span>
@@ -77,6 +78,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                 id="content"
                 {...register("content")}
                 placeholder="Enter announcement content..."
+                maxLength={256} // Set maximum length to 256 characters
               />
               {errors.content && (
                 <span className="text-red-500">{errors.content.message}</span>
