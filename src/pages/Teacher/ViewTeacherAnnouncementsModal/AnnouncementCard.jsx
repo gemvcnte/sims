@@ -14,9 +14,9 @@ const AnnouncementCard = ({
 
   return (
     <div key={announcement._id} className="mb-4 rounded-lg border p-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between break-all">
         <div>
-          <h2 className="break-words font-semibold">{announcement.title}</h2>
+          <h2 className="break-all font-semibold">{announcement.title}</h2>
           <p className="text-xs text-muted-foreground">
             {new Date(announcement.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
@@ -73,7 +73,9 @@ const AnnouncementCard = ({
         )}
       </section>
       {expandedAnnouncement === announcement._id && (
-        <div className="mt-2 text-sm text-gray-400">{announcement.content}</div>
+        <div className="mt-2 break-all text-sm text-gray-400">
+          {announcement.content}
+        </div>
       )}
     </div>
   );
