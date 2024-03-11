@@ -11,6 +11,7 @@ import { useTeacherProfile } from "./hooks";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const TeacherProfileDisplayAndEditSection = () => {
   const { teacherProfile, error, setTeacherProfile } = useTeacherProfile();
@@ -22,6 +23,8 @@ const TeacherProfileDisplayAndEditSection = () => {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     const updatedProfileData = { ...teacherProfile };
@@ -29,6 +32,7 @@ const TeacherProfileDisplayAndEditSection = () => {
       const response = await updateTeacherProfileApi(updatedProfileData);
       if (response && response.status === 200) {
         showSuccessNotification(response.data.message);
+        navigate("/");
       } else {
         showErrorNotification(response.data.message);
       }
