@@ -20,8 +20,16 @@ import getTeacherAssignedClassesApi from "./helpers/getTeacherAssignedClassesApi
 
 const schema = yup.object().shape({
   selectedClass: yup.string().required("Class is required"),
-  title: yup.string().required("Title is required"),
-  content: yup.string().required("Content is required"),
+  title: yup
+    .string()
+    .required("Title is required")
+    .min(2, "Title must be at least 2 characters")
+    .max(50, "Title cannot exceed 50 characters"),
+  content: yup
+    .string()
+    .required("Content is required")
+    .min(10, "Content must be at least 10 characters")
+    .max(255, "Content cannot exceed 255 characters"),
 });
 
 export default function CreateAdminClassAnnouncementModal({ onClose }) {
@@ -64,7 +72,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
 
   return (
     <>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="">
         <DialogHeader>
           <DialogTitle>Create Class Announcement</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
@@ -102,6 +110,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
                 id="title"
                 {...register("title")}
                 placeholder="Enter announcement title..."
+                maxLength={51} // Set maximum length to 51 characters
               />
               {errors.title && (
                 <span className="text-red-500">{errors.title.message}</span>
@@ -113,6 +122,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
                 id="content"
                 {...register("content")}
                 placeholder="Enter announcement content..."
+                maxLength={256} // Set maximum length to 256 characters
               />
               {errors.content && (
                 <span className="text-red-500">{errors.content.message}</span>
