@@ -65,6 +65,18 @@ const AllClassesDataTable = () => {
       cell: ({ row }) => <div>{row.getValue("schoolYear")}</div>,
     },
     {
+      accessorKey: "semester",
+      header: "Semester",
+      // header: "Students",
+      cell: ({ row }) => (
+        <div className="">
+          {row.original.schoolYear[0].semester == "first semester"
+            ? "1st Semester"
+            : "2nd Semester"}
+        </div>
+      ),
+    },
+    {
       accessorKey: "strand",
       header: "Strand",
       cell: ({ row }) => <div>{row.getValue("strand")}</div>,
