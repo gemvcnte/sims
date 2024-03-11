@@ -20,7 +20,7 @@ export default function SidebarContainer({ children, overflow }) {
       )}
 
       <aside
-        className={`border-white-700 bg-white-500 sticky top-0 z-20 h-[100svh] w-[85vw] border-r md:sticky md:max-w-[300px]  ${
+        className={`border-white-700 sticky top-0 z-20 h-[100svh] w-[85vw] border-r bg-background md:sticky md:max-w-[300px]  ${
           !isSidebarOpen && "hidden"
         } lg:block`}
       >
