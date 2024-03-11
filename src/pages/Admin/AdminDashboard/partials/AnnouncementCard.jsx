@@ -28,7 +28,7 @@ const AnnouncementCard = ({
                 {/* Show "See More" button if title is truncated */}
                 {announcement.title.length > 25 && (
                   <button
-                    className="text-sm italic text-muted-foreground hover:underline sm:ml-2"
+                    className="text-xs italic text-muted-foreground hover:underline sm:ml-2"
                     onClick={toggleTitle}
                   >
                     Show Full Title
