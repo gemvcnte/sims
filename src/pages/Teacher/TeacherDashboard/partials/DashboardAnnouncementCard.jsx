@@ -50,9 +50,11 @@ export default function DashboardAnnouncementCard() {
 
       <CardFooter>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger>
+          <DialogTrigger className="w-full">
             <span onClick={handleDialogClick}>
-              <Button variant="outline">View all</Button>
+              <Button variant="outline" className="w-full">
+                View all announcements
+              </Button>
             </span>
           </DialogTrigger>
           <ViewTeacherAnnouncementsModal onClose={handleDialogClick} />
