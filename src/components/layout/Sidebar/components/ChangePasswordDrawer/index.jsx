@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Drawer,
   DrawerClose,
@@ -16,30 +16,50 @@ import { Label } from "@/components/ui/label";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import updatePasswordApi from "./update-password-api";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { PasswordInput } from "@/components/ui/PasswordInput";
+
+const schema = yup.object().shape({
+  currentPassword: yup.string().required("Current password is required"),
+  newPassword: yup
+    .string()
+    .required("New password is required")
+    .min(8, "New password must be at least 8 characters"),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+    .required("Repeat password is required"),
+});
 
 export default function ChangePasswordDrawer({ userType }) {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const form = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const handleChangePassword = async () => {
+  const handleChangePassword = async (data) => {
     try {
-      if (newPassword !== repeatPassword) {
+      if (data.newPassword !== data.repeatPassword) {
         showErrorNotification("New password and repeat password do not match.");
         return;
       }
 
       const response = await updatePasswordApi(
-        currentPassword,
-        newPassword,
+        data.currentPassword,
+        data.newPassword,
         userType,
       );
 
-
       showSuccessNotification(response.data.message);
-      setCurrentPassword("");
-      setNewPassword("");
-      setRepeatPassword("");
     } catch (error) {
       showErrorNotification(error.response?.data.message);
     }
@@ -53,7 +73,7 @@ export default function ChangePasswordDrawer({ userType }) {
           Password
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="overflow-scroll">
         <section className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Update Password</DrawerTitle>
@@ -62,53 +82,75 @@ export default function ChangePasswordDrawer({ userType }) {
             </DrawerDescription>
           </DrawerHeader>
 
-          <section>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                Current Password
-              </Label>
-              <Input
-                placeholder=""
-                value={currentPassword}
-                onChange={(e) => {
-                  setCurrentPassword(e.target.value);
-                }}
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleChangePassword)}
+              className="flex flex-col gap-4"
+            >
+              <FormField
+                control={form.control}
+                name="currentPassword"
+                render={({ field }) => (
+                  <FormItem className="space-y-0 px-4">
+                    <FormLabel>Current Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="Enter announcement currentPassword..."
+                        {...field}
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                New Password
-              </Label>
-              <Input
-                placeholder=""
-                value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="px-4 py-1">
-              <Label htmlFor="" className="font-normal text-muted-foreground">
-                Repeat Password
-              </Label>
-              <Input
-                placeholder=""
-                value={repeatPassword}
-                onChange={(e) => {
-                  setRepeatPassword(e.target.value);
-                }}
-              />
-            </div>
-          </section>
 
-          <DrawerFooter>
-            <Button onClick={handleChangePassword}>Change Password</Button>
-            <DrawerClose className="w-full">
-              <Button variant="outline" className="w-full">
-                Cancel
-              </Button>
-            </DrawerClose>
-          </DrawerFooter>
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem className="space-y-0 px-4">
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="Enter announcement newPassword..."
+                        {...field}
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="repeatPassword"
+                render={({ field }) => (
+                  <FormItem className="space-y-0 px-4">
+                    <FormLabel>Repeat Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="Enter announcement repeatPassword..."
+                        {...field}
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <DrawerFooter>
+                <Button type="submit">Change Password</Button>
+                <DrawerClose className="w-full">
+                  <Button variant="outline" className="w-full">
+                    Cancel
+                  </Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </form>
+          </Form>
         </section>
       </DrawerContent>
     </Drawer>
