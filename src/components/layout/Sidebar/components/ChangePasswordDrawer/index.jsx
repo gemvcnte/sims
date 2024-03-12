@@ -48,11 +48,6 @@ export default function ChangePasswordDrawer({ userType }) {
 
   const handleChangePassword = async (data) => {
     try {
-      if (data.newPassword !== data.repeatPassword) {
-        showErrorNotification("New password and repeat password do not match.");
-        return;
-      }
-
       const response = await updatePasswordApi(
         data.currentPassword,
         data.newPassword,
@@ -60,6 +55,9 @@ export default function ChangePasswordDrawer({ userType }) {
       );
 
       showSuccessNotification(response.data.message);
+      form.setValue("currentPassword", "");
+      form.setValue("newPassword", "");
+      form.setValue("repeatPassword", "");
     } catch (error) {
       showErrorNotification(error.response?.data.message);
     }
@@ -73,7 +71,7 @@ export default function ChangePasswordDrawer({ userType }) {
           Password
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="overflow-scroll">
+      <DrawerContent>
         <section className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Update Password</DrawerTitle>
@@ -95,9 +93,9 @@ export default function ChangePasswordDrawer({ userType }) {
                     <FormLabel>Current Password</FormLabel>
                     <FormControl>
                       <PasswordInput
-                        placeholder="Enter announcement currentPassword..."
+                        placeholder="Enter current password"
                         {...field}
-                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border bg-background p-2 focus:border focus:border-primary focus:outline-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -113,9 +111,9 @@ export default function ChangePasswordDrawer({ userType }) {
                     <FormLabel>New Password</FormLabel>
                     <FormControl>
                       <PasswordInput
-                        placeholder="Enter announcement newPassword..."
+                        placeholder="Enter new password"
                         {...field}
-                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border bg-background p-2 focus:border focus:border-primary focus:outline-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -131,9 +129,9 @@ export default function ChangePasswordDrawer({ userType }) {
                     <FormLabel>Repeat Password</FormLabel>
                     <FormControl>
                       <PasswordInput
-                        placeholder="Enter announcement repeatPassword..."
+                        placeholder="Repeat new password"
                         {...field}
-                        className=" border-white-700 placeholder-white-700 w-full rounded-md border p-3 focus:border focus:border-primary focus:outline-none"
+                        className=" border-white-700 placeholder-white-700 w-full rounded-md border bg-background p-2 focus:border focus:border-primary focus:outline-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -141,7 +139,7 @@ export default function ChangePasswordDrawer({ userType }) {
                 )}
               />
 
-              <DrawerFooter>
+              <DrawerFooter className="mb-4">
                 <Button type="submit">Change Password</Button>
                 <DrawerClose className="w-full">
                   <Button variant="outline" className="w-full">
