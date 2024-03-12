@@ -13,7 +13,7 @@ export const useTeacherAdminMode = () => {
 };
 
 export const TeacherAdminModeProvider = ({ children }) => {
-  const [isAdminMode, setIsAdminMode] = useState(true);
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const toggleMode = () => {
     setIsAdminMode((prevMode) => !prevMode);
