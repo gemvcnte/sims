@@ -61,3 +61,6 @@ export const allApplicationsEndpoint = `${baseUrl}/admin/all-applications`;
 // updating students in class
 export const getStudentsInSpecificClassEndpoint = `${baseUrl}/admin/students-in-specific-class`;
 export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/students-in-class-and-no-class`;
+
+// ARCHIVE FEATURE
+export const archiveStudentEndpoint = `${baseUrl}/admin/students/:studentId/archive`;
