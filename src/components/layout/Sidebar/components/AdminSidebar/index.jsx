@@ -39,7 +39,7 @@ export default function AdminSidebar() {
   return (
     !isOnRegistrationPage &&
     isAdminMode && (
-      <SidebarContainer overflow={true}>
+      <SidebarContainer overflow={false}>
         {/* <div className="flex items-center space-x-2 px-4">
           <Switch checked={isAdminMode} onCheckedChange={toggleMode} />
           <Label>Admin Mode</Label>
