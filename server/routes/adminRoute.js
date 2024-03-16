@@ -195,4 +195,15 @@ router.post(
   adminController.getStudentsInClassAndHaveNoClass
 );
 
+
+
+// ARCHIVE FEATURE
+router.patch(
+  "/students/:studentId/archive",
+  // verifyToken,
+  adminController.archiveStudent
+);
+
+
+
 module.exports = router;

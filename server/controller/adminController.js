@@ -1,6 +1,7 @@
 const bcryptjs = require("bcryptjs");
 const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
+const ArchivedStudent = require("../models/ArchivedStudentModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
 const { GlobalSettings } = require('../models/GlobalSettingsModel');
@@ -1691,6 +1692,39 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
 
 
 
+const archiveStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the student exists
+    const student = await Student.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Create a new archived student document with the same fields as the student
+    const archivedStudent = new ArchivedStudent({
+      ...student.toObject(), // Copy all fields from the existing student
+      archivedRemarks: remarks, // Add the archivedRemarks field
+    });
+
+    // Save the archived student document
+    await archivedStudent.save();
+
+    // Remove the student document from the Student collection
+    await Student.findByIdAndDelete(studentId);
+
+    res.status(200).json({ message: "Student archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
 
 
 module.exports = {
@@ -1757,6 +1791,7 @@ module.exports = {
   updateGlobalSettings,
   getStudentsInSpecificClass,
   getStudentsInClassAndHaveNoClass,
+  archiveStudent,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

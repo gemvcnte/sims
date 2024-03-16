@@ -152,9 +152,9 @@ const archivedStudentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const archivedStudent = mongoose.model(
+const ArchivedStudent = mongoose.model(
   "ArchivedStudent",
   archivedStudentSchema
 );
 
-module.exports = { archivedStudent };
+module.exports = ArchivedStudent;
