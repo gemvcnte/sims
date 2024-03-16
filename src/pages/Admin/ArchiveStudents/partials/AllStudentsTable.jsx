@@ -279,37 +279,50 @@ const AllStudentsTable = () => {
               ))}
             </TableHeader>
             <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    as={TableRow}
-                    className="group transition-all duration-700 hover:cursor-pointer"
-                    onClick={() => {
-                      setIsModalOpen(true);
-                      setSelectedRow(row.original);
-                    }}
-                    data-state={row.getIsSelected() ? "selected" : ""}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
+              {allStudents.length === 0 ? (
                 <TableRow>
                   <TableCell
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No archived students found
                   </TableCell>
                 </TableRow>
+              ) : (
+                <>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        as={TableRow}
+                        className="group transition-all duration-700 hover:cursor-pointer"
+                        onClick={() => {
+                          setIsModalOpen(true);
+                          setSelectedRow(row.original);
+                        }}
+                        data-state={row.getIsSelected() ? "selected" : ""}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
               )}
             </TableBody>
           </Table>
