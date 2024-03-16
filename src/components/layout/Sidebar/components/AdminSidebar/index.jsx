@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 import { useAuth } from "@/contexts/AuthContext";
+import { ArchiveDropdown } from "./ArchiveDropdown";
 
 export default function AdminSidebar() {
   const location = useLocation();
@@ -53,6 +54,7 @@ export default function AdminSidebar() {
         <TeachersDropdown />
         <ClassroomsDropdown />
         <AdminsDropdown />
+        <ArchiveDropdown />
 
         <DropdownMenuSeparator />
 
