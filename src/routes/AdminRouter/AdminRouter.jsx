@@ -55,7 +55,7 @@ export default function AdminRouter() {
           <Route path="/admins" element={<ViewAllAdmins />} />
 
           {/* ARCHIVE */}
-          <Route path="/archive/students" element={<ArchiveStudents />} />
+          <Route path="/archived/students" element={<ArchiveStudents />} />
 
           <Route path="/classes" element={<TeacherClasses />} />
           <Route path="/class/:id" element={<TeacherSpecificClass />} />

@@ -64,3 +64,4 @@ export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/st
 
 // ARCHIVE FEATURE
 export const archiveStudentEndpoint = `${baseUrl}/admin/students/:studentId/archive`;
+export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/students/archived`;
