@@ -14,6 +14,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { AlertDialogCancel } from "../ui/alert-dialog";
 import { archiveStudent } from "@/services/api/admin/archiveStudent";
+import { useAllStudents } from "@/pages/Admin/ViewAllStudents/hooks/useAllStudents";
 
 const schema = yup.object().shape({
   remarks: yup
@@ -22,23 +23,22 @@ const schema = yup.object().shape({
     .max(255, "Remarks must be at most 255 characters"),
 });
 
-export default function ArchiveAccountForm({
-  userType,
-  userId,
-  closeAlertDialog,
-}) {
+export default function ArchiveAccountForm({ userType, userId }) {
   const form = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    if (userType === "student") {
-      console.log(userId);
-      archiveStudent(userId, data.remarks);
-    }
+  const { refetchStudents } = useAllStudents();
 
-    console.log(data.remarks);
-    closeAlertDialog();
+  const onSubmit = async (data) => {
+    if (userType === "student") {
+      const response = await archiveStudent(userId, data.remarks);
+      if (response) {
+        refetchStudents();
+      }
+    } else {
+      return;
+    }
   };
 
   const handleSubmit = (e) => {

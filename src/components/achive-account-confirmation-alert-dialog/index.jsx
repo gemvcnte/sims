@@ -11,14 +11,8 @@ import { Button } from "@/components/ui/button";
 import ArchiveAccountForm from "./ArchiveAccountForm";
 
 export function ArchiveAccountConfirmationAlertDialog({ userType, userId }) {
-  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
-
-  const closeAlertDialog = () => {
-    setIsAlertDialogOpen(false);
-  };
-
   return (
-    <AlertDialog open={isAlertDialogOpen} onOpenChange={setIsAlertDialogOpen}>
+    <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive">Move to Archive</Button>
       </AlertDialogTrigger>
@@ -31,11 +25,7 @@ export function ArchiveAccountConfirmationAlertDialog({ userType, userId }) {
           </AlertDialogDescription>
 
           {/* Imported form component */}
-          <ArchiveAccountForm
-            userType={userType}
-            userId={userId}
-            closeAlertDialog={closeAlertDialog}
-          />
+          <ArchiveAccountForm userType={userType} userId={userId} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
