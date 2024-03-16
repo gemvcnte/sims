@@ -1725,6 +1725,38 @@ const archiveStudent = asyncHandler(async (req, res) => {
 
 
 
+const unarchiveStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Check if the archived student exists
+    const archivedStudent = await ArchivedStudent.findById(studentId);
+
+    if (!archivedStudent) {
+      return res.status(404).json({ message: "Archived student not found" });
+    }
+
+    // Create a new student document with the same fields as the archived student
+    const student = new Student({
+      ...archivedStudent.toObject(), // Copy all fields from the archived student
+    });
+
+    // Save the student document to the EnrollStudent collection
+    await student.save();
+
+    // Remove the archived student document from the ArchivedStudent collection
+    await ArchivedStudent.findByIdAndDelete(studentId);
+
+    res.status(200).json({ message: "Student unarchived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+
 
 
 module.exports = {
@@ -1792,6 +1824,7 @@ module.exports = {
   getStudentsInSpecificClass,
   getStudentsInClassAndHaveNoClass,
   archiveStudent,
+  unarchiveStudent,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

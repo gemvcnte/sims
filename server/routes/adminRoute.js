@@ -204,6 +204,13 @@ router.patch(
   adminController.archiveStudent
 );
 
+router.patch(
+  "/students/:studentId/unarchive",
+  // verifyToken,
+  adminController.unarchiveStudent
+);
+
+
 
 
 module.exports = router;

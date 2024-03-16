@@ -141,6 +141,7 @@ const archivedStudentSchema = new mongoose.Schema(
 
     archivedRemarks: {
       type: String,
+      uppercase: true,
     },
 
     userImage: {
