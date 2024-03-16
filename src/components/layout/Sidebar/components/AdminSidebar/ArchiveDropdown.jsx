@@ -50,7 +50,11 @@ export function ArchiveDropdown({}) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <Link to="admins" onClick={handleDropdownClick} className="w-full">
+          <Link
+            to="archive/students"
+            onClick={handleDropdownClick}
+            className="w-full"
+          >
             Student Accounts
           </Link>
         </DropdownMenuItem>
