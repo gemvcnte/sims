@@ -86,11 +86,11 @@ export default function StudentsFiltersDrawer() {
             onChange={(e) => handleFilterChange("strand", e.target.value)}
           >
             <option value="all">All Strands</option>
-            <option value="gas">GAS</option>
-            <option value="abm">ABM</option>
-            <option value="humss">HUMSS</option>
-            <option value="stem">STEM</option>
-            <option value="ict">ICT</option>
+            <option value="GAS">GAS</option>
+            <option value="ABM">ABM</option>
+            <option value="HUMSS">HUMSS</option>
+            <option value="STEM">STEM</option>
+            <option value="ICT">ICT</option>
           </select>
 
           <DrawerClose asChild>
