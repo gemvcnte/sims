@@ -21,6 +21,8 @@ import {
 import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectSeparator } from "@/components/ui/select";
+import { unarchiveStudent } from "@/services/api/admin/unarchiveStudent";
+import { useAllStudents } from "../hooks/useAllStudents";
 
 const InputField = ({
   type,
@@ -51,7 +53,7 @@ const selectOptions = [
   { value: "NONE", label: "None" },
 ];
 
-export default function ViewStudentProfileModal({
+export default function ViewArchivedStudentProfileModal({
   application,
   onSave,
   onClose,
@@ -61,16 +63,33 @@ export default function ViewStudentProfileModal({
     onClose();
   };
 
-  const moveStudentToArchive = () => {
-    console.log(application._id);
-    console.log(`ISACTIVE: ${application.isActive}`);
+  const { refetchStudents } = useAllStudents();
+
+  const hanldeUnarchiveStudentButton = async (e) => {
+    e.preventDefault();
+    const response = await unarchiveStudent(application._id);
+
+    if (response) {
+      refetchStudents();
+    }
+  };
+
+  const onSubmit = async (data) => {
+    if (userType === "student") {
+      const response = await archiveStudent(userId, data.remarks);
+      if (response) {
+        refetchStudents();
+      }
+    } else {
+      return;
+    }
   };
 
   return (
     <DialogContent
       className={"max-h-[80%] overflow-y-scroll px-10 lg:max-w-[720px]"}
     >
-      <form onSubmit={handleSaveChanges}>
+      <form onSubmit={hanldeUnarchiveStudentButton}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -545,8 +564,26 @@ export default function ViewStudentProfileModal({
         </Accordion>
 
         <DialogFooter>
-          <span className="flex w-full flex-col gap-4">
-            <Button type="submit" variant="outline" className="w-full">
+          <span className="mt-4 flex w-full flex-col gap-4">
+            {/* <div className="object-contain text-right text-destructive">
+              <Button
+                type="submit"
+                variant="ghost"
+                className="object-contain text-right text-destructive"
+              >
+                Permanently delete student records
+              </Button>
+            </div> */}
+            <Button type="submit" className="w-full">
+              Unarchive Student
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full border-destructive text-destructive"
+            >
+              Delete Student
+            </Button>
+            <Button type="submit" variant="ghost" className="w-full">
               Close
             </Button>
           </span>

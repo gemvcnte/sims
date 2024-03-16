@@ -1,25 +1,23 @@
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { archiveStudentEndpoint } from "./adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import { unarchiveStudentEndpoint } from "@/config/adminEndpoints";
 
-const archiveStudent = async (studentId, archiveRemarks) => {
-  const archiveStudentUrl = archiveStudentEndpoint.replace(
+const unarchiveStudent = async (studentId) => {
+  const archiveStudentUrl = unarchiveStudentEndpoint.replace(
     ":studentId",
     studentId,
   );
 
   try {
-    const response = await axiosInstance.post(archiveStudentUrl, {
-      remarks: archiveRemarks,
-    });
+    const response = await axiosInstance.patch(archiveStudentUrl);
 
     if (response.status === 200) {
       showSuccessNotification(response.data.message); // Log the response message
       return true; // Archive successful
     } else {
       showErrorNotification(
-        response.data.message || "Failed to archive student",
+        response.data.message || "Failed to unarchive student",
       );
     }
   } catch (error) {
@@ -28,4 +26,4 @@ const archiveStudent = async (studentId, archiveRemarks) => {
   }
 };
 
-export { archiveStudent };
+export { unarchiveStudent };

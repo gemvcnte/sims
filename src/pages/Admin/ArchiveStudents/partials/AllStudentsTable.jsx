@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewStudentProfileModal from "./ViewStudentProfileModal";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import StudentsFiltersDrawer from "./StudentsFiltersDrawer";
 import {
@@ -37,6 +36,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useAllStudents } from "../hooks/useAllStudents";
 import AllStudentsTableSkeleton from "./AllStudentsTableSkeleton";
+import ViewArchivedStudentProfileModal from "./ViewArchivedStudentProfileModal";
 
 const AllStudentsTable = () => {
   const { allStudents, refetchStudents, loading, error } = useAllStudents();
@@ -314,7 +314,7 @@ const AllStudentsTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewStudentProfileModal
+            <ViewArchivedStudentProfileModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}
