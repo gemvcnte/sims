@@ -60,6 +60,10 @@ export default function ArchiveAccountForm({ userType, userId }) {
                   {...field}
                   id="remarks"
                   placeholder={`Add remarks for archiving the ${userType} account.`}
+                  onInput={(e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    field.onChange(e);
+                  }}
                 />
               </FormControl>
               <FormMessage />
