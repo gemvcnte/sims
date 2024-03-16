@@ -144,6 +144,11 @@ const archivedStudentSchema = new mongoose.Schema(
       uppercase: true,
     },
 
+    archivedTimestamp: {
+      type: Date, // Add the archivedTimestamp field with type Date
+      default: Date.now, // Set the default value to the current date and time
+    },
+
     userImage: {
       type: String,
       // need nalang lagyan ng image

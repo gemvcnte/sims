@@ -1708,6 +1708,7 @@ const archiveStudent = asyncHandler(async (req, res) => {
     const archivedStudent = new ArchivedStudent({
       ...student.toObject(), // Copy all fields from the existing student
       archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
     });
 
     // Save the archived student document
