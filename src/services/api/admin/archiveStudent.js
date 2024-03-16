@@ -23,7 +23,7 @@ const archiveStudent = async (studentId, archiveRemarks) => {
       );
     }
   } catch (error) {
-    console.error("Error archiving student:", error.message);
+    showErrorNotification(error.response.data.message);
     return false;
   }
 };
