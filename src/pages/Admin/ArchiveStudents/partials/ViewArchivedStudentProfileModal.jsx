@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -18,11 +18,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectSeparator } from "@/components/ui/select";
 import { unarchiveStudent } from "@/services/api/admin/unarchiveStudent";
 import { useAllStudents } from "../hooks/useAllStudents";
+import { DeleteAccountConfirmationAlertDialog } from "@/components/delete-account-confirmation-alert-dialog";
 
 const InputField = ({
   type,
@@ -58,11 +58,6 @@ export default function ViewArchivedStudentProfileModal({
   onSave,
   onClose,
 }) {
-  const handleSaveChanges = () => {
-    onSave();
-    onClose();
-  };
-
   const { refetchStudents } = useAllStudents();
 
   const hanldeUnarchiveStudentButton = async (e) => {
@@ -275,7 +270,7 @@ export default function ViewArchivedStudentProfileModal({
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="FatherContactNumber" className="text-right">
-              Father's Tel. No.
+              Father's Contact #
             </Label>
             <InputField
               required
@@ -291,7 +286,7 @@ export default function ViewArchivedStudentProfileModal({
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="motherContactNumber" className="text-right">
-              Mother's Tel. No.
+              Mother's Contact #
             </Label>
             <InputField
               required
@@ -322,7 +317,7 @@ export default function ViewArchivedStudentProfileModal({
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="guardianContactNumber" className="text-right">
-              Guardian's Tel. No.
+              Guardian's Contact #
             </Label>
             <InputField
               type="number"
@@ -564,29 +559,20 @@ export default function ViewArchivedStudentProfileModal({
         </Accordion>
 
         <DialogFooter>
-          <span className="mt-4 flex w-full flex-col gap-4">
-            {/* <div className="object-contain text-right text-destructive">
-              <Button
-                type="submit"
-                variant="ghost"
-                className="object-contain text-right text-destructive"
-              >
-                Permanently delete student records
-              </Button>
-            </div> */}
+          <div className="mt-4 flex w-full flex-col gap-4">
             <Button type="submit" className="w-full">
               Unarchive Student
             </Button>
-            <Button
-              variant="outline"
-              className="w-full border-destructive text-destructive"
-            >
-              Delete Student
-            </Button>
-            <Button type="submit" variant="ghost" className="w-full">
-              Close
-            </Button>
-          </span>
+            <DeleteAccountConfirmationAlertDialog
+              userType="student"
+              userId={application._id}
+            />
+            <DialogClose>
+              <Button type="button" variant="ghost" className="w-full">
+                Close
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </form>
     </DialogContent>

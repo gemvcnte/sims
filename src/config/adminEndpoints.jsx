@@ -66,3 +66,4 @@ export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/st
 export const archiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
 export const unarchiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId/unarchive`;
 export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/archived/students`;
+export const deleteArchivedStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
