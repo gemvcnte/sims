@@ -14,25 +14,31 @@ import { Button } from "@/components/ui/button";
 import { deleteArchivedStudent } from "@/services/api/admin/deleteArchivedStudent";
 import { useAllStudents } from "@/pages/Admin/ArchiveStudents/hooks/useAllStudents";
 import { useAllArchivedTeachers } from "@/pages/Admin/ArchiveTeachers/hooks/useAllArchivedTeachers";
+import { deleteArchivedTeacher } from "@/services/api/admin/deleteArchivedTeacher";
 
 export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
+  let refetchStudents;
+  let refetchTeachers;
+
+  if (userType === "student") {
+    ({ refetchStudents } = useAllStudents());
+  } else if (userType === "teacher") {
+    ({ refetchTeachers } = useAllArchivedTeachers());
+  }
+
   const handleSubmit = async (data) => {
     if (userType === "student") {
-      const { refetchStudents: refetchArchivedStudents } = useAllStudents();
-
       const response = await deleteArchivedStudent(userId);
       if (response) {
-        refetchArchivedStudents();
+        refetchStudents();
       }
     }
 
     if (userType === "teacher") {
-      const { refetchTeachers: refetchArchivedTeachers } =
-        useAllArchivedTeachers();
-
-      const response = await deleteArchivedStudent(userId);
+      const response = await deleteArchivedTeacher(userId);
       if (response) {
-        refetchArchivedTeachers();
+        console.log("deleted");
+        refetchTeachers();
       }
     }
   };
