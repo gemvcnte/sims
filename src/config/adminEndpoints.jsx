@@ -63,6 +63,6 @@ export const getStudentsInSpecificClassEndpoint = `${baseUrl}/admin/students-in-
 export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/students-in-class-and-no-class`;
 
 // ARCHIVE FEATURE
-export const archiveStudentEndpoint = `${baseUrl}/admin/students/:studentId/archive`;
-export const unarchiveStudentEndpoint = `${baseUrl}/admin/students/:studentId/unarchive`;
-export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/students/archived`;
+export const archiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
+export const unarchiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId/unarchive`;
+export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/archived/students`;
