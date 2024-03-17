@@ -2,6 +2,7 @@ const bcryptjs = require("bcryptjs");
 const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const ArchivedStudent = require("../models/ArchivedStudentModel");
+const {ArchivedTeacher} = require("../models/ArchivedTeacherModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
 const { GlobalSettings } = require('../models/GlobalSettingsModel');
@@ -1796,6 +1797,41 @@ const deleteArchivedStudent = asyncHandler(async (req, res) => {
 
 
 
+const archiveTeacher = asyncHandler(async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the teacher exists
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Create a new archived teacher document with the same fields as the teacher
+    const archivedTeacher = new ArchivedTeacher({
+      ...teacher.toObject(), // Copy all fields from the existing teacher
+      archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
+    });
+
+    // Save the archived teacher document
+    await archivedTeacher.save();
+
+    // Remove the teacher document from the Teacher collection
+    await Teacher.findByIdAndDelete(teacherId);
+
+    res.status(200).json({ message: "Teacher archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+
 
 
 module.exports = {
@@ -1866,6 +1902,7 @@ module.exports = {
   unarchiveStudent,
   getAllArchivedStudents,
   deleteArchivedStudent,
+  archiveTeacher,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

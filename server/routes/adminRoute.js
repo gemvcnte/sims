@@ -210,19 +210,24 @@ router.patch(
   adminController.unarchiveStudent
 );
 
-
-
 router.get(
   "/archived/students",
   verifyToken,
   adminController.getAllArchivedStudents
 );
 
-
 router.delete(
   "/archived/students/:studentId",
   verifyToken,
   adminController.deleteArchivedStudent
+);
+
+
+
+router.patch(
+  "/archived/teachers/:teacherId/",
+  // verifyToken,
+  adminController.archiveTeacher
 );
 
 
