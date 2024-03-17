@@ -226,22 +226,27 @@ router.delete(
 
 router.patch(
   "/archived/teachers/:teacherId/",
-  // verifyToken,
+  verifyToken,
   adminController.archiveTeacher
 );
 
 router.get(
   "/archived/teachers",
-  // verifyToken,
+  verifyToken,
   adminController.getAllArchivedTeachers
 );
 
 router.patch(
   "/archived/teachers/:teacherId/unarchive",
-  // verifyToken,
+  verifyToken,
   adminController.unarchiveTeacher
 );
 
+router.delete(
+  "/archived/teachers/:teacherId",
+  verifyToken,
+  adminController.deleteArchivedTeacher
+);
 
 
 

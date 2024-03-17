@@ -1879,6 +1879,34 @@ const unarchiveTeacher = asyncHandler(async (req, res) => {
 
 
 
+
+const deleteArchivedTeacher = asyncHandler(async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+
+    const teacher = await ArchivedTeacher.findOneAndDelete({ _id: teacherId});
+
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found in the archive.' });
+    }
+
+    // If the teacher is found and deleted successfully
+    return res.status(200).json({ message: 'Teacher account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the teacher from the archive.' });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 module.exports = {
   getAllAdmins,
   createAdmin,
@@ -1950,6 +1978,7 @@ module.exports = {
   archiveTeacher,
   getAllArchivedTeachers,
   unarchiveTeacher,
+  deleteArchivedTeacher,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
