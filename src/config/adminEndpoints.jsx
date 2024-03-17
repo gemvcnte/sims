@@ -69,3 +69,4 @@ export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/archived/student
 export const deleteArchivedStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
 
 export const archiveTeacherEndpoint = `${baseUrl}/admin/archived/teachers/:teacherId`;
+export const getAllArchivedTeachersEndpoint = `${baseUrl}/admin/archived/teachers`;

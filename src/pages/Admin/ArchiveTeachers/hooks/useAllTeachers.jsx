@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axiosInstance from "@/utils/axios";
-import { getALlTeachers } from "@/config/adminEndpoints";
+import {
+  getALlTeachers,
+  getAllArchivedTeachersEndpoint,
+} from "@/config/adminEndpoints";
 
 const AllTeachersContext = createContext();
 
@@ -22,7 +25,7 @@ export const AllTeachersProvider = ({ children }) => {
   const fetchTeachers = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get(getALlTeachers);
+      const response = await axiosInstance.get(getAllArchivedTeachersEndpoint);
       if (response.status === 200) {
         setAllTeachers(response.data.data);
       } else {
