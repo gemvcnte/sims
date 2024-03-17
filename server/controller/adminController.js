@@ -1744,13 +1744,30 @@ const unarchiveStudent = asyncHandler(async (req, res) => {
 
     // Save the student document to the EnrollStudent collection
     await student.save();
-
+    
     // Remove the archived student document from the ArchivedStudent collection
     await ArchivedStudent.findByIdAndDelete(studentId);
-
+    
     res.status(200).json({ message: "Student unarchived successfully" });
   } catch (error) {
     return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+const getAllArchivedStudents = asyncHandler(async (req, res) => {
+  try {
+    const archivedStudents = await ArchivedStudent.find();
+
+    // if (!archivedStudents || archivedStudents.length === 0) {
+    //   return res.status(404).json({ message: 'No archived students found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived students retrieved successfully', data: archivedStudents });
+  } catch (error) {
+    console.error('Error retrieving archived students:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -1826,6 +1843,7 @@ module.exports = {
   getStudentsInClassAndHaveNoClass,
   archiveStudent,
   unarchiveStudent,
+  getAllArchivedStudents,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

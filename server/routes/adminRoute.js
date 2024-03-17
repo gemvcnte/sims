@@ -212,5 +212,12 @@ router.patch(
 
 
 
+router.get(
+  "/students/archived",
+  // verifyToken,
+  adminController.getAllArchivedStudents
+);
+
+
 
 module.exports = router;
