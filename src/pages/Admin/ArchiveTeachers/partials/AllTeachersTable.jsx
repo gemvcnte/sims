@@ -29,18 +29,19 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAllTeachers } from "../hooks/useAllArchivedTeachers";
+import { useAllArchivedTeachers } from "../hooks/useAllArchivedTeachers";
 import AllTeachersTableSkeleton from "./AllTeachersTableSkeleton";
+import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
 
 const AllTeachersTable = () => {
-  const { allTeachers, refetchTeachers, loading, error } = useAllTeachers();
+  const { allTeachers, refetchTeachers, loading, error } =
+    useAllArchivedTeachers();
 
   const refetchData = () => {
     refetchTeachers();

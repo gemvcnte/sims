@@ -13,18 +13,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { deleteArchivedStudent } from "@/services/api/admin/deleteArchivedStudent";
 import { useAllStudents } from "@/pages/Admin/ArchiveStudents/hooks/useAllStudents";
+import { useAllArchivedTeachers } from "@/pages/Admin/ArchiveTeachers/hooks/useAllArchivedTeachers";
 
 export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
-  const { refetchStudents: refetchArchivedStudents } = useAllStudents();
-
   const handleSubmit = async (data) => {
     if (userType === "student") {
+      const { refetchStudents: refetchArchivedStudents } = useAllStudents();
+
       const response = await deleteArchivedStudent(userId);
       if (response) {
         refetchArchivedStudents();
       }
-    } else {
-      return;
+    }
+
+    if (userType === "teacher") {
+      const { refetchTeachers: refetchArchivedTeachers } =
+        useAllArchivedTeachers();
+
+      const response = await deleteArchivedStudent(userId);
+      if (response) {
+        refetchArchivedTeachers();
+      }
     }
   };
 

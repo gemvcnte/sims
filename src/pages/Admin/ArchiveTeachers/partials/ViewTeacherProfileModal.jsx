@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -12,6 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
+import { DeleteAccountConfirmationAlertDialog } from "@/components/delete-account-confirmation-alert-dialog";
+import { unarchiveTeacher } from "@/services/api/admin/unarchiveTeacher";
+import { useAllArchivedTeachers } from "../hooks/useAllArchivedTeachers";
 
 const InputField = ({
   type,
@@ -47,14 +51,20 @@ export default function ViewTeacherProfileModal({
   onSave,
   onClose,
 }) {
-  const handleSaveChanges = () => {
-    onSave && onSave(application);
-    onClose && onClose();
+  const { refetchTeachers: refetchArchivedTeachers } = useAllArchivedTeachers();
+
+  const handleUnarchiveTeacherButton = async (e) => {
+    e.preventDefault();
+    const response = await unarchiveTeacher(application._id);
+
+    if (response) {
+      refetchArchivedTeachers();
+    }
   };
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
-      <form onSubmit={handleSaveChanges}>
+      <form onSubmit={handleUnarchiveTeacherButton}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -285,15 +295,20 @@ export default function ViewTeacherProfileModal({
           </div>
         </div>
         <DialogFooter>
-          <span className="mt-8 flex w-full flex-col gap-4">
-            <ArchiveAccountConfirmationAlertDialog
+          <div className="mt-4 flex w-full flex-col gap-4">
+            <Button type="submit" className="w-full">
+              Unarchive Teacher
+            </Button>
+            <DeleteAccountConfirmationAlertDialog
               userType="teacher"
               userId={application._id}
             />
-            <Button type="submit" variant="outline" className="w-full">
-              Close
-            </Button>
-          </span>
+            <DialogClose>
+              <Button type="button" variant="ghost" className="w-full">
+                Close
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </form>
     </DialogContent>
