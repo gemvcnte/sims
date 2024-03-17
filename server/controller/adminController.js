@@ -1,6 +1,9 @@
 const bcryptjs = require("bcryptjs");
 const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
+const ArchivedStudent = require("../models/ArchivedStudentModel");
+const {ArchivedTeacher} = require("../models/ArchivedTeacherModel");
+const {ArchivedAdmin} = require("../models/ArchivedAdminModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
 const { GlobalSettings } = require('../models/GlobalSettingsModel');
@@ -1691,6 +1694,320 @@ const getStudentsInClassAndHaveNoClass = async (req, res) => {
 
 
 
+const archiveStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the student exists
+    const student = await Student.findById(studentId);
+
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    // Create a new archived student document with the same fields as the student
+    const archivedStudent = new ArchivedStudent({
+      ...student.toObject(), // Copy all fields from the existing student
+      archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
+    });
+
+    // Save the archived student document
+    await archivedStudent.save();
+
+    // Remove the student document from the Student collection
+    await Student.findByIdAndDelete(studentId);
+
+    res.status(200).json({ message: "Student archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+const unarchiveStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Check if the archived student exists
+    const archivedStudent = await ArchivedStudent.findById(studentId);
+
+    if (!archivedStudent) {
+      return res.status(404).json({ message: "Archived student not found" });
+    }
+
+    // Create a new student document with the same fields as the archived student
+    const student = new Student({
+      ...archivedStudent.toObject(), // Copy all fields from the archived student
+    });
+
+    // Save the student document to the EnrollStudent collection
+    await student.save();
+    
+    // Remove the archived student document from the ArchivedStudent collection
+    await ArchivedStudent.findByIdAndDelete(studentId);
+    
+    res.status(200).json({ message: "Student unarchived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+const getAllArchivedStudents = asyncHandler(async (req, res) => {
+  try {
+    const archivedStudents = await ArchivedStudent.find();
+
+    // if (!archivedStudents || archivedStudents.length === 0) {
+    //   return res.status(404).json({ message: 'No archived students found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived students retrieved successfully', data: archivedStudents });
+  } catch (error) {
+    console.error('Error retrieving archived students:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+const deleteArchivedStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    const student = await ArchivedStudent.findOneAndDelete({ _id: studentId});
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found in the archive.' });
+    }
+
+    // If the student is found and deleted successfully
+    return res.status(200).json({ message: 'Student account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the student from the archive.' });
+  }
+});
+
+
+
+
+
+const archiveTeacher = asyncHandler(async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the teacher exists
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    // Create a new archived teacher document with the same fields as the teacher
+    const archivedTeacher = new ArchivedTeacher({
+      ...teacher.toObject(), // Copy all fields from the existing teacher
+      archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
+    });
+
+    // Save the archived teacher document
+    await archivedTeacher.save();
+
+    // Remove the teacher document from the Teacher collection
+    await Teacher.findByIdAndDelete(teacherId);
+
+    res.status(200).json({ message: "Teacher archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+const getAllArchivedTeachers = asyncHandler(async (req, res) => {
+  try {
+    const archivedTeachers = await ArchivedTeacher.find();
+
+    // if (!archivedTeachers || archivedTeachers.length === 0) {
+    //   return res.status(404).json({ message: 'No archived teachers found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived teachers retrieved successfully', data: archivedTeachers });
+  } catch (error) {
+    console.error('Error retrieving archived teachers:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+const unarchiveTeacher = asyncHandler(async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+
+    // Check if the archived teacher exists
+    const archivedTeacher = await ArchivedTeacher.findById(teacherId);
+
+    if (!archivedTeacher) {
+      return res.status(404).json({ message: "Archived teacher not found" });
+    }
+
+    // Create a new teacher document with the same fields as the archived techer
+    const teacher = new Teacher({
+      ...archivedTeacher.toObject(), // Copy all fields from the archived teacher
+    });
+
+    // Save the teacher document to the teachers collection
+    await teacher.save();
+    
+    // Remove the archived teacher document from the ArchivedTeachers collection
+    await ArchivedTeacher.findByIdAndDelete(teacherId);
+    
+    res.status(200).json({ message: "Teacher unarchived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+const deleteArchivedTeacher = asyncHandler(async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+
+    const teacher = await ArchivedTeacher.findOneAndDelete({ _id: teacherId});
+
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found in the archive.' });
+    }
+
+    // If the teacher is found and deleted successfully
+    return res.status(200).json({ message: 'Teacher account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the teacher from the archive.' });
+  }
+});
+
+
+
+
+
+
+const archiveAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the admin exists
+    const admin = await Admin.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    // Create a new archived admin document with the same fields as the admin
+    const archivedAdmin = new ArchivedAdmin({
+      ...admin.toObject(), // Copy all fields from the existing admin
+      archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
+    });
+
+    // Save the archived admin document
+    await archivedAdmin.save();
+
+    // Remove the admin document from the Admin collection
+    await Admin.findByIdAndDelete(adminId);
+
+    res.status(200).json({ message: "Admin archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+const getAllArchivedAdmins = asyncHandler(async (req, res) => {
+  try {
+    const archivedAdmins = await ArchivedAdmin.find();
+
+    // if (!archivedAdmins || archivedAdmins.length === 0) {
+    //   return res.status(404).json({ message: 'No archived admins found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived admins retrieved successfully', data: archivedAdmins });
+  } catch (error) {
+    console.error('Error retrieving archived admins:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+const unarchiveAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+
+    // Check if the archived admin exists
+    const archivedAdmin = await ArchivedAdmin.findById(adminId);
+
+    if (!archivedAdmin) {
+      return res.status(404).json({ message: "Archived admin not found" });
+    }
+
+    // Create a new admin document with the same fields as the archived admin
+    const admin = new Admin({
+      ...archivedAdmin.toObject(), // Copy all fields from the archived admin
+    });
+
+    // Save the admin document to the admin collection
+    await admin.save();
+    
+    // Remove the archived admin document from the ArchivedTeachers collection
+    await ArchivedAdmin.findByIdAndDelete(adminId);
+    
+    res.status(200).json({ message: "Admin unarchived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+const deleteArchivedAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+
+    const admin = await ArchivedAdmin.findOneAndDelete({ _id: adminId});
+
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found in the archive.' });
+    }
+
+    // If the admin is found and deleted successfully
+    return res.status(200).json({ message: 'Admin account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the admin from the archive.' });
+  }
+});
+
+
+
+
+
+
 
 
 module.exports = {
@@ -1757,6 +2074,18 @@ module.exports = {
   updateGlobalSettings,
   getStudentsInSpecificClass,
   getStudentsInClassAndHaveNoClass,
+  archiveStudent,
+  unarchiveStudent,
+  getAllArchivedStudents,
+  deleteArchivedStudent,
+  archiveTeacher,
+  getAllArchivedTeachers,
+  unarchiveTeacher,
+  deleteArchivedTeacher,
+  archiveAdmin,
+  getAllArchivedAdmins,
+  unarchiveAdmin,
+  deleteArchivedAdmin,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

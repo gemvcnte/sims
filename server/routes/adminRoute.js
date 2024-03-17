@@ -195,4 +195,87 @@ router.post(
   adminController.getStudentsInClassAndHaveNoClass
 );
 
+
+
+// ARCHIVE FEATURE
+router.patch(
+  "/archived/students/:studentId/",
+  verifyToken,
+  adminController.archiveStudent
+);
+
+router.patch(
+  "/archived/students/:studentId/unarchive",
+  verifyToken,
+  adminController.unarchiveStudent
+);
+
+router.get(
+  "/archived/students",
+  verifyToken,
+  adminController.getAllArchivedStudents
+);
+
+router.delete(
+  "/archived/students/:studentId",
+  verifyToken,
+  adminController.deleteArchivedStudent
+);
+
+
+
+router.patch(
+  "/archived/teachers/:teacherId/",
+  verifyToken,
+  adminController.archiveTeacher
+);
+
+router.get(
+  "/archived/teachers",
+  verifyToken,
+  adminController.getAllArchivedTeachers
+);
+
+router.patch(
+  "/archived/teachers/:teacherId/unarchive",
+  verifyToken,
+  adminController.unarchiveTeacher
+);
+
+router.delete(
+  "/archived/teachers/:teacherId",
+  verifyToken,
+  adminController.deleteArchivedTeacher
+);
+
+
+
+router.patch(
+  "/archived/admins/:adminId/",
+  verifyToken,
+  adminController.archiveAdmin
+);
+
+router.get(
+  "/archived/admins",
+  verifyToken,
+  adminController.getAllArchivedAdmins
+);
+
+router.patch(
+  "/archived/admins/:adminId/unarchive",
+  verifyToken,
+  adminController.unarchiveAdmin
+);
+
+router.delete(
+  "/archived/admins/:adminId",
+  verifyToken,
+  adminController.deleteArchivedAdmin
+);
+
+
+
+
+
 module.exports = router;
