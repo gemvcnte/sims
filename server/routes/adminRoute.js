@@ -230,6 +230,11 @@ router.patch(
   adminController.archiveTeacher
 );
 
+router.get(
+  "/archived/teachers",
+  // verifyToken,
+  adminController.getAllArchivedTeachers
+);
 
 
 

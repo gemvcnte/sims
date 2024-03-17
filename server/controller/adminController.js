@@ -1831,6 +1831,24 @@ const archiveTeacher = asyncHandler(async (req, res) => {
 
 
 
+const getAllArchivedTeachers = asyncHandler(async (req, res) => {
+  try {
+    const archivedTeachers = await ArchivedTeacher.find();
+
+    // if (!archivedTeachers || archivedTeachers.length === 0) {
+    //   return res.status(404).json({ message: 'No archived teachers found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived teachers retrieved successfully', data: archivedTeachers });
+  } catch (error) {
+    console.error('Error retrieving archived teachers:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
 
 
 
@@ -1903,6 +1921,7 @@ module.exports = {
   getAllArchivedStudents,
   deleteArchivedStudent,
   archiveTeacher,
+  getAllArchivedTeachers,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
