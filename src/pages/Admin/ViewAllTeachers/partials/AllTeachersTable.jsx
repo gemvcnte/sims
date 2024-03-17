@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useAllTeachers from "../hooks/useAllTeachers";
 import {
   flexRender,
   getCoreRowModel,
@@ -31,9 +30,25 @@ import {
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useAllTeachers } from "../hooks/useAllTeachers";
+import AllTeachersTableSkeleton from "./AllTeachersTableSkeleton";
 
 const AllTeachersTable = () => {
-  const { allTeachers, loading, error } = useAllTeachers();
+  const { allTeachers, refetchTeachers, loading, error } = useAllTeachers();
+
+  const refetchData = () => {
+    refetchTeachers();
+  };
+
+  if (loading) {
+    return <AllTeachersTableSkeleton />;
+  }
 
   const columns = [
     {
@@ -116,6 +131,43 @@ const AllTeachersTable = () => {
           }
           className="max-w-sm"
         />
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  refetchData();
+                }}
+                className="flex gap-2"
+              >
+                <span className="hidden sm:inline">Refresh Data</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-refresh-cw"
+                >
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                  <path d="M21 3v5h-5" />
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                  <path d="M8 16H3v5" />
+                </svg>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Reload Data</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

@@ -61,3 +61,19 @@ export const allApplicationsEndpoint = `${baseUrl}/admin/all-applications`;
 // updating students in class
 export const getStudentsInSpecificClassEndpoint = `${baseUrl}/admin/students-in-specific-class`;
 export const getStudentsInSpecificClassAndNoClassEndpoint = `${baseUrl}/admin/students-in-class-and-no-class`;
+
+// ARCHIVE FEATURE
+export const archiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
+export const unarchiveStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId/unarchive`;
+export const getAllArchivedStudentsEndpoint = `${baseUrl}/admin/archived/students`;
+export const deleteArchivedStudentEndpoint = `${baseUrl}/admin/archived/students/:studentId`;
+
+export const archiveTeacherEndpoint = `${baseUrl}/admin/archived/teachers/:teacherId`;
+export const getAllArchivedTeachersEndpoint = `${baseUrl}/admin/archived/teachers`;
+export const unarchiveTeacherEndpoint = `${baseUrl}/admin/archived/teachers/:teacherId/unarchive`;
+export const deleteArchivedTeacherEndpoint = `${baseUrl}/admin/archived/teachers/:teacherId`;
+
+export const archiveAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId`;
+export const getAllArchivedAdminsEndpoint = `${baseUrl}/admin/archived/admins`;
+export const unarchiveAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId/unarchive`;
+export const deleteArchivedAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId`;

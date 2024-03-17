@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
 
 const InputField = ({
   type,
@@ -511,9 +512,15 @@ export default function ViewStudentProfileModal({
         </Accordion>
 
         <DialogFooter>
-          <Button type="submit" variant="outline" className="w-full">
-            Close
-          </Button>
+          <span className="flex w-full flex-col gap-4">
+            <ArchiveAccountConfirmationAlertDialog
+              userType="student"
+              userId={application._id}
+            />
+            <Button type="submit" variant="outline" className="w-full">
+              Close
+            </Button>
+          </span>
         </DialogFooter>
       </form>
     </DialogContent>

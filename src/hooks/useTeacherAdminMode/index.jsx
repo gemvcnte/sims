@@ -17,7 +17,6 @@ export const TeacherAdminModeProvider = ({ children }) => {
 
   const toggleMode = () => {
     setIsAdminMode((prevMode) => !prevMode);
-    console.log("Admin mode: ", isAdminMode);
   };
 
   return (

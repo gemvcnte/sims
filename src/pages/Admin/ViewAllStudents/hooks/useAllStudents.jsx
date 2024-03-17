@@ -73,6 +73,7 @@ export const AllStudentsProvider = ({ children }) => {
       );
     }
 
+    // returns all the students that had strand == strand even if thats only previous semester or schoolyear[1]
     if (strand !== "all") {
       filtered = filtered.filter((application) =>
         application.schoolYear.some(
@@ -80,6 +81,13 @@ export const AllStudentsProvider = ({ children }) => {
         ),
       );
     }
+
+    // returns only the students that have same strands in the current semester, schoolYear[0]
+    // if (strand !== "all") {
+    //   filtered = filtered.filter(
+    //     (application) => application.schoolYear[0].strand === strand,
+    //   );
+    // }
 
     setAllStudents(filtered);
   };

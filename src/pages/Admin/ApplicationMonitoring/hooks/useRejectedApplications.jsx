@@ -66,10 +66,8 @@ export const RejectedApplicationsProvider = ({ children }) => {
 
     if (gradeLevel !== "") {
       const gradeLevelNum = parseInt(gradeLevel, 10);
-      console.log("Filter Grade Level:", gradeLevelNum); // Log the filter value
       filtered = filtered.filter((application) =>
         application.schoolYear.some((schoolYearItem) => {
-          console.log("Data Grade Level:", schoolYearItem.gradeLevel); // Log the data value
           return schoolYearItem.gradeLevel === gradeLevelNum;
         }),
       );
@@ -83,7 +81,6 @@ export const RejectedApplicationsProvider = ({ children }) => {
       );
     }
 
-    console.log(filtered);
     setPendingApplications(filtered);
   };
 

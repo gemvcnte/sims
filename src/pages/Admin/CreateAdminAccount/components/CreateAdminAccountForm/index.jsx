@@ -10,9 +10,11 @@ import { createAdminProfileApi } from "./helpers";
 import showSuccessNotification from "@utils/ShowSuccessNotification";
 import showErrorNotification from "@utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateAdminAccountForm = () => {
   const [teacherProfile, setTeacherProfile] = useState();
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
     setTeacherProfile({
@@ -27,6 +29,7 @@ const CreateAdminAccountForm = () => {
       const response = await createAdminProfileApi(teacherProfile);
       if (response && response.status === 201) {
         showSuccessNotification(response.data.message);
+        navigate("/admins");
       } else {
         showErrorNotification(response.data.message);
       }
