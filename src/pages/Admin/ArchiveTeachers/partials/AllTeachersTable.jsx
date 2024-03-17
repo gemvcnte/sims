@@ -37,11 +37,10 @@ import {
 } from "@/components/ui/tooltip";
 import { useAllArchivedTeachers } from "../hooks/useAllArchivedTeachers";
 import AllTeachersTableSkeleton from "./AllTeachersTableSkeleton";
-import ViewTeacherProfileModal from "./ViewTeacherProfileModal";
+import ViewArchivedTeacherProfileModal from "./ViewArchivedTeacherProfileModal";
 
 const AllTeachersTable = () => {
-  const { allTeachers, refetchTeachers, loading, error } =
-    useAllArchivedTeachers();
+  const { allTeachers, refetchTeachers, loading } = useAllArchivedTeachers();
 
   const refetchData = () => {
     refetchTeachers();
@@ -251,7 +250,7 @@ const AllTeachersTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewTeacherProfileModal
+            <ViewArchivedTeacherProfileModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}

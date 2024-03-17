@@ -16,6 +16,8 @@ import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-accou
 import { DeleteAccountConfirmationAlertDialog } from "@/components/delete-account-confirmation-alert-dialog";
 import { unarchiveTeacher } from "@/services/api/admin/unarchiveTeacher";
 import { useAllArchivedTeachers } from "../hooks/useAllArchivedTeachers";
+import { Textarea } from "@/components/ui/textarea";
+import { SelectSeparator } from "@/components/ui/select";
 
 const InputField = ({
   type,
@@ -46,7 +48,7 @@ const selectOptions = [
   { value: "NONE", label: "None" },
 ];
 
-export default function ViewTeacherProfileModal({
+export default function ViewArchivedTeacherProfileModal({
   application,
   onSave,
   onClose,
@@ -72,6 +74,32 @@ export default function ViewTeacherProfileModal({
           </DialogDescription>
         </DialogHeader> */}
         <div className="grid gap-4 py-4">
+          <div className="text-right text-sm italic">
+            <p>
+              <span className="text-xs text-muted-foreground">
+                Archived Date:
+              </span>{" "}
+              {new Date(application.archivedTimestamp).toDateString()}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="archivedRemarks" className="text-right ">
+              Remarks
+            </Label>
+            <Textarea
+              disabled
+              id="archivedRemarks"
+              type="text"
+              defaultValue={application.archivedRemarks}
+              name="archivedRemarks"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
+
+          <SelectSeparator className="my-8" />
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="lastName" className="text-right">
               Last Name
