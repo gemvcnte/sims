@@ -65,7 +65,7 @@ export function ArchiveDropdown({}) {
             onClick={handleDropdownClick}
             className="w-full"
           >
-            Teachers Accounts
+            Teacher Accounts
           </Link>
         </DropdownMenuItem>
 
