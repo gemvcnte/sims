@@ -10,9 +10,11 @@ import { createTeacherProfileApi } from "./helpers";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateTeacherAccountForm = () => {
   const [teacherProfile, setTeacherProfile] = useState();
+  const navigate = useNavigate();
 
   const handleInputChange = (field, value) => {
     setTeacherProfile({
@@ -27,6 +29,7 @@ const CreateTeacherAccountForm = () => {
       const response = await createTeacherProfileApi(teacherProfile);
       if (response && response.status === 201) {
         showSuccessNotification(response.data.message);
+        navigate("/teachers");
       } else {
         showErrorNotification(response.data.message);
       }
@@ -68,8 +71,8 @@ const CreateTeacherAccountForm = () => {
         /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
-          <Button type="submit">
-            Create <span className="hidden sm:inline">teacher</span> account
+          <Button type="submit" className="whitespace-pre-wrap">
+            Create <div className="hidden sm:inline">teacher</div> account
           </Button>
         </footer>
       </form>
