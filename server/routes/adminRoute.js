@@ -236,6 +236,14 @@ router.get(
   adminController.getAllArchivedTeachers
 );
 
+router.patch(
+  "/archived/teachers/:teacherId/unarchive",
+  // verifyToken,
+  adminController.unarchiveTeacher
+);
+
+
+
 
 
 module.exports = router;
