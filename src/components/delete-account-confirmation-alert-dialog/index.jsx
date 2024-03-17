@@ -15,15 +15,22 @@ import { deleteArchivedStudent } from "@/services/api/admin/deleteArchivedStuden
 import { useAllStudents } from "@/pages/Admin/ArchiveStudents/hooks/useAllStudents";
 import { useAllArchivedTeachers } from "@/pages/Admin/ArchiveTeachers/hooks/useAllArchivedTeachers";
 import { deleteArchivedTeacher } from "@/services/api/admin/deleteArchivedTeacher";
+import { useAllArchivedAdmins } from "@/pages/Admin/ArchiveAdmins/hooks/useAllArchivedAdmins";
+import { deleteArchivedAdmin } from "@/services/api/admin/deleteArchivedAdmin";
 
 export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
   let refetchStudents;
   let refetchTeachers;
+  let refetchAdmins;
 
   if (userType === "student") {
     ({ refetchStudents } = useAllStudents());
-  } else if (userType === "teacher") {
+  }
+  if (userType === "teacher") {
     ({ refetchTeachers } = useAllArchivedTeachers());
+  }
+  if (userType === "admin") {
+    ({ refetchAdmins } = useAllArchivedAdmins());
   }
 
   const handleSubmit = async (data) => {
@@ -37,8 +44,14 @@ export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
     if (userType === "teacher") {
       const response = await deleteArchivedTeacher(userId);
       if (response) {
-        console.log("deleted");
         refetchTeachers();
+      }
+    }
+
+    if (userType === "admin") {
+      const response = await deleteArchivedAdmin(userId);
+      if (response) {
+        refetchAdmins();
       }
     }
   };
@@ -66,7 +79,7 @@ export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Button variant="destructive" onClick={handleSubmit}>
-            Delete Account
+            Delete {userType}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
