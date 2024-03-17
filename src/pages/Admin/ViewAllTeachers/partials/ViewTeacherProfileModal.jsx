@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
 
 const InputField = ({
   type,
@@ -52,7 +53,7 @@ export default function ViewTeacherProfileModal({
   };
 
   return (
-    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[425px]"}>
+    <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
       <form onSubmit={handleSaveChanges}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -284,9 +285,15 @@ export default function ViewTeacherProfileModal({
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" variant="outline">
-            Close
-          </Button>
+          <span className="mt-8 flex w-full flex-col gap-4">
+            <ArchiveAccountConfirmationAlertDialog
+              userType="teacher"
+              userId={application._id}
+            />
+            <Button type="submit" variant="outline" className="w-full">
+              Close
+            </Button>
+          </span>
         </DialogFooter>
       </form>
     </DialogContent>

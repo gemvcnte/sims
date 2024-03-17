@@ -15,6 +15,8 @@ import { Button } from "../ui/button";
 import { AlertDialogCancel } from "../ui/alert-dialog";
 import { archiveStudent } from "@/services/api/admin/archiveStudent";
 import { useAllStudents } from "@/pages/Admin/ViewAllStudents/hooks/useAllStudents";
+import { archiveTeacher } from "@/services/api/admin/archiveTeacher";
+import useAllTeachers from "@/pages/Admin/ViewAllTeachers/hooks/useAllTeachers";
 
 const schema = yup.object().shape({
   remarks: yup
@@ -28,7 +30,14 @@ export default function ArchiveAccountForm({ userType, userId }) {
     resolver: yupResolver(schema),
   });
 
-  const { refetchStudents } = useAllStudents();
+  let refetchStudents;
+  let refetchTeachers;
+
+  if (userType === "student") {
+    ({ refetchStudents } = useAllStudents());
+  } else if (userType === "teacher") {
+    ({ refetchTeachers } = useAllTeachers());
+  }
 
   const onSubmit = async (data) => {
     if (userType === "student") {
@@ -36,8 +45,13 @@ export default function ArchiveAccountForm({ userType, userId }) {
       if (response) {
         refetchStudents();
       }
-    } else {
-      return;
+    }
+
+    if (userType === "teacher") {
+      const response = await archiveTeacher(userId, data.remarks);
+      if (response) {
+        refetchTeachers();
+      }
     }
   };
 

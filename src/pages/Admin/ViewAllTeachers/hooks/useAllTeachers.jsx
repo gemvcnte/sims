@@ -7,25 +7,29 @@ export default function useAllTeachers() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        const response = await axiosInstance.get(getALlTeachers);
+  const fetchTeachers = async () => {
+    try {
+      const response = await axiosInstance.get(getALlTeachers);
 
-        if (response.status === 200) {
-          setAllTeachers(response.data.data);
-        } else {
-          setError(response.data.message);
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false);
+      if (response.status === 200) {
+        setAllTeachers(response.data.data);
+      } else {
+        setError(response.data.message);
       }
-    };
+    } catch (error) {
+      setError("An error occurred while fetching data.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTeachers();
-  }, []);
+  }, []); // Fetch data on mount
 
-  return { allTeachers, loading, error };
+  const refetchTeachers = () => {
+    fetchTeachers(); // Re-fetch data
+  };
+
+  return { allTeachers, loading, error, refetchTeachers };
 }
