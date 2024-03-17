@@ -13,9 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -29,11 +26,15 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import useAllAdmins from "../hooks/useAllAdmins";
+import { useAllAdmins } from "../hooks/useAllAdmins";
 import ViewAdminProfileModal from "./ViewAdminProfileModal";
 
 const AllAdminsTable = () => {
-  const { allTeachers, loading, error } = useAllAdmins();
+  const { allAdmins, loading, error } = useAllAdmins();
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
 
   const columns = [
     {
@@ -74,7 +75,7 @@ const AllAdminsTable = () => {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data: allTeachers,
+    data: allAdmins,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
