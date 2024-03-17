@@ -250,5 +250,16 @@ router.delete(
 
 
 
+router.patch(
+  "/archived/admins/:adminId/",
+  // verifyToken,
+  adminController.archiveAdmin
+);
+
+
+
+
+
+
 
 module.exports = router;

@@ -3,6 +3,7 @@ const { Admin } = require("../models/AdminModel");
 const { Student } = require("../models/StudentModel");
 const ArchivedStudent = require("../models/ArchivedStudentModel");
 const {ArchivedTeacher} = require("../models/ArchivedTeacherModel");
+const {ArchivedAdmin} = require("../models/ArchivedAdminModel");
 const { Teacher } = require("../models/TeacherModel");
 const { StudentApplication } = require("../models/StudentApplicationModel");
 const { GlobalSettings } = require('../models/GlobalSettingsModel');
@@ -1903,6 +1904,43 @@ const deleteArchivedTeacher = asyncHandler(async (req, res) => {
 
 
 
+const archiveAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+    const { remarks } = req.body; // Assuming remarks are sent in the request body
+
+    // Check if the admin exists
+    const admin = await Admin.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    // Create a new archived admin document with the same fields as the admin
+    const archivedAdmin = new ArchivedAdmin({
+      ...admin.toObject(), // Copy all fields from the existing admin
+      archivedRemarks: remarks, // Add the archivedRemarks field
+      archivedTimestamp: new Date(), // Add the archivedTimestamp field with the current date and time
+    });
+
+    // Save the archived admin document
+    await archivedAdmin.save();
+
+    // Remove the admin document from the Admin collection
+    await Admin.findByIdAndDelete(adminId);
+
+    res.status(200).json({ message: "Admin archived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+
+
+
 
 
 
@@ -1979,6 +2017,7 @@ module.exports = {
   getAllArchivedTeachers,
   unarchiveTeacher,
   deleteArchivedTeacher,
+  archiveAdmin,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
