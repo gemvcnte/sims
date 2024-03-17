@@ -16,7 +16,7 @@ import { AlertDialogCancel } from "../ui/alert-dialog";
 import { archiveStudent } from "@/services/api/admin/archiveStudent";
 import { useAllStudents } from "@/pages/Admin/ViewAllStudents/hooks/useAllStudents";
 import { archiveTeacher } from "@/services/api/admin/archiveTeacher";
-import useAllTeachers from "@/pages/Admin/ViewAllTeachers/hooks/useAllTeachers";
+import { useAllTeachers } from "@/pages/Admin/ViewAllTeachers/hooks/useAllTeachers";
 
 const schema = yup.object().shape({
   remarks: yup
