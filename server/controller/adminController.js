@@ -1985,6 +1985,24 @@ const unarchiveAdmin = asyncHandler(async (req, res) => {
 
 
 
+const deleteArchivedAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+
+    const admin = await ArchivedAdmin.findOneAndDelete({ _id: adminId});
+
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found in the archive.' });
+    }
+
+    // If the admin is found and deleted successfully
+    return res.status(200).json({ message: 'Admin account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the admin from the archive.' });
+  }
+});
+
 
 
 
@@ -2067,6 +2085,7 @@ module.exports = {
   archiveAdmin,
   getAllArchivedAdmins,
   unarchiveAdmin,
+  deleteArchivedAdmin,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

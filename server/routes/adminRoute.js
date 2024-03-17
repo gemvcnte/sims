@@ -252,22 +252,27 @@ router.delete(
 
 router.patch(
   "/archived/admins/:adminId/",
-  // verifyToken,
+  verifyToken,
   adminController.archiveAdmin
 );
 
 router.get(
   "/archived/admins",
-  // verifyToken,
+  verifyToken,
   adminController.getAllArchivedAdmins
 );
 
 router.patch(
   "/archived/admins/:adminId/unarchive",
-  // verifyToken,
+  verifyToken,
   adminController.unarchiveAdmin
 );
 
+router.delete(
+  "/archived/admins/:adminId",
+  verifyToken,
+  adminController.deleteArchivedAdmin
+);
 
 
 
