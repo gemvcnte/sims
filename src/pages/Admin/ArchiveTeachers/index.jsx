@@ -1,7 +1,7 @@
 import Topbar from "@/components/layout/Topbar";
 import React from "react";
 import AllTeachersTable from "./partials/AllTeachersTable";
-import { AllTeachersProvider } from "./hooks/useAllTeachers";
+import { AllTeachersProvider } from "./hooks/useAllArchivedTeachers";
 
 export default function ArchiveTeachers() {
   return (

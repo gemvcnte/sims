@@ -7,11 +7,11 @@ import {
 
 const AllTeachersContext = createContext();
 
-export const useAllTeachers = () => {
+export const useAllArchivedTeachers = () => {
   const context = useContext(AllTeachersContext);
   if (!context) {
     throw new Error(
-      "useAllTeachers must be used within an AllTeachersProvider",
+      "useAllArchivedTeachers must be used within an AllTeachersProvider",
     );
   }
   return context;

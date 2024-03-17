@@ -36,7 +36,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAllTeachers } from "../hooks/useAllTeachers";
+import { useAllTeachers } from "../hooks/useAllArchivedTeachers";
 import AllTeachersTableSkeleton from "./AllTeachersTableSkeleton";
 
 const AllTeachersTable = () => {
