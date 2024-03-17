@@ -325,7 +325,7 @@ export default function ViewArchivedTeacherProfileModal({
         <DialogFooter>
           <div className="mt-4 flex w-full flex-col gap-4">
             <Button type="submit" className="w-full">
-              Unarchive Teacher
+              Unarchive teacher
             </Button>
             <DeleteAccountConfirmationAlertDialog
               userType="teacher"

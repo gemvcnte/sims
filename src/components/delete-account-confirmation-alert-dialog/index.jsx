@@ -44,7 +44,7 @@ export function DeleteAccountConfirmationAlertDialog({ userType, userId }) {
           variant="outline"
           className="w-full border-destructive text-destructive"
         >
-          Delete Student
+          Delete {userType}
         </Button>
       </AlertDialogTrigger>
 
