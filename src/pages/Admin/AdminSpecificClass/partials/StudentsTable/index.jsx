@@ -21,13 +21,11 @@ export default function StudentsTable() {
   const isAdviser = isClassAdviser(classDetails);
 
   const consoleLogAllLrns = () => {
-    console.log(selectedLrns);
     setSelectedLrns([]);
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
-    console.log(selectedLrns);
     try {
       if (classDetails) {
         // Remove duplicates from selectedLrns array

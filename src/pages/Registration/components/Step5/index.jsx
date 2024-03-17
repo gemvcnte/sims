@@ -47,7 +47,6 @@ function Step5({ setStep, fullFormData, onBack, onNext }) {
     e.preventDefault();
     const isFormValid = FormValidator(academicData, 5);
     isFormValid ? onNext(academicData) : notify();
-    console.log(academicData);
   };
 
   return (

@@ -40,7 +40,6 @@ export default function CreateNewSection({ onClose }) {
       return;
     }
 
-    console.log(sectionDetails);
     const result = await createSectionApi(sectionDetails);
 
     result.success

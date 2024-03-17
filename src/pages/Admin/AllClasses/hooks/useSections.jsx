@@ -71,7 +71,6 @@ export const SectionsProvider = ({ children }) => {
       );
     }
 
-    console.log(filtered);
     setPendingApplications(filtered);
   };
 

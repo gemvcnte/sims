@@ -59,11 +59,6 @@ export default function ViewStudentProfileModal({
     onClose();
   };
 
-  const moveStudentToArchive = () => {
-    console.log(application._id);
-    console.log(`ISACTIVE: ${application.isActive}`);
-  };
-
   return (
     <DialogContent
       className={"max-h-[80%] overflow-y-scroll px-10 lg:max-w-[720px]"}
