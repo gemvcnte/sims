@@ -1774,6 +1774,27 @@ const getAllArchivedStudents = asyncHandler(async (req, res) => {
 
 
 
+const deleteArchivedStudent = asyncHandler(async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    const student = await ArchivedStudent.findOneAndDelete({ _id: studentId});
+
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found in the archive.' });
+    }
+
+    // If the student is found and deleted successfully
+    return res.status(200).json({ message: 'Student account deleted successfully' });
+  }  catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'An error occurred while deleting the student from the archive.' });
+  }
+});
+
+
+
+
 
 
 
@@ -1844,6 +1865,7 @@ module.exports = {
   archiveStudent,
   unarchiveStudent,
   getAllArchivedStudents,
+  deleteArchivedStudent,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

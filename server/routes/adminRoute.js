@@ -199,24 +199,32 @@ router.post(
 
 // ARCHIVE FEATURE
 router.patch(
-  "/students/:studentId/archive",
-  // verifyToken,
+  "/archived/students/:studentId/",
+  verifyToken,
   adminController.archiveStudent
 );
 
 router.patch(
-  "/students/:studentId/unarchive",
-  // verifyToken,
+  "/archived/students/:studentId/unarchive",
+  verifyToken,
   adminController.unarchiveStudent
 );
 
 
 
 router.get(
-  "/students/archived",
-  // verifyToken,
+  "/archived/students",
+  verifyToken,
   adminController.getAllArchivedStudents
 );
+
+
+router.delete(
+  "/archived/students/:studentId",
+  verifyToken,
+  adminController.deleteArchivedStudent
+);
+
 
 
 
