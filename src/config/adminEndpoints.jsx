@@ -75,3 +75,4 @@ export const deleteArchivedTeacherEndpoint = `${baseUrl}/admin/archived/teachers
 
 export const archiveAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId`;
 export const getAllArchivedAdminsEndpoint = `${baseUrl}/admin/archived/admins`;
+export const unarchiveAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId/unarchive`;

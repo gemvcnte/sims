@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/table";
 import { Icon } from "@iconify/react";
 import { Dialog } from "@/components/ui/dialog";
-import ViewAdminProfileModal from "./ViewAdminProfileModal";
 import {
   Tooltip,
   TooltipContent,
@@ -35,6 +34,7 @@ import {
 } from "@/components/ui/tooltip";
 import AllAdminsTableSkeleton from "./AllAdminsTableSkeleton";
 import { useAllArchivedAdmins } from "../hooks/useAllArchivedAdmins";
+import ViewArchivedAdminProfileModal from "./ViewArchivedAdminProfileModal";
 
 const AllAdminsTable = () => {
   const { allAdmins, refetchAdmins, loading, error } = useAllArchivedAdmins();
@@ -247,7 +247,7 @@ const AllAdminsTable = () => {
             </TableBody>
           </Table>
           {selectedRow && (
-            <ViewAdminProfileModal
+            <ViewArchivedAdminProfileModal
               application={selectedRow}
               onSave={onSave}
               onClose={onClose}

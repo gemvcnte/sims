@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -12,6 +13,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { SelectSeparator } from "@/components/ui/select";
+import { DeleteAccountConfirmationAlertDialog } from "@/components/delete-account-confirmation-alert-dialog";
+import { useAllArchivedAdmins } from "../hooks/useAllArchivedAdmins";
+import { unarchiveAdmin } from "@/services/api/admin/unarchiveAdmin";
 
 const InputField = ({
   type,
@@ -42,19 +48,25 @@ const selectOptions = [
   { value: "NONE", label: "None" },
 ];
 
-export default function ViewAdminProfileModal({
+export default function ViewArchivedAdminProfileModal({
   application,
   onSave,
   onClose,
 }) {
-  const handleSaveChanges = () => {
-    onSave && onSave(application);
-    onClose && onClose();
+  const { refetchAdmins: refetchArchivedAdmins } = useAllArchivedAdmins();
+
+  const handleUnarchiveAdminButton = async (e) => {
+    e.preventDefault();
+    const response = await unarchiveAdmin(application._id);
+
+    if (response) {
+      refetchArchivedAdmins();
+    }
   };
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
-      <form onSubmit={handleSaveChanges}>
+      <form onSubmit={handleUnarchiveAdminButton}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -62,6 +74,23 @@ export default function ViewAdminProfileModal({
           </DialogDescription>
         </DialogHeader> */}
         <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="archivedRemarks" className="text-right ">
+              Remarks
+            </Label>
+            <Textarea
+              disabled
+              id="archivedRemarks"
+              type="text"
+              defaultValue={application.archivedRemarks}
+              name="archivedRemarks"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
+
+          <SelectSeparator className="my-8" />
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="lastName" className="text-right">
               Last Name
@@ -285,15 +314,20 @@ export default function ViewAdminProfileModal({
           </div>
         </div>
         <DialogFooter>
-          <span className="mt-8 flex w-full flex-col gap-4">
-            <ArchiveAccountConfirmationAlertDialog
+          <div className="mt-4 flex w-full flex-col gap-4">
+            <Button type="submit" className="w-full">
+              Unarchive admin
+            </Button>
+            <DeleteAccountConfirmationAlertDialog
               userType="admin"
               userId={application._id}
             />
-            <Button type="submit" variant="outline" className="w-full">
-              Close
-            </Button>
-          </span>
+            <DialogClose>
+              <Button type="button" variant="ghost" className="w-full">
+                Close
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </form>
     </DialogContent>
