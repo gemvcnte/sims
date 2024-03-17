@@ -17,6 +17,8 @@ import { archiveStudent } from "@/services/api/admin/archiveStudent";
 import { useAllStudents } from "@/pages/Admin/ViewAllStudents/hooks/useAllStudents";
 import { archiveTeacher } from "@/services/api/admin/archiveTeacher";
 import { useAllTeachers } from "@/pages/Admin/ViewAllTeachers/hooks/useAllTeachers";
+import { useAllAdmins } from "@/pages/Admin/ViewAllAdmins/hooks/useAllAdmins";
+import { archiveAdmin } from "@/services/api/admin/archiveAdmin";
 
 const schema = yup.object().shape({
   remarks: yup
@@ -32,11 +34,16 @@ export default function ArchiveAccountForm({ userType, userId }) {
 
   let refetchStudents;
   let refetchTeachers;
+  let refetchAdmins;
 
   if (userType === "student") {
     ({ refetchStudents } = useAllStudents());
-  } else if (userType === "teacher") {
+  }
+  if (userType === "teacher") {
     ({ refetchTeachers } = useAllTeachers());
+  }
+  if (userType === "admin") {
+    ({ refetchAdmins } = useAllAdmins());
   }
 
   const onSubmit = async (data) => {
@@ -51,6 +58,13 @@ export default function ArchiveAccountForm({ userType, userId }) {
       const response = await archiveTeacher(userId, data.remarks);
       if (response) {
         refetchTeachers();
+      }
+    }
+
+    if (userType === "admin") {
+      const response = await archiveAdmin(userId, data.remarks);
+      if (response) {
+        refetchAdmins();
       }
     }
   };
