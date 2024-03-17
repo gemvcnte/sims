@@ -256,6 +256,12 @@ router.patch(
   adminController.archiveAdmin
 );
 
+router.get(
+  "/archived/admins",
+  // verifyToken,
+  adminController.getAllArchivedAdmins
+);
+
 
 
 

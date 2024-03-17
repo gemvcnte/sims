@@ -1937,6 +1937,21 @@ const archiveAdmin = asyncHandler(async (req, res) => {
 
 
 
+const getAllArchivedAdmins = asyncHandler(async (req, res) => {
+  try {
+    const archivedAdmins = await ArchivedAdmin.find();
+
+    // if (!archivedAdmins || archivedAdmins.length === 0) {
+    //   return res.status(404).json({ message: 'No archived admins found' });
+    // }
+    
+    res.status(200).json({ message: 'Archived admins retrieved successfully', data: archivedAdmins });
+  } catch (error) {
+    console.error('Error retrieving archived admins:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 
 
@@ -2018,6 +2033,7 @@ module.exports = {
   unarchiveTeacher,
   deleteArchivedTeacher,
   archiveAdmin,
+  getAllArchivedAdmins,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
