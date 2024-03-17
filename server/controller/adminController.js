@@ -1955,6 +1955,38 @@ const getAllArchivedAdmins = asyncHandler(async (req, res) => {
 
 
 
+const unarchiveAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { adminId } = req.params;
+
+    // Check if the archived admin exists
+    const archivedAdmin = await ArchivedAdmin.findById(adminId);
+
+    if (!archivedAdmin) {
+      return res.status(404).json({ message: "Archived admin not found" });
+    }
+
+    // Create a new admin document with the same fields as the archived admin
+    const admin = new Admin({
+      ...archivedAdmin.toObject(), // Copy all fields from the archived admin
+    });
+
+    // Save the admin document to the admin collection
+    await admin.save();
+    
+    // Remove the archived admin document from the ArchivedTeachers collection
+    await ArchivedAdmin.findByIdAndDelete(adminId);
+    
+    res.status(200).json({ message: "Admin unarchived successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: `Error: ${error.message}` });
+  }
+});
+
+
+
+
+
 
 
 
@@ -2034,6 +2066,7 @@ module.exports = {
   deleteArchivedTeacher,
   archiveAdmin,
   getAllArchivedAdmins,
+  unarchiveAdmin,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

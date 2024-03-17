@@ -262,6 +262,11 @@ router.get(
   adminController.getAllArchivedAdmins
 );
 
+router.patch(
+  "/archived/admins/:adminId/unarchive",
+  // verifyToken,
+  adminController.unarchiveAdmin
+);
 
 
 
