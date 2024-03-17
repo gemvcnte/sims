@@ -19,6 +19,7 @@ import AdminSpecificClass from "@/pages/Admin/AdminSpecificClass";
 import { TeacherAdminModeProvider } from "@/hooks/useTeacherAdminMode";
 import AdminSidebarTeacherMode from "@/components/layout/Sidebar/components/AdminSidebarTeacherMode";
 import ArchiveStudents from "@/pages/Admin/ArchiveStudents";
+import ArchiveTeachers from "@/pages/Admin/ArchiveTeachers";
 
 export default function AdminRouter() {
   return (
@@ -56,6 +57,7 @@ export default function AdminRouter() {
 
           {/* ARCHIVE */}
           <Route path="/archived/students" element={<ArchiveStudents />} />
+          <Route path="/archived/teachers" element={<ArchiveTeachers />} />
 
           <Route path="/classes" element={<TeacherClasses />} />
           <Route path="/class/:id" element={<TeacherSpecificClass />} />
