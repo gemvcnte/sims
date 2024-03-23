@@ -27,7 +27,9 @@ export default function TeacherClassesTable() {
   return (
     <main className="px-4">
       <Table>
-        <TableCaption></TableCaption>
+        {filteredClasses.length === 0 && (
+          <TableCaption className="p-4">No sections found.</TableCaption>
+        )}
         <TableHeader>
           <TableRow>
             <TableHead>
