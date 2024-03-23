@@ -772,21 +772,22 @@ const updateClassroom = asyncHandler(async (req, res) => {
 
 const deleteClassroom = asyncHandler(async (req, res) => {
   try {
-    const { sectionName } = req.body;
+    const { sectionId } = req.params;
 
-    const deletedSection = await Classroom.findOneAndDelete({ sectionName });
+    const deletedClassroom = await Classroom.findByIdAndDelete(sectionId);
 
-    if (!deletedSection) {
+    if (!deletedClassroom) {
       return res
         .status(404)
-        .json({ message: "There are no classroom with this section name." });
+        .json({ message: "Oops! We couldn't find a section with this ID." });
     }
 
-    return res.status(202).json({ message: "Classroom has been deleted." });
+    return res.status(202).json({ message: "Section has been deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ message: "" });
+    return res.status(500).json({ message: "Internal server error." });
   }
 });
+
 
 const createClassAnnouncement = asyncHandler(async (req, res) => {
   try {

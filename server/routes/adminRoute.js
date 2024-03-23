@@ -104,7 +104,7 @@ router.post("/class/create", verifyToken, adminController.createClassroom); // /
 router.get("/class/getAll", verifyToken, adminController.getAllClasses);
 router.get("/class/:id", verifyToken, adminController.getSpecificClass);
 router.patch("/class/update", verifyToken, adminController.getSpecificClass);
-router.delete("/class/delete", verifyToken, adminController.deleteClassroom);
+router.delete("/class/:sectionId", verifyToken, adminController.deleteClassroom);
 
 // faculty announcement
 // router.post("/announcement/create-faculty-announcement")
