@@ -779,7 +779,7 @@ const deleteClassroom = asyncHandler(async (req, res) => {
     if (!deletedClassroom) {
       return res
         .status(404)
-        .json({ message: "Oops! We couldn't find a section with this ID." });
+        .json({ message: "We couldn't find a section with this ID." });
     }
 
     return res.status(202).json({ message: "Section has been deleted successfully" });
