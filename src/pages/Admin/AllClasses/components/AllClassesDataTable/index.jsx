@@ -7,7 +7,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  CircleEllipsis,
+  MoreHorizontal,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -41,6 +47,18 @@ import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useSections } from "../../hooks/useSections";
 import AllClassesFiltersDrawer from "./AllClassesFiltersDrawer";
 import { useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import DeleteSectionAlertDialog from "@/components/delete-section-alert-dialog";
 
 const AllClassesDataTable = () => {
   const navigate = useNavigate();
@@ -71,8 +89,8 @@ const AllClassesDataTable = () => {
       cell: ({ row }) => (
         <div className="">
           {row.original.schoolYear[0].semester == "first semester"
-            ? "1st Semester"
-            : "2nd Semester"}
+            ? "1st"
+            : "2nd"}
         </div>
       ),
     },
@@ -113,6 +131,15 @@ const AllClassesDataTable = () => {
           />
           <span className="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
         </button>
+      ),
+    },
+    {
+      accessorKey: "deleteSection",
+      header: "",
+      cell: ({ row }) => (
+        <div onClick={(e) => e.stopPropagation()}>
+          <DeleteSectionAlertDialog sectionId={row.original._id} />
+        </div>
       ),
     },
   ];
