@@ -39,6 +39,7 @@
     "lucide-react": "^0.293.0",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "react": "^18.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
     "react-router-dom": "^6.17.0",
