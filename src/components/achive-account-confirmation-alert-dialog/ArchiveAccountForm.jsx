@@ -99,7 +99,9 @@ export default function ArchiveAccountForm({ userType, userId }) {
           )}
         />
 
-        <Button onClick={handleSubmit}>Continue</Button>
+        <Button variant="destructive" onClick={handleSubmit}>
+          Confirm Archive
+        </Button>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
       </form>
     </Form>
