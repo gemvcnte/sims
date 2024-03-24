@@ -189,7 +189,7 @@ export default function GradesTable() {
   return (
     <main className="p-4">
       <header className="mb-4 flex justify-between gap-4">
-        {isSubjectTeacher ? (
+        {/* {isSubjectTeacher ? (
           <div className="flex gap-4">
             <Button
               variant="outline"
@@ -203,7 +203,19 @@ export default function GradesTable() {
           </div>
         ) : (
           <div></div>
-        )}
+        )} */}
+        <div className="flex gap-4">
+          <Button
+            disabled={!isSubjectTeacher}
+            variant="outline"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
+            {isEditing ? "Cancel Editing" : "Edit Grades"}
+          </Button>
+          {isEditing && (
+            <Button onClick={handleSaveChanges}>Save Changes</Button>
+          )}
+        </div>
         <div>
           <select
             onChange={(e) => setSelectedSubject(e.target.value)}
