@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DrawerClose,
   DrawerContent,
@@ -16,11 +16,17 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function AllClassesFiltersDrawer() {
+  const globalSettingsString = localStorage.getItem("globalSettings");
+  const globalSettings = JSON.parse(globalSettingsString);
+
+  const { schoolYear: defaultSchoolYear, semester: defaultSemester } =
+    globalSettings;
+
   const { filterApplications } = useSections();
 
   const [filters, setFilters] = useState({
-    schoolYear: "all",
-    semester: "all",
+    schoolYear: defaultSchoolYear,
+    semester: defaultSemester,
     gradeLevel: "",
     strand: "all",
   });
@@ -47,6 +53,10 @@ export default function AllClassesFiltersDrawer() {
     setFilters(initialFilters);
     filterApplications(initialFilters);
   };
+
+  useEffect(() => {
+    handleFilterClick();
+  }, []);
 
   return (
     <DrawerContent>
