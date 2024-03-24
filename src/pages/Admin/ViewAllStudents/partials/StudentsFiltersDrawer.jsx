@@ -49,7 +49,9 @@ export default function StudentsFiltersDrawer() {
   };
 
   useEffect(() => {
-    handleFilterClick();
+    setTimeout(() => {
+      handleFilterClick();
+    }, 100);
   }, []);
 
   return (
