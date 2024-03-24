@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DrawerClose,
   DrawerContent,
@@ -10,14 +10,27 @@ import { Button } from "@/components/ui/button";
 import { useAllStudents } from "../hooks/useAllStudents";
 
 export default function StudentsFiltersDrawer() {
+  const globalSettingsString = localStorage.getItem("globalSettings");
+  const globalSettings = JSON.parse(globalSettingsString);
+
+  const { schoolYear: defaultSchoolYear, semester: defaultSemester } =
+    globalSettings;
+
   const { filterStudents: filterApplications } = useAllStudents();
 
   const [filters, setFilters] = useState({
+    schoolYear: defaultSchoolYear,
+    semester: defaultSemester,
+    gradeLevel: "",
+    strand: "all",
+  });
+
+  const initialFilters = {
     schoolYear: "all",
     semester: "all",
     gradeLevel: "",
     strand: "all",
-  });
+  };
 
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
@@ -29,6 +42,15 @@ export default function StudentsFiltersDrawer() {
   const handleFilterClick = () => {
     filterApplications(filters);
   };
+
+  const handleClearFilters = () => {
+    setFilters(initialFilters);
+    filterApplications(initialFilters);
+  };
+
+  useEffect(() => {
+    handleFilterClick();
+  }, []);
 
   return (
     <DrawerContent>
@@ -92,6 +114,14 @@ export default function StudentsFiltersDrawer() {
             <option value="STEM">STEM</option>
             <option value="ICT">ICT</option>
           </select>
+
+          <Button
+            onClick={handleClearFilters}
+            className=" w-full"
+            variant="outline"
+          >
+            Clear Filters
+          </Button>
 
           <DrawerClose asChild>
             <Button onClick={handleFilterClick} className="w-full">
