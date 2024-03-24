@@ -15,6 +15,7 @@ import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { useAuth } from "@/contexts/AuthContext";
 import axiosInstance from "@/utils/axios";
 import { updateGradesEndpoint } from "@/config/teacherEndpoints";
+import { isClassAdviser } from "../helpers/isClassAdviser";
 
 export default function GradesTable() {
   const { user } = useAuth();
@@ -23,6 +24,8 @@ export default function GradesTable() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [modifiedGrades, setModifiedGrades] = useState({});
+
+  console.log(classDetails);
 
   const handleSaveChanges = async () => {
     try {
@@ -54,9 +57,20 @@ export default function GradesTable() {
     }
   };
 
-  const filteredSubjects = classDetails?.subjects.filter(
+  let filteredSubjects = classDetails?.subjects.filter(
     (subject) => subject.subjectTeacher === user.username,
   );
+
+  const isAdviser = isClassAdviser(classDetails);
+  if (isAdviser) {
+    filteredSubjects = classDetails?.subjects;
+  }
+
+  const isSubjectTeacher =
+    selectedSubject &&
+    classDetails.subjects.find(
+      (subject) => subject.subjectName === selectedSubject,
+    )?.subjectTeacher === user.username;
 
   useEffect(() => {
     if (filteredSubjects.length > 0) {
@@ -175,17 +189,21 @@ export default function GradesTable() {
   return (
     <main className="p-4">
       <header className="mb-4 flex justify-between gap-4">
-        <div className="flex gap-4">
-          <Button
-            variant="outline"
-            onClick={() => setIsEditing((prev) => !prev)}
-          >
-            {isEditing ? "Cancel Editing" : "Edit Grades"}
-          </Button>
-          {isEditing && (
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
-          )}
-        </div>
+        {isSubjectTeacher ? (
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              onClick={() => setIsEditing((prev) => !prev)}
+            >
+              {isEditing ? "Cancel Editing" : "Edit Grades"}
+            </Button>
+            {isEditing && (
+              <Button onClick={handleSaveChanges}>Save Changes</Button>
+            )}
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div>
           <select
             onChange={(e) => setSelectedSubject(e.target.value)}
