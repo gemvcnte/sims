@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { CSVLink } from "react-csv";
+import { Download, Mail } from "lucide-react";
 
 const schema = yup.object().shape({
   p1Grade: yup
@@ -365,7 +366,13 @@ export default function GradesTable() {
             </div>
             <div className="flex gap-2">
               <CSVLink data={csvData} headers={headers}>
-                Download me
+                <Button className="border-none bg-green-400" variant="outline">
+                  <Download className="mr-2 h-4 w-4" /> Export{" "}
+                  <span className="hidden sm:ml-[1ch] sm:inline-block">
+                    {" "}
+                    CSV
+                  </span>
+                </Button>
               </CSVLink>
 
               <select
