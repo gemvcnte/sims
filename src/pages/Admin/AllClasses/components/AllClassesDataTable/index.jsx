@@ -138,9 +138,7 @@ const AllClassesDataTable = () => {
       // header: "Students",
       cell: ({ row }) => (
         <div className="">
-          {row.original.schoolYear[0].semester == "first semester"
-            ? "1st"
-            : "2nd"}
+          {row.original.semester == "first semester" ? "1st" : "2nd"}
         </div>
       ),
     },
