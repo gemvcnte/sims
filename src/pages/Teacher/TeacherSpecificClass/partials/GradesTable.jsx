@@ -252,7 +252,7 @@ export default function GradesTable() {
                               modifiedGrades[student.lrn]?.p1Grade < 75
                                 ? "text-destructive"
                                 : ""
-                            } border bg-background`}
+                            } min-w-[10ch] border bg-background`}
                             {...field}
                             id="p1Grade"
                             value={modifiedGrades[student.lrn]?.p1Grade}
@@ -299,7 +299,7 @@ export default function GradesTable() {
                               modifiedGrades[student.lrn]?.p2Grade < 75
                                 ? "text-destructive"
                                 : ""
-                            } border bg-background`}
+                            } min-w-[10ch] border bg-background`}
                             {...field}
                             id="p2Grade"
                             value={modifiedGrades[student.lrn]?.p2Grade}
@@ -313,7 +313,12 @@ export default function GradesTable() {
                             }}
                           />
                         </FormControl>
-                        <FormMessage />
+                        {(modifiedGrades[student.lrn]?.p2Grade < 65 ||
+                          modifiedGrades[student.lrn]?.p2Grade > 100) &&
+                          modifiedGrades[student.lrn]?.p2Grade !== null &&
+                          modifiedGrades[student.lrn]?.p2Grade !== "" && (
+                            <FormMessage />
+                          )}
                       </FormItem>
                     )}
                   />
