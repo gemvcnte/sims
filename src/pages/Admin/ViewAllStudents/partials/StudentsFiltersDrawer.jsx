@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DrawerClose,
   DrawerContent,
@@ -10,11 +10,17 @@ import { Button } from "@/components/ui/button";
 import { useAllStudents } from "../hooks/useAllStudents";
 
 export default function StudentsFiltersDrawer() {
+  const globalSettingsString = localStorage.getItem("globalSettings");
+  const globalSettings = JSON.parse(globalSettingsString);
+
+  const { schoolYear: defaultSchoolYear, semester: defaultSemester } =
+    globalSettings;
+
   const { filterStudents: filterApplications } = useAllStudents();
 
   const [filters, setFilters] = useState({
-    schoolYear: "all",
-    semester: "all",
+    schoolYear: defaultSchoolYear,
+    semester: defaultSemester,
     gradeLevel: "",
     strand: "all",
   });
@@ -29,6 +35,10 @@ export default function StudentsFiltersDrawer() {
   const handleFilterClick = () => {
     filterApplications(filters);
   };
+
+  useEffect(() => {
+    handleFilterClick();
+  }, []);
 
   return (
     <DrawerContent>
