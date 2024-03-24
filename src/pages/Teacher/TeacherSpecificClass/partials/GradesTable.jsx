@@ -266,7 +266,12 @@ export default function GradesTable() {
                             }}
                           />
                         </FormControl>
-                        <FormMessage />
+                        {(modifiedGrades[student.lrn]?.p1Grade < 65 ||
+                          modifiedGrades[student.lrn]?.p1Grade > 100) &&
+                          modifiedGrades[student.lrn]?.p1Grade !== null &&
+                          modifiedGrades[student.lrn]?.p1Grade !== "" && (
+                            <FormMessage />
+                          )}
                       </FormItem>
                     )}
                   />
