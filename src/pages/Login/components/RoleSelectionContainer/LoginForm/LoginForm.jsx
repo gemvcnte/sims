@@ -132,7 +132,7 @@ function LoginForm({ role, setSelectedRole }) {
         </div>
 
         <button
-          className="mt-4 flex items-center justify-center gap-2 rounded-2xl bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
+          className="mt-4 flex items-center justify-center gap-2 rounded-md bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
           type="submit"
         >
           Login
