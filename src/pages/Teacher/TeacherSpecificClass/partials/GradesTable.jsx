@@ -32,14 +32,20 @@ import { Input } from "@/components/ui/input";
 const schema = yup.object().shape({
   p1Grade: yup
     .number()
+    .transform((currentValue, originalValue) => {
+      return originalValue === "" ? null : currentValue;
+    })
+    .nullable()
     .typeError("Grade must be a number")
-    // .required("Grade is required")
     .min(65, "Grade must be at least 65")
     .max(100, "Grade must be at most 100"),
   p2Grade: yup
     .number()
+    .transform((currentValue, originalValue) => {
+      return originalValue === "" ? null : currentValue;
+    })
+    .nullable()
     .typeError("Grade must be a number")
-    // .required("Grade is required")
     .min(65, "Grade must be at least 65")
     .max(100, "Grade must be at most 100"),
 });
@@ -114,11 +120,15 @@ export default function GradesTable() {
   }, []);
 
   const handleChangeGrade = (lrn, type, value) => {
+    // Convert empty string to null
+    const numericValue = value === "" ? null : parseFloat(value);
+    console.log(numericValue);
+
     setModifiedGrades((prevGrades) => ({
       ...prevGrades,
       [lrn]: {
         ...prevGrades[lrn],
-        [type]: value,
+        [type]: numericValue,
       },
     }));
   };
@@ -207,8 +217,7 @@ export default function GradesTable() {
                             id="p1Grade"
                             value={modifiedGrades[student.lrn]?.p1Grade}
                             onChange={(e) => {
-                              e.target.value = e.target.value;
-                              field.onChange(e);
+                              field.onChange(e); // This should be sufficient for controlled inputs
                               handleChangeGrade(
                                 student.lrn,
                                 "p1Grade",
@@ -241,13 +250,16 @@ export default function GradesTable() {
                         <FormControl>
                           <Input
                             type="number"
-                            className="border bg-background text-foreground "
+                            className={`${
+                              modifiedGrades[student.lrn]?.p2Grade < 75
+                                ? "text-destructive"
+                                : ""
+                            } border bg-background`}
                             {...field}
                             id="p2Grade"
                             value={modifiedGrades[student.lrn]?.p2Grade}
                             onChange={(e) => {
-                              e.target.value = e.target.value;
-                              field.onChange(e);
+                              field.onChange(e); // This should be sufficient for controlled inputs
                               handleChangeGrade(
                                 student.lrn,
                                 "p2Grade",
