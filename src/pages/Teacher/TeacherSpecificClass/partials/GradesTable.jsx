@@ -212,7 +212,11 @@ export default function GradesTable() {
                         <FormControl>
                           <Input
                             type="number"
-                            className="border bg-background text-foreground"
+                            className={`${
+                              modifiedGrades[student.lrn]?.p1Grade < 75
+                                ? "text-destructive"
+                                : ""
+                            } border bg-background`}
                             {...field}
                             id="p1Grade"
                             value={modifiedGrades[student.lrn]?.p1Grade}
