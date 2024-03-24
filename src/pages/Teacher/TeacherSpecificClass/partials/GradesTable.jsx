@@ -136,7 +136,13 @@ export default function GradesTable() {
                   />
                 </TableCell>
               ) : (
-                <TableCell>{grade?.p1Grade || ""}</TableCell>
+                <TableCell
+                  className={`${
+                    grade?.p1Grade < 75 ? "text-destructive" : ""
+                  } `}
+                >
+                  {grade?.p1Grade || ""}
+                </TableCell>
               )}
               {isEditing ? (
                 <TableCell>
@@ -150,7 +156,13 @@ export default function GradesTable() {
                   />
                 </TableCell>
               ) : (
-                <TableCell>{grade?.p2Grade || ""}</TableCell>
+                <TableCell
+                  className={`${
+                    grade?.p2Grade < 75 ? "text-destructive" : ""
+                  } `}
+                >
+                  {grade?.p2Grade || ""}
+                </TableCell>
               )}
             </TableRow>
           );
@@ -201,8 +213,8 @@ export default function GradesTable() {
             <TableHead>Firstname</TableHead>
             <TableHead>LRN</TableHead>
             <TableHead>Subject</TableHead>
-            <TableHead>P1</TableHead>
-            <TableHead>P2</TableHead>
+            <TableHead>QTR1</TableHead>
+            <TableHead>QTR2</TableHead>
           </TableRow>
         </TableHeader>
 
