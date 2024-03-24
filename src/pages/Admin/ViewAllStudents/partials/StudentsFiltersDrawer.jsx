@@ -25,6 +25,13 @@ export default function StudentsFiltersDrawer() {
     strand: "all",
   });
 
+  const initialFilters = {
+    schoolYear: "all",
+    semester: "all",
+    gradeLevel: "",
+    strand: "all",
+  };
+
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -34,6 +41,11 @@ export default function StudentsFiltersDrawer() {
 
   const handleFilterClick = () => {
     filterApplications(filters);
+  };
+
+  const handleClearFilters = () => {
+    setFilters(initialFilters);
+    filterApplications(initialFilters);
   };
 
   useEffect(() => {
@@ -102,6 +114,14 @@ export default function StudentsFiltersDrawer() {
             <option value="STEM">STEM</option>
             <option value="ICT">ICT</option>
           </select>
+
+          <Button
+            onClick={handleClearFilters}
+            className=" w-full"
+            variant="outline"
+          >
+            Clear Filters
+          </Button>
 
           <DrawerClose asChild>
             <Button onClick={handleFilterClick} className="w-full">
