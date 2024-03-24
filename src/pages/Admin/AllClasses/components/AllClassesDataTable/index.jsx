@@ -66,10 +66,27 @@ const AllClassesDataTable = () => {
   const { pendingApplications, loading, refetchData } = useSections();
 
   const columns = [
+    // {
+    //   accessorKey: "sectionName",
+    //   header: "Section Name",
+    //   cell: ({ row }) => <div>{row.getValue("sectionName")}</div>,
+    // },
+
     {
       accessorKey: "sectionName",
-      header: "Section Name",
-      cell: ({ row }) => <div>{row.getValue("sectionName")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Section Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="">{row.getValue("sectionName")}</div>,
     },
 
     {
@@ -79,10 +96,29 @@ const AllClassesDataTable = () => {
       cell: ({ row }) => <div>{row.getValue("gradeLevel")}</div>,
     },
 
+    // {
+    //   accessorKey: "strand",
+    //   header: "Strand",
+    //   cell: ({ row }) => <div>{row.getValue("strand")}</div>,
+    // },
+
     {
       accessorKey: "strand",
-      header: "Strand",
-      cell: ({ row }) => <div>{row.getValue("strand")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Strand
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("strand")}</div>
+      ),
     },
 
     {

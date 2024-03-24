@@ -50,11 +50,46 @@ const AllStudentsTable = () => {
   }
 
   const columns = [
+    // {
+    //   accessorKey: "lastName",
+    //   header: "Last Name",
+    //   cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+    // },
+
     {
       accessorKey: "lastName",
-      header: "Last Name",
-      cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Last Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="">{row.getValue("lastName")}</div>,
     },
+
+    // {
+    //   accessorKey: "firstName",
+    //   header: ({ column }) => {
+    //     return (
+    //       <Button
+    //         className="m-0 p-0"
+    //         variant="ghost"
+    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //       >
+    //         First Name
+    //         <ArrowUpDown className="ml-2 h-4 w-4" />
+    //       </Button>
+    //     );
+    //   },
+    //   cell: ({ row }) => <div className="">{row.getValue("firstName")}</div>,
+    // },
+
     {
       accessorKey: "firstName",
       header: "First Name",
@@ -72,6 +107,7 @@ const AllStudentsTable = () => {
         <div className="">{row.original.schoolYear[0].gradeLevel}</div>
       ),
     },
+
     {
       accessorKey: "strand",
       header: "Strand",
@@ -102,8 +138,8 @@ const AllStudentsTable = () => {
       cell: ({ row }) => (
         <div className="">
           {row.original.schoolYear[0].semester == "first semester"
-            ? "1st Semester"
-            : "2nd Semester"}
+            ? "1st"
+            : "2nd"}
         </div>
       ),
     },

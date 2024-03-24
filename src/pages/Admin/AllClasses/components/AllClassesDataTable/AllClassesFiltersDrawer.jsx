@@ -143,7 +143,7 @@ export default function AllClassesFiltersDrawer() {
             onChange={(e) => handleFilterChange("strand", e.target.value)}
           >
             <option value="all">All Strands</option>
-            <option value="gas">GAS</option>
+            {/* <option value="gas">GAS</option> */}
             <option value="abm">ABM</option>
             <option value="humss">HUMSS</option>
             <option value="stem">STEM</option>
