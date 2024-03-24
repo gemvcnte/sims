@@ -365,15 +365,21 @@ export default function GradesTable() {
               )}
             </div>
             <div className="flex gap-2">
-              <CSVLink data={csvData} headers={headers}>
-                <Button className="border-none bg-green-400" variant="outline">
-                  <Download className="mr-2 h-4 w-4" /> Export{" "}
-                  <span className="hidden sm:ml-[1ch] sm:inline-block">
-                    {" "}
-                    CSV
-                  </span>
-                </Button>
-              </CSVLink>
+              {selectedSubject && (
+                <CSVLink data={csvData} headers={headers}>
+                  <Button
+                    className="border-none bg-green-400"
+                    variant="outline"
+                    type="button"
+                  >
+                    <Download className="mr-2 h-4 w-4" /> Export{" "}
+                    <span className="hidden sm:ml-[1ch] sm:inline-block">
+                      {" "}
+                      CSV
+                    </span>
+                  </Button>
+                </CSVLink>
+              )}
 
               <select
                 onChange={(e) => setSelectedSubject(e.target.value)}
