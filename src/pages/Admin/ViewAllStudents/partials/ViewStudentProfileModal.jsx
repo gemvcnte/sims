@@ -19,6 +19,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const InputField = ({
   type,
@@ -58,6 +60,12 @@ export default function ViewStudentProfileModal({
     onSave();
     onClose();
   };
+
+  const { user } = useAuth();
+  const isAdmin = user.role === "admin";
+
+  const location = useLocation(); // Get the current location
+  const onStudentsPath = location.pathname === "/students";
 
   return (
     <DialogContent
@@ -513,10 +521,12 @@ export default function ViewStudentProfileModal({
 
         <DialogFooter>
           <span className="flex w-full flex-col gap-4">
-            <ArchiveAccountConfirmationAlertDialog
-              userType="student"
-              userId={application._id}
-            />
+            {isAdmin && onStudentsPath && (
+              <ArchiveAccountConfirmationAlertDialog
+                userType="student"
+                userId={application._id}
+              />
+            )}
             <Button type="submit" variant="outline" className="w-full">
               Close
             </Button>
