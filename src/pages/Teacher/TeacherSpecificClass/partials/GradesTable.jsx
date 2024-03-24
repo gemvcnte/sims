@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { CSVLink } from "react-csv";
 
 const schema = yup.object().shape({
   p1Grade: yup
@@ -57,6 +58,31 @@ export default function GradesTable() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [modifiedGrades, setModifiedGrades] = useState({});
+  const [csvData, setCsvData] = useState([]); // State to store CSV data
+
+  useEffect(() => {
+    if (classDetails && selectedSubject) {
+      const selectedSubjectDetails = classDetails.subjects.find(
+        (subject) => subject.subjectName === selectedSubject,
+      );
+
+      if (selectedSubjectDetails) {
+        const data = selectedSubjectDetails.grades.map((grade) => ({
+          Lastname:
+            classDetails.students.find((student) => student.lrn === grade.lrn)
+              ?.lastName || "",
+          Firstname:
+            classDetails.students.find((student) => student.lrn === grade.lrn)
+              ?.firstName || "",
+          LRN: grade.lrn,
+          Subject: selectedSubject,
+          P1Grade: grade.p1Grade || "",
+          P2Grade: grade.p2Grade || "",
+        }));
+        setCsvData(data);
+      }
+    }
+  }, [classDetails, selectedSubject]);
 
   console.log(classDetails);
 
@@ -168,6 +194,15 @@ export default function GradesTable() {
     resolver: yupResolver(schema),
     defaultValues: modifiedGrades, // Set default values here
   });
+
+  const headers = [
+    { label: "Lastname", key: "Lastname" },
+    { label: "Firstname", key: "Firstname" },
+    { label: "LRN", key: "LRN" },
+    { label: "Subject", key: "Subject" },
+    { label: "QTR1 Grade", key: "P1Grade" },
+    { label: "QTR2 Grade", key: "P2Grade" },
+  ];
 
   const renderSortedStudents = () => {
     const studentsToRender = classDetails?.students || [];
@@ -314,6 +349,7 @@ export default function GradesTable() {
         ) : (
           <div></div>
         )} */}
+
             <div className="flex gap-4">
               <Button
                 disabled={!isSubjectTeacher}
@@ -327,7 +363,11 @@ export default function GradesTable() {
                 <Button onClick={handleSaveChanges}>Save Changes</Button>
               )}
             </div>
-            <div>
+            <div className="flex gap-2">
+              <CSVLink data={csvData} headers={headers}>
+                Download me
+              </CSVLink>
+
               <select
                 onChange={(e) => setSelectedSubject(e.target.value)}
                 value={selectedSubject}
