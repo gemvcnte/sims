@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePendingApplications } from "../../hooks/usePendingApplications";
 import {
   DrawerClose,
@@ -12,12 +12,24 @@ import { Button } from "@/components/ui/button";
 export default function PendingFiltersDrawer() {
   const { filterApplications } = usePendingApplications();
 
+  const globalSettingsString = localStorage.getItem("globalSettings");
+  const globalSettings = JSON.parse(globalSettingsString);
+  const { schoolYear: defaultSchoolYear, semester: defaultSemester } =
+    globalSettings;
+
   const [filters, setFilters] = useState({
+    schoolYear: defaultSchoolYear,
+    semester: defaultSemester,
+    gradeLevel: "",
+    strand: "all",
+  });
+
+  const initialFilters = {
     schoolYear: "all",
     semester: "all",
     gradeLevel: "",
     strand: "all",
-  });
+  };
 
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
@@ -29,6 +41,17 @@ export default function PendingFiltersDrawer() {
   const handleFilterClick = () => {
     filterApplications(filters);
   };
+
+  const handleClearFilters = () => {
+    setFilters(initialFilters);
+    filterApplications(initialFilters);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleFilterClick();
+    }, 100);
+  }, []);
 
   return (
     <DrawerContent>
@@ -92,6 +115,14 @@ export default function PendingFiltersDrawer() {
             <option value="stem">STEM</option>
             <option value="ict">ICT</option>
           </select>
+
+          <Button
+            onClick={handleClearFilters}
+            className=" w-full"
+            variant="outline"
+          >
+            Clear Filters
+          </Button>
 
           <DrawerClose asChild>
             <Button onClick={handleFilterClick} className="w-full">
