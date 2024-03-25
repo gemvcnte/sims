@@ -252,7 +252,7 @@ export default function GradesTable() {
                             type="number"
                             className={`${
                               modifiedGrades[student.lrn]?.p1Grade < 75
-                                ? "text-destructive"
+                                ? "text-[#ff0000]"
                                 : ""
                             } min-w-[10ch] border bg-background`}
                             {...field}
@@ -280,9 +280,7 @@ export default function GradesTable() {
                 </TableCell>
               ) : (
                 <TableCell
-                  className={`${
-                    grade?.p1Grade < 75 ? "text-destructive" : ""
-                  } `}
+                  className={`${grade?.p1Grade < 75 ? "text-[#ff0000]" : ""} `}
                 >
                   {grade?.p1Grade || ""}
                 </TableCell>
@@ -299,7 +297,7 @@ export default function GradesTable() {
                             type="number"
                             className={`${
                               modifiedGrades[student.lrn]?.p2Grade < 75
-                                ? "text-destructive"
+                                ? "text-[#ff0000]"
                                 : ""
                             } min-w-[10ch] border bg-background`}
                             {...field}
@@ -327,9 +325,7 @@ export default function GradesTable() {
                 </TableCell>
               ) : (
                 <TableCell
-                  className={`${
-                    grade?.p2Grade < 75 ? "text-destructive" : ""
-                  } `}
+                  className={`${grade?.p2Grade < 75 ? "text-[#ff0000]" : ""} `}
                 >
                   {grade?.p2Grade || ""}
                 </TableCell>
@@ -479,10 +475,7 @@ export default function GradesTable() {
             </Table>
 
             {studentDetails && (
-              <>
-                <p>wtff</p>
-                <SpecificStudentGradesModal studentDetails={studentDetails} />
-              </>
+              <SpecificStudentGradesModal studentDetails={studentDetails} />
             )}
           </main>
         </form>

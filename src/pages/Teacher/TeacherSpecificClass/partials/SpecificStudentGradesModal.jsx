@@ -156,18 +156,42 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
                 <TableCell>{grade.Subject}</TableCell>
                 <TableCell>{grade.P1Grade || ""}</TableCell>
                 <TableCell>{grade.P2Grade || ""}</TableCell>
-                <TableCell>
+                <TableCell
+                  style={{
+                    color:
+                      (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
+                        2 <
+                      75
+                        ? "red"
+                        : "inherit",
+                  }}
+                >
                   {(parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
                     2 || ""}
                 </TableCell>
-                <TableCell>
-                  {grade.P1Grade && grade.P2Grade
-                    ? (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
-                        2 >=
-                      75
-                      ? "Passed"
-                      : "Failed"
-                    : ""}
+                <TableCell
+                  style={{
+                    color:
+                      grade.P1Grade &&
+                      grade.P2Grade &&
+                      (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
+                        2 <
+                        75
+                        ? "red"
+                        : "inherit",
+                  }}
+                >
+                  {grade.P1Grade && grade.P2Grade ? (
+                    (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
+                      2 >=
+                    75 ? (
+                      "Passed"
+                    ) : (
+                      <span style={{ color: "red" }}>Failed</span>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </TableCell>
               </TableRow>
             ))}
