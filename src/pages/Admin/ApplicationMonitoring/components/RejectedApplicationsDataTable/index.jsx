@@ -247,7 +247,7 @@ const RejectedApplicationsDataTable = () => {
           <RejectedFiltersDrawer />
         </Drawer>
 
-        <TooltipProvider>
+        <TooltipProvider delayDuration={10}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button

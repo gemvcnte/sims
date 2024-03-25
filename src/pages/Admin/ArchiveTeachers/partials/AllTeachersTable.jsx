@@ -132,7 +132,7 @@ const AllTeachersTable = () => {
           className="max-w-sm"
         />
 
-        <TooltipProvider>
+        <TooltipProvider delayDuration={10}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
