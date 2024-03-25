@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -49,6 +51,12 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
       SUBJECT: grade.Subject,
       QTR1: grade.P1Grade || "",
       QTR2: grade.P2Grade || "",
+      FINAL_GRADE:
+        (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) / 2 || "",
+      REMARKS:
+        (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) / 2 >= 75
+          ? "Passed"
+          : "Failed",
     })),
   ];
 
@@ -64,6 +72,8 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
     { label: "SUBJECT", key: "SUBJECT" },
     { label: "QTR1", key: "QTR1" },
     { label: "QTR2", key: "QTR2" },
+    { label: "FINAL GRADE", key: "FINAL_GRADE" }, // Added FINAL GRADE header
+    { label: "REMARKS", key: "REMARKS" }, // Added REMARKS header
   ];
 
   return (
@@ -72,52 +82,93 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
         <h2 className="mb-4 text-lg font-semibold">
           {studentDetails.Firstname} {studentDetails.Lastname} - Grades
         </h2>
-        <p>School Year: {studentDetails.SchoolYear}</p>
-        <p>Semester: {studentDetails.Semester}</p>
-        <p>Section Name: {studentDetails.SectionName}</p>
-        <p>Grade Level: {studentDetails.GradeLevel}</p>
-        <p>Strand: {studentDetails.Strand}</p>
 
-        {/* Export CSV Button */}
+        <section className="flex items-end justify-between py-2">
+          <div>
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">Section Name:</p>
+              <p className="ml-2 text-left">
+                {studentDetails.SectionName.toUpperCase()}
+              </p>
+            </div>
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">School Year:</p>
+              <p className="ml-2 text-left">{studentDetails.SchoolYear}</p>
+            </div>
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">Semester:</p>
+              <p className="ml-2 text-left">
+                {studentDetails.Semester.toUpperCase()}
+              </p>
+            </div>
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">Grade Level:</p>
+              <p className="ml-2 text-left">{studentDetails.GradeLevel}</p>
+            </div>
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">Strand:</p>
+              <p className="ml-2 text-left">
+                {studentDetails.Strand.toUpperCase()}
+              </p>
+            </div>
+          </div>
 
-        <CSVLink
-          data={csvData}
-          headers={headers}
-          filename={`${studentDetails.Lastname}_${studentDetails.Firstname}_Grades.csv`}
-          target="_blank"
-        >
-          <Button
-            className="border-none bg-green-400"
-            variant="outline"
-            type="button"
+          {/* Export CSV Button */}
+          <CSVLink
+            data={csvData}
+            headers={headers}
+            filename={`${studentDetails.Lastname}_${studentDetails.Firstname}_Grades.csv`}
+            target="_blank"
           >
-            <Download className="mr-2 h-4 w-4" /> Export{" "}
-            <span className="hidden sm:ml-[1ch] sm:inline-block"> CSV</span>
-          </Button>
-        </CSVLink>
+            <Button
+              className="border-none bg-green-400"
+              variant="outline"
+              type="button"
+            >
+              <Download className="mr-2 h-4 w-4" /> Export{" "}
+              <span className="hidden sm:ml-[1ch] sm:inline-block"> CSV</span>
+            </Button>
+          </CSVLink>
+        </section>
 
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Lastname</TableHead>
+              {/* <TableHead>Lastname</TableHead>
               <TableHead>Firstname</TableHead>
-              <TableHead>LRN</TableHead>
+              <TableHead>LRN</TableHead> */}
+
               <TableHead>Subject</TableHead>
               <TableHead>QTR1</TableHead>
               <TableHead>QTR2</TableHead>
+              <TableHead>FINAL GRADE</TableHead>
+              <TableHead>REMARKS</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
             {studentDetails.studentGrades.map((grade, index) => (
               <TableRow key={index}>
-                <TableCell>{studentDetails.Lastname}</TableCell>
+                {/* <TableCell>{studentDetails.Lastname}</TableCell>
                 <TableCell>{studentDetails.Firstname}</TableCell>
-                <TableCell>{studentDetails.LRN}</TableCell>
+                <TableCell>{studentDetails.LRN}</TableCell> */}
 
                 <TableCell>{grade.Subject}</TableCell>
                 <TableCell>{grade.P1Grade || ""}</TableCell>
                 <TableCell>{grade.P2Grade || ""}</TableCell>
+                <TableCell>
+                  {(parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
+                    2 || ""}
+                </TableCell>
+                <TableCell>
+                  {grade.P1Grade && grade.P2Grade
+                    ? (parseFloat(grade.P2Grade) + parseFloat(grade.P1Grade)) /
+                        2 >=
+                      75
+                      ? "Passed"
+                      : "Failed"
+                    : ""}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
