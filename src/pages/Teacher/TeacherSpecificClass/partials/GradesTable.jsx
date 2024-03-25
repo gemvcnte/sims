@@ -332,12 +332,49 @@ export default function GradesTable() {
                   {grade?.p2Grade || ""}
                 </TableCell>
               )}
+              <TableCell>
+                <Button
+                  variant="text"
+                  onClick={(e) => handleViewAllGrades(e, student)}
+                >
+                  View All Grades
+                </Button>
+              </TableCell>
             </TableRow>
           );
         }
 
         return null; // Return null if selectedSubjectDetails is not defined
       });
+  };
+
+  const handleViewAllGrades = (e, student) => {
+    e.preventDefault();
+
+    if (!student) return;
+
+    // Create an object to store LRN, lastname, firstname, and grades
+    const studentDetails = {
+      LRN: student.lrn,
+      Lastname: student.lastName,
+      Firstname: student.firstName,
+      studentGrades: [],
+    };
+
+    // Loop through all subjects to find grades for the selected student
+    classDetails.subjects.forEach((subject) => {
+      subject.grades.forEach((grade) => {
+        if (grade.lrn === student.lrn) {
+          studentDetails.studentGrades.push({
+            Subject: subject.subjectName,
+            P1Grade: grade.p1Grade || "",
+            P2Grade: grade.p2Grade || "",
+          });
+        }
+      });
+    });
+
+    console.log("Student Grades:", studentDetails);
   };
 
   return (
