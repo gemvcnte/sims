@@ -102,13 +102,13 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
   ];
 
   return (
-    <DialogContent className="max-h-[90svh] max-w-[70vw] overflow-scroll">
+    <DialogContent className="max-h-[90svh] max-w-[90vw] overflow-scroll md:max-w-[70vw]">
       <div className="">
         <h2 className="mb-4 text-lg font-semibold">
           {studentDetails.Firstname} {studentDetails.Lastname} - Grades
         </h2>
 
-        <section className="flex items-end justify-between py-2">
+        <section className="flex flex-col justify-between py-2 md:flex-row md:items-end">
           <div className="">
             <div className="flex ">
               <p className="w-[13ch] text-right font-bold">LRN:</p>
