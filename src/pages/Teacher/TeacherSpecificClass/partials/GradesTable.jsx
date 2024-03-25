@@ -30,6 +30,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { CSVLink } from "react-csv";
 import { Download, Mail } from "lucide-react";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import SpecificStudentGradesModal from "./SpecificStudentGradesModal";
 
 const schema = yup.object().shape({
   p1Grade: yup
@@ -348,6 +350,9 @@ export default function GradesTable() {
       });
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [studentDetails, setStudentDetails] = useState(null);
+
   const handleViewAllGrades = (e, student) => {
     e.preventDefault();
 
@@ -375,14 +380,18 @@ export default function GradesTable() {
     });
 
     console.log("Student Grades:", studentDetails);
+
+    setStudentDetails(studentDetails);
+    setIsModalOpen(true);
   };
 
   return (
-    <Form {...form}>
-      <form>
-        <main className="p-4">
-          <header className="mb-4 flex justify-between gap-4">
-            {/* {isSubjectTeacher ? (
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <Form {...form}>
+        <form>
+          <main className="p-4">
+            <header className="mb-4 flex justify-between gap-4">
+              {/* {isSubjectTeacher ? (
           <div className="flex gap-4">
             <Button
               variant="outline"
@@ -398,73 +407,81 @@ export default function GradesTable() {
           <div></div>
         )} */}
 
-            <div className="flex gap-4">
-              <Button
-                disabled={!isSubjectTeacher}
-                type="button"
-                variant="outline"
-                onClick={() => setIsEditing((prev) => !prev)}
-              >
-                {isEditing ? "Cancel Editing" : "Edit Grades"}
-              </Button>
-              {isEditing && (
-                <Button onClick={handleSaveChanges}>Save Changes</Button>
-              )}
-            </div>
-            <div className="flex gap-2">
-              {selectedSubject && (
-                <CSVLink data={csvData} headers={headers}>
-                  <Button
-                    className="border-none bg-green-400"
-                    variant="outline"
-                    type="button"
-                  >
-                    <Download className="mr-2 h-4 w-4" /> Export{" "}
-                    <span className="hidden sm:ml-[1ch] sm:inline-block">
-                      {" "}
-                      CSV
-                    </span>
-                  </Button>
-                </CSVLink>
+              <div className="flex gap-4">
+                <Button
+                  disabled={!isSubjectTeacher}
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsEditing((prev) => !prev)}
+                >
+                  {isEditing ? "Cancel Editing" : "Edit Grades"}
+                </Button>
+                {isEditing && (
+                  <Button onClick={handleSaveChanges}>Save Changes</Button>
+                )}
+              </div>
+              <div className="flex gap-2">
+                {selectedSubject && (
+                  <CSVLink data={csvData} headers={headers}>
+                    <Button
+                      className="border-none bg-green-400"
+                      variant="outline"
+                      type="button"
+                    >
+                      <Download className="mr-2 h-4 w-4" /> Export{" "}
+                      <span className="hidden sm:ml-[1ch] sm:inline-block">
+                        {" "}
+                        CSV
+                      </span>
+                    </Button>
+                  </CSVLink>
+                )}
+
+                <select
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                  value={selectedSubject}
+                  className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Select Subject</option>
+                  {filteredSubjects.map((subject) => (
+                    <option key={subject._id} value={subject.subjectName}>
+                      {subject.subjectName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </header>
+
+            <Table>
+              {classDetails?.students.length === 0 && !isEditing && (
+                <TableCaption className="pb-4">No Students Found</TableCaption>
               )}
 
-              <select
-                onChange={(e) => setSelectedSubject(e.target.value)}
-                value={selectedSubject}
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Select Subject</option>
-                {filteredSubjects.map((subject) => (
-                  <option key={subject._id} value={subject.subjectName}>
-                    {subject.subjectName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </header>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Lastname</TableHead>
+                  <TableHead>Firstname</TableHead>
+                  <TableHead>LRN</TableHead>
+                  <TableHead>Subject</TableHead>
+                  <TableHead>QTR1</TableHead>
+                  <TableHead>QTR2</TableHead>
+                </TableRow>
+              </TableHeader>
 
-          <Table>
-            {classDetails?.students.length === 0 && !isEditing && (
-              <TableCaption className="pb-4">No Students Found</TableCaption>
+              <TableBody>{renderSortedStudents()}</TableBody>
+
+              <TableFooter></TableFooter>
+            </Table>
+
+            {studentDetails && (
+              <>
+                <p>wtff</p>
+                <SpecificStudentGradesModal studentDetails={studentDetails} />
+              </>
             )}
-
-            <TableHeader>
-              <TableRow>
-                <TableHead>Lastname</TableHead>
-                <TableHead>Firstname</TableHead>
-                <TableHead>LRN</TableHead>
-                <TableHead>Subject</TableHead>
-                <TableHead>QTR1</TableHead>
-                <TableHead>QTR2</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>{renderSortedStudents()}</TableBody>
-
-            <TableFooter></TableFooter>
-          </Table>
-        </main>
-      </form>
-    </Form>
+          </main>
+        </form>
+      </Form>
+    </Dialog>
   );
 }
