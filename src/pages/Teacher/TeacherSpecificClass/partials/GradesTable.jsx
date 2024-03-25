@@ -231,7 +231,10 @@ export default function GradesTable() {
             (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
 
           // Calculate remarks
-          const remarks = finalGrade && finalGrade < 75 ? "Failed" : "Passed";
+          let remarks = "";
+          if (finalGrade !== "") {
+            remarks = finalGrade < 75 ? "Failed" : "Passed";
+          }
 
           return (
             <TooltipProvider delayDuration={10}>
