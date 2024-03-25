@@ -77,18 +77,22 @@ export default function GradesTable() {
       );
 
       if (selectedSubjectDetails) {
-        const data = selectedSubjectDetails.grades.map((grade) => ({
-          Lastname:
-            classDetails.students.find((student) => student.lrn === grade.lrn)
-              ?.lastName || "",
-          Firstname:
-            classDetails.students.find((student) => student.lrn === grade.lrn)
-              ?.firstName || "",
-          LRN: grade.lrn,
-          Subject: selectedSubject,
-          P1Grade: grade.p1Grade || "",
-          P2Grade: grade.p2Grade || "",
-        }));
+        const data = selectedSubjectDetails.grades.map((grade) => {
+          const student = classDetails.students.find(
+            (student) => student.lrn === grade.lrn,
+          );
+          const finalGrade =
+            (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
+          return {
+            Lastname: student?.lastName || "",
+            Firstname: student?.firstName || "",
+            LRN: grade.lrn,
+            Subject: selectedSubject,
+            P1Grade: grade.p1Grade || "",
+            P2Grade: grade.p2Grade || "",
+            FinalGrade: finalGrade,
+          };
+        });
         setCsvData(data);
       }
     }
@@ -208,6 +212,7 @@ export default function GradesTable() {
     { label: "Subject", key: "Subject" },
     { label: "QTR1 Grade", key: "P1Grade" },
     { label: "QTR2 Grade", key: "P2Grade" },
+    { label: "Final Grade", key: "FinalGrade" },
   ];
 
   const renderSortedStudents = () => {
