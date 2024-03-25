@@ -19,8 +19,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
     return <p>loading..</p>; // or render a loading indicator or an error message
   }
 
-  console.log(studentDetails);
-
   // Extract student details
   const {
     Firstname,
@@ -69,14 +67,23 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
           ? "Passed"
           : "Failed",
     })),
-    {
+  ];
+
+  // Check if all subjects have final grades
+  const allSubjectsHaveGrades = studentGrades.every(
+    (grade) => grade.P1Grade && grade.P2Grade,
+  );
+
+  // Include average grade in CSV data only if all subjects have grades
+  if (allSubjectsHaveGrades) {
+    csvData.push({
       SUBJECT: "Average Grade",
       QTR1: "", // No quarters for average grade
       QTR2: "", // No quarters for average grade
       FINAL_GRADE: isNaN(averageGrade) ? "" : averageGrade.toFixed(1), // Limit to 1 decimal place
       REMARKS: isNaN(averageGrade) || averageGrade < 75 ? "" : "Passed",
-    },
-  ];
+    });
+  }
 
   const headers = [
     { label: "FIRST NAME", key: "FIRSTNAME" },
@@ -223,18 +230,20 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
               <TableCell colSpan={3} className="font-semibold italic">
                 Average Grade
               </TableCell>
-              <TableCell
-                className="italic"
-                style={{
-                  fontWeight: "bold",
-                  color:
-                    !isNaN(averageGrade) && averageGrade < 75
-                      ? "red"
-                      : "inherit",
-                }}
-              >
-                {isNaN(averageGrade) ? "" : averageGrade.toFixed(1)}
-              </TableCell>
+              {allSubjectsHaveGrades && (
+                <TableCell
+                  className="italic"
+                  style={{
+                    fontWeight: "bold",
+                    color:
+                      !isNaN(averageGrade) && averageGrade < 75
+                        ? "red"
+                        : "inherit",
+                  }}
+                >
+                  {isNaN(averageGrade) ? "" : averageGrade.toFixed(1)}
+                </TableCell>
+              )}
               <TableCell></TableCell>
             </TableRow>
           </TableBody>
