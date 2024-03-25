@@ -360,6 +360,11 @@ export default function GradesTable() {
 
     // Create an object to store LRN, lastname, firstname, and grades
     const studentDetails = {
+      SchoolYear: classDetails.schoolYear,
+      Semester: classDetails.semester,
+      SectionName: classDetails.sectionName,
+      GradeLevel: classDetails.gradeLevel,
+      Strand: classDetails.strand,
       LRN: student.lrn,
       Lastname: student.lastName,
       Firstname: student.firstName,
