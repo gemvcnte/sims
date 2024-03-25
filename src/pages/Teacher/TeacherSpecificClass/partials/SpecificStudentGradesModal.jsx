@@ -19,6 +19,8 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
     return <p>loading..</p>; // or render a loading indicator or an error message
   }
 
+  console.log(studentDetails);
+
   // Extract student details
   const {
     Firstname,
@@ -93,7 +95,7 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
   ];
 
   return (
-    <DialogContent className="max-w-[70vw]">
+    <DialogContent className="max-h-[80svh] max-w-[70vw] overflow-scroll">
       <div className="">
         <h2 className="mb-4 text-lg font-semibold">
           {studentDetails.Firstname} {studentDetails.Lastname} - Grades
@@ -101,6 +103,10 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
 
         <section className="flex items-end justify-between py-2">
           <div className="">
+            <div className="flex ">
+              <p className="w-[13ch] text-right font-bold">LRN:</p>
+              <p className="ml-2 text-left">{studentDetails.LRN}</p>
+            </div>
             <div className="flex ">
               <p className="w-[13ch] text-right font-bold">Section Name:</p>
               <p className="ml-2 text-left">
