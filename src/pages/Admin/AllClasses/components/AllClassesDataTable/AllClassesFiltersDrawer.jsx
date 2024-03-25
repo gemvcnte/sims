@@ -55,7 +55,9 @@ export default function AllClassesFiltersDrawer() {
   };
 
   useEffect(() => {
-    handleFilterClick();
+    setTimeout(() => {
+      handleFilterClick();
+    }, 100);
   }, []);
 
   return (
