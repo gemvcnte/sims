@@ -237,7 +237,7 @@ export default function GradesTable() {
                   <TableRow
                     // onClick={(e) => handleViewAllGrades(e, student)}
                     onClick={
-                      isAdviser
+                      isAdviser && !isEditing
                         ? (e) => handleViewAllGrades(e, student)
                         : undefined
                     }
@@ -350,7 +350,13 @@ export default function GradesTable() {
                         {grade?.p2Grade || ""}
                       </TableCell>
                     )}
-                    <TableCell>{finalGrade || ""}</TableCell>{" "}
+                    <TableCell
+                      className={
+                        finalGrade && finalGrade < 75 ? "text-[#ff0000]" : ""
+                      }
+                    >
+                      {finalGrade || ""}
+                    </TableCell>{" "}
                     <TableCell className="block sm:hidden">
                       <Button
                         variant="text"
@@ -373,7 +379,7 @@ export default function GradesTable() {
                 {/* <TooltipContent>
                   <p>Click to View All Grades</p>
                 </TooltipContent> */}
-                {isAdviser && (
+                {isAdviser && !isEditing && (
                   <TooltipContent>
                     <p>
                       Click to view all grades of {student.firstName}{" "}
