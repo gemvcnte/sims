@@ -83,6 +83,9 @@ export default function GradesTable() {
           );
           const finalGrade =
             (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
+          const remarks =
+            finalGrade !== "" ? (finalGrade < 75 ? "Failed" : "Passed") : "";
+
           return {
             Lastname: student?.lastName || "",
             Firstname: student?.firstName || "",
@@ -91,6 +94,7 @@ export default function GradesTable() {
             P1Grade: grade.p1Grade || "",
             P2Grade: grade.p2Grade || "",
             FinalGrade: finalGrade,
+            Remarks: remarks || "",
           };
         });
         setCsvData(data);
@@ -213,6 +217,7 @@ export default function GradesTable() {
     { label: "QTR1 Grade", key: "P1Grade" },
     { label: "QTR2 Grade", key: "P2Grade" },
     { label: "Final Grade", key: "FinalGrade" },
+    { label: "Remarks", key: "Remarks" },
   ];
 
   const renderSortedStudents = () => {
