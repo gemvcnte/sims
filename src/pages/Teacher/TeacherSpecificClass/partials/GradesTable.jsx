@@ -226,6 +226,10 @@ export default function GradesTable() {
             (grade) => grade.lrn === student.lrn,
           );
 
+          // Calculate the final grade
+          const finalGrade =
+            (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
+
           return (
             <TooltipProvider delayDuration={10}>
               <Tooltip>
@@ -346,6 +350,7 @@ export default function GradesTable() {
                         {grade?.p2Grade || ""}
                       </TableCell>
                     )}
+                    <TableCell>{finalGrade || ""}</TableCell>{" "}
                     <TableCell className="block sm:hidden">
                       <Button
                         variant="text"
@@ -503,6 +508,9 @@ export default function GradesTable() {
                   <TableHead>Subject</TableHead>
                   <TableHead>QTR1</TableHead>
                   <TableHead>QTR2</TableHead>
+                  <TableHead>Final Grade</TableHead>{" "}
+                  {/* New Table Head for Final Grade */}
+                  <TableHead className="sm:hidden"></TableHead>
                 </TableRow>
               </TableHeader>
 
