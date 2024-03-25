@@ -34,7 +34,7 @@ export default function Topbar({ children }) {
           onClick={toggleSidebar}
         />
         <span>{children}</span>
-        <span className="flex justify-center gap-2">
+        <span className="flex justify-center sm:gap-2">
           {user?.role === "admin" && (
             <TooltipProvider delayDuration={10}>
               <Tooltip>
