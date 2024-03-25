@@ -32,6 +32,13 @@ import { CSVLink } from "react-csv";
 import { Download, Mail } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import SpecificStudentGradesModal from "./SpecificStudentGradesModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Icon } from "@iconify/react";
 
 const schema = yup.object().shape({
   p1Grade: yup
@@ -220,17 +227,21 @@ export default function GradesTable() {
           );
 
           return (
-            <TableRow
-              key={student._id}
-              className="group transition-all duration-700 hover:cursor-pointer"
-            >
-              <TableCell>{student.lastName}</TableCell>
-              <TableCell>{student.firstName}</TableCell>
-              <TableCell>{student.lrn}</TableCell>
-              <TableCell>{selectedSubject}</TableCell>
-              {isEditing ? (
-                <TableCell>
-                  {/* <input
+            <TooltipProvider delayDuration={10}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <TableRow
+                    onClick={(e) => handleViewAllGrades(e, student)}
+                    key={student._id}
+                    className="group transition-all duration-700 hover:cursor-pointer"
+                  >
+                    <TableCell>{student.lastName}</TableCell>
+                    <TableCell>{student.firstName}</TableCell>
+                    <TableCell>{student.lrn}</TableCell>
+                    <TableCell>{selectedSubject}</TableCell>
+                    {isEditing ? (
+                      <TableCell>
+                        {/* <input
                     type="number"
                     className="border bg-background text-foreground"
                     value={modifiedGrades[student.lrn]?.p1Grade}
@@ -238,103 +249,128 @@ export default function GradesTable() {
                       handleChangeGrade(student.lrn, "p1Grade", e.target.value)
                     }
                   /> */}
-                  <FormField
-                    control={form.control}
-                    name="p1Grade"
-                    render={({ field }) => (
-                      <FormItem className="space-y-0 py-4">
-                        <FormControl>
-                          <Input
-                            type="number"
-                            className={`${
-                              modifiedGrades[student.lrn]?.p1Grade < 75
-                                ? "text-[#ff0000]"
-                                : ""
-                            } min-w-[10ch] border bg-background`}
-                            {...field}
-                            id="p1Grade"
-                            value={modifiedGrades[student.lrn]?.p1Grade}
-                            onChange={(e) => {
-                              field.onChange(e); // This should be sufficient for controlled inputs
-                              handleChangeGrade(
-                                student.lrn,
-                                "p1Grade",
-                                e.target.value,
-                              );
-                            }}
-                          />
-                        </FormControl>
-                        {(modifiedGrades[student.lrn]?.p1Grade < 65 ||
-                          modifiedGrades[student.lrn]?.p1Grade > 100) &&
-                          modifiedGrades[student.lrn]?.p1Grade !== null &&
-                          modifiedGrades[student.lrn]?.p1Grade !== "" && (
-                            <FormMessage />
+                        <FormField
+                          control={form.control}
+                          name="p1Grade"
+                          render={({ field }) => (
+                            <FormItem className="space-y-0 py-4">
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  className={`${
+                                    modifiedGrades[student.lrn]?.p1Grade < 75
+                                      ? "text-[#ff0000]"
+                                      : ""
+                                  } min-w-[10ch] border bg-background`}
+                                  {...field}
+                                  id="p1Grade"
+                                  value={modifiedGrades[student.lrn]?.p1Grade}
+                                  onChange={(e) => {
+                                    field.onChange(e); // This should be sufficient for controlled inputs
+                                    handleChangeGrade(
+                                      student.lrn,
+                                      "p1Grade",
+                                      e.target.value,
+                                    );
+                                  }}
+                                />
+                              </FormControl>
+                              {(modifiedGrades[student.lrn]?.p1Grade < 65 ||
+                                modifiedGrades[student.lrn]?.p1Grade > 100) &&
+                                modifiedGrades[student.lrn]?.p1Grade !== null &&
+                                modifiedGrades[student.lrn]?.p1Grade !== "" && (
+                                  <FormMessage />
+                                )}
+                            </FormItem>
                           )}
-                      </FormItem>
+                        />
+                      </TableCell>
+                    ) : (
+                      <TableCell
+                        className={`${
+                          grade?.p1Grade < 75 ? "text-[#ff0000]" : ""
+                        } `}
+                      >
+                        {grade?.p1Grade || ""}
+                      </TableCell>
                     )}
-                  />
-                </TableCell>
-              ) : (
-                <TableCell
-                  className={`${grade?.p1Grade < 75 ? "text-[#ff0000]" : ""} `}
-                >
-                  {grade?.p1Grade || ""}
-                </TableCell>
-              )}
-              {isEditing ? (
-                <TableCell>
-                  <FormField
-                    control={form.control}
-                    name="p2Grade"
-                    render={({ field }) => (
-                      <FormItem className="space-y-0 py-4">
-                        <FormControl>
-                          <Input
-                            type="number"
-                            className={`${
-                              modifiedGrades[student.lrn]?.p2Grade < 75
-                                ? "text-[#ff0000]"
-                                : ""
-                            } min-w-[10ch] border bg-background`}
-                            {...field}
-                            id="p2Grade"
-                            value={modifiedGrades[student.lrn]?.p2Grade}
-                            onChange={(e) => {
-                              field.onChange(e); // This should be sufficient for controlled inputs
-                              handleChangeGrade(
-                                student.lrn,
-                                "p2Grade",
-                                e.target.value,
-                              );
-                            }}
-                          />
-                        </FormControl>
-                        {(modifiedGrades[student.lrn]?.p2Grade < 65 ||
-                          modifiedGrades[student.lrn]?.p2Grade > 100) &&
-                          modifiedGrades[student.lrn]?.p2Grade !== null &&
-                          modifiedGrades[student.lrn]?.p2Grade !== "" && (
-                            <FormMessage />
+                    {isEditing ? (
+                      <TableCell>
+                        <FormField
+                          control={form.control}
+                          name="p2Grade"
+                          render={({ field }) => (
+                            <FormItem className="space-y-0 py-4">
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  className={`${
+                                    modifiedGrades[student.lrn]?.p2Grade < 75
+                                      ? "text-[#ff0000]"
+                                      : ""
+                                  } min-w-[10ch] border bg-background`}
+                                  {...field}
+                                  id="p2Grade"
+                                  value={modifiedGrades[student.lrn]?.p2Grade}
+                                  onChange={(e) => {
+                                    field.onChange(e); // This should be sufficient for controlled inputs
+                                    handleChangeGrade(
+                                      student.lrn,
+                                      "p2Grade",
+                                      e.target.value,
+                                    );
+                                  }}
+                                />
+                              </FormControl>
+                              {(modifiedGrades[student.lrn]?.p2Grade < 65 ||
+                                modifiedGrades[student.lrn]?.p2Grade > 100) &&
+                                modifiedGrades[student.lrn]?.p2Grade !== null &&
+                                modifiedGrades[student.lrn]?.p2Grade !== "" && (
+                                  <FormMessage />
+                                )}
+                            </FormItem>
                           )}
-                      </FormItem>
+                        />
+                      </TableCell>
+                    ) : (
+                      <TableCell
+                        className={`${
+                          grade?.p2Grade < 75 ? "text-[#ff0000]" : ""
+                        } `}
+                      >
+                        {grade?.p2Grade || ""}
+                      </TableCell>
                     )}
-                  />
-                </TableCell>
-              ) : (
-                <TableCell
-                  className={`${grade?.p2Grade < 75 ? "text-[#ff0000]" : ""} `}
-                >
-                  {grade?.p2Grade || ""}
-                </TableCell>
-              )}
-              <TableCell>
-                <Button
-                  variant="text"
-                  onClick={(e) => handleViewAllGrades(e, student)}
-                >
-                  View All Grades
-                </Button>
-              </TableCell>
-            </TableRow>
+                    <TableCell className="block sm:hidden">
+                      <Button
+                        variant="text"
+                        onClick={(e) => handleViewAllGrades(e, student)}
+                      >
+                        View{" "}
+                        <span className="ml-2 hidden sm:inline">
+                          All Grades
+                        </span>
+                        <Icon
+                          icon="octicon:arrow-down-24"
+                          rotate={3}
+                          className="ml-2  -rotate-45 transform transition-all duration-300 group-hover:rotate-45 sm:inline"
+                        />
+                        <span className="block h-[1px] max-w-0 bg-foreground transition-all duration-300 group-hover:max-w-[12ch]"></span>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </TooltipTrigger>
+                {/* <TooltipContent>
+                  <p>Click to View All Grades</p>
+                </TooltipContent> */}
+                <TooltipContent>
+                  <p>
+                    Click to view all grades of {student.firstName}{" "}
+                    {student.lastName}.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           );
         }
 
