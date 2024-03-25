@@ -230,6 +230,9 @@ export default function GradesTable() {
           const finalGrade =
             (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
 
+          // Calculate remarks
+          const remarks = finalGrade && finalGrade < 75 ? "Failed" : "Passed";
+
           return (
             <TooltipProvider delayDuration={10}>
               <Tooltip>
@@ -357,6 +360,13 @@ export default function GradesTable() {
                     >
                       {finalGrade || ""}
                     </TableCell>{" "}
+                    <TableCell
+                      className={
+                        finalGrade && finalGrade < 75 ? "text-[#ff0000]" : ""
+                      }
+                    >
+                      {remarks}
+                    </TableCell>
                     <TableCell className="block sm:hidden">
                       <Button
                         variant="text"
@@ -514,7 +524,8 @@ export default function GradesTable() {
                   <TableHead>Subject</TableHead>
                   <TableHead>QTR1</TableHead>
                   <TableHead>QTR2</TableHead>
-                  <TableHead>Final Grade</TableHead>{" "}
+                  <TableHead>FINAL GRADE</TableHead>{" "}
+                  <TableHead>REMARKS</TableHead>{" "}
                   {/* New Table Head for Final Grade */}
                   <TableHead className="sm:hidden"></TableHead>
                 </TableRow>
