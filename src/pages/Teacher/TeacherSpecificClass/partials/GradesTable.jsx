@@ -231,7 +231,12 @@ export default function GradesTable() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <TableRow
-                    onClick={(e) => handleViewAllGrades(e, student)}
+                    // onClick={(e) => handleViewAllGrades(e, student)}
+                    onClick={
+                      isAdviser
+                        ? (e) => handleViewAllGrades(e, student)
+                        : undefined
+                    }
                     key={student._id}
                     className="group transition-all duration-700 hover:cursor-pointer"
                   >
@@ -363,12 +368,14 @@ export default function GradesTable() {
                 {/* <TooltipContent>
                   <p>Click to View All Grades</p>
                 </TooltipContent> */}
-                <TooltipContent>
-                  <p>
-                    Click to view all grades of {student.firstName}{" "}
-                    {student.lastName}.
-                  </p>
-                </TooltipContent>
+                {isAdviser && (
+                  <TooltipContent>
+                    <p>
+                      Click to view all grades of {student.firstName}{" "}
+                      {student.lastName}.
+                    </p>
+                  </TooltipContent>
+                )}
               </Tooltip>
             </TooltipProvider>
           );
