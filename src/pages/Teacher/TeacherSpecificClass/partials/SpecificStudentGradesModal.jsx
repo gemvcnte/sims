@@ -95,7 +95,7 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
   ];
 
   return (
-    <DialogContent className="max-h-[80svh] max-w-[70vw] overflow-scroll">
+    <DialogContent className="max-h-[90svh] max-w-[70vw] overflow-scroll">
       <div className="">
         <h2 className="mb-4 text-lg font-semibold">
           {studentDetails.Firstname} {studentDetails.Lastname} - Grades
