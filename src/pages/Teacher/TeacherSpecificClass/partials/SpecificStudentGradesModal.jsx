@@ -33,12 +33,16 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
   } = studentDetails;
 
   // Calculate average grade
+  const gradesWithValues = studentGrades.filter(
+    (grade) =>
+      !isNaN(parseFloat(grade.P1Grade)) && !isNaN(parseFloat(grade.P2Grade)),
+  );
   const averageGrade =
-    studentGrades.reduce(
+    gradesWithValues.reduce(
       (total, grade) =>
         total + (parseFloat(grade.P1Grade) + parseFloat(grade.P2Grade)) / 2,
       0,
-    ) / studentGrades.length;
+    ) / gradesWithValues.length;
 
   // Prepare CSV data
   const csvData = [
@@ -67,9 +71,8 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
       SUBJECT: "Average Grade",
       QTR1: "", // No quarters for average grade
       QTR2: "", // No quarters for average grade
-      FINAL_GRADE: averageGrade || "",
-      //   REMARKS: averageGrade >= 75 ? "Passed" : "Failed",
-      REMARKS: averageGrade >= 75 ? "" : "",
+      FINAL_GRADE: isNaN(averageGrade) ? "" : averageGrade.toFixed(1), // Limit to 1 decimal place
+      REMARKS: isNaN(averageGrade) || averageGrade < 75 ? "" : "Passed",
     },
   ];
 
@@ -97,7 +100,7 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
         </h2>
 
         <section className="flex items-end justify-between py-2">
-          <div>
+          <div className="">
             <div className="flex ">
               <p className="w-[13ch] text-right font-bold">Section Name:</p>
               <p className="ml-2 text-left">
@@ -151,7 +154,7 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
               <TableHead>Firstname</TableHead>
               <TableHead>LRN</TableHead> */}
 
-              <TableHead>Subject</TableHead>
+              <TableHead>SUBJECT</TableHead>
               <TableHead>QTR1</TableHead>
               <TableHead>QTR2</TableHead>
               <TableHead>FINAL GRADE</TableHead>
@@ -211,34 +214,20 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
 
             {/* Calculate average grade */}
             <TableRow>
-              <TableCell colSpan={3} className="font-semibold">
+              <TableCell colSpan={3} className="font-semibold italic">
                 Average Grade
               </TableCell>
               <TableCell
+                className="italic"
                 style={{
                   fontWeight: "bold",
                   color:
-                    studentGrades.reduce(
-                      (total, grade) =>
-                        total +
-                        (parseFloat(grade.P1Grade) +
-                          parseFloat(grade.P2Grade)) /
-                          2,
-                      0,
-                    ) /
-                      studentGrades.length <
-                    75
-                      ? //   ? "red"
-                        "inherit"
+                    !isNaN(averageGrade) && averageGrade < 75
+                      ? "red"
                       : "inherit",
                 }}
               >
-                {studentGrades.reduce(
-                  (total, grade) =>
-                    total +
-                    (parseFloat(grade.P1Grade) + parseFloat(grade.P2Grade)) / 2,
-                  0,
-                ) / studentGrades.length || ""}
+                {isNaN(averageGrade) ? "" : averageGrade.toFixed(1)}
               </TableCell>
               <TableCell></TableCell>
             </TableRow>
