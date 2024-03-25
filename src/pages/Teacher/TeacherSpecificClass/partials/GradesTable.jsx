@@ -494,7 +494,11 @@ export default function GradesTable() {
               </div>
               <div className="flex gap-2">
                 {selectedSubject && (
-                  <CSVLink data={csvData} headers={headers}>
+                  <CSVLink
+                    data={csvData}
+                    headers={headers}
+                    filename={`${selectedSubject}_grades.csv`}
+                  >
                     <Button
                       className="border-none bg-green-400"
                       variant="outline"
