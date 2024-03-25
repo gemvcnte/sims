@@ -160,7 +160,7 @@ const StudentsInClassDataTable = () => {
         </section>
 
         <section className="flex w-full justify-end gap-2">
-          <TooltipProvider>
+          <TooltipProvider delayDuration={10}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button

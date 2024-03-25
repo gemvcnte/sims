@@ -232,7 +232,7 @@ const AllStudentsTable = () => {
           <StudentsFiltersDrawer />
         </Drawer>
 
-        <TooltipProvider>
+        <TooltipProvider delayDuration={10}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button

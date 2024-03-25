@@ -36,7 +36,7 @@ export default function Topbar({ children }) {
         <span>{children}</span>
         <span className="flex justify-center gap-2">
           {user?.role === "admin" && (
-            <TooltipProvider>
+            <TooltipProvider delayDuration={10}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex items-center space-x-2 px-4">

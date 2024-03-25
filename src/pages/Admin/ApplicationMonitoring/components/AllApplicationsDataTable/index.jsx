@@ -280,7 +280,7 @@ const AllApplicationsDataTable = () => {
           <AllFiltersDrawer />
         </Drawer>
 
-        <TooltipProvider>
+        <TooltipProvider delayDuration={10}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button

@@ -247,7 +247,7 @@ const ApprovedApplicationsDataTable = () => {
           <ApprovedFiltersDrawer />
         </Drawer>
 
-        <TooltipProvider>
+        <TooltipProvider delayDuration={10}>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
