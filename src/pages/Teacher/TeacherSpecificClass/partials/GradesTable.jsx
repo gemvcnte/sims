@@ -87,8 +87,6 @@ export default function GradesTable() {
     }
   }, [classDetails, selectedSubject]);
 
-  console.log(classDetails);
-
   const handleSaveChanges = async (e) => {
     e.preventDefault(); // Prevent default form submission
 
@@ -98,7 +96,6 @@ export default function GradesTable() {
       const isValid = await form.trigger();
       if (!isValid) return;
 
-      console.log("validation passed");
       const classId = classDetails._id;
       const subjectId = classDetails.subjects.find(
         (subject) => subject.subjectName === selectedSubject,
@@ -151,7 +148,6 @@ export default function GradesTable() {
   const handleChangeGrade = (lrn, type, value) => {
     // Convert empty string to null
     const numericValue = value === "" ? null : parseFloat(value);
-    console.log(numericValue);
 
     setModifiedGrades((prevGrades) => ({
       ...prevGrades,
@@ -379,8 +375,6 @@ export default function GradesTable() {
         }
       });
     });
-
-    console.log("Student Grades:", studentDetails);
 
     setStudentDetails(studentDetails);
     setIsModalOpen(true);
