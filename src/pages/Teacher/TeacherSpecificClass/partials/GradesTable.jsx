@@ -77,18 +77,26 @@ export default function GradesTable() {
       );
 
       if (selectedSubjectDetails) {
-        const data = selectedSubjectDetails.grades.map((grade) => ({
-          Lastname:
-            classDetails.students.find((student) => student.lrn === grade.lrn)
-              ?.lastName || "",
-          Firstname:
-            classDetails.students.find((student) => student.lrn === grade.lrn)
-              ?.firstName || "",
-          LRN: grade.lrn,
-          Subject: selectedSubject,
-          P1Grade: grade.p1Grade || "",
-          P2Grade: grade.p2Grade || "",
-        }));
+        const data = selectedSubjectDetails.grades.map((grade) => {
+          const student = classDetails.students.find(
+            (student) => student.lrn === grade.lrn,
+          );
+          const finalGrade =
+            (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
+          const remarks =
+            finalGrade !== "" ? (finalGrade < 75 ? "Failed" : "Passed") : "";
+
+          return {
+            Lastname: student?.lastName || "",
+            Firstname: student?.firstName || "",
+            LRN: grade.lrn,
+            Subject: selectedSubject,
+            P1Grade: grade.p1Grade || "",
+            P2Grade: grade.p2Grade || "",
+            FinalGrade: finalGrade,
+            Remarks: remarks || "",
+          };
+        });
         setCsvData(data);
       }
     }
@@ -208,6 +216,8 @@ export default function GradesTable() {
     { label: "Subject", key: "Subject" },
     { label: "QTR1 Grade", key: "P1Grade" },
     { label: "QTR2 Grade", key: "P2Grade" },
+    { label: "Final Grade", key: "FinalGrade" },
+    { label: "Remarks", key: "Remarks" },
   ];
 
   const renderSortedStudents = () => {
@@ -226,12 +236,27 @@ export default function GradesTable() {
             (grade) => grade.lrn === student.lrn,
           );
 
+          // Calculate the final grade
+          const finalGrade =
+            (parseFloat(grade.p2Grade) + parseFloat(grade.p1Grade)) / 2 || "";
+
+          // Calculate remarks
+          let remarks = "";
+          if (finalGrade !== "") {
+            remarks = finalGrade < 75 ? "Failed" : "Passed";
+          }
+
           return (
             <TooltipProvider delayDuration={10}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <TableRow
-                    onClick={(e) => handleViewAllGrades(e, student)}
+                    // onClick={(e) => handleViewAllGrades(e, student)}
+                    onClick={
+                      isAdviser && !isEditing
+                        ? (e) => handleViewAllGrades(e, student)
+                        : undefined
+                    }
                     key={student._id}
                     className="group transition-all duration-700 hover:cursor-pointer"
                   >
@@ -341,6 +366,20 @@ export default function GradesTable() {
                         {grade?.p2Grade || ""}
                       </TableCell>
                     )}
+                    <TableCell
+                      className={
+                        finalGrade && finalGrade < 75 ? "text-[#ff0000]" : ""
+                      }
+                    >
+                      {finalGrade || ""}
+                    </TableCell>{" "}
+                    <TableCell
+                      className={
+                        finalGrade && finalGrade < 75 ? "text-[#ff0000]" : ""
+                      }
+                    >
+                      {remarks}
+                    </TableCell>
                     <TableCell className="block sm:hidden">
                       <Button
                         variant="text"
@@ -363,12 +402,14 @@ export default function GradesTable() {
                 {/* <TooltipContent>
                   <p>Click to View All Grades</p>
                 </TooltipContent> */}
-                <TooltipContent>
-                  <p>
-                    Click to view all grades of {student.firstName}{" "}
-                    {student.lastName}.
-                  </p>
-                </TooltipContent>
+                {isAdviser && !isEditing && (
+                  <TooltipContent>
+                    <p>
+                      Click to view all grades of {student.firstName}{" "}
+                      {student.lastName}.
+                    </p>
+                  </TooltipContent>
+                )}
               </Tooltip>
             </TooltipProvider>
           );
@@ -453,7 +494,11 @@ export default function GradesTable() {
               </div>
               <div className="flex gap-2">
                 {selectedSubject && (
-                  <CSVLink data={csvData} headers={headers}>
+                  <CSVLink
+                    data={csvData}
+                    headers={headers}
+                    filename={`${selectedSubject}_grades.csv`}
+                  >
                     <Button
                       className="border-none bg-green-400"
                       variant="outline"
@@ -496,6 +541,10 @@ export default function GradesTable() {
                   <TableHead>Subject</TableHead>
                   <TableHead>QTR1</TableHead>
                   <TableHead>QTR2</TableHead>
+                  <TableHead>FINAL GRADE</TableHead>{" "}
+                  <TableHead>REMARKS</TableHead>{" "}
+                  {/* New Table Head for Final Grade */}
+                  <TableHead className="sm:hidden"></TableHead>
                 </TableRow>
               </TableHeader>
 
