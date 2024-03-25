@@ -195,6 +195,40 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
                 </TableCell>
               </TableRow>
             ))}
+
+            {/* Calculate average grade */}
+            <TableRow>
+              <TableCell colSpan={3} className="font-semibold">
+                Average Grade
+              </TableCell>
+              <TableCell
+                style={{
+                  fontWeight: "bold",
+                  color:
+                    studentGrades.reduce(
+                      (total, grade) =>
+                        total +
+                        (parseFloat(grade.P1Grade) +
+                          parseFloat(grade.P2Grade)) /
+                          2,
+                      0,
+                    ) /
+                      studentGrades.length <
+                    75
+                      ? //   ? "red"
+                        "inherit"
+                      : "inherit",
+                }}
+              >
+                {studentGrades.reduce(
+                  (total, grade) =>
+                    total +
+                    (parseFloat(grade.P1Grade) + parseFloat(grade.P2Grade)) / 2,
+                  0,
+                ) / studentGrades.length || ""}
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </div>
