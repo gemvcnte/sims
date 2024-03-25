@@ -19,9 +19,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
     return <p>loading..</p>; // or render a loading indicator or an error message
   }
 
-  console.log("heelo");
-  console.log(studentDetails);
-
   // Extract student details
   const {
     Firstname,
@@ -34,6 +31,14 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
     GradeLevel,
     studentGrades,
   } = studentDetails;
+
+  // Calculate average grade
+  const averageGrade =
+    studentGrades.reduce(
+      (total, grade) =>
+        total + (parseFloat(grade.P1Grade) + parseFloat(grade.P2Grade)) / 2,
+      0,
+    ) / studentGrades.length;
 
   // Prepare CSV data
   const csvData = [
@@ -58,6 +63,14 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
           ? "Passed"
           : "Failed",
     })),
+    {
+      SUBJECT: "Average Grade",
+      QTR1: "", // No quarters for average grade
+      QTR2: "", // No quarters for average grade
+      FINAL_GRADE: averageGrade || "",
+      //   REMARKS: averageGrade >= 75 ? "Passed" : "Failed",
+      REMARKS: averageGrade >= 75 ? "" : "",
+    },
   ];
 
   const headers = [
