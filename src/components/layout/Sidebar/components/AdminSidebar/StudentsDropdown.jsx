@@ -13,6 +13,7 @@ import {
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -28,13 +29,10 @@ export function StudentsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  const location = useLocation();
-  const isActive =
-    location.pathname === `/students` ||
-    location.pathname === `/student-application-monitoring`;
-
-  // Conditionally apply classes based on isActive
-  const isActiveClasses = isActive ? "bg-primary text-background" : "";
+  const isActiveClasses = useActiveClasses([
+    "/students",
+    "/student-application-monitoring",
+  ]);
 
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
