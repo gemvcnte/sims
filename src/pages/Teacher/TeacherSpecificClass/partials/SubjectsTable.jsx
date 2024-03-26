@@ -26,7 +26,7 @@ export default function SubjectsTable() {
 
   return (
     <main className="p-4">
-      {isAdviser && <AddSubjectModal onSuccess={() => fetchClassDetails()} />}
+      {isAdviser && <AddSubjectModal />}
 
       <Table>
         {classDetails.subjects.length === 0 && (

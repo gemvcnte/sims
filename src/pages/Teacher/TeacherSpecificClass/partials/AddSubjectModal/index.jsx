@@ -10,70 +10,22 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import SelectTeacherCombobox from "./SelectTeacherCombobox";
-import { useState } from "react";
-import { useClassDetails } from "../contexts/ClassDetailsContext";
-import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { addSubjectApi } from "../helpers/addSubjectApi";
-import showErrorNotification from "@/utils/ShowErrorNotification";
+import useAddSubjectModal from "./useAddSubjectModal";
+import SelectTeacherCombobox from "../SelectTeacherCombobox";
 
-export default function AddSubjectModal({ onSuccess }) {
-  const classDetailsContext = useClassDetails();
-  const { classDetails } = classDetailsContext;
-
-  const [subjectName, setSubjectName] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState("");
-  const [schedules, setSchedules] = useState([
-    { day: "", startTime: "", endTime: "" },
-  ]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleSaveChanges = async () => {
-    try {
-      const newSubjectData = {
-        classId: classDetails._id,
-        subjectName,
-        subjectTeacher: selectedTeacher,
-        schedules,
-      };
-
-      const response = await addSubjectApi(newSubjectData);
-
-      showSuccessNotification(response.data.message);
-
-      setSubjectName("");
-      setSelectedTeacher("");
-      setSchedules([{ day: "", startTime: "", endTime: "" }]);
-
-      onSuccess();
-      closeModal();
-    } catch (error) {
-      showErrorNotification("Error adding subject:", error.message);
-    }
-  };
-
-  const addSchedule = () => {
-    setSchedules([...schedules, { day: "", startTime: "", endTime: "" }]);
-  };
-
-  const removeSchedule = (index) => {
-    if (schedules.length > 1) {
-      const updatedSchedules = [...schedules];
-      updatedSchedules.splice(index, 1);
-      setSchedules(updatedSchedules);
-    }
-  };
-
-  const updateSchedule = (index, field, value) => {
-    const updatedSchedules = [...schedules];
-    updatedSchedules[index][field] = value;
-    setSchedules(updatedSchedules);
-  };
+export default function AddSubjectModal() {
+  const {
+    subjectName,
+    setSubjectName,
+    setSelectedTeacher,
+    schedules,
+    isModalOpen,
+    setIsModalOpen,
+    handleSaveChanges,
+    addSchedule,
+    removeSchedule,
+    updateSchedule,
+  } = useAddSubjectModal();
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
