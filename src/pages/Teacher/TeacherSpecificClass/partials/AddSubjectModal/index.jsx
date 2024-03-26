@@ -29,20 +29,23 @@ export default function AddSubjectModal() {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <div className="mb-4 flex gap-4">
+      <section className="mb-4 flex gap-4">
         <DialogTrigger asChild>
           <Button variant="outline">Add Subject</Button>
         </DialogTrigger>
-      </div>
+      </section>
+
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Add Subject</DialogTitle>
+          <DialogTitle>Add a Subject</DialogTitle>
+
           <DialogDescription className="md:max-w-[80%]">
-            Add a new subject by providing the required details below.
+            Let's add a new subject. Fill in the details below.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid h-80 gap-4 overflow-y-auto py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+
+        <main className="grid h-80 gap-4 overflow-y-auto py-4">
+          <section className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Subject <span className="hidden sm:inline">Name</span>
             </Label>
@@ -53,14 +56,14 @@ export default function AddSubjectModal() {
               value={subjectName}
               onChange={(e) => setSubjectName(e.target.value)}
             />
-          </div>
+          </section>
 
-          <div className="grid grid-cols-4 items-center gap-4">
+          <section className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="teacher" className="text-right">
               Teacher
             </Label>
             <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
-          </div>
+          </section>
 
           {schedules.map((schedule, index) => (
             <div
@@ -127,7 +130,7 @@ export default function AddSubjectModal() {
           <Button variant="outline" onClick={addSchedule}>
             Add another schedule
           </Button>
-        </div>
+        </main>
 
         <Button onClick={handleSaveChanges}>Add subject</Button>
       </DialogContent>
