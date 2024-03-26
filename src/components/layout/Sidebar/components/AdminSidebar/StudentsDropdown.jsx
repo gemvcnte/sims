@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,10 +28,21 @@ export function StudentsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const location = useLocation();
+  const isActive =
+    location.pathname === `/students` ||
+    location.pathname === `/student-application-monitoring`;
+
+  // Conditionally apply classes based on isActive
+  const isActiveClasses = isActive ? "bg-primary text-background" : "";
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between">
+        <Button
+          variant="ghost"
+          className={`w-full justify-between ${isActiveClasses}`}
+        >
           <span className="flex items-center">
             <Icon icon="ph-student" className="mr-2" />
             Students
