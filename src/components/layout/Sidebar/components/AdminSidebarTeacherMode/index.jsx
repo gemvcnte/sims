@@ -49,7 +49,7 @@ export default function AdminSidebarTeacherMode() {
           Dashboard
         </SidebarItem>
 
-        <SidebarItem to="/classes" icon="mdi:google-classroom">
+        <SidebarItem to="classes" icon="mdi:google-classroom">
           Classes
         </SidebarItem>
 

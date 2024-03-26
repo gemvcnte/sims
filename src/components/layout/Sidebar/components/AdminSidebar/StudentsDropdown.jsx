@@ -31,7 +31,7 @@ export function StudentsDropdown({}) {
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between ">
+        <Button variant="ghost" className="w-full justify-between">
           <span className="flex items-center">
             <Icon icon="ph-student" className="mr-2" />
             Students
