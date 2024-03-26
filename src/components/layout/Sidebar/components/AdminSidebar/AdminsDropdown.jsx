@@ -13,6 +13,7 @@ import {
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export function AdminsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -28,10 +29,18 @@ export function AdminsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const isActiveClasses = useActiveClasses([
+    "/admins",
+    "/create-admin-account",
+  ]);
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between ">
+        <Button
+          variant="ghost"
+          className={`w-full justify-between ${isActiveClasses}`}
+        >
           <span className="flex items-center">
             <Icon icon="mdi:teacher" className="mr-2" />
             Admins
