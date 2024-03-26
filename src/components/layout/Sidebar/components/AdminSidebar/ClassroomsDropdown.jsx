@@ -15,6 +15,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CreateNewSection from "@/pages/Admin/CreateNewSection";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export function ClassroomsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -30,10 +31,18 @@ export function ClassroomsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const isActiveClasses = useActiveClasses([
+    "/all-classes",
+    /^\/all-classes\//,
+  ]);
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between ">
+        <Button
+          variant="ghost"
+          className={`w-full justify-between ${isActiveClasses}`}
+        >
           <span className="flex items-center">
             <Icon icon="mdi:google-classroom" className="mr-2" />
             Sections

@@ -13,6 +13,7 @@ import {
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export function ArchiveDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -28,10 +29,19 @@ export function ArchiveDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const isActiveClasses = useActiveClasses([
+    "/archived/students",
+    "/archived/teachers",
+    "/archived/admins",
+  ]);
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between ">
+        <Button
+          variant="ghost"
+          className={`w-full justify-between ${isActiveClasses}`}
+        >
           <span className="flex items-center">
             <Icon icon="material-symbols:archive-outline" className="mr-2" />
             Archive

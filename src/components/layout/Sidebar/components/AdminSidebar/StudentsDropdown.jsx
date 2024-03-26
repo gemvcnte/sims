@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import {
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -28,10 +29,18 @@ export function StudentsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const isActiveClasses = useActiveClasses([
+    "/students",
+    "/student-application-monitoring",
+  ]);
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
-        <Button variant="ghost" className="w-full justify-between ">
+        <Button
+          variant="ghost"
+          className={`w-full justify-between ${isActiveClasses}`}
+        >
           <span className="flex items-center">
             <Icon icon="ph-student" className="mr-2" />
             Students

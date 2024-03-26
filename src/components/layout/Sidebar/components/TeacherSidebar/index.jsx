@@ -7,9 +7,12 @@ import ChangePasswordDrawer from "../ChangePasswordDrawer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Icon } from "@iconify/react";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export default function TeacherSidebar() {
   const { logout } = useAuth();
+
+  const isActiveClasses = useActiveClasses([/^\/class\//]);
 
   return (
     <SidebarContainer>
@@ -21,7 +24,11 @@ export default function TeacherSidebar() {
         Schedule
       </SidebarItem> */}
 
-      <SidebarItem to="/classes" icon="mdi:google-classroom">
+      <SidebarItem
+        to="classes"
+        icon="mdi:google-classroom"
+        className={isActiveClasses}
+      >
         Classes
       </SidebarItem>
 
