@@ -31,7 +31,10 @@ export function ClassroomsDropdown({}) {
     setIsDialogOpen(!isDialogOpen);
   };
 
-  const isActiveClasses = useActiveClasses(["/all-classes"]);
+  const isActiveClasses = useActiveClasses([
+    "/all-classes",
+    /^\/all-classes\//,
+  ]);
 
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>

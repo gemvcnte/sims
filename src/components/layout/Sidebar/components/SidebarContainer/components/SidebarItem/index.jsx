@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-export default function SidebarItem({ to, icon, children }) {
+export default function SidebarItem({ to, icon, children, className }) {
   const { toggleSidebar } = useSidebarContext();
 
   const location = useLocation();
@@ -17,7 +17,7 @@ export default function SidebarItem({ to, icon, children }) {
     <Link to={to} onClick={toggleSidebar}>
       <Button
         variant="ghost"
-        className={`w-full justify-start ${isActiveClasses}`}
+        className={`w-full justify-start ${isActiveClasses} ${className}`}
       >
         <Icon icon={icon} className="mr-2" />
         {children}
