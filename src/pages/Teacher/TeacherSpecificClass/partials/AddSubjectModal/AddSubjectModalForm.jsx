@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -143,7 +144,7 @@ export default function AddSubjectModalForm() {
 
           {schedules.map((schedule, index) => (
             <div key={index} className="mt-8 flex flex-col gap-4">
-              {schedules.length > 1 && (
+              {/* {schedules.length > 1 && (
                 <Button
                   variant="text"
                   className="col-span-4 text-red-600"
@@ -151,7 +152,7 @@ export default function AddSubjectModalForm() {
                 >
                   Remove
                 </Button>
-              )}
+              )} */}
 
               <FormField
                 control={form.control}
@@ -256,12 +257,19 @@ export default function AddSubjectModalForm() {
             </div>
           ))}
 
-          <Button variant="outline" type="button" onClick={addSchedule}>
+          <Button
+            variant="outline"
+            type="button"
+            onClick={addSchedule}
+            className=""
+          >
             Add another schedule
           </Button>
         </main>
 
-        <Button type="submit">Add subject</Button>
+        <DialogFooter>
+          <Button type="submit">Add subject</Button>
+        </DialogFooter>
       </form>
     </Form>
   );
