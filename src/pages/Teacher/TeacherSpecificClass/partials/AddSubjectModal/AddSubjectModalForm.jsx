@@ -85,49 +85,55 @@ export default function AddSubjectModalForm() {
           </DialogDescription>
         </DialogHeader>
 
-        <main className="grid h-80 gap-4 overflow-y-auto py-4">
+        <main className="grid h-80 gap-4 overflow-y-auto py-8">
           <FormField
             control={form.control}
             name="subjectName"
             render={({ field }) => (
-              <FormItem className="grid grid-cols-4 items-center gap-4">
-                <FormLabel htmlFor="name" className="text-right">
-                  Subject <span className="hidden sm:inline">Name</span>
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    id="name"
-                    className="col-span-3"
-                    placeholder="Enter Subject Name"
-                    value={subjectName}
-                    onChange={(e) => {
-                      field.onChange(e); // This should be sufficient for controlled inputs
-                      setSubjectName(e.target.value);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
+              <FormItem>
+                <section className="grid grid-cols-4 items-center gap-4">
+                  <FormLabel htmlFor="name" className="text-right">
+                    Subject <span className="hidden sm:inline">Name</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="name"
+                      className="col-span-3"
+                      placeholder="Enter Subject Name"
+                      value={subjectName}
+                      onChange={(e) => {
+                        field.onChange(e); // This should be sufficient for controlled inputs
+                        setSubjectName(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                </section>
+                <FormMessage className="text-center" />
               </FormItem>
             )}
           />
 
-          {/* <FormField
+          <FormField
             control={form.control}
             name="selectedTeacher"
             render={({ field }) => (
-              <FormItem className="grid grid-cols-4 items-center gap-4">
-                <FormControl>
-                  <Label htmlFor="teacher" className="text-right">
+              <FormItem>
+                <section className="grid grid-cols-4 items-center gap-4">
+                  <FormLabel htmlFor="teacher" className="text-right">
                     Teacher
-                  </Label>
-                  <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
-                </FormControl>
-                <FormMessage />
+                  </FormLabel>
+                  <FormControl>
+                    <SelectTeacherCombobox
+                      onSelectTeacher={setSelectedTeacher}
+                    />
+                  </FormControl>
+                </section>
+                <FormMessage className="text-center" />
               </FormItem>
             )}
           />
-
+          {/* 
           {schedules.map((schedule, index) => (
             <div
               key={index}
