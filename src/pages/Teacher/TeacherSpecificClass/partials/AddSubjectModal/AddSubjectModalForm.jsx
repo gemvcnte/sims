@@ -91,10 +91,13 @@ const schema = yup.object().shape({
           .required("End time is required"),
       }),
     )
-    .test("check-overlap", "Overlapping schedules found: ${value}", (value) => {
-      const overlappingSchedule = checkOverlap(value);
-      return !overlappingSchedule;
-    }),
+    .test(
+      "check-overlap",
+      "Oops! Looks like some schedules are overlapping. Please adjust your schedule so they don't overlap.",
+      (value) => {
+        return !checkOverlap(value);
+      },
+    ),
 });
 
 export default function AddSubjectModalForm() {
@@ -298,6 +301,24 @@ export default function AddSubjectModalForm() {
             Add another schedule
           </Button>
         </main>
+
+        {/* Add a conditional rendering for the error message */}
+        {/* {form.formState.errors.schedules && (
+          <div className="text-center text-red-500">
+            <p>Overlapping schedules found:</p>
+            {Array.isArray(form.formState.errors.schedules.message) ? (
+              form.formState.errors.schedules.message.map((schedule, index) => (
+                <p key={index}>
+                  {schedule.day} ({schedule.startTime} - {schedule.endTime})
+                </p>
+              ))
+            ) : (
+              <p>
+                {form.formState.errors.schedules.message.replace(/[[\]"]/g, "")}
+              </p>
+            )}
+          </div>
+        )} */}
 
         {/* Add a conditional rendering for the error message */}
         {form.formState.errors.schedules && (
