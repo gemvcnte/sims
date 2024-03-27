@@ -3,8 +3,8 @@ import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
 import { addSubjectApi } from "../../helpers/addSubjectApi";
-import { useModal } from "./AddSubjectModal.hooks";
 import { updateSubjectApi } from "../../helpers/updateSubjectApi";
+import { useModal } from "./AddSubjectModal.hooks";
 
 export default function useAddSubjectModal({ subject }) {
   const { closeModal } = useModal();
@@ -29,11 +29,14 @@ export default function useAddSubjectModal({ subject }) {
 
       const response = await updateSubjectApi(updatedSubjectData);
 
-      showSuccessNotification(response.data.message);
-      onSuccess();
-      closeModal();
+      if (response.status == 200) {
+        showSuccessNotification(response.data.message);
+        closeModal();
+        fetchClassDetails();
+        // onSuccess();
+      }
     } catch (error) {
-      showErrorNotification("Error updating subject:", error.message);
+      console.error("Error updating subject:", error.message);
     }
   };
 

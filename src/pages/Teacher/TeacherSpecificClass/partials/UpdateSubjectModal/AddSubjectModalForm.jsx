@@ -129,10 +129,10 @@ export default function AddSubjectModalForm(subject) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <DialogHeader>
-          <DialogTitle>Add a Subject</DialogTitle>
+          <DialogTitle>Update a Subject</DialogTitle>
 
           <DialogDescription className="md:max-w-[80%]">
-            Let's add a new subject. Fill in the details below.
+            Let's update a new subject. Update the details below.
           </DialogDescription>
         </DialogHeader>
 
@@ -176,6 +176,7 @@ export default function AddSubjectModalForm(subject) {
                   </FormLabel>
                   <FormControl>
                     <SelectTeacherCombobox
+                      subject={subject}
                       field={field}
                       onSelectTeacher={setSelectedTeacher}
                     />
@@ -337,7 +338,7 @@ export default function AddSubjectModalForm(subject) {
         )}
 
         <DialogFooter>
-          <Button type="submit">Add subject</Button>
+          <Button type="submit">Update subject</Button>
         </DialogFooter>
       </form>
     </Form>

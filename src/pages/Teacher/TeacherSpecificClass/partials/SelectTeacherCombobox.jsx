@@ -23,11 +23,22 @@ import getAuthHeaders from "@/utils/getAuthHeaders";
 import { getAllTeachersEndpoint } from "@/config/adminEndpoints";
 import useGetAllTeachers from "../hooks/useGetAllTeachers";
 
-export default function SelectTeacherCombobox({ field, onSelectTeacher }) {
+export default function SelectTeacherCombobox({
+  subject,
+  field,
+  onSelectTeacher,
+}) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(
+    subject && subject.subject ? subject.subject.subjectTeacher : "",
+  );
 
   const { teachers, error } = useGetAllTeachers();
+
+  useEffect(() => {
+    // Call field.onChange with the initial value when the component mounts
+    field.onChange(value);
+  }, []); // Empty dependency array ensures the effect runs only once after the initial render
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
