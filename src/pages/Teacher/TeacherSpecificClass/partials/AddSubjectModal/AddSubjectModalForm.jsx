@@ -142,10 +142,7 @@ export default function AddSubjectModalForm() {
           />
 
           {schedules.map((schedule, index) => (
-            <div
-              key={index}
-              className="mt-8 grid grid-cols-4 items-center gap-4"
-            >
+            <div key={index} className="mt-8 flex flex-col gap-4">
               {schedules.length > 1 && (
                 <Button
                   variant="text"
@@ -195,30 +192,66 @@ export default function AddSubjectModalForm() {
                 )}
               />
 
-              <Label htmlFor={`startTime-${index}`} className="text-right">
-                Start Time
-              </Label>
-              <Input
-                className="col-span-3"
-                id={`startTime-${index}`}
-                type="time"
-                value={schedule.startTime}
-                onChange={(e) =>
-                  updateSchedule(index, "startTime", e.target.value)
-                }
+              <FormField
+                control={form.control}
+                name={`schedules[${index}].startTime`}
+                render={({ field }) => (
+                  <FormItem>
+                    <section className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel
+                        htmlFor={`startTime-${index}`}
+                        className="text-right"
+                      >
+                        Start Time
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="col-span-3"
+                          id={`startTime-${index}`}
+                          type="time"
+                          value={schedule.startTime}
+                          onChange={(e) => {
+                            field.onChange(e); // This should be sufficient for controlled inputs
+                            updateSchedule(index, "startTime", e.target.value);
+                          }}
+                        />
+                      </FormControl>
+                    </section>
+                    <FormMessage className="text-center" />
+                  </FormItem>
+                )}
               />
 
-              <Label htmlFor={`endTime-${index}`} className="text-right">
-                End Time
-              </Label>
-              <Input
-                className="col-span-3"
-                id={`endTime-${index}`}
-                type="time"
-                value={schedule.endTime}
-                onChange={(e) =>
-                  updateSchedule(index, "endTime", e.target.value)
-                }
+              <FormField
+                control={form.control}
+                name={`schedules[${index}].endTime`}
+                render={({ field }) => (
+                  <FormItem>
+                    <section className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel
+                        htmlFor={`endTime-${index}`}
+                        className="text-right"
+                      >
+                        End Time
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="col-span-3"
+                          id={`endTime-${index}`}
+                          type="time"
+                          value={schedule.endTime}
+                          onChange={(e) => {
+                            updateSchedule(index, "endTime", e.target.value);
+                            field.onChange(e); // This should be sufficient for controlled inputs
+                          }}
+                        />
+                      </FormControl>
+                    </section>
+                    <FormMessage className="text-center" />
+                  </FormItem>
+                )}
               />
             </div>
           ))}

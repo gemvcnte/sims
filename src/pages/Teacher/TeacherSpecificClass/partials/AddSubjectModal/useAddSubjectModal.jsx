@@ -20,6 +20,8 @@ export default function useAddSubjectModal() {
   };
 
   const handleSaveChanges = async () => {
+    console.log("submitted");
+
     try {
       const newSubjectData = {
         classId: classDetails._id,
