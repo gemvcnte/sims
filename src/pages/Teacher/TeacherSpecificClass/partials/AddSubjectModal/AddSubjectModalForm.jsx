@@ -33,19 +33,17 @@ const checkOverlap = (schedules) => {
       const start2 = moment(schedule2.startTime, "HH:mm");
       const end2 = moment(schedule2.endTime, "HH:mm");
 
-      // Check for overlap between schedule1 and schedule2
       if (
         start1.isBetween(start2, end2) ||
         end1.isBetween(start2, end2) ||
         start2.isBetween(start1, end1) ||
         end2.isBetween(start1, end1)
       ) {
-        console.log("overlap");
-        return true; // Overlapping schedules found
+        const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
+        return overlappingSchedule;
       }
     }
   }
-  console.log("no overlap");
   return false; // No overlapping schedules found
 };
 
@@ -93,8 +91,9 @@ const schema = yup.object().shape({
           .required("End time is required"),
       }),
     )
-    .test("check-overlap", "Schedules should not overlap", (value) => {
-      return !checkOverlap(value);
+    .test("check-overlap", "Overlapping schedules found: ${value}", (value) => {
+      const overlappingSchedule = checkOverlap(value);
+      return !overlappingSchedule;
     }),
 });
 
