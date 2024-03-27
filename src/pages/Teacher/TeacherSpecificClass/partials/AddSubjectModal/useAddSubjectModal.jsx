@@ -3,8 +3,11 @@ import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
 import { addSubjectApi } from "../../helpers/addSubjectApi";
+import { useModal } from "./AddSubjectModal.hooks";
 
 export default function useAddSubjectModal() {
+  const { closeModal } = useModal();
+
   const classDetailsContext = useClassDetails();
   const { classDetails, fetchClassDetails } = classDetailsContext;
 
@@ -13,15 +16,8 @@ export default function useAddSubjectModal() {
   const [schedules, setSchedules] = useState([
     { day: "", startTime: "", endTime: "" },
   ]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSaveChanges = async () => {
-    console.log("submitted");
-
     try {
       const newSubjectData = {
         classId: classDetails._id,
@@ -70,9 +66,6 @@ export default function useAddSubjectModal() {
     setSelectedTeacher,
     schedules,
     setSchedules,
-    isModalOpen,
-    setIsModalOpen,
-    closeModal,
     handleSaveChanges,
     addSchedule,
     removeSchedule,

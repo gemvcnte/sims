@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import useAddSubjectModal from "./useAddSubjectModal";
 import AddSubjectModalForm from "./AddSubjectModalForm";
+import { useModal } from "./AddSubjectModal.hooks";
 
 export default function AddSubjectModal() {
-  const { isModalOpen, setIsModalOpen } = useAddSubjectModal();
+  const { isModalOpen, setIsModalOpen } = useModal();
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

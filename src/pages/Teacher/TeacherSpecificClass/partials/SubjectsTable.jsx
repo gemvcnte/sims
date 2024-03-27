@@ -15,6 +15,7 @@ import UpdateSubjectModal from "./UpdateSubjectModal";
 import { Icon } from "@iconify/react";
 import { DeleteSubjectModal } from "./DeleteSubjectModal";
 import { isClassAdviser } from "../helpers/isClassAdviser";
+import { ModalProvider } from "./AddSubjectModal/AddSubjectModal.hooks";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -26,7 +27,11 @@ export default function SubjectsTable() {
 
   return (
     <main className="p-4">
-      {isAdviser && <AddSubjectModal />}
+      {isAdviser && (
+        <ModalProvider>
+          <AddSubjectModal />
+        </ModalProvider>
+      )}
 
       <Table>
         {classDetails.subjects.length === 0 && (
