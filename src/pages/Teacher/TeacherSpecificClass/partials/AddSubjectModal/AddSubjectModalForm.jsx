@@ -1,6 +1,6 @@
 import React from "react";
 import * as yup from "yup";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   DialogDescription,
@@ -8,9 +8,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -89,17 +91,20 @@ export default function AddSubjectModalForm() {
             name="subjectName"
             render={({ field }) => (
               <FormItem className="grid grid-cols-4 items-center gap-4">
+                <FormLabel htmlFor="name" className="text-right">
+                  Subject <span className="hidden sm:inline">Name</span>
+                </FormLabel>
                 <FormControl>
-                  <Label htmlFor="name" className="text-right">
-                    Subject <span className="hidden sm:inline">Name</span>
-                  </Label>
                   <Input
                     {...field}
                     id="name"
                     className="col-span-3"
                     placeholder="Enter Subject Name"
                     value={subjectName}
-                    onChange={(e) => setSubjectName(e.target.value)}
+                    onChange={(e) => {
+                      field.onChange(e); // This should be sufficient for controlled inputs
+                      setSubjectName(e.target.value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -107,12 +112,21 @@ export default function AddSubjectModalForm() {
             )}
           />
 
-          <section className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="teacher" className="text-right">
-              Teacher
-            </Label>
-            <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
-          </section>
+          {/* <FormField
+            control={form.control}
+            name="selectedTeacher"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-4 items-center gap-4">
+                <FormControl>
+                  <Label htmlFor="teacher" className="text-right">
+                    Teacher
+                  </Label>
+                  <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {schedules.map((schedule, index) => (
             <div
@@ -178,7 +192,7 @@ export default function AddSubjectModalForm() {
 
           <Button variant="outline" onClick={addSchedule}>
             Add another schedule
-          </Button>
+          </Button> */}
         </main>
 
         <Button type="submit">Add subject</Button>
