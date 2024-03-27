@@ -14,7 +14,7 @@ export default function AddSubjectModal() {
         </DialogTrigger>
       </section>
 
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className="sm:max-h-[90svh] sm:max-w-[525px]">
         <AddSubjectModalForm />
       </DialogContent>
     </Dialog>

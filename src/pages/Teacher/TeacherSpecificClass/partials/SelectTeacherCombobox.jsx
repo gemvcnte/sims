@@ -58,7 +58,7 @@ export default function SelectTeacherCombobox({ field, onSelectTeacher }) {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
                   onSelectTeacher(teacher.username);
-                  field.onChange(currentValue); // This should be sufficient for controlled inputs
+                  field.onChange(currentValue === value ? "" : currentValue); // This should be sufficient for controlled inputs
                 }}
               >
                 <Check

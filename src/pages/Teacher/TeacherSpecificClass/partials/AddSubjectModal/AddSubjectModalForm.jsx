@@ -85,7 +85,7 @@ export default function AddSubjectModalForm() {
           </DialogDescription>
         </DialogHeader>
 
-        <main className="grid h-80 gap-4 overflow-y-auto py-8">
+        <main className="my-4 grid h-80 gap-4 overflow-y-auto py-4">
           <FormField
             control={form.control}
             name="subjectName"
@@ -134,7 +134,7 @@ export default function AddSubjectModalForm() {
               </FormItem>
             )}
           />
-          {/* 
+
           {schedules.map((schedule, index) => (
             <div
               key={index}
@@ -197,9 +197,9 @@ export default function AddSubjectModalForm() {
             </div>
           ))}
 
-          <Button variant="outline" onClick={addSchedule}>
+          <Button variant="outline" type="button" onClick={addSchedule}>
             Add another schedule
-          </Button> */}
+          </Button>
         </main>
 
         <Button type="submit">Add subject</Button>
