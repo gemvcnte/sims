@@ -20,6 +20,34 @@ import { Input } from "@/components/ui/input";
 import SelectTeacherCombobox from "../SelectTeacherCombobox";
 import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
+import moment from "moment";
+
+const checkOverlap = (schedules) => {
+  for (let i = 0; i < schedules.length - 1; i++) {
+    for (let j = i + 1; j < schedules.length; j++) {
+      const schedule1 = schedules[i];
+      const schedule2 = schedules[j];
+
+      const start1 = moment(schedule1.startTime, "HH:mm");
+      const end1 = moment(schedule1.endTime, "HH:mm");
+      const start2 = moment(schedule2.startTime, "HH:mm");
+      const end2 = moment(schedule2.endTime, "HH:mm");
+
+      // Check for overlap between schedule1 and schedule2
+      if (
+        start1.isBetween(start2, end2) ||
+        end1.isBetween(start2, end2) ||
+        start2.isBetween(start1, end1) ||
+        end2.isBetween(start1, end1)
+      ) {
+        console.log("overlap");
+        return true; // Overlapping schedules found
+      }
+    }
+  }
+  console.log("no overlap");
+  return false; // No overlapping schedules found
+};
 
 const schema = yup.object().shape({
   subjectName: yup
@@ -28,41 +56,46 @@ const schema = yup.object().shape({
     .max(255, "Subject name must be at most 255 characters")
     .required("Subject name is required"),
   selectedTeacher: yup.string().required("Teacher is required"),
-  schedules: yup.array().of(
-    yup.object().shape({
-      day: yup
-        .string()
-        .oneOf(
-          ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "Invalid day",
-        )
-        .required("Day is required"),
-      startTime: yup
-        .string()
-        .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid start time")
-        .test({
-          name: "start-time-validation",
-          message: "Start time must be between 7am and 6pm",
-          test: function (value) {
-            const time = parseInt(value.split(":")[0]);
-            return time >= 7 && time < 18;
-          },
-        })
-        .required("Start time is required"),
-      endTime: yup
-        .string()
-        .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid end time")
-        .test({
-          name: "end-time-validation",
-          message: "End time must be between 7am and 6pm",
-          test: function (value) {
-            const time = parseInt(value.split(":")[0]);
-            return time >= 7 && time < 18;
-          },
-        })
-        .required("End time is required"),
+  schedules: yup
+    .array()
+    .of(
+      yup.object().shape({
+        day: yup
+          .string()
+          .oneOf(
+            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "Invalid day",
+          )
+          .required("Day is required"),
+        startTime: yup
+          .string()
+          .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid start time")
+          .test({
+            name: "start-time-validation",
+            message: "Start time must be between 7am and 6pm",
+            test: function (value) {
+              const time = parseInt(value.split(":")[0]);
+              return time >= 7 && time < 18;
+            },
+          })
+          .required("Start time is required"),
+        endTime: yup
+          .string()
+          .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid end time")
+          .test({
+            name: "end-time-validation",
+            message: "End time must be between 7am and 6pm",
+            test: function (value) {
+              const time = parseInt(value.split(":")[0]);
+              return time >= 7 && time < 18;
+            },
+          })
+          .required("End time is required"),
+      }),
+    )
+    .test("check-overlap", "Schedules should not overlap", (value) => {
+      return !checkOverlap(value);
     }),
-  ),
 });
 
 export default function AddSubjectModalForm() {
@@ -266,6 +299,13 @@ export default function AddSubjectModalForm() {
             Add another schedule
           </Button>
         </main>
+
+        {/* Add a conditional rendering for the error message */}
+        {form.formState.errors.schedules && (
+          <p className="text-center text-red-500">
+            {form.formState.errors.schedules.message}
+          </p>
+        )}
 
         <DialogFooter>
           <Button type="submit">Add subject</Button>
