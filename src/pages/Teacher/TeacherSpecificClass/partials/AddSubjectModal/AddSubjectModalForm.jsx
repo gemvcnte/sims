@@ -30,7 +30,13 @@ const schema = yup.object().shape({
   selectedTeacher: yup.string().required("Teacher is required"),
   schedules: yup.array().of(
     yup.object().shape({
-      day: yup.string().required("Day is required"),
+      day: yup
+        .string()
+        .oneOf(
+          ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "Invalid day",
+        )
+        .required("Day is required"),
       startTime: yup
         .string()
         .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid start time")
@@ -150,24 +156,44 @@ export default function AddSubjectModalForm() {
                 </Button>
               )}
 
-              <Label htmlFor={`day-${index}`} className="text-right">
-                Day
-              </Label>
-              <select
-                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                id={`day-${index}`}
-                value={schedule.day}
-                onChange={(e) => updateSchedule(index, "day", e.target.value)}
-              >
-                <option value="" disabled>
-                  Select Day
-                </option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-              </select>
+              <FormField
+                control={form.control}
+                name={`schedules[${index}].day`}
+                render={({ field }) => (
+                  <FormItem>
+                    <section className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel
+                        htmlFor={`day-${index}`}
+                        className="text-right"
+                      >
+                        Day
+                      </FormLabel>
+                      <FormControl>
+                        <select
+                          {...field}
+                          className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          id={`day-${index}`}
+                          value={schedule.day}
+                          onChange={(e) => {
+                            updateSchedule(index, "day", e.target.value);
+                            field.onChange(e); // This should be sufficient for controlled inputs
+                          }}
+                        >
+                          <option value="" disabled>
+                            Select Day
+                          </option>
+                          <option value="Monday">Monday</option>
+                          <option value="Tuesday">Tuesday</option>
+                          <option value="Wednesday">Wednesday</option>
+                          <option value="Thursday">Thursday</option>
+                          <option value="Friday">Friday</option>
+                        </select>
+                      </FormControl>
+                    </section>
+                    <FormMessage className="text-center" />
+                  </FormItem>
+                )}
+              />
 
               <Label htmlFor={`startTime-${index}`} className="text-right">
                 Start Time
