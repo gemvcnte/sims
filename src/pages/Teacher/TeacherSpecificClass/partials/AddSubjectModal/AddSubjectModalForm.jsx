@@ -1,0 +1,188 @@
+import React from "react";
+import * as yup from "yup";
+import { Form, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import SelectTeacherCombobox from "../SelectTeacherCombobox";
+import { Button } from "@/components/ui/button";
+import useAddSubjectModal from "./useAddSubjectModal";
+
+const schema = yup.object().shape({
+  subjectName: yup
+    .string()
+    .min(2, "Subject name must be at least 2 characters")
+    .max(255, "Subject name must be at most 255 characters")
+    .required("Subject name is required"),
+  selectedTeacher: yup.string().required("Teacher is required"),
+  schedules: yup.array().of(
+    yup.object().shape({
+      day: yup.string().required("Day is required"),
+      startTime: yup
+        .string()
+        .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid start time")
+        .test({
+          name: "start-time-validation",
+          message: "Start time must be between 7am and 6pm",
+          test: function (value) {
+            const time = parseInt(value.split(":")[0]);
+            return time >= 7 && time < 18;
+          },
+        })
+        .required("Start time is required"),
+      endTime: yup
+        .string()
+        .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid end time")
+        .test({
+          name: "end-time-validation",
+          message: "End time must be between 7am and 6pm",
+          test: function (value) {
+            const time = parseInt(value.split(":")[0]);
+            return time >= 7 && time < 18;
+          },
+        })
+        .required("End time is required"),
+    }),
+  ),
+});
+
+export default function AddSubjectModalForm() {
+  const {
+    subjectName,
+    setSubjectName,
+    setSelectedTeacher,
+    schedules,
+    handleSaveChanges,
+    addSchedule,
+    removeSchedule,
+    updateSchedule,
+  } = useAddSubjectModal();
+
+  const form = useForm({
+    resolver: yupResolver(schema),
+  });
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSaveChanges)}>
+        <DialogHeader>
+          <DialogTitle>Add a Subject</DialogTitle>
+
+          <DialogDescription className="md:max-w-[80%]">
+            Let's add a new subject. Fill in the details below.
+          </DialogDescription>
+        </DialogHeader>
+
+        <main className="grid h-80 gap-4 overflow-y-auto py-4">
+          <FormField
+            control={form.control}
+            name="subjectName"
+            render={({ field }) => (
+              <FormItem className="grid grid-cols-4 items-center gap-4">
+                <FormControl>
+                  <Label htmlFor="name" className="text-right">
+                    Subject <span className="hidden sm:inline">Name</span>
+                  </Label>
+                  <Input
+                    {...field}
+                    id="name"
+                    className="col-span-3"
+                    placeholder="Enter Subject Name"
+                    value={subjectName}
+                    onChange={(e) => setSubjectName(e.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <section className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="teacher" className="text-right">
+              Teacher
+            </Label>
+            <SelectTeacherCombobox onSelectTeacher={setSelectedTeacher} />
+          </section>
+
+          {schedules.map((schedule, index) => (
+            <div
+              key={index}
+              className="mt-8 grid grid-cols-4 items-center gap-4"
+            >
+              {schedules.length > 1 && (
+                <Button
+                  variant="text"
+                  className="col-span-4 text-red-600"
+                  onClick={() => removeSchedule(index)}
+                >
+                  Remove
+                </Button>
+              )}
+
+              <Label htmlFor={`day-${index}`} className="text-right">
+                Day
+              </Label>
+              <select
+                className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id={`day-${index}`}
+                value={schedule.day}
+                onChange={(e) => updateSchedule(index, "day", e.target.value)}
+              >
+                <option value="" disabled>
+                  Select Day
+                </option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+              </select>
+
+              <Label htmlFor={`startTime-${index}`} className="text-right">
+                Start Time
+              </Label>
+              <Input
+                className="col-span-3"
+                id={`startTime-${index}`}
+                type="time"
+                value={schedule.startTime}
+                onChange={(e) =>
+                  updateSchedule(index, "startTime", e.target.value)
+                }
+              />
+
+              <Label htmlFor={`endTime-${index}`} className="text-right">
+                End Time
+              </Label>
+              <Input
+                className="col-span-3"
+                id={`endTime-${index}`}
+                type="time"
+                value={schedule.endTime}
+                onChange={(e) =>
+                  updateSchedule(index, "endTime", e.target.value)
+                }
+              />
+            </div>
+          ))}
+
+          <Button variant="outline" onClick={addSchedule}>
+            Add another schedule
+          </Button>
+        </main>
+
+        <Button type="submit">Add subject</Button>
+      </form>
+    </Form>
+  );
+}
