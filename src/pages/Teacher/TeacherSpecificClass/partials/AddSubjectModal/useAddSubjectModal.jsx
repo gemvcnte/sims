@@ -37,7 +37,8 @@ export default function useAddSubjectModal() {
       fetchClassDetails();
       closeModal();
     } catch (error) {
-      showErrorNotification("Error adding subject:", error.message);
+      // showErrorNotification("Error adding subject:", error.message);
+      showErrorNotification(error.response.data.message);
     }
   };
 
