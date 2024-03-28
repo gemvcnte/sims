@@ -683,12 +683,18 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
   const classroom = await Classroom.findById(classId);
 
   if (!classroom) {
-    return res.status(404).json({ message: "Class not found." });
+    return res.status(404).json({ message: "Oops! Couldn't find that class." });
   }
 
   if (classroom.adviser !== req.user.username) {
     return res.status(403).json({
-      message: "Unauthorized: You are not the adviser of this class.",
+      message: "Uh-oh! You're not the adviser of this class. Unauthorized access.",
+    });
+  }
+
+  if (classroom.subjects.length >= 15) {
+    return res.status(400).json({
+      message: "Whoops! You've already reached the maximum of 15 subjects for this class.",
     });
   }
 
@@ -700,8 +706,10 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
 
   await classroom.save();
 
-  res.status(201).json({ message: "Subject added to class successfully." });
+  res.status(201).json({ message: "Success! Subject has been added to the class." });
 });
+
+
 
 
 const updateSubjectClass = asyncHandler(async (req, res) => {
