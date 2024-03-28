@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 import { useAuth } from "@/contexts/AuthContext";
+import useActiveClasses from "@/hooks/useActiveClasses";
 
 export default function AdminSidebarTeacherMode() {
   const location = useLocation();
@@ -36,6 +37,8 @@ export default function AdminSidebarTeacherMode() {
 
   const { logout } = useAuth();
 
+  const isActiveClasses = useActiveClasses(["/class", /^\/class\//]);
+
   return (
     !isOnRegistrationPage &&
     !isAdminMode && (
@@ -49,7 +52,11 @@ export default function AdminSidebarTeacherMode() {
           Dashboard
         </SidebarItem>
 
-        <SidebarItem to="classes" icon="mdi:google-classroom">
+        <SidebarItem
+          to="classes"
+          icon="mdi:google-classroom"
+          className={isActiveClasses}
+        >
           Classes
         </SidebarItem>
 

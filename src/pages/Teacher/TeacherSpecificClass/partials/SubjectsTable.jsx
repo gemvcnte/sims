@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/table";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import AddSubjectModal from "./AddSubjectModal";
-import UpdateSubjectModal from "./UpdateSubjectModal";
 import { Icon } from "@iconify/react";
 import { DeleteSubjectModal } from "./DeleteSubjectModal";
 import { isClassAdviser } from "../helpers/isClassAdviser";
+import { ModalProvider } from "./AddSubjectModal/AddSubjectModal.hooks";
+import UpdateSubjectModal from "./UpdateSubjectModal";
+import { UpdateModalProvider } from "./UpdateSubjectModal/AddSubjectModal.hooks";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -26,7 +28,11 @@ export default function SubjectsTable() {
 
   return (
     <main className="p-4">
-      {isAdviser && <AddSubjectModal onSuccess={() => fetchClassDetails()} />}
+      {isAdviser && (
+        <ModalProvider>
+          <AddSubjectModal />
+        </ModalProvider>
+      )}
 
       <Table>
         {classDetails.subjects.length === 0 && (
@@ -54,10 +60,12 @@ export default function SubjectsTable() {
               </TableCell>
               <TableCell>{subject.subjectTeacher}</TableCell>
               {isAdviser ? (
-                <UpdateSubjectModal
-                  onSuccess={() => fetchClassDetails()}
-                  subject={subject}
-                />
+                <UpdateModalProvider>
+                  <UpdateSubjectModal
+                    onSuccess={() => fetchClassDetails()}
+                    subject={subject}
+                  />
+                </UpdateModalProvider>
               ) : (
                 <TableCell></TableCell>
               )}
@@ -69,6 +77,7 @@ export default function SubjectsTable() {
               ) : (
                 <TableCell></TableCell>
               )}
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>
