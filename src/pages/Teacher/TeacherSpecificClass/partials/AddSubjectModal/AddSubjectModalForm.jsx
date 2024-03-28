@@ -1,5 +1,4 @@
 import React from "react";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -20,97 +19,7 @@ import { Input } from "@/components/ui/input";
 import SelectTeacherCombobox from "../SelectTeacherCombobox";
 import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
-import moment from "moment";
-
-const checkOverlap = (schedules) => {
-  for (let i = 0; i < schedules.length - 1; i++) {
-    for (let j = i + 1; j < schedules.length; j++) {
-      const schedule1 = schedules[i];
-      const schedule2 = schedules[j];
-
-      // Convert start and end times to moment objects
-      const start1 = moment(schedule1.startTime, "HH:mm");
-      const end1 = moment(schedule1.endTime, "HH:mm");
-      const start2 = moment(schedule2.startTime, "HH:mm");
-      const end2 = moment(schedule2.endTime, "HH:mm");
-
-      // Check if the schedules are on different days
-      if (schedule1.day !== schedule2.day) {
-        continue; // Skip if schedules are on different days
-      }
-
-      // Check for overlap within the same day
-      if (
-        start1.isBetween(start2, end2) ||
-        end1.isBetween(start2, end2) ||
-        start2.isBetween(start1, end1) ||
-        end2.isBetween(start1, end1)
-      ) {
-        // If overlap found, construct and return the overlapping schedule message
-        const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
-        return overlappingSchedule;
-      }
-    }
-  }
-  return false; // No overlapping schedules found
-};
-
-const schema = yup.object().shape({
-  subjectName: yup
-    .string()
-    .min(2, "Subject name must be at least 2 characters")
-    .max(255, "Subject name must be at most 255 characters")
-    .required("Subject name is required"),
-  selectedTeacher: yup.string().required("Teacher is required"),
-  schedules: yup
-    .array()
-    .of(
-      yup.object().shape({
-        day: yup
-          .string()
-          .oneOf(
-            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            "Invalid day",
-          )
-          .required("Day is required"),
-        startTime: yup
-          .string()
-          .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid start time")
-          .test({
-            name: "start-time-validation",
-            message: "Start time must be between 7am and 6pm",
-            test: function (value) {
-              const time = parseInt(value.split(":")[0]);
-              return time >= 7 && time < 18;
-            },
-          })
-          .required("Start time is required"),
-        endTime: yup
-          .string()
-          .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid end time")
-          .test({
-            name: "end-time-validation",
-            message: "End time must be greater than start time",
-            test: function (value, { parent }) {
-              const startTime = parent.startTime;
-              // Parse time strings into Date objects for comparison
-              const startTimeObj = new Date(`2000-01-01T${startTime}`);
-              const endTimeObj = new Date(`2000-01-01T${value}`);
-              // Compare the parsed times
-              return endTimeObj > startTimeObj;
-            },
-          })
-          .required("End time is required"),
-      }),
-    )
-    .test(
-      "check-overlap",
-      "Oops! Looks like some schedules are overlapping. Please adjust your schedule so they don't overlap.",
-      (value) => {
-        return !checkOverlap(value);
-      },
-    ),
-});
+import { schema } from "./schema";
 
 export default function AddSubjectModalForm() {
   const {
