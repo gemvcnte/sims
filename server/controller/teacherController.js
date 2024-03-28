@@ -698,11 +698,20 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
     });
   }
 
-  classroom.subjects.push({
+  const studentLrns = classroom.students.map(student => student.lrn);
+
+  const newSubject = {
     subjectName,
     subjectTeacher,
-    schedules, 
-  });
+    schedules,
+    grades: studentLrns.map(lrn => ({
+      lrn,
+      p1Grade: "",
+      p2Grade: "",
+    })),
+  };
+
+  classroom.subjects.push(newSubject);
 
   await classroom.save();
 
