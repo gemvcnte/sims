@@ -286,9 +286,7 @@ const AllStudentsTable = () => {
                   </svg>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                <p>Reload Data</p>
-              </TooltipContent>
+              {/* <TooltipContent><p>Reload Data</p></TooltipContent> */}
             </Tooltip>
           </TooltipProvider>
         </section>

@@ -59,6 +59,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import DeleteSectionAlertDialog from "@/components/delete-section-alert-dialog";
+import ExportCsvButton from "@/components/export-csv-button";
 
 const AllClassesDataTable = () => {
   const navigate = useNavigate();
@@ -149,6 +150,7 @@ const AllClassesDataTable = () => {
       // header: "Students",
       cell: ({ row }) => <div className="">{row.original.students.length}</div>,
     },
+
     {
       accessorKey: "totalSubjects",
       header: "Total Subjects",
@@ -184,7 +186,9 @@ const AllClassesDataTable = () => {
 
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
-  const [columnVisibility, setColumnVisibility] = useState({});
+  const [columnVisibility, setColumnVisibility] = useState({
+    totalSubjects: false,
+  });
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
@@ -227,10 +231,34 @@ const AllClassesDataTable = () => {
     navigate(`${classId}`);
   };
 
+  console.log(pendingApplications);
+
+  const csvData = pendingApplications.map((section) => ({
+    "SECTION NAME": section.sectionName,
+    "GRADE LEVEL": section.gradeLevel,
+    ADVISER: section.adviser,
+    "SCHOOL YEAR": section.schoolYear,
+    SEMESTER: section.semester,
+    STRAND: section.strand,
+    "TOTAL STUDENTS": section.students.length,
+    "TOTAL SUBJECTS": section.subjects.length,
+  }));
+
+  const csvHeaders = [
+    { label: "SECTION NAME", key: "SECTION NAME" },
+    { label: "GRADE LEVEL", key: "GRADE LEVEL" },
+    { label: "STRAND", key: "STRAND" },
+    { label: "ADVISER", key: "ADVISER" },
+    { label: "SCHOOL YEAR", key: "SCHOOL YEAR" },
+    { label: "SEMESTER", key: "SEMESTER" },
+    { label: "TOTAL STUDENTS", key: "TOTAL STUDENTS" },
+    { label: "TOTAL SUBJECTS", key: "TOTAL SUBJECTS" },
+  ];
+
   return (
     <div className="w-full px-4">
-      <div className="flex items-center justify-between gap-2 py-4">
-        <section className="flex w-full gap-2">
+      <div className="flex items-center justify-between gap-2 overflow-auto py-4">
+        <section className="flex gap-2">
           {/* <Input
             placeholder="Filter lrns..."
             value={table.getColumn("lrn")?.getFilterValue() || ""}
@@ -245,17 +273,31 @@ const AllClassesDataTable = () => {
             onChange={(event) =>
               table.getColumn("sectionName")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="min-w-[30ch] lg:min-w-[50ch]"
           />
           <Drawer dismissible={true}>
             <DrawerTrigger>
-              <Button variant="outline">Filters</Button>
+              <Button variant="outline" className="flex gap-2">
+                <span className="hidden sm:inline">Filters</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-filter"
+                >
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+              </Button>
             </DrawerTrigger>
             <AllClassesFiltersDrawer />
           </Drawer>
-        </section>
 
-        <section className="flex w-full justify-end gap-2">
           <TooltipProvider delayDuration={10}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -264,7 +306,9 @@ const AllClassesDataTable = () => {
                   onClick={() => {
                     refetchData();
                   }}
+                  className="flex gap-2"
                 >
+                  <span className="hidden sm:inline">Refresh Data</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="15"
@@ -284,11 +328,17 @@ const AllClassesDataTable = () => {
                   </svg>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                <p>Reload Data</p>
-              </TooltipContent>
+              {/* <TooltipContent><p>Reload Data</p></TooltipContent> */}
             </Tooltip>
           </TooltipProvider>
+        </section>
+
+        <section className="flex w-full justify-end gap-2">
+          <ExportCsvButton
+            data={csvData}
+            headers={csvHeaders}
+            filename="sections.csv"
+          />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
