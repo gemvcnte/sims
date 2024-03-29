@@ -23,6 +23,7 @@ import { SelectSeparator } from "@/components/ui/select";
 import { unarchiveStudent } from "@/services/api/admin/unarchiveStudent";
 import { useAllStudents } from "../hooks/useAllStudents";
 import { DeleteAccountConfirmationAlertDialog } from "@/components/delete-account-confirmation-alert-dialog";
+import ExportCsvButton from "@/components/export-csv-button";
 
 const InputField = ({
   type,
@@ -80,10 +81,78 @@ export default function ViewArchivedStudentProfileModal({
     }
   };
 
+  // Initialize an empty array to store CSV data
+  const csvData = [];
+
+  // Loop through each school year in the application object
+  application.schoolYear.forEach((yearData, index) => {
+    // Create an object for each school year and push it to csvData array
+    csvData.push({
+      REMARKS: application.archivedRemarks,
+      FIRSTNAME: application.firstName,
+      MIDDLENAME: application.middleName || "",
+      LASTNAME: application.lastName,
+      LRN: application.lrn,
+      BIRTHDATE: application.birthDate,
+      GENDER: application.gender,
+      CURRENT_ADDRESS: application.currentAddress,
+      EMAIL: application.emailAddress,
+      GUARDIAN_NAME: application.guardianName,
+      GUARDIAN_CONTACT_NUMBER: application.guardianContactNumber,
+      GUARDIAN_RELATIONSHIP: application.guardianRelationship,
+      RELIGION: application.religion || "",
+      PROVINCE: application.province || "",
+      CITY: application.city || "",
+      ZIP_CODE: application.zipCode || "",
+      BARANGAY: application.barangay || "",
+      SCHOOL_YEAR: yearData.year,
+      SEMESTER: yearData.semester,
+      GRADE_LEVEL: yearData.gradeLevel,
+      TRACK: yearData.track,
+      STRAND: yearData.strand,
+      SECTION_NAME: yearData.sectionName,
+    });
+  });
+
+  // Define CSV headers
+  const csvHeaders = [
+    { label: "REMARKS", key: "REMARKS" },
+    { label: "LAST NAME", key: "LASTNAME" },
+    { label: "FIRST NAME", key: "FIRSTNAME" },
+    { label: "MIDDLE NAME", key: "MIDDLENAME" },
+    { label: "LRN", key: "LRN" },
+    { label: "BIRTHDATE", key: "BIRTHDATE" },
+    { label: "GENDER", key: "GENDER" },
+    { label: "CURRENT ADDRESS", key: "CURRENT_ADDRESS" },
+    { label: "EMAIL", key: "EMAIL" },
+    { label: "GUARDIAN NAME", key: "GUARDIAN_NAME" },
+    { label: "GUARDIAN CONTACT NUMBER", key: "GUARDIAN_CONTACT_NUMBER" },
+    { label: "GUARDIAN RELATIONSHIP", key: "GUARDIAN_RELATIONSHIP" },
+    { label: "RELIGION", key: "RELIGION" },
+    { label: "PROVINCE", key: "PROVINCE" },
+    { label: "CITY", key: "CITY" },
+    { label: "ZIP CODE", key: "ZIP_CODE" },
+    { label: "BARANGAY", key: "BARANGAY" },
+    { label: "SCHOOL YEAR", key: "SCHOOL_YEAR" },
+    { label: "SEMESTER", key: "SEMESTER" },
+    { label: "GRADE LEVEL", key: "GRADE_LEVEL" },
+    { label: "TRACK", key: "TRACK" },
+    { label: "STRAND", key: "STRAND" },
+    { label: "SECTION NAME", key: "SECTION_NAME" },
+  ];
+
   return (
     <DialogContent
       className={"max-h-[80%] overflow-y-scroll px-10 lg:max-w-[720px]"}
     >
+      <section className="mt-4 flex w-full justify-end">
+        <ExportCsvButton
+          data={csvData}
+          headers={csvHeaders}
+          filename={`ArchivedStudentProfile_${application.firstName}_${application.lastName}.csv`}
+        />
+      </section>
+
       <form onSubmit={hanldeUnarchiveStudentButton}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
