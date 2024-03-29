@@ -51,21 +51,57 @@ const AllTeachersTable = () => {
   }
 
   const columns = [
+    // {
+    //   accessorKey: "lastName",
+    //   header: "Last Name",
+    //   cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+    // },
+
     {
       accessorKey: "lastName",
-      header: "Last Name",
-      cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Last Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="">{row.getValue("lastName")}</div>,
     },
+
     {
       accessorKey: "firstName",
       header: "First Name",
       cell: ({ row }) => <div>{row.getValue("firstName")}</div>,
     },
+
     {
       accessorKey: "username",
-      header: "Username",
-      cell: ({ row }) => <div>{row.getValue("username")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Username
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="">{row.getValue("username")}</div>,
     },
+
+    // {
+    //   accessorKey: "username",
+    //   header: "Username",
+    //   cell: ({ row }) => <div>{row.getValue("username")}</div>,
+    // },
     {
       accessorKey: "viewProfile",
       header: "",
