@@ -295,7 +295,7 @@ export default function ViewArchivedTeacherProfileModal({
               Designation
             </Label>
             <InputField
-              type="number"
+              type="text"
               value={application.designation}
               onChange={(e) =>
                 handleInputChange("fatherContactNumber", e.target.value)
@@ -313,7 +313,7 @@ export default function ViewArchivedTeacherProfileModal({
               Specialization
             </Label>
             <InputField
-              type="number"
+              type="text"
               value={application.specialization}
               onChange={(e) =>
                 handleInputChange("fatherContactNumber", e.target.value)
