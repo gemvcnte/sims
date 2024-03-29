@@ -114,6 +114,8 @@ const PendingApplicationsDataTable = () => {
     LASTNAME: student.lastName,
     LRN: student.lrn,
     STATUS: student.status,
+    "SCHOOL YEAR": student.schoolYear[0].year,
+    SEMESTER: student.schoolYear[0].semester,
   }));
 
   const csvHeaders = [
@@ -121,6 +123,8 @@ const PendingApplicationsDataTable = () => {
     { label: "FIRST NAME", key: "FIRSTNAME" },
     { label: "MIDDLE NAME", key: "MIDDLENAME" },
     { label: "LRN", key: "LRN" },
+    { label: "SCHOOL YEAR", key: "SCHOOL YEAR" },
+    { label: "SEMESTER", key: "SEMESTER" },
     { label: "STATUS", key: "STATUS" },
   ];
 
