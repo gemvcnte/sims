@@ -51,9 +51,9 @@ const AllTeachersTable = () => {
   }));
 
   const csvHeaders = [
+    { label: "LAST NAME", key: "LASTNAME" },
     { label: "FIRST NAME", key: "FIRSTNAME" },
     { label: "MIDDLE NAME", key: "MIDDLENAME" },
-    { label: "LAST NAME", key: "LASTNAME" },
     { label: "USERNAME", key: "USERNAME" },
   ];
 

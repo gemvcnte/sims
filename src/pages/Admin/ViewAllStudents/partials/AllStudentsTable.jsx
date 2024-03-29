@@ -55,9 +55,9 @@ const AllStudentsTable = () => {
   }));
 
   const csvHeaders = [
+    { label: "LAST NAME", key: "LASTNAME" },
     { label: "FIRST NAME", key: "FIRSTNAME" },
     { label: "MIDDLE NAME", key: "MIDDLENAME" },
-    { label: "LAST NAME", key: "LASTNAME" },
     { label: "LRN", key: "LRN" },
     { label: "GRADE LEVEL", key: "GRADE LEVEL" },
     { label: "STRAND", key: "STRAND" },
