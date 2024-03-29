@@ -15,6 +15,9 @@ export default function AdminSpecificClass() {
     <ClassDetailsProvider>
       <main className="w-full">
         <Topbar>
+          <span className="hidden text-muted-foreground sm:inline">
+            Section Name:{" "}
+          </span>
           <ClassName />
         </Topbar>
 
