@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArchiveAccountConfirmationAlertDialog } from "@/components/achive-account-confirmation-alert-dialog";
+import ExportCsvButton from "@/components/export-csv-button";
 
 const InputField = ({
   type,
@@ -52,8 +53,60 @@ export default function ViewTeacherProfileModal({
     onClose && onClose();
   };
 
+  const csvData = [
+    {
+      "FIRST NAME": application.firstName,
+      "MIDDLE NAME": application.middleName,
+      "LAST NAME": application.lastName,
+      "EXTENSION NAME": application.extensionName,
+      "BIRTH DATE": application.birthDate,
+      GENDER: application.gender,
+      USERNAME: application.username,
+      "EMAIL ADDRESS": application.emailAddress,
+      "CURRENT ADDRESS": application.currentAddress,
+      "NUMBER OF YEARS TEACHING": application.numOfYearsTeaching,
+      DESIGNATION: application.designation,
+      SPECIALIZATION: application.specialization,
+      "HIGHEST EDUCATIONAL ATTAINMENT":
+        application.highestEducationalAttainment,
+      TIN: application.tinNumber,
+      "GSIS BP": application.gsisNumber,
+      "PLANTILLA NUMBER": application.plantillaNumber,
+    },
+  ];
+
+  const csvHeaders = [
+    { label: "FIRST NAME", key: "FIRST NAME" },
+    { label: "MIDDLE NAME", key: "MIDDLE NAME" },
+    { label: "LAST NAME", key: "LAST NAME" },
+    { label: "EXTENSION NAME", key: "EXTENSION NAME" },
+    { label: "BIRTH DATE", key: "BIRTH DATE" },
+    { label: "GENDER", key: "GENDER" },
+    { label: "USERNAME", key: "USERNAME" },
+    { label: "EMAIL ADDRESS", key: "EMAIL ADDRESS" },
+    { label: "CURRENT ADDRESS", key: "CURRENT ADDRESS" },
+    { label: "NUMBER OF YEARS TEACHING", key: "NUMBER OF YEARS TEACHING" },
+    { label: "DESIGNATION", key: "DESIGNATION" },
+    { label: "SPECIALIZATION", key: "SPECIALIZATION" },
+    {
+      label: "HIGHEST EDUCATIONAL ATTAINMENT",
+      key: "HIGHEST EDUCATIONAL ATTAINMENT",
+    },
+    { label: "TIN", key: "TIN" },
+    { label: "GSIS BP", key: "GSIS BP" },
+    { label: "PLANTILLA NUMBER", key: "PLANTILLA NUMBER" },
+  ];
+
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
+      <section className="mt-4 flex w-full justify-end">
+        <ExportCsvButton
+          data={csvData}
+          headers={csvHeaders}
+          filename={`TeacherProfile_${application.firstName}_${application.lastName}.csv`}
+        />
+      </section>
+
       <form onSubmit={handleSaveChanges}>
         {/* <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -202,12 +255,8 @@ export default function ViewTeacherProfileModal({
               Designation
             </Label>
             <InputField
-              type="number"
+              type="text"
               value={application.designation}
-              onChange={(e) =>
-                handleInputChange("fatherContactNumber", e.target.value)
-              }
-              name="fatherContactNumber"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
@@ -220,12 +269,8 @@ export default function ViewTeacherProfileModal({
               Specialization
             </Label>
             <InputField
-              type="number"
+              type="text"
               value={application.specialization}
-              onChange={(e) =>
-                handleInputChange("fatherContactNumber", e.target.value)
-              }
-              name="fatherContactNumber"
               className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
