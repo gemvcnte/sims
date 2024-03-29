@@ -150,8 +150,8 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
             target="_blank"
           >
             <Button
-              className="border-none bg-green-400"
-              variant="outline"
+              // className="border-none bg-green-400"
+              variant="secondary"
               type="button"
             >
               <Download className="mr-2 h-4 w-4" /> Export{" "}

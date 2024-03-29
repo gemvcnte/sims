@@ -500,8 +500,8 @@ export default function GradesTable() {
                     filename={`${selectedSubject}_grades.csv`}
                   >
                     <Button
-                      className="border-none bg-green-400"
-                      variant="outline"
+                      // className="border-none bg-green-400"
+                      variant="secondary"
                       type="button"
                     >
                       <Download className="mr-2 h-4 w-4" /> Export{" "}
