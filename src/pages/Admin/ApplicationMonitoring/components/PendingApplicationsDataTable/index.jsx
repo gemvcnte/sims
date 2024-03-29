@@ -62,6 +62,7 @@ import {
 import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import AllStudentsTableSkeleton from "@/pages/Admin/ViewAllStudents/partials/AllStudentsTableSkeleton";
 import ViewStudentApplicationModal from "../ViewStudentApplicationModal";
+import ExportCsvButton from "@/components/export-csv-button";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -106,6 +107,22 @@ const PendingApplicationsDataTable = () => {
 
   const { pendingApplications, loading, refetchData } =
     usePendingApplications();
+
+  const csvData = pendingApplications.map((student) => ({
+    FIRSTNAME: student.firstName,
+    MIDDLENAME: student.middleName,
+    LASTNAME: student.lastName,
+    LRN: student.lrn,
+    STATUS: student.status,
+  }));
+
+  const csvHeaders = [
+    { label: "LAST NAME", key: "LASTNAME" },
+    { label: "FIRST NAME", key: "FIRSTNAME" },
+    { label: "MIDDLE NAME", key: "MIDDLENAME" },
+    { label: "LRN", key: "LRN" },
+    { label: "STATUS", key: "STATUS" },
+  ];
 
   const columns = [
     {
@@ -259,8 +276,10 @@ const PendingApplicationsDataTable = () => {
 
   return (
     <div className="w-full px-4">
-      <div className="flex items-center gap-2 py-4">
-        {/* <Input
+      <div className="flex items-center justify-between gap-2 overflow-auto py-4">
+        <section className="flex gap-2">
+          {" "}
+          {/* <Input
             placeholder="Filter lrns..."
             value={table.getColumn("lrn")?.getFilterValue() || ""}
             onChange={(event) =>
@@ -268,48 +287,18 @@ const PendingApplicationsDataTable = () => {
             }
             className="max-w-sm"
           /> */}
-        <Input
-          placeholder="Search by Last Name..."
-          value={table.getColumn("lastName")?.getFilterValue() || ""}
-          onChange={(event) =>
-            table.getColumn("lastName")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <Drawer dismissible={true}>
-          <DrawerTrigger>
-            <Button variant="secondary" className="flex gap-2">
-              <span className="hidden sm:inline">Filters</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-filter"
-              >
-                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-              </svg>
-            </Button>
-          </DrawerTrigger>
-          <PendingFiltersDrawer />
-        </Drawer>
-
-        <TooltipProvider delayDuration={10}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  refetchData();
-                }}
-                className="flex gap-2"
-              >
-                <span className="hidden sm:inline">Refresh Data</span>
+          <Input
+            placeholder="Search by Last Name..."
+            value={table.getColumn("lastName")?.getFilterValue() || ""}
+            onChange={(event) =>
+              table.getColumn("lastName")?.setFilterValue(event.target.value)
+            }
+            className="min-w-[27ch] lg:min-w-[50ch]"
+          />
+          <Drawer dismissible={true}>
+            <DrawerTrigger>
+              <Button variant="secondary" className="flex gap-2">
+                <span className="hidden sm:inline">Filters</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="15"
@@ -317,50 +306,88 @@ const PendingApplicationsDataTable = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-refresh-cw"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-filter"
                 >
-                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                  <path d="M21 3v5h-5" />
-                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                  <path d="M8 16H3v5" />
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                 </svg>
               </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Reload Data</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
+            </DrawerTrigger>
+            <PendingFiltersDrawer />
+          </Drawer>
+          <TooltipProvider delayDuration={10}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    refetchData();
+                  }}
+                  className="flex gap-2"
+                >
+                  <span className="hidden sm:inline">Refresh Data</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-refresh-cw"
                   >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M8 16H3v5" />
+                  </svg>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Reload Data</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </section>
+
+        <section className="flex gap-2">
+          <ExportCsvButton
+            data={csvData}
+            headers={csvHeaders}
+            filename="Pending_Student_Applications.csv"
+          />
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </section>
       </div>
       <div className="rounded-md ">
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
