@@ -134,7 +134,7 @@ const AllAdminsTable = () => {
 
   return (
     <div className="w-full px-4">
-      <div className="flex items-center justify-between gap-2 overflow-auto py-4">
+      <div className="flex items-center justify-between gap-2 overflow-auto py-4 lg:overflow-visible">
         <section className="flex gap-2">
           {" "}
           <Input
