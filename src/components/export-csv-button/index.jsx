@@ -7,8 +7,8 @@ export default function ExportCsvButton({ data, headers, filename }) {
   if (!data || !headers || !filename) {
     return (
       <Button
-        className="border-none bg-green-400"
-        variant="outline"
+        // className="border-none bg-green-400"
+        variant="secondary"
         type="button"
         disabled
       >
@@ -21,8 +21,8 @@ export default function ExportCsvButton({ data, headers, filename }) {
   if (data.length === 0) {
     return (
       <Button
-        className="border-none bg-green-400"
-        variant="outline"
+        // className="border-none bg-green-400"
+        variant="secondary"
         type="button"
         disabled
       >
@@ -35,8 +35,8 @@ export default function ExportCsvButton({ data, headers, filename }) {
   return (
     <CSVLink data={data} headers={headers} filename={filename}>
       <Button
-        className="border-none bg-green-400"
-        variant="outline"
+        // className="border-none bg-green-400"
+        variant="secondary"
         type="button"
       >
         <Download className="mr-2 h-4 w-4" /> Export{" "}

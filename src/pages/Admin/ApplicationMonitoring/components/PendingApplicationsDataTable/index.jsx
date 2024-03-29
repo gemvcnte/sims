@@ -278,7 +278,7 @@ const PendingApplicationsDataTable = () => {
         />
         <Drawer dismissible={true}>
           <DrawerTrigger>
-            <Button variant="outline" className="flex gap-2">
+            <Button variant="secondary" className="flex gap-2">
               <span className="hidden sm:inline">Filters</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
