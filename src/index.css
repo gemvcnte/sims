@@ -65,12 +65,12 @@ body {
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
-* {
+/* * {
   scrollbar-width: auto;
   scrollbar-color: #7a7a7a #ffffff;
 }
 
-/* Chrome, Edge, and Safari */
+Chrome, Edge, and Safari
 *::-webkit-scrollbar {
   width: 8px;
 }
@@ -83,7 +83,7 @@ body {
   background-color: #7a7a7a;
   border-radius: 8px;
   border: 3px solid #ffffff;
-}
+} */
 
 @layer base {
   @media (max-width: 480px) {
