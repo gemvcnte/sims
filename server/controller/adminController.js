@@ -1859,7 +1859,7 @@ const unarchiveTeacher = asyncHandler(async (req, res) => {
     const archivedTeacher = await ArchivedTeacher.findById(teacherId);
 
     if (!archivedTeacher) {
-      return res.status(404).json({ message: "Archived teacher not found" });
+      return res.status(404).json({ message: "Oops! Couldn't find the archived teacher." });
     }
 
     // Create a new teacher document with the same fields as the archived techer
@@ -1916,6 +1916,15 @@ const archiveAdmin = asyncHandler(async (req, res) => {
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
+
+     // Get the ID of the admin making the request
+     const requestingAdminId = req.user._id; // Assuming the user ID is stored in req.user.id
+     console.log(requestingAdminId)
+
+     // Check if the admin making the request is trying to archive themselves
+     if (adminId === requestingAdminId) {
+      return res.status(400).json({ message: "Oops! You can't archive yourself" });
+     }
 
     // Create a new archived admin document with the same fields as the admin
     const archivedAdmin = new ArchivedAdmin({
