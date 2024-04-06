@@ -1917,6 +1917,15 @@ const archiveAdmin = asyncHandler(async (req, res) => {
       return res.status(404).json({ message: "Admin not found" });
     }
 
+     // Get the ID of the admin making the request
+     const requestingAdminId = req.user._id; // Assuming the user ID is stored in req.user.id
+     console.log(requestingAdminId)
+
+     // Check if the admin making the request is trying to archive themselves
+     if (adminId === requestingAdminId) {
+      return res.status(400).json({ message: "Oops! You can't archive yourself" });
+     }
+
     // Create a new archived admin document with the same fields as the admin
     const archivedAdmin = new ArchivedAdmin({
       ...admin.toObject(), // Copy all fields from the existing admin
