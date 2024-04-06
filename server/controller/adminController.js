@@ -1859,7 +1859,7 @@ const unarchiveTeacher = asyncHandler(async (req, res) => {
     const archivedTeacher = await ArchivedTeacher.findById(teacherId);
 
     if (!archivedTeacher) {
-      return res.status(404).json({ message: "Archived teacher not found" });
+      return res.status(404).json({ message: "Oops! Couldn't find the archived teacher." });
     }
 
     // Create a new teacher document with the same fields as the archived techer
