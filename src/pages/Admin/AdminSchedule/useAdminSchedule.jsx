@@ -15,7 +15,7 @@ export const AdminScheduleProvider = ({ children }) => {
     try {
       const response = await axiosInstance.get(getScheduleEndpoint);
 
-      setSchedule(response.data);
+      setSchedule(response.data.data);
       setLoading(false);
     } catch (error) {
       setError(error.message);
