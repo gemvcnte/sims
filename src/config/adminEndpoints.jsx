@@ -79,3 +79,6 @@ export const unarchiveAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId
 export const deleteArchivedAdminEndpoint = `${baseUrl}/admin/archived/admins/:adminId`;
 
 export const deleteSectionEndpoint = `${baseUrl}/admin/class/:sectionId`;
+
+// Schedule
+export const getScheduleEndpoint = `${baseUrl}/teacher/schedule`;

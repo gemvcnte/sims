@@ -52,6 +52,10 @@ export default function AdminSidebarTeacherMode() {
           Dashboard
         </SidebarItem>
 
+        <SidebarItem to="schedule" icon="uil:schedule">
+          Schedule
+        </SidebarItem>
+
         <SidebarItem
           to="classes"
           icon="mdi:google-classroom"

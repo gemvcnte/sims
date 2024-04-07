@@ -21,6 +21,8 @@ import AdminSidebarTeacherMode from "@/components/layout/Sidebar/components/Admi
 import ArchiveStudents from "@/pages/Admin/ArchiveStudents";
 import ArchiveTeachers from "@/pages/Admin/ArchiveTeachers";
 import ArchiveAdmins from "@/pages/Admin/ArchiveAdmins";
+import AdminSchedule from "@/pages/Admin/AdminSchedule";
+import AdminScheduleLayout from "@/pages/Admin/AdminSchedule/layout";
 
 export default function AdminRouter() {
   return (
@@ -66,6 +68,8 @@ export default function AdminRouter() {
 
           <Route path="/all-classes" element={<AllClasses />} />
           <Route path="/all-classes/:id" element={<AdminSpecificClass />} />
+
+          <Route path="/schedule" element={<AdminScheduleLayout />} />
         </Routes>
       </div>
     </>
