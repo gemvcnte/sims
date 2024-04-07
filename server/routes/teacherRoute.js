@@ -94,4 +94,8 @@ router.get('/get-announcements', verifyToken, teacherController.getAnnouncements
 
 router.patch('/update-password', verifyToken, teacherController.updateTeacherPassword);
 
+router.get('/schedule', 
+verifyToken, 
+ teacherController.getTeacherSchedule);
+
 module.exports = router;
