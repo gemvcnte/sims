@@ -8,6 +8,8 @@ const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
 const { transporter } = require("../mailer");
 const { Admin } = require("../models/AdminModel");
+const { GlobalSettings } = require('../models/GlobalSettingsModel');
+
 
 //
 const teacherLogin = asyncHandler(async (req, res) => {
@@ -118,22 +120,6 @@ const updateTeacherProfile = asyncHandler(async (req, res) => {
       message: "Teacher profile updated successfully.",
       teacherData: teacherProfile,
     });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: `Internal server error. Please try again later.` });
-  }
-});
-
-const getTeacherSchedule = asyncHandler(async (req, res) => {
-  try {
-    const { _id } = req.user;
-
-    const teacherSchedule = await Teacher.findById(_id);
-
-    const schedule = await Schedule.find();
-
-    res.status(200).json({ message: "Teacher Schedule has been retrieved." });
   } catch (error) {
     res
       .status(500)
@@ -437,6 +423,73 @@ const getAssignedClasses = asyncHandler(async (req, res) => {
       .json({ message: "Internal server error. Please try again later." });
   }
 });
+
+
+
+const getTeacherSchedule = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.user;
+
+    // Get current school year and semester from global settings
+    const globalSettings = await GlobalSettings.findOne();
+    const { schoolYear, semester } = globalSettings;
+
+    // Find classes where the teacher is either adviser or subject teacher
+    const assignedClasses = await Classroom.find({
+      $and: [
+        {
+          $or: [
+            { adviser: username },
+            { subjects: { $elemMatch: { subjectTeacher: username } } },
+          ],
+        },
+        { schoolYear: schoolYear },
+        { semester: semester }
+      ],
+    });
+
+    // if (!assignedClasses || assignedClasses.length === 0) {
+    //   return res.status(404).json({
+    //     message: "Teacher not found or not assigned to any classes in the current school year and semester.",
+    //   });
+    // }
+
+    // Compile teacher's schedule
+    let teacherSchedule = {};
+
+    assignedClasses.forEach((classroom) => {
+      classroom.subjects.forEach((subject) => {
+        if (subject.subjectTeacher === username) {
+          // If the teacher is the subject teacher
+          subject.schedules.forEach((schedule) => {
+            if (!teacherSchedule[schedule.day]) {
+              teacherSchedule[schedule.day] = [];
+            }
+            teacherSchedule[schedule.day].push({
+              class: classroom.sectionName,
+              subject: subject.subjectName,
+              startTime: schedule.startTime,
+              endTime: schedule.endTime,
+            });
+          });
+        }
+      });
+    });
+
+    return res.status(200).json({
+      message: "Teacher schedule retrieved successfully",
+      data: teacherSchedule,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again later." });
+  }
+});
+
+
+
+
 
 
 const getSpecificClass = asyncHandler(async (req, res) => {
