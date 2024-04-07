@@ -12,6 +12,7 @@ const TeacherClasses = () => {
       <FilteredClassesProvider>
         <main className="w-full">
           <Topbar>MY SECTIONS</Topbar>
+
           <TeacherClassesFilter />
           <TeacherClassesTable />
         </main>

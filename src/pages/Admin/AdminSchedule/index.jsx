@@ -53,7 +53,12 @@ export default function AdminSchedule() {
                       ) {
                         return (
                           <div key={subject.subject}>
-                            <p>{subject.subject}</p>
+                            <p>
+                              {subject.subject} - <br />{" "}
+                              <span className="hidden sm:inline">
+                                ({subject.class})
+                              </span>
+                            </p>
                             <p>
                               {convertTo12HourFormat(startTime)} -{" "}
                               {convertTo12HourFormat(endTime)}
