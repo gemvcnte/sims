@@ -20,7 +20,7 @@ export default function TeacherSidebar() {
         Dashboard
       </SidebarItem>
 
-      <SidebarItem to="" icon="uil:schedule">
+      <SidebarItem to="schedule" icon="uil:schedule">
         Schedule
       </SidebarItem>
 
