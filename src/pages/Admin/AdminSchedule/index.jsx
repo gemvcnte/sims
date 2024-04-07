@@ -9,12 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAdminSchedule } from "./useAdminSchedule";
+import AdminScheduleSkeleton from "./index.skeleton";
 
 export default function AdminSchedule() {
   const { schedule, loading } = useAdminSchedule();
 
   if (loading) {
-    return <p>loading..</p>;
+    return <AdminScheduleSkeleton />;
   }
 
   return (
