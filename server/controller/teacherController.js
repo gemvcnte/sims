@@ -8,6 +8,8 @@ const generateAuthToken = require("../configs/auth");
 const bcryptjs = require("bcryptjs");
 const { transporter } = require("../mailer");
 const { Admin } = require("../models/AdminModel");
+const { GlobalSettings } = require('../models/GlobalSettingsModel');
+
 
 //
 const teacherLogin = asyncHandler(async (req, res) => {
@@ -424,24 +426,33 @@ const getAssignedClasses = asyncHandler(async (req, res) => {
 
 
 
-
 const getTeacherSchedule = asyncHandler(async (req, res) => {
   try {
     const { username } = req.user;
 
+    // Get current school year and semester from global settings
+    const globalSettings = await GlobalSettings.findOne();
+    const { schoolYear, semester } = globalSettings;
+
     // Find classes where the teacher is either adviser or subject teacher
     const assignedClasses = await Classroom.find({
-      $or: [
-        { adviser: username },
-        { subjects: { $elemMatch: { subjectTeacher: username } } },
+      $and: [
+        {
+          $or: [
+            { adviser: username },
+            { subjects: { $elemMatch: { subjectTeacher: username } } },
+          ],
+        },
+        { schoolYear: schoolYear },
+        { semester: semester }
       ],
     });
 
-    if (!assignedClasses || assignedClasses.length === 0) {
-      return res.status(404).json({
-        message: "Teacher not found or not assigned to any classes.",
-      });
-    }
+    // if (!assignedClasses || assignedClasses.length === 0) {
+    //   return res.status(404).json({
+    //     message: "Teacher not found or not assigned to any classes in the current school year and semester.",
+    //   });
+    // }
 
     // Compile teacher's schedule
     let teacherSchedule = {};
