@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 326 45% 100%;
-    --foreground: 326 57% 3%;
-    --muted: 146 16% 89%;
-    --muted-foreground: 146 1% 39%;
-    --popover: 0 0% 99%;
-    --popover-foreground: 326 57% 2%;
-    --card: 0 0% 99%;
-    --card-foreground: 326 57% 2%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --primary: 265.53 23.5% 71.96%;
-    --primary-foreground: 326 24% 10%;
-    --secondary: 146 24% 70%;
-    --secondary-foreground: 146 24% 10%;
-    --accent: 146 24% 70%;
-    --accent-foreground: 146 24% 10%;
-    --destructive: 9 91% 21%;
-    --destructive-foreground: 9 91% 81%;
-    --ring: 326 24% 70%;
+    --background: 178 60% 99%;
+    --foreground: 178 79% 4%;
+    --muted: 178 23% 87%;
+    --muted-foreground: 178 7% 38%;
+    --popover: 178 60% 98%;
+    --popover-foreground: 178 79% 3%;
+    --card: 178 60% 98%;
+    --card-foreground: 178 79% 3%;
+    --border: 178 4% 89%;
+    --input: 178 4% 89%;
+    --primary: 178 46% 51%;
+    --primary-foreground: 178 46% 11%;
+    --secondary: 178 5% 81%;
+    --secondary-foreground: 178 5% 21%;
+    --accent: 178 11% 73%;
+    --accent-foreground: 178 11% 13%;
+    --destructive: 11 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 178 46% 51%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 326 48% 3%;
-    --foreground: 326 36% 97%;
-    --muted: 146 16% 11%;
-    --muted-foreground: 146 1% 61%;
-    --popover: 326 48% 4%;
-    --popover-foreground: 326 36% 98%;
-    --card: 326 48% 4%;
-    --card-foreground: 326 36% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --primary: 326 24% 70%;
-    --primary-foreground: 326 24% 10%;
-    --secondary: 146 24% 70%;
-    --secondary-foreground: 146 24% 10%;
-    --accent: 146 24% 70%;
-    --accent-foreground: 146 24% 10%;
-    --destructive: 9 91% 45%;
+    --background: 178 51% 0%;
+    --foreground: 178 24% 98%;
+    --muted: 178 23% 13%;
+    --muted-foreground: 178 7% 62%;
+    --popover: 0 0% 1%;
+    --popover-foreground: 178 24% 99%;
+    --card: 0 0% 1%;
+    --card-foreground: 178 24% 99%;
+    --border: 178 4% 13%;
+    --input: 178 4% 13%;
+    --primary: 178 46% 51%;
+    --primary-foreground: 178 46% 11%;
+    --secondary: 178 7% 16%;
+    --secondary-foreground: 178 7% 76%;
+    --accent: 178 17% 23%;
+    --accent-foreground: 178 17% 83%;
+    --destructive: 11 84% 53%;
     --destructive-foreground: 0 0% 100%;
-    --ring: 326 24% 70%;
+    --ring: 178 46% 51%;
   }
 }
 
@@ -62,28 +62,6 @@ html,
 body {
   height: -webkit-fill-available;
 }
-
-/* ===== Scrollbar CSS ===== */
-/* Firefox */
-/* * {
-  scrollbar-width: auto;
-  scrollbar-color: #7a7a7a #ffffff;
-}
-
-Chrome, Edge, and Safari
-*::-webkit-scrollbar {
-  width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #7a7a7a;
-  border-radius: 8px;
-  border: 3px solid #ffffff;
-} */
 
 @layer base {
   @media (max-width: 480px) {

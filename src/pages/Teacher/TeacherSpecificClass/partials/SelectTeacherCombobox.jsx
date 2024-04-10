@@ -41,7 +41,7 @@ export default function SelectTeacherCombobox({
   }, []); // Empty dependency array ensures the effect runs only once after the initial render
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           {...field}
@@ -56,7 +56,7 @@ export default function SelectTeacherCombobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="max-h-[50svh] w-[200px] overflow-y-scroll p-0">
         <Command>
           <CommandInput placeholder="Search teacher..." />
           <CommandEmpty>No teacher found.</CommandEmpty>
