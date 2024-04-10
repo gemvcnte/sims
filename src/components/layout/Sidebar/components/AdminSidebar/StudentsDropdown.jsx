@@ -66,7 +66,7 @@ export function StudentsDropdown({}) {
         <DropdownMenuItem>
           <Link
             onClick={handleDropdownClick}
-            to="student-application-monitoring"
+            to="student-enrollment-monitoring"
             className="w-full"
           >
             Student Enrollment Monitoring
