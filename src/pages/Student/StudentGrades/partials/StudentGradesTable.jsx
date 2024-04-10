@@ -11,6 +11,7 @@ import {
   TableCaption,
 } from "@/components/ui/table";
 import { useAuth } from "@/contexts/AuthContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function StudentGradesTable({ setSectionName }) {
   const { user } = useAuth();
@@ -50,6 +51,8 @@ export default function StudentGradesTable({ setSectionName }) {
     return { p1Grade: "", p2Grade: "" };
   };
 
+  console.log(classDetails);
+
   const renderSubjects = () => {
     return classDetails?.subjects.map((subject) => {
       const p1Grade = getStudentGrades(subject).p1Grade;
@@ -68,18 +71,54 @@ export default function StudentGradesTable({ setSectionName }) {
             : "Failed"
           : null;
 
+      const p1GradeClassName =
+        roundedFinalGrade !== null && p1Grade < 75 ? "text-red-500" : "";
+
+      const p2GradeClassName =
+        roundedFinalGrade !== null && p2Grade < 75 ? "text-red-500" : "";
+
+      const roundedFinalGradeClassName =
+        roundedFinalGrade !== null && roundedFinalGrade < 75
+          ? "text-red-500"
+          : "";
+
+      const remarksClassName =
+        roundedFinalGrade !== null && remarks === "Failed"
+          ? "text-red-500"
+          : "";
+
       return (
         <TableRow key={subject._id}>
           <TableCell>{subject.subjectName}</TableCell>
           <TableCell>{subject.subjectTeacher}</TableCell>
-          <TableCell>{p1Grade}</TableCell>
-          <TableCell>{p2Grade}</TableCell>
-          <TableCell>{roundedFinalGrade}</TableCell>
-          <TableCell>{remarks}</TableCell>
+          <TableCell className={p1GradeClassName}>{p1Grade}</TableCell>
+          <TableCell className={p2GradeClassName}>{p2Grade}</TableCell>
+          <TableCell className={roundedFinalGradeClassName}>
+            {roundedFinalGrade}
+          </TableCell>
+          <TableCell className={remarksClassName}>{remarks}</TableCell>
         </TableRow>
       );
     });
   };
+
+  if (loading) {
+    return (
+      <main className="m-4 flex flex-col gap-2">
+        <Skeleton className="h-[10svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+      </main>
+    );
+  }
 
   return (
     <main className="m-4">

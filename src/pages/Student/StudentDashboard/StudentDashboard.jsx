@@ -12,10 +12,12 @@ export default function StudentDashboard() {
 
   const { user } = useAuth();
 
+  const firstName = user?.username.split(" ")[0];
+
   return (
     <ClassDetailsProvider>
       <main className="w-full">
-        <Topbar>{user?.username ? `Welcome, ${user.username}!` : null}</Topbar>
+        <Topbar>{user?.username ? `Welcome, ${firstName}!` : null}</Topbar>
         <section className="flex flex-col gap-4 p-4 md:flex-row ">
           <ScheduleTable />
           <div className="order-1 flex min-w-[40%] flex-col gap-4 md:order-2 md:pr-4">
