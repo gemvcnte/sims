@@ -12,6 +12,7 @@ import AnnouncementCard from "./AnnouncementCard";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherAnnouncementsModal from "../../ViewTeacherAnnouncementsModal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardAnnouncementCard() {
   const { announcements, loading, error } = useAnnouncements();
@@ -34,7 +35,7 @@ export default function DashboardAnnouncementCard() {
     <Card className="md:w-[60%]">
       <CardHeader>Announcements</CardHeader>
       <CardContent className="px-4 pb-2">
-        {!loading && !error && (
+        {!loading && !error ? (
           <>
             {twoMostRecentAnnouncements.map((announcement) => (
               <AnnouncementCard
@@ -45,6 +46,11 @@ export default function DashboardAnnouncementCard() {
               />
             ))}
           </>
+        ) : (
+          <section className="flex flex-col gap-2">
+            <Skeleton className="mx-2 h-24"></Skeleton>
+            <Skeleton className="mx-2 h-24"></Skeleton>
+          </section>
         )}
       </CardContent>
 
