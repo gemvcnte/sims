@@ -80,7 +80,7 @@ export function StudentsDropdown({}) {
             className="w-full"
             onClick={handleDropdownClick}
           >
-            Student Registration Form
+            Student Enrollment Form
           </Link>
         </DropdownMenuItem>
 
