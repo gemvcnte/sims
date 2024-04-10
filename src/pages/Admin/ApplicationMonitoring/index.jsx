@@ -34,7 +34,7 @@ export default function ApplicationMonitoring() {
           <ApprovedApplicationsProvider>
             <AllApplicationsProvider>
               <main className="w-full">
-                <Topbar>STUDENT APPLICATION MONITORING</Topbar>
+                <Topbar>STUDENT ENROLLMENT MONITORING</Topbar>
 
                 <section className="px-4 pt-4">
                   <Select

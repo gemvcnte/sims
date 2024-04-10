@@ -69,7 +69,7 @@ export function StudentsDropdown({}) {
             to="student-application-monitoring"
             className="w-full"
           >
-            Student Application Monitoring
+            Student Enrollment Monitoring
           </Link>
         </DropdownMenuItem>
 
