@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
@@ -27,7 +28,11 @@ export default function ScheduleTable() {
   }, [fetchedClass]);
 
   if (loading) {
-    return <main className="order-2 min-w-[60%]">loading schedule...</main>;
+    return (
+      <main className="order-2 min-w-[60%]">
+        <Skeleton className="h-[100svh]"></Skeleton>
+      </main>
+    );
   }
 
   const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
