@@ -15,12 +15,6 @@ export const FilteredClassesProvider = ({ children }) => {
   const [semesterFilter, setSemesterFilter] = useState("all");
   const user = getUserFromToken();
 
-  if (!loading) {
-    console.log(`global settings`, globalSettings);
-    console.log(schoolYearFilter);
-    console.log(semesterFilter);
-  }
-
   // Update schoolYearFilter state once globalSettings is loaded
   useEffect(() => {
     if (!loading && globalSettings) {
