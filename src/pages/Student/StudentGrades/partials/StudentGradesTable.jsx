@@ -11,6 +11,7 @@ import {
   TableCaption,
 } from "@/components/ui/table";
 import { useAuth } from "@/contexts/AuthContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function StudentGradesTable({ setSectionName }) {
   const { user } = useAuth();
@@ -80,6 +81,24 @@ export default function StudentGradesTable({ setSectionName }) {
       );
     });
   };
+
+  if (loading) {
+    return (
+      <main className="m-4 flex flex-col gap-2">
+        <Skeleton className="h-[10svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+      </main>
+    );
+  }
 
   return (
     <main className="m-4">
