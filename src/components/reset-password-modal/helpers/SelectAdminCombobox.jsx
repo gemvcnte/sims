@@ -25,7 +25,7 @@ export default function SelectAdminCombobox({ onSelectStudent }) {
   const { teachers: TeacherData, loading, error } = useFetchAdmins();
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -40,8 +40,8 @@ export default function SelectAdminCombobox({ onSelectStudent }) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <ScrollArea className="flex max-h-60 flex-col" type="always">
+      <PopoverContent className="max-h-[40svh] w-[200px] p-0">
+        <ScrollArea className="flex max-h-[40svh] flex-col" type="always">
           <Command>
             <CommandInput placeholder="Search username..." />
             <CommandEmpty>No admin found.</CommandEmpty>
