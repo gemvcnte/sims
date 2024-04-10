@@ -24,7 +24,7 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
   const { students: StudentData, loading, error } = useFetchStudents();
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -39,7 +39,7 @@ export default function SelectStudentCombobox({ onSelectStudent }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <ScrollArea className="flex max-h-60 flex-col" type="always">
+        <ScrollArea className="flex max-h-[40svh] flex-col" type="always">
           <Command>
             <CommandInput placeholder="Search LRN..." />
             <CommandEmpty>No student found.</CommandEmpty>
