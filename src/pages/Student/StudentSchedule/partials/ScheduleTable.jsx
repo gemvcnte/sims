@@ -10,6 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
+import { Skeleton } from "@/components/ui/skeleton";
+import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
@@ -29,7 +31,7 @@ export default function ScheduleTable() {
   }, [fetchedClass]);
 
   if (loading) {
-    return <p>loading..</p>;
+    return <AdminScheduleSkeleton />;
   }
 
   return (
