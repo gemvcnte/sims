@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import { getAllTeachersEndpoint } from "@/config/adminEndpoints";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function SelectAdviserCombobox({ onSelectTeacher }) {
   const [open, setOpen] = React.useState(false);
@@ -45,7 +46,7 @@ export default function SelectAdviserCombobox({ onSelectTeacher }) {
   }, []);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -60,7 +61,7 @@ export default function SelectAdviserCombobox({ onSelectTeacher }) {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="max-h-[50svh] w-[200px] overflow-y-scroll p-0">
         <Command>
           <CommandInput placeholder="Search teacher..." />
           <CommandEmpty>No teacher found.</CommandEmpty>
