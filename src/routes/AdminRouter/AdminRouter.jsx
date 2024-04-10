@@ -37,7 +37,7 @@ export default function AdminRouter() {
 
           {/* <Route path="/registration" element={<Registration />} /> */}
           <Route
-            path="/student-application-monitoring"
+            path="/student-enrollment-monitoring"
             element={<ApplicationMonitoring />}
           />
           <Route path="/students" element={<ViewAllStudents />} />

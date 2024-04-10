@@ -66,10 +66,10 @@ export function StudentsDropdown({}) {
         <DropdownMenuItem>
           <Link
             onClick={handleDropdownClick}
-            to="student-application-monitoring"
+            to="student-enrollment-monitoring"
             className="w-full"
           >
-            Student Application Monitoring
+            Student Enrollment Monitoring
           </Link>
         </DropdownMenuItem>
 
@@ -80,7 +80,7 @@ export function StudentsDropdown({}) {
             className="w-full"
             onClick={handleDropdownClick}
           >
-            Student Registration Form
+            Student Enrollment Form
           </Link>
         </DropdownMenuItem>
 
