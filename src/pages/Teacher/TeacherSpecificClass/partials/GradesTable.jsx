@@ -262,7 +262,7 @@ export default function GradesTable() {
                   >
                     <TableCell>{student.lastName}</TableCell>
                     <TableCell>{student.firstName}</TableCell>
-                    <TableCell>{student.lrn}</TableCell>
+                    {/* <TableCell>{student.lrn}</TableCell> */}
                     <TableCell>{selectedSubject}</TableCell>
                     {isEditing ? (
                       <TableCell>
@@ -537,7 +537,7 @@ export default function GradesTable() {
                 <TableRow>
                   <TableHead>Lastname</TableHead>
                   <TableHead>Firstname</TableHead>
-                  <TableHead>LRN</TableHead>
+                  {/* <TableHead>LRN</TableHead> */}
                   <TableHead>Subject</TableHead>
                   <TableHead>QTR1</TableHead>
                   <TableHead>QTR2</TableHead>
