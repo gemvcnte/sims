@@ -8,18 +8,56 @@ const ClassDetailsContext = createContext();
 const ClassDetailsProvider = ({ children }) => {
   const [classDetails, setClassDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [
+    schoolYearAndSemesterSelectOptions,
+    setSchoolYearAndSemesterSelectOptions,
+  ] = useState(null);
 
-  const fetchClassDetails = async () => {
+  const storeAvailableSchoolYearAndSemesterOptions = async (sortedClasses) => {
     try {
-      const response = await axiosInstance(getStudentAssignedClassEndpoint);
-      setClassDetails(response.data.data);
-      setLoading(false);
+      const options = sortedClasses.map((classItem) => ({
+        schoolYear: classItem.schoolYear,
+        semester: classItem.semester,
+      }));
+
+      // Removing duplicate options
+      const uniqueOptions = options.filter(
+        (option, index, self) =>
+          index ===
+          self.findIndex(
+            (t) =>
+              t.schoolYear === option.schoolYear &&
+              t.semester === option.semester,
+          ),
+      );
+
+      setSchoolYearAndSemesterSelectOptions(uniqueOptions);
     } catch (error) {
       console.error("Error fetching class details:", error);
     }
   };
 
   useEffect(() => {
+    const fetchClassDetails = async () => {
+      try {
+        const response = await axiosInstance(getStudentAssignedClassEndpoint);
+        const fetchedClass = response.data.data;
+
+        const sortedClasses = [...fetchedClass].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
+
+        const mostLatestClass = sortedClasses[0];
+        setClassDetails(mostLatestClass);
+
+        await storeAvailableSchoolYearAndSemesterOptions(sortedClasses);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching class details:", error);
+      }
+    };
+
     fetchClassDetails();
   }, []);
 
@@ -29,7 +67,8 @@ const ClassDetailsProvider = ({ children }) => {
         classDetails,
         loading,
         setClassDetails,
-        fetchClassDetails,
+        schoolYearAndSemesterSelectOptions,
+        // fetchClassDetails,
       }}
     >
       {children}
@@ -46,6 +85,7 @@ const useClassDetails = () => {
     loading,
     setClassDetails,
     fetchClassDetails,
+    schoolYearAndSemesterSelectOptions,
   };
 };
 
