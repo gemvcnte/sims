@@ -61,6 +61,13 @@ const ClassDetailsProvider = ({ children }) => {
     fetchClassDetails();
   }, []);
 
+  useEffect(() => {
+    console.log(
+      `schoolYearAndSemesterSelectOptions`,
+      schoolYearAndSemesterSelectOptions,
+    );
+  }, [schoolYearAndSemesterSelectOptions]);
+
   return (
     <ClassDetailsContext.Provider
       value={{
@@ -77,8 +84,13 @@ const ClassDetailsProvider = ({ children }) => {
 };
 
 const useClassDetails = () => {
-  const { classDetails, loading, setClassDetails, fetchClassDetails } =
-    useContext(ClassDetailsContext);
+  const {
+    classDetails,
+    loading,
+    setClassDetails,
+    fetchClassDetails,
+    schoolYearAndSemesterSelectOptions,
+  } = useContext(ClassDetailsContext);
 
   return {
     classDetails,
