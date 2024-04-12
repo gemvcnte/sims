@@ -1,5 +1,5 @@
+import { PastAcademicRecordsAccordion } from "./past-academic-records-accordion";
 import React, { useState } from "react";
-import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,12 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import usePastAcademicRecords from "./usePastAcademicRecords";
 
 const InputField = ({
   type,
@@ -57,6 +52,12 @@ export default function ViewStudentApplicationModal({
     onSave();
     onClose();
   };
+
+  let studentData, loading;
+
+  if (application.hasAccount) {
+    ({ studentData, loading } = usePastAcademicRecords(application.lrn));
+  }
 
   return (
     <DialogContent
@@ -436,6 +437,10 @@ export default function ViewStudentApplicationModal({
             </select>
           </div>
         </div>
+
+        {application?.hasAccount && (
+          <PastAcademicRecordsAccordion studentData={studentData} />
+        )}
 
         <DialogFooter>
           <Button type="submit" variant="outline" className="w-full">
