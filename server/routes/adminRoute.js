@@ -277,5 +277,13 @@ router.delete(
 
 
 
+router.get(
+  "/students/:lrn",
+  verifyToken,
+  adminController.getStudentByLrn
+); 
+
+
+
 
 module.exports = router;
