@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import usePastAcademicRecords from "./usePastAcademicRecords";
+import { PastStudentProfileAccordion } from "./past-student-profile-accordion";
 
 const InputField = ({
   type,
@@ -437,6 +438,10 @@ export default function ViewStudentApplicationModal({
             </select>
           </div>
         </div>
+
+        {application?.hasAccount && (
+          <PastStudentProfileAccordion studentData={studentData} />
+        )}
 
         {application?.hasAccount && (
           <PastAcademicRecordsAccordion studentData={studentData} />

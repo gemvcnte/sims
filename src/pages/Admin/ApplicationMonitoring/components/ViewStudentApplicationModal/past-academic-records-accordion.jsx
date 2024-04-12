@@ -9,8 +9,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { InputField } from "@/pages/Admin/AdminProfile/components/AdminProfileDisplayAndEditSection/common";
 export function PastAcademicRecordsAccordion({ studentData }) {
-  console.log(`studentData`, studentData);
-
   if (!studentData) return null;
 
   return (
