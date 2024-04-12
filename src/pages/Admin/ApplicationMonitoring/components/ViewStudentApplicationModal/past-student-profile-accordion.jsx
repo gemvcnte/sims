@@ -26,8 +26,8 @@ export function PastStudentProfileAccordion({ studentData: application }) {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1" className="mb-2 border-none">
-        <AccordionTrigger className="ml-auto max-w-[30ch]">
-          View Past Student Profile
+        <AccordionTrigger className="ml-auto max-w-[30ch] py-2">
+          View Profile History
         </AccordionTrigger>
         <AccordionContent>
           <form>

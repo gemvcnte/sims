@@ -14,8 +14,8 @@ export function PastAcademicRecordsAccordion({ studentData }) {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1" className="mb-2 border-none">
-        <AccordionTrigger className="ml-auto max-w-[30ch]">
-          View Past Academic Records
+        <AccordionTrigger className="mb-4 ml-auto max-w-[30ch] py-2">
+          View Academic History
         </AccordionTrigger>
         <AccordionContent>
           {studentData.schoolYear.length >= 1 ? (
