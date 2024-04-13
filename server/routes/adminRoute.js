@@ -284,6 +284,14 @@ router.get(
 ); 
 
 
+router.patch(
+  "/sections/:sectionId",
+  // verifyToken,
+  adminController.updateSection
+); 
+
+
+
 
 
 module.exports = router;
