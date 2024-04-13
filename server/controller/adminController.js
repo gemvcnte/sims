@@ -2038,6 +2038,44 @@ const getStudentByLrn = asyncHandler(async (req, res) => {
 
 
 
+const updateSection = asyncHandler(async (req, res) => {
+  try {
+    const { sectionName, gradeLevel, adviser, strand } = req.body;
+    const { sectionId } = req.params;
+
+    const existingClass = await Classroom.findById(sectionId);
+
+    if (!existingClass) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Section not found." });
+    }
+
+    const existingSection = await Classroom.findOne({ sectionName, adviser });
+
+    if (existingSection && existingSection._id.toString() !== sectionId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "A class with this name and teacher combination already exists." });
+    }
+
+    existingClass.sectionName = sectionName;
+    existingClass.gradeLevel = gradeLevel;
+    existingClass.adviser = adviser;
+    existingClass.strand = strand;
+
+    await existingClass.save();
+
+    return res.status(200).json({ success: true, message: "Section has been updated." });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+
+
+
+
 
 
 
@@ -2118,6 +2156,7 @@ module.exports = {
   unarchiveAdmin,
   deleteArchivedAdmin,
   getStudentByLrn,
+  updateSection,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
