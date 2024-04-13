@@ -60,6 +60,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import DeleteSectionAlertDialog from "@/components/delete-section-alert-dialog";
 import ExportCsvButton from "@/components/export-csv-button";
+import EditSectionModal from "../EditSectionModal";
 
 const AllClassesDataTable = () => {
   const navigate = useNavigate();
@@ -173,12 +174,59 @@ const AllClassesDataTable = () => {
         </button>
       ),
     },
+    // {
+    //   accessorKey: "deleteSection",
+    //   header: "",
+    //   cell: ({ row }) => (
+    //     <div onClick={(e) => e.stopPropagation()}>
+    //       <DeleteSectionAlertDialog sectionId={row.original._id} />
+    //     </div>
+    //   ),
+    // },
     {
-      accessorKey: "deleteSection",
+      accessorKey: "actions",
       header: "",
       cell: ({ row }) => (
         <div onClick={(e) => e.stopPropagation()}>
-          <DeleteSectionAlertDialog sectionId={row.original._id} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button aria-haspopup="true" size="icon" variant="ghost">
+                <MoreHorizontal className="h-4 w-4" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+              <EditSectionModal section={row.original}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="justify-start px-2"
+                >
+                  Edit
+                </Button>
+              </EditSectionModal>
+
+              <DeleteSectionAlertDialog sectionId={row.original._id}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="justify-start px-2"
+                >
+                  Delete
+                </Button>
+              </DeleteSectionAlertDialog>
+
+              <DropdownMenuSeparator className="mx-2" />
+
+              <DropdownMenuItem
+                onClick={() => navigateToClass(row.original._id)}
+              >
+                View
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       ),
     },
@@ -231,7 +279,7 @@ const AllClassesDataTable = () => {
     navigate(`${classId}`);
   };
 
-  console.log(pendingApplications);
+  // console.log(pendingApplications);
 
   const csvData = pendingApplications.map((section) => ({
     "SECTION NAME": section.sectionName,
