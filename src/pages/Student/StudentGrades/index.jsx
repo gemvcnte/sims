@@ -10,14 +10,14 @@ export default function StudentGrades() {
 
   return (
     <ClassDetailsProvider>
-      <main className="w-full">
-        {sectionName ? (
-          <Topbar>GRADES - {sectionName?.toUpperCase()}</Topbar>
-        ) : (
-          <Topbar>
+      <main className="w-full pr-4">
+        <Topbar>
+          {sectionName ? (
+            `GRADES - ${sectionName.toUpperCase()}`
+          ) : (
             <Skeleton className="h-8 w-[30ch]"></Skeleton>
-          </Topbar>
-        )}
+          )}
+        </Topbar>
 
         <FilterGrades />
         <StudentGradesTable setSectionName={setSectionName} />
