@@ -60,6 +60,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import DeleteSectionAlertDialog from "@/components/delete-section-alert-dialog";
 import ExportCsvButton from "@/components/export-csv-button";
+import EditSectionModal from "../EditSectionModal";
 
 const AllClassesDataTable = () => {
   const navigate = useNavigate();
@@ -179,6 +180,37 @@ const AllClassesDataTable = () => {
       cell: ({ row }) => (
         <div onClick={(e) => e.stopPropagation()}>
           <DeleteSectionAlertDialog sectionId={row.original._id} />
+        </div>
+      ),
+    },
+    {
+      accessorKey: "actions",
+      header: "",
+      cell: ({ row }) => (
+        <div onClick={(e) => e.stopPropagation()}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button aria-haspopup="true" size="icon" variant="ghost">
+                <MoreHorizontal className="h-4 w-4" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+              <EditSectionModal section={row.original}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="justify-start px-2"
+                >
+                  Edit
+                </Button>
+              </EditSectionModal>
+
+              <DropdownMenuItem>Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       ),
     },
