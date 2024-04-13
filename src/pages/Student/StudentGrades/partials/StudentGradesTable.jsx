@@ -37,6 +37,7 @@ export default function StudentGradesTable({ setSectionName }) {
   }
 
   const classDetails = fetchedClass[0];
+  setSectionName(classDetails?.sectionName);
 
   const getStudentGrades = (subject) => {
     const student = classDetails?.students.find(
@@ -60,8 +61,8 @@ export default function StudentGradesTable({ setSectionName }) {
     return { p1Grade: "", p2Grade: "" };
   };
 
-  console.log(`fetchedClass`, fetchedClass);
-  console.log(`classDetails`, classDetails);
+  // console.log(`fetchedClass`, fetchedClass);
+  // console.log(`classDetails`, classDetails);
 
   const renderSubjects = () => {
     return classDetails?.subjects.map((subject) => {
