@@ -17,17 +17,26 @@ export default function StudentGradesTable({ setSectionName }) {
   const { user } = useAuth();
   const classDetailsContext = useClassDetails();
   const { classDetails: fetchedClass, loading } = classDetailsContext;
-  const [classDetails, setClassDetails] = useState(null);
 
-  useEffect(() => {
-    if (fetchedClass && fetchedClass.length > 0) {
-      const sortedClasses = [...fetchedClass].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-      );
-      setClassDetails(sortedClasses[0]);
-      setSectionName(sortedClasses[0].sectionName);
-    }
-  }, [fetchedClass]);
+  if (loading) {
+    return (
+      <main className="m-4 flex flex-col gap-2">
+        <Skeleton className="h-[10svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+        <Skeleton className="h-[5svh]"></Skeleton>
+      </main>
+    );
+  }
+
+  const classDetails = fetchedClass[0];
 
   const getStudentGrades = (subject) => {
     const student = classDetails?.students.find(
@@ -51,7 +60,8 @@ export default function StudentGradesTable({ setSectionName }) {
     return { p1Grade: "", p2Grade: "" };
   };
 
-  console.log(classDetails);
+  console.log(`fetchedClass`, fetchedClass);
+  console.log(`classDetails`, classDetails);
 
   const renderSubjects = () => {
     return classDetails?.subjects.map((subject) => {
@@ -101,24 +111,6 @@ export default function StudentGradesTable({ setSectionName }) {
       );
     });
   };
-
-  if (loading) {
-    return (
-      <main className="m-4 flex flex-col gap-2">
-        <Skeleton className="h-[10svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-        <Skeleton className="h-[5svh]"></Skeleton>
-      </main>
-    );
-  }
 
   return (
     <main className="m-4">

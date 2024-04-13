@@ -1,5 +1,4 @@
 import React from "react";
-import { useClassDetails } from "../contexts/ClassDetailsContext";
 import {
   Select,
   SelectContent,
@@ -10,8 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ExportCsvButton from "@/components/export-csv-button";
+import { useClassDetails } from "../hooks/ClassDetailsContext";
 
-export default function FilterSchedule() {
+export default function FilterGrades() {
   const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
     useClassDetails();
 
