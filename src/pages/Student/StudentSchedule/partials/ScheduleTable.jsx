@@ -14,11 +14,13 @@ import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
-  const { classDetails, loading } = classDetailsContext;
+  const { classDetails: fetchedClassDetails, loading } = classDetailsContext;
 
   if (loading) {
     return <AdminScheduleSkeleton />;
   }
+
+  const classDetails = fetchedClassDetails[0];
 
   return (
     <main className="p-4">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import {
   Select,
@@ -9,28 +9,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter } from "lucide-react";
 import ExportCsvButton from "@/components/export-csv-button";
 
 export default function FilterSchedule() {
-  const { schoolYearAndSemesterSelectOptions } = useClassDetails();
-
-  useEffect(() => {
-    console.log(
-      `schoolYearAndSemesterSelectOptions`,
-      schoolYearAndSemesterSelectOptions,
-    );
-  }, [schoolYearAndSemesterSelectOptions]);
+  const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
+    useClassDetails();
 
   const mostLatestSchoolYearAndSemester = schoolYearAndSemesterSelectOptions
     ? `${schoolYearAndSemesterSelectOptions[0]?.schoolYear}-${schoolYearAndSemesterSelectOptions[0]?.semester}`
     : "";
 
-  console.log(mostLatestSchoolYearAndSemester);
+  const handleSelectChange = (value) => {
+    if (!schoolYearAndSemesterSelectOptions) return;
+
+    const selectedOption = schoolYearAndSemesterSelectOptions.find(
+      (option) => `${option.schoolYear}-${option.semester}` === value,
+    );
+
+    if (selectedOption) {
+      filterClassDetails(selectedOption);
+    }
+  };
 
   return (
     <header className="flex justify-between gap-2 px-4 pt-4">
-      <Select value={mostLatestSchoolYearAndSemester}>
+      <Select
+        defaultValue={mostLatestSchoolYearAndSemester}
+        onValueChange={handleSelectChange}
+      >
         <SelectTrigger className="w-fit">
           <SelectValue placeholder="Select School Year and Semester" />
         </SelectTrigger>

@@ -47,8 +47,7 @@ const ClassDetailsProvider = ({ children }) => {
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
 
-        const mostLatestClass = sortedClasses[0];
-        setClassDetails(mostLatestClass);
+        setClassDetails(sortedClasses);
 
         await storeAvailableSchoolYearAndSemesterOptions(sortedClasses);
 
@@ -61,12 +60,19 @@ const ClassDetailsProvider = ({ children }) => {
     fetchClassDetails();
   }, []);
 
-  useEffect(() => {
-    console.log(
-      `schoolYearAndSemesterSelectOptions`,
-      schoolYearAndSemesterSelectOptions,
+  const filterClassDetails = (selectedOption) => {
+    const filteredClass = classDetails.filter(
+      (classItem) =>
+        classItem.schoolYear === selectedOption.schoolYear &&
+        classItem.semester === selectedOption.semester,
     );
-  }, [schoolYearAndSemesterSelectOptions]);
+
+    // Put the filtered class at the beginning of the array
+    setClassDetails([
+      filteredClass[0],
+      ...classDetails.filter((item) => item !== filteredClass[0]),
+    ]);
+  };
 
   return (
     <ClassDetailsContext.Provider
@@ -76,6 +82,7 @@ const ClassDetailsProvider = ({ children }) => {
         setClassDetails,
         schoolYearAndSemesterSelectOptions,
         // fetchClassDetails,
+        filterClassDetails,
       }}
     >
       {children}
@@ -90,6 +97,7 @@ const useClassDetails = () => {
     setClassDetails,
     fetchClassDetails,
     schoolYearAndSemesterSelectOptions,
+    filterClassDetails,
   } = useContext(ClassDetailsContext);
 
   return {
@@ -98,6 +106,7 @@ const useClassDetails = () => {
     setClassDetails,
     fetchClassDetails,
     schoolYearAndSemesterSelectOptions,
+    filterClassDetails,
   };
 };
 
