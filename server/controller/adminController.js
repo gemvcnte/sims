@@ -2016,6 +2016,27 @@ const deleteArchivedAdmin = asyncHandler(async (req, res) => {
 
 
 
+const getStudentByLrn = asyncHandler(async (req, res) => {
+  try {
+    const { lrn } = req.params;
+
+    const retrieveSpecificStudent = await Student.findOne({ lrn });
+
+    if (!retrieveSpecificStudent) {
+      return res.status(404).json({ message: "There is no student with this LRN." });
+    }
+
+    return res.status(200).json({
+      message: "Student retrieved successfully.",
+      data: retrieveSpecificStudent,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
 
 
 
@@ -2096,6 +2117,7 @@ module.exports = {
   getAllArchivedAdmins,
   unarchiveAdmin,
   deleteArchivedAdmin,
+  getStudentByLrn,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
