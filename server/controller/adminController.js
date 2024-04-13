@@ -2048,7 +2048,7 @@ const updateSection = asyncHandler(async (req, res) => {
     if (!existingClass) {
       return res
         .status(404)
-        .json({ message: "Section not found." });
+        .json({ success: false, message: "Section not found." });
     }
 
     const existingSection = await Classroom.findOne({ sectionName, adviser });
@@ -2056,7 +2056,7 @@ const updateSection = asyncHandler(async (req, res) => {
     if (existingSection && existingSection._id.toString() !== sectionId) {
       return res
         .status(400)
-        .json({ message: "A class with this name and teacher combination already exists." });
+        .json({ success: false, message: "A class with this name and teacher combination already exists." });
     }
 
     existingClass.sectionName = sectionName;
@@ -2066,9 +2066,9 @@ const updateSection = asyncHandler(async (req, res) => {
 
     await existingClass.save();
 
-    return res.status(200).json({ message: "Section has been updated." });
+    return res.status(200).json({ success: true, message: "Section has been updated." });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 });
 
