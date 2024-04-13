@@ -76,7 +76,7 @@ export default function SelectAdviserCombobox({
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
-                  onSelectTeacher(teacher);
+                  onSelectTeacher(teacher.username);
                 }}
               >
                 <Check

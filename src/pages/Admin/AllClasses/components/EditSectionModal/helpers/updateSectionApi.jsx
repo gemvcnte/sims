@@ -1,16 +1,14 @@
-import { createClassEndpoint } from "@/config/adminEndpoints";
-import getAuthHeaders from "@/utils/getAuthHeaders";
-import axios from "axios";
+import { adminSectionEndpoint } from "@/config/adminEndpoints";
+import axiosInstance from "@/utils/axios";
 
-const createSectionApi = async (sectionDetails) => {
+const updateSectionApi = async (sectionId, sectionDetails) => {
   try {
-    const response = await axios.post(
-      createClassEndpoint,
+    const response = await axiosInstance.patch(
+      `${adminSectionEndpoint}/${sectionId}`,
       sectionDetails,
-      getAuthHeaders(),
     );
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       return { success: true, message: response.data.message };
     } else {
       return {
@@ -34,4 +32,4 @@ const createSectionApi = async (sectionDetails) => {
   }
 };
 
-export default createSectionApi;
+export default updateSectionApi;

@@ -12,14 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
-import { createSectionApi, SelectAdviserCombobox } from "./helpers";
+import { SelectAdviserCombobox } from "./helpers";
 import showErrorNotification from "@/utils/ShowErrorNotification";
-import useGlobalSettings from "@/pages/Registration/useGlobalSettings";
+import updateSectionApi from "./helpers/updateSectionApi";
+import { useSections } from "../../hooks/useSections";
 
 export default function EditSectionModal({ children, section }) {
-  const { globalSettings } = useGlobalSettings();
+  const { refetchData } = useSections();
+  const [loading, setLoading] = useState(false);
 
-  console.log(`section`, section);
+  const sectionId = section?._id;
 
   const [sectionName, setSectionName] = useState(section.sectionName || "");
   const [selectedTeacher, setSelectedTeacher] = useState(
@@ -32,11 +34,11 @@ export default function EditSectionModal({ children, section }) {
 
   const handleCreateSectionButton = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const sectionDetails = {
-      schoolYear: globalSettings.schoolYear,
-      semester: globalSettings.semester,
       sectionName: sectionName,
-      adviser: selectedTeacher ? selectedTeacher : "",
+      adviser: selectedTeacher,
       gradeLevel: selectedGradeLevel,
       strand: selectedStrand,
     };
@@ -46,16 +48,17 @@ export default function EditSectionModal({ children, section }) {
       return;
     }
 
-    console.log(`sectionDetails`, sectionDetails);
+    const result = await updateSectionApi(sectionId, sectionDetails);
 
-    // const result = await createSectionApi(sectionDetails);
+    result.success
+      ? (showSuccessNotification(result.message),
+        setSectionName(""),
+        setSelectedGradeLevel(null),
+        setSelectedStrand(""),
+        refetchData())
+      : showErrorNotification(result.message);
 
-    // result.success
-    //   ? (showSuccessNotification(result.message),
-    //     setSectionName(""),
-    //     setSelectedGradeLevel(null),
-    //     setSelectedStrand(""))
-    //   : showErrorNotification(result.message);
+    setLoading(false);
   };
 
   return (
@@ -127,7 +130,9 @@ export default function EditSectionModal({ children, section }) {
               />
             </div>
             <DialogFooter>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit" disabled={loading}>
+                Save Changes
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

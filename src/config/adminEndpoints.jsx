@@ -85,3 +85,6 @@ export const getScheduleEndpoint = `${baseUrl}/teacher/schedule`;
 
 // Student
 export const adminStudentsEndpoint = `${baseUrl}/admin/students`;
+
+// Section
+export const adminSectionEndpoint = `${baseUrl}/admin/sections`;
