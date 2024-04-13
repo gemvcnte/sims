@@ -10,29 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
-import { Skeleton } from "@/components/ui/skeleton";
 import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
-  const { classDetails: fetchedClass, loading } = classDetailsContext;
-
-  const [classDetails, setClassDetails] = useState(null);
-
-  useEffect(() => {
-    if (fetchedClass && fetchedClass.length > 0) {
-      // Sort classes by createdAt in descending order
-      const sortedClasses = [...fetchedClass].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-      );
-      // Take the most lastest class
-      setClassDetails(sortedClasses[0]);
-    }
-  }, [fetchedClass]);
+  const { classDetails: fetchedClassDetails, loading } = classDetailsContext;
 
   if (loading) {
     return <AdminScheduleSkeleton />;
   }
+
+  const classDetails = fetchedClassDetails[0];
 
   return (
     <main className="p-4">

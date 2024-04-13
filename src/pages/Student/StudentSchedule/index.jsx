@@ -3,6 +3,7 @@ import React from "react";
 import { ClassDetailsProvider } from "./contexts/ClassDetailsContext";
 import ClassName from "./partials/ClassName";
 import ScheduleTable from "./partials/ScheduleTable";
+import FilterSchedule from "./partials/FilterSchedule";
 
 export default function StudentSchedule() {
   return (
@@ -12,6 +13,7 @@ export default function StudentSchedule() {
           <ClassName />
         </Topbar>
 
+        <FilterSchedule />
         <ScheduleTable />
       </main>
     </ClassDetailsProvider>

@@ -31,7 +31,7 @@ export function StudentsDropdown({}) {
 
   const isActiveClasses = useActiveClasses([
     "/students",
-    "/student-application-monitoring",
+    "/student-enrollment-monitoring",
   ]);
 
   return (

@@ -82,3 +82,6 @@ export const deleteSectionEndpoint = `${baseUrl}/admin/class/:sectionId`;
 
 // Schedule
 export const getScheduleEndpoint = `${baseUrl}/teacher/schedule`;
+
+// Student
+export const adminStudentsEndpoint = `${baseUrl}/admin/students`;
