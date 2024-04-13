@@ -209,7 +209,6 @@ const AllClassesDataTable = () => {
               </EditSectionModal>
 
               <DeleteSectionAlertDialog sectionId={row.original._id}>
-                {/* <DropdownMenuItem>Delete</DropdownMenuItem> */}
                 <Button
                   size="sm"
                   variant="ghost"
@@ -218,6 +217,14 @@ const AllClassesDataTable = () => {
                   Delete
                 </Button>
               </DeleteSectionAlertDialog>
+
+              <DropdownMenuSeparator className="mx-2" />
+
+              <DropdownMenuItem
+                onClick={() => navigateToClass(row.original._id)}
+              >
+                View
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
