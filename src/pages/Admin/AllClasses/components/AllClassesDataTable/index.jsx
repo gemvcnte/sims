@@ -174,15 +174,15 @@ const AllClassesDataTable = () => {
         </button>
       ),
     },
-    {
-      accessorKey: "deleteSection",
-      header: "",
-      cell: ({ row }) => (
-        <div onClick={(e) => e.stopPropagation()}>
-          <DeleteSectionAlertDialog sectionId={row.original._id} />
-        </div>
-      ),
-    },
+    // {
+    //   accessorKey: "deleteSection",
+    //   header: "",
+    //   cell: ({ row }) => (
+    //     <div onClick={(e) => e.stopPropagation()}>
+    //       <DeleteSectionAlertDialog sectionId={row.original._id} />
+    //     </div>
+    //   ),
+    // },
     {
       accessorKey: "actions",
       header: "",
@@ -208,7 +208,16 @@ const AllClassesDataTable = () => {
                 </Button>
               </EditSectionModal>
 
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+              <DeleteSectionAlertDialog sectionId={row.original._id}>
+                {/* <DropdownMenuItem>Delete</DropdownMenuItem> */}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="justify-start px-2"
+                >
+                  Delete
+                </Button>
+              </DeleteSectionAlertDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -263,7 +272,7 @@ const AllClassesDataTable = () => {
     navigate(`${classId}`);
   };
 
-  console.log(pendingApplications);
+  // console.log(pendingApplications);
 
   const csvData = pendingApplications.map((section) => ({
     "SECTION NAME": section.sectionName,

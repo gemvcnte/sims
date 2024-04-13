@@ -14,7 +14,7 @@ import { Trash2 } from "lucide-react";
 import { deleteSection } from "@/services/api/admin/deleteSection";
 import { useSections } from "@/pages/Admin/AllClasses/hooks/useSections";
 
-export default function DeleteSectionAlertDialog({ sectionId }) {
+export default function DeleteSectionAlertDialog({ sectionId, children }) {
   const { refetchData } = useSections();
 
   const handleSubmit = async () => {
@@ -27,8 +27,9 @@ export default function DeleteSectionAlertDialog({ sectionId }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Trash2 size={16} />
+      <AlertDialogTrigger asChild className="w-full">
+        {/* <Trash2 size={16} /> */}
+        {children}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
