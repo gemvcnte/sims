@@ -2,8 +2,19 @@ import React from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useClassNav } from "../contexts/ClassNavContext";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Copy, Truck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function OverviewTable() {
   const { classDetails } = useClassDetails();
@@ -16,7 +27,7 @@ export default function OverviewTable() {
 
   return (
     <>
-      <div className="gap-4 md:flex">
+      {/* <div className="gap-4 md:flex">
         <header className="flex max-w-[52ch] justify-between gap-4 p-4 md:order-2 ">
           <Card
             className={`flex aspect-square w-[25ch] cursor-pointer flex-col hover:border-b-4 hover:border-r-4 `}
@@ -77,7 +88,114 @@ export default function OverviewTable() {
             </div>
           </section>
         </main>
-      </div>
+      </div> */}
+
+      <section className="flex flex-col gap-4 p-4 md:flex-row">
+        <div className="order-2 flex gap-2">
+          <Card
+            className={`flex aspect-square w-full cursor-pointer flex-col hover:border-b-4 hover:border-r-4 md:w-[25ch] `}
+            onClick={() => setTab("students")}
+          >
+            <CardTitle className="flex justify-end p-2"></CardTitle>
+            <CardContent
+              className={`flex h-full flex-col items-center justify-center gap-2 text-center `}
+            >
+              <h1 className="text-2xl font-bold">
+                {classDetails.students.length}
+              </h1>
+              <span>Total Students</span>
+            </CardContent>
+          </Card>
+
+          <Card
+            className={`flex aspect-square w-full cursor-pointer flex-col hover:border-b-4  hover:border-r-4 md:w-[25ch] `}
+            onClick={() => setTab("subjects")}
+          >
+            <CardTitle className="flex justify-end p-2"></CardTitle>
+            <CardContent
+              className={`flex h-full flex-col items-center justify-center gap-2 text-center `}
+            >
+              <h1 className="text-2xl font-bold">
+                {classDetails.subjects.length}
+              </h1>
+              <span>Total Subjects</span>
+            </CardContent>
+          </Card>
+
+          {/* <Card className="h-fit">
+            <CardHeader className="pb-2">
+              <CardDescription>This Week</CardDescription>
+              <CardTitle className="text-4xl">$1,329</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xs text-muted-foreground">
+                +25% from last week
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Progress value={25} aria-label="25% increase" />
+            </CardFooter>
+          </Card> */}
+        </div>
+
+        <div>
+          <Card className="overflow-hidden">
+            <CardHeader className="flex flex-row items-start bg-muted/50">
+              <div className="grid gap-0.5">
+                <CardTitle className="group flex items-center gap-2 text-lg">
+                  {classDetails.sectionName.toUpperCase()}
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    <Copy className="h-3 w-3" />
+                    <span className="sr-only">Copy Order ID</span>
+                  </Button>
+                </CardTitle>
+                <CardDescription>
+                  SY {classDetails.schoolYear} - {classDetails.semester}
+                </CardDescription>
+              </div>
+              {/* <div className="ml-auto flex items-center gap-1">
+                <Button size="sm" variant="outline" className="h-8 gap-1">
+                  <Truck className="h-3.5 w-3.5" />
+                  <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+                    Track Order
+                  </span>
+                </Button>
+              </div> */}
+            </CardHeader>
+            <CardContent className="p-6 text-sm">
+              <div className="grid gap-3">
+                <div className="font-semibold">Section Details</div>
+                <ul className="grid gap-3">
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Grade Level</span>
+                    <span>{classDetails.gradeLevel}</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Strand</span>
+                    <span>{classDetails.strand.toUpperCase()}</span>
+                  </li>
+                </ul>
+                <Separator className="my-2" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-3">
+                  <div className="font-semibold">Adviser</div>
+                  <address className="grid gap-0.5 not-italic text-muted-foreground">
+                    <span>{classDetails.adviser}</span>
+                    {/* <span>Liam Johnson</span>
+                    <span>1234 Main St.</span>
+                    <span>Anytown, CA 12345</span> */}
+                  </address>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
     </>
   );
 }
