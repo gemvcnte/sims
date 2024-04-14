@@ -24,7 +24,6 @@ import {
 
 import { useEnrollment } from "../../useEnrollment";
 import { schema } from "./schema";
-import { selectOptions } from "./selectOptions";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export default function StepTwo() {
