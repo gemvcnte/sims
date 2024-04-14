@@ -1,9 +1,10 @@
 import React from "react";
 import ClassNav from "./ClassNav";
-import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -26,16 +27,17 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between">
       <ClassNav />
-      <div className="p-4 hover:cursor-pointer" onClick={navigateToClasses}>
-        <Icon
-          icon="octicon:arrow-down-24"
-          rotate={1}
-          className="mr-2 inline-block text-muted-foreground"
-        />
+      <Button
+        variant="ghost"
+        className="group -mb-4 mr-4 p-4 hover:cursor-pointer"
+        onClick={navigateToClasses}
+      >
+        <ChevronLeft className="mr-2 inline-block text-muted-foreground transition-all duration-300  group-hover:mr-4" />
+
         <span className="hidden text-sm text-muted-foreground sm:inline">
           View My Sections
         </span>
-      </div>
+      </Button>
     </header>
   );
 }
