@@ -24,19 +24,12 @@ import {
 
 import { useEnrollment } from "../../useEnrollment";
 import { schema } from "./schema";
-import { selectOptions } from "./selectOptions";
 
-export default function StepOne() {
-  const {
-    step,
-    nextStep,
-    prevStep,
-    enrollmentData,
-    setEnrollmentData,
-    hasAccount,
-  } = useEnrollment();
+export default function StepOneHasAccount() {
+  const { step, prevStep, enrollmentData, setEnrollmentData, hasAccount } =
+    useEnrollment();
 
-  if (step !== 1 || hasAccount) return null;
+  if (step !== 1 || !hasAccount) return null;
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -44,23 +37,15 @@ export default function StepOne() {
   });
 
   const onSubmit = (data) => {
-    const formattedData = { ...data, birthDate: formatDate(data.birthDate) };
-    setEnrollmentData({ ...formattedData, ...enrollmentData });
-
-    nextStep();
+    setEnrollmentData({ ...data, ...enrollmentData });
   };
 
   return (
     <>
-      <header className="py-6 text-center">
-        <h4>Step 1</h4>
-        <h1 className="text-2xl">Learner Information</h1>
-      </header>
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto space-y-8 px-24 lg:px-[12.5rem]"
+          className="mx-auto flex h-[100svh] flex-col justify-center space-y-8 px-24 lg:px-[12.5rem]"
         >
           <section className="flex flex-col justify-between gap-8 lg:flex-row lg:gap-24">
             <div className="flex w-full flex-col gap-8">
@@ -82,119 +67,17 @@ export default function StepOne() {
 
               <FormField
                 control={form.control}
-                name="firstName"
+                name="lrn"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      First Name <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your first name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="middleName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Middle Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your middle name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="extensionName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Extension Name</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || "None"}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose an extension name" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {selectOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="flex w-full flex-col gap-8">
-              <FormField
-                control={form.control}
-                name="birthDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Date of Birth <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="gender"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Gender <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your gender" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Male">Male</SelectItem>
-                        <SelectItem value="Female">Female</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="currentAddress"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Current Address{" "}
+                      LRN (Learner Reference Number){" "}
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="123 Purok St, Barangay, Municipality"
+                        placeholder="Enter your learner reference number"
+                        type="number"
                         {...field}
                       />
                     </FormControl>
@@ -205,15 +88,56 @@ export default function StepOne() {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="gradeLevel"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Email <span className="text-destructive">*</span>
+                      Grade Level <span className="text-destructive">*</span>
                     </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your Email" {...field} />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your grade level" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="11">Grade 11</SelectItem>
+                        <SelectItem value="12">Grade 12</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="strand"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Strand <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your strand" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="humss">HUMSS (Academic)</SelectItem>
+                        <SelectItem value="abm">ABM (Academic)</SelectItem>
+                        <SelectItem value="stem">STEM (Academic)</SelectItem>
+                        <SelectItem value="ict">ICT (TVL)</SelectItem>
+                        <SelectItem value="he">HE (TVL)</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

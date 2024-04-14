@@ -2,9 +2,9 @@ import React from "react";
 import { useEnrollment } from "../../useEnrollment";
 
 export default function Header() {
-  const { step } = useEnrollment();
+  const { step, hasAccount } = useEnrollment();
 
-  if (!step || step === 0) return null;
+  if (!step || step === 0 || hasAccount) return null;
 
   return (
     <header className=" flex justify-between">

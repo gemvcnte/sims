@@ -28,6 +28,10 @@ export const EnrollmentProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (step === 0) {
+      setEnrollmentData({});
+    }
+
     console.log(`step`, step);
   }, [step]);
 
