@@ -23,8 +23,7 @@ export default function EnrollmentLayout({ children }) {
     return (
       <main className="flex h-[100svh] items-center justify-center px-4">
         <p className="text-center">
-          Our Enrollment form is only accessible through the MRMNHS computer
-          lab.
+          Enrollment form is only accessible through the MRMNHS computer lab.
           <br />
           <br />
           <br />
