@@ -12,12 +12,13 @@ import { useClassNav } from "../contexts/ClassNavContext";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OverviewTable() {
   const { classDetails } = useClassDetails();
 
   if (!classDetails) {
-    return <p>loading...</p>;
+    return <Skeleton className="m-4 h-[40ch] w-[40ch]"></Skeleton>;
   }
 
   const { setTab } = useClassNav();
@@ -29,7 +30,7 @@ export default function OverviewTable() {
   return (
     <>
       <section className="flex flex-col gap-4 p-4 md:flex-row">
-        <div className="order-2 flex gap-2">
+        <div className="order-2 flex gap-4">
           <Card
             className={`flex aspect-square w-full cursor-pointer flex-col hover:border-b-4 hover:border-r-4 md:w-[25ch] `}
             onClick={() => setTab("students")}
