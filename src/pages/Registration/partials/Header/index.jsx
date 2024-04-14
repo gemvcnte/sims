@@ -9,12 +9,12 @@ export default function Header() {
   return (
     <header className=" flex justify-between">
       <div
-        className={`flex w-full items-center justify-center gap-2 bg-blue-400 px-2 py-2 ${
+        className={`flex w-full items-center justify-center gap-2 bg-primary px-2 py-2 ${
           step === 1 ? "rounded-br-full rounded-tr-full" : ""
-        } text-white md:px-16 md:py-4`}
+        } text-background md:px-16 md:py-4`}
       >
         <span
-          className={`hidden h-8 w-8 rounded-full bg-white p-1 text-center text-black sm:block`}
+          className={`hidden h-8 w-8 rounded-full bg-background p-1 text-center text-foreground sm:block`}
         >
           1
         </span>
@@ -25,11 +25,11 @@ export default function Header() {
           step !== 2
             ? "rounded-br-none rounded-tr-none"
             : "rounded-br-full rounded-tr-full"
-        } ${step !== 1 ? "bg-blue-400 text-white" : ""}`}
+        } ${step !== 1 ? "bg-primary text-background" : ""}`}
       >
         <span
-          className={`bg-black-300 hidden h-8 w-8 rounded-full p-1 text-center sm:block ${
-            step !== 1 ? "bg-white text-black" : ""
+          className={`hidden h-8 w-8 rounded-full bg-muted p-1 text-center sm:block ${
+            step !== 1 ? "bg-background text-foreground" : ""
           }`}
         >
           2
@@ -38,12 +38,12 @@ export default function Header() {
       </div>
       <div
         className={`flex w-full items-center justify-center gap-2 px-2 py-2 md:px-16 md:py-4 ${
-          step === 3 ? "bg-blue-400 text-white" : ""
+          step === 3 ? "bg-primary text-background" : ""
         }`}
       >
         <span
-          className={`bg-black-300 hidden h-8 w-8 rounded-full p-1 text-center sm:block ${
-            step === 3 ? "bg-white text-black" : ""
+          className={`hidden h-8 w-8 rounded-full bg-muted p-1 text-center sm:block ${
+            step === 3 ? "bg-background text-foreground" : ""
           }`}
         >
           3
