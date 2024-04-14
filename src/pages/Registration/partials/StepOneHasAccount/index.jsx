@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,6 +24,8 @@ import {
 
 import { useEnrollment } from "../../useEnrollment";
 import { schema } from "./schema";
+import { Dialog } from "@/components/ui/dialog";
+import { StepOneConfirmDialog } from "./StepOneConfirmDialog";
 
 export default function StepOneHasAccount() {
   const { step, prevStep, enrollmentData, setEnrollmentData, hasAccount } =
@@ -36,12 +38,31 @@ export default function StepOneHasAccount() {
     defaultValues: enrollmentData,
   });
 
+  const [showDialog, setShowDialog] = useState(false);
+
   const onSubmit = (data) => {
-    setEnrollmentData({ ...data, ...enrollmentData });
+    let trackValue = "";
+    if (
+      data.strand === "abm" ||
+      data.strand === "humss" ||
+      data.strand === "stem"
+    ) {
+      trackValue = "academic";
+    } else {
+      trackValue = "tvl";
+    }
+
+    setEnrollmentData({ ...enrollmentData, ...data, track: trackValue });
+
+    setShowDialog(true);
   };
 
   return (
     <>
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <StepOneConfirmDialog />
+      </Dialog>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -58,7 +79,14 @@ export default function StepOneHasAccount() {
                       Last Name <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your last name" {...field} />
+                      <Input
+                        placeholder="Enter your last name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
