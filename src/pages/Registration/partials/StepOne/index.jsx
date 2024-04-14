@@ -73,7 +73,14 @@ export default function StepOne() {
                       Last Name <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your last name" {...field} />
+                      <Input
+                        placeholder="Enter your last name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +96,14 @@ export default function StepOne() {
                       First Name <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your first name" {...field} />
+                      <Input
+                        placeholder="Enter your first name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,7 +117,14 @@ export default function StepOne() {
                   <FormItem>
                     <FormLabel>Middle Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your middle name" {...field} />
+                      <Input
+                        placeholder="Enter your middle name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -196,6 +217,10 @@ export default function StepOne() {
                       <Input
                         placeholder="123 Purok St, Barangay, Municipality"
                         {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
