@@ -1,7 +1,5 @@
 import React from "react";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -11,9 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useClassNav } from "../contexts/ClassNavContext";
-import { Progress } from "@/components/ui/progress";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import { Copy, Truck } from "lucide-react";
+import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function OverviewTable() {
@@ -25,71 +22,12 @@ export default function OverviewTable() {
 
   const { setTab } = useClassNav();
 
+  const handleCopySectionName = () => {
+    navigator.clipboard.writeText(classDetails.sectionName.toUpperCase());
+  };
+
   return (
     <>
-      {/* <div className="gap-4 md:flex">
-        <header className="flex max-w-[52ch] justify-between gap-4 p-4 md:order-2 ">
-          <Card
-            className={`flex aspect-square w-[25ch] cursor-pointer flex-col hover:border-b-4 hover:border-r-4 `}
-            onClick={() => setTab("students")}
-          >
-            <CardTitle className="flex justify-end p-2"></CardTitle>
-            <CardContent
-              className={`flex h-full flex-col items-center justify-center gap-2 text-center `}
-            >
-              <h1 className="text-2xl font-bold">
-                {classDetails.students.length}
-              </h1>
-              <span>Total Students</span>
-            </CardContent>
-          </Card>
-          <Card
-            className={`flex aspect-square w-[25ch] cursor-pointer flex-col  hover:border-b-4 hover:border-r-4 `}
-            onClick={() => setTab("subjects")}
-          >
-            <CardTitle className="flex justify-end p-2"></CardTitle>
-            <CardContent
-              className={`flex h-full flex-col items-center justify-center gap-2 text-center `}
-            >
-              <h1 className="text-2xl font-bold">
-                {classDetails.subjects.length}
-              </h1>
-              <span>Total Subjects</span>
-            </CardContent>
-          </Card>
-        </header>
-        <main className="flex flex-col gap-4 p-4 md:w-[32%]">
-          <section className="flex flex-col gap-4 ">
-            <div>
-              <Label>Section Name</Label>
-              <Input value={classDetails.sectionName.toUpperCase()} disabled />
-            </div>
-            <div>
-              <Label>Adviser</Label>
-              <Input value={classDetails.adviser} disabled />
-            </div>
-            <div>
-              <Label>Grade Level</Label>
-              <Input value={classDetails.gradeLevel} disabled />
-            </div>
-          </section>
-          <section className="flex flex-col gap-4">
-            <div>
-              <Label>Strand</Label>
-              <Input value={classDetails.strand.toUpperCase()} disabled />
-            </div>
-            <div>
-              <Label>School Year</Label>
-              <Input value={classDetails.schoolYear} disabled />
-            </div>
-            <div>
-              <Label>Semester</Label>
-              <Input value={classDetails.semester} disabled />
-            </div>
-          </section>
-        </main>
-      </div> */}
-
       <section className="flex flex-col gap-4 p-4 md:flex-row">
         <div className="order-2 flex gap-2">
           <Card
@@ -121,21 +59,6 @@ export default function OverviewTable() {
               <span>Total Subjects</span>
             </CardContent>
           </Card>
-
-          {/* <Card className="h-fit">
-            <CardHeader className="pb-2">
-              <CardDescription>This Week</CardDescription>
-              <CardTitle className="text-4xl">$1,329</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-xs text-muted-foreground">
-                +25% from last week
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Progress value={25} aria-label="25% increase" />
-            </CardFooter>
-          </Card> */}
         </div>
 
         <div>
@@ -148,23 +71,16 @@ export default function OverviewTable() {
                     size="icon"
                     variant="outline"
                     className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
+                    onClick={handleCopySectionName}
                   >
                     <Copy className="h-3 w-3" />
-                    <span className="sr-only">Copy Order ID</span>
+                    <span className="sr-only">Copy Section Name</span>
                   </Button>
                 </CardTitle>
                 <CardDescription>
                   SY {classDetails.schoolYear} - {classDetails.semester}
                 </CardDescription>
               </div>
-              {/* <div className="ml-auto flex items-center gap-1">
-                <Button size="sm" variant="outline" className="h-8 gap-1">
-                  <Truck className="h-3.5 w-3.5" />
-                  <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                    Track Order
-                  </span>
-                </Button>
-              </div> */}
             </CardHeader>
             <CardContent className="p-6 text-sm">
               <div className="grid gap-3">
@@ -186,9 +102,6 @@ export default function OverviewTable() {
                   <div className="font-semibold">Adviser</div>
                   <address className="grid gap-0.5 not-italic text-muted-foreground">
                     <span>{classDetails.adviser}</span>
-                    {/* <span>Liam Johnson</span>
-                    <span>1234 Main St.</span>
-                    <span>Anytown, CA 12345</span> */}
                   </address>
                 </div>
               </div>
