@@ -12,12 +12,21 @@ export const schema = yup.object().shape({
   middleName: yup
     .string()
     .max(255, "Your middle name must be at most 255 characters long."),
-  extensionName: yup.string().default("None"),
+  extensionName: yup
+    .string()
+    .oneOf(
+      ["None", "Jr", "II", "III", "IV", "V"],
+      "Please select a valid extension name.",
+    )
+    .default("None"),
   birthDate: yup
     .date()
     .max(new Date(), "Please enter a birthdate in the past.")
     .required("Your date of birth is required."),
-  gender: yup.string().required("Please specify your gender."),
+  gender: yup
+    .string()
+    .oneOf(["Male", "Female"], "Please specify your gender as Male or Female.")
+    .required("Please specify your gender."),
   currentAddress: yup
     .string()
     .required("Please provide your current address.")
