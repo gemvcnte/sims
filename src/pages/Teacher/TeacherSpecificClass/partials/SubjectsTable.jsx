@@ -47,6 +47,7 @@ export default function SubjectsTable() {
             <TableHead>Teacher</TableHead>
             <TableHead></TableHead>
             <TableHead></TableHead>
+            {!isAdviser && <TableHead></TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useClassNav } from "../contexts/ClassNavContext";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { isClassAdviser } from "../helpers/isClassAdviser";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function ClassNav({ className, ...props }) {
   const classDetailsContext = useClassDetails();
@@ -16,52 +17,34 @@ function ClassNav({ className, ...props }) {
   };
 
   return (
-    <nav
-      className={cn("flex items-center space-x-4 px-4 lg:space-x-6", className)}
-      {...props}
-    >
-      <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-          selectedTab === "students" &&
-          "border-b-2 border-foreground !text-foreground"
-        }`}
-        onClick={() => handleTabClick("students")}
-      >
-        Students
-      </p>
-
-      <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-          selectedTab === "grades" &&
-          "border-b-2 border-foreground !text-foreground"
-        }`}
-        onClick={() => handleTabClick("grades")}
-      >
-        Grades
-      </p>
-
-      {/* {isAdviser && ( */}
-      <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-          selectedTab === "subjects" &&
-          "border-b-2 border-foreground !text-foreground"
-        }`}
-        onClick={() => handleTabClick("subjects")}
-      >
-        Subjects
-      </p>
-      {/* )} */}
-
-      <p
-        className={`py-4 text-sm font-medium text-muted-foreground transition-colors hover:cursor-pointer hover:text-foreground ${
-          selectedTab === "schedule" &&
-          "border-b-2 border-foreground !text-foreground"
-        }`}
-        onClick={() => handleTabClick("schedule")}
-      >
-        Schedule
-      </p>
-    </nav>
+    <Tabs defaultValue="overview" value={selectedTab} className="px-4 pt-4">
+      <TabsList className="grid w-full grid-cols-4">
+        <TabsTrigger
+          value="overview"
+          onClick={() => handleTabClick("overview")}
+        >
+          Overview
+        </TabsTrigger>
+        <TabsTrigger
+          value="students"
+          onClick={() => handleTabClick("students")}
+        >
+          Students
+        </TabsTrigger>
+        <TabsTrigger
+          value="subjects"
+          onClick={() => handleTabClick("subjects")}
+        >
+          Subjects
+        </TabsTrigger>
+        <TabsTrigger
+          value="schedule"
+          onClick={() => handleTabClick("schedule")}
+        >
+          Schedule
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
   );
 }
 
