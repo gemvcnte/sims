@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const EnrollmentContext = createContext();
 
@@ -12,6 +12,7 @@ export const useEnrollment = () => {
 
 export const EnrollmentProvider = ({ children }) => {
   const [enrollmentData, setEnrollmentData] = useState({});
+  const [hasAccount, setHasAccount] = useState(null);
   const [step, setStep] = useState(0);
 
   const nextStep = () => {
@@ -26,6 +27,10 @@ export const EnrollmentProvider = ({ children }) => {
     setStep(0);
   };
 
+  useEffect(() => {
+    console.log(`step`, step);
+  }, [step]);
+
   const values = {
     enrollmentData,
     setEnrollmentData,
@@ -33,6 +38,8 @@ export const EnrollmentProvider = ({ children }) => {
     nextStep,
     prevStep,
     resetStep,
+    hasAccount,
+    setHasAccount,
   };
 
   return (
