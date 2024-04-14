@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 const ClassNavContext = createContext();
 
 export const ClassNavProvider = ({ children }) => {
-  const [selectedTab, setSelectedTab] = useState("students");
+  const [selectedTab, setSelectedTab] = useState("overview");
 
   const setTab = (tab) => {
     setSelectedTab(tab);
