@@ -44,8 +44,7 @@ export default function StepTwo() {
   });
 
   const onSubmit = (data) => {
-    const formattedData = { ...data, birthDate: formatDate(data.birthDate) };
-    setEnrollmentData({ ...formattedData, ...enrollmentData });
+    setEnrollmentData({ ...enrollmentData, ...data });
 
     nextStep();
   };
@@ -252,12 +251,3 @@ export default function StepTwo() {
     </>
   );
 }
-
-// Function to format date as "YYYY-MM-DD"
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};

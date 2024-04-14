@@ -24,9 +24,9 @@ import {
 
 import { useEnrollment } from "../../useEnrollment";
 import { schema } from "./schema";
-import { selectOptions } from "./selectOptions";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
-export default function StepOne() {
+export default function StepThree() {
   const {
     step,
     nextStep,
@@ -36,7 +36,7 @@ export default function StepOne() {
     hasAccount,
   } = useEnrollment();
 
-  if (step !== 1 || hasAccount) return null;
+  if (step !== 3 || hasAccount) return null;
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -44,8 +44,7 @@ export default function StepOne() {
   });
 
   const onSubmit = (data) => {
-    const formattedData = { ...data, birthDate: formatDate(data.birthDate) };
-    setEnrollmentData({ ...enrollmentData, ...formattedData });
+    setEnrollmentData({ ...enrollmentData, ...data });
 
     nextStep();
   };
@@ -53,8 +52,8 @@ export default function StepOne() {
   return (
     <>
       <header className="py-6 text-center">
-        <h4>Step 1</h4>
-        <h1 className="text-2xl">Learner Information</h1>
+        <h4>Step 3</h4>
+        <h1 className="text-2xl">Academic Information</h1>
       </header>
 
       <Form {...form}>
@@ -62,19 +61,20 @@ export default function StepOne() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="mx-auto space-y-8 px-24 lg:px-[12.5rem]"
         >
-          <section className="flex flex-col justify-between gap-8 lg:flex-row lg:gap-24">
-            <div className="flex w-full flex-col gap-8">
+          <section className="flex flex-col justify-between gap-8 ">
+            <div className="flex justify-between gap-24">
               <FormField
                 control={form.control}
-                name="lastName"
+                name="guardianName"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormLabel>
-                      Last Name <span className="text-destructive">*</span>
+                      Guardian's Name{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your last name"
+                        placeholder="Enter your guardian's name"
                         {...field}
                         onChange={(e) => {
                           const uppercaseValue = e.target.value.toUpperCase();
@@ -89,133 +89,71 @@ export default function StepOne() {
 
               <FormField
                 control={form.control}
-                name="firstName"
+                name="guardianContactNumber"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormLabel>
-                      First Name <span className="text-destructive">*</span>
+                      Guardian's Contact Number{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your first name"
+                        type="number"
+                        placeholder="eg. 09123456789"
                         {...field}
-                        onChange={(e) => {
-                          const uppercaseValue = e.target.value.toUpperCase();
-                          field.onChange(uppercaseValue);
-                        }}
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="middleName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Middle Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your middle name"
-                        {...field}
-                        onChange={(e) => {
-                          const uppercaseValue = e.target.value.toUpperCase();
-                          field.onChange(uppercaseValue);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="extensionName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Extension Name</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || "None"}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose an extension name" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {selectOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <div className="flex w-full flex-col gap-8">
+            <div>
               <FormField
                 control={form.control}
-                name="birthDate"
+                name="guardianRelationship"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormLabel>
-                      Date of Birth <span className="text-destructive">*</span>
+                      Relationship <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Relationship" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Relative">Relative</SelectItem>
+                          <SelectItem value="Non-relative">
+                            Non-relative
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+            </div>
 
+            <Separator className="my-4 h-[.5px] bg-muted" />
+
+            <div className="flex justify-between gap-24">
               <FormField
                 control={form.control}
-                name="gender"
+                name="fatherName"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Gender <span className="text-destructive">*</span>
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your gender" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Male">Male</SelectItem>
-                        <SelectItem value="Female">Female</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="currentAddress"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Current Address{" "}
-                      <span className="text-destructive">*</span>
-                    </FormLabel>
+                  <FormItem className="w-full">
+                    <FormLabel>Father's Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="123 Purok St, Barangay, Municipality"
+                        placeholder="Enter your father's name"
                         {...field}
                         onChange={(e) => {
                           const uppercaseValue = e.target.value.toUpperCase();
@@ -230,14 +168,57 @@ export default function StepOne() {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="fatherContactNumber"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Email <span className="text-destructive">*</span>
-                    </FormLabel>
+                  <FormItem className="w-full">
+                    <FormLabel>Father's Contact Number </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Your Email" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="eg. 09123456789"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="flex justify-between gap-24">
+              <FormField
+                control={form.control}
+                name="motherName"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Mother's Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your mother's name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="motherContactNumber"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Mother's Contact Number </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="eg. 09123456789"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -270,12 +251,3 @@ export default function StepOne() {
     </>
   );
 }
-
-// Function to format date as "YYYY-MM-DD"
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
