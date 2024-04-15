@@ -100,22 +100,6 @@ export default function StepThreeConfirmDialog() {
     }
   };
 
-  const handleConfirmSubmission = (e) => {
-    e.preventDefault();
-
-    const objectWithBackendSchemaStructure = {
-      schoolYear: {
-        year: globalSettings.schoolYear,
-        semester: globalSettings.semester,
-        gradeLevel: enrollmentData.gradeLevel,
-        track: enrollmentData.track,
-        strand: enrollmentData.strand,
-      },
-      ...enrollmentData,
-    };
-
-    handleSubmit(objectWithBackendSchemaStructure);
-  };
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
