@@ -230,14 +230,21 @@ export default function StepOne() {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="emailAddress"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
                       Email <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Your Email" {...field} />
+                      <Input
+                        placeholder="Enter Your Email"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

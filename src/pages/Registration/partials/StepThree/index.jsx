@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,6 +25,8 @@ import {
 import { useEnrollment } from "../../useEnrollment";
 import { schema } from "./schema";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Dialog } from "@/components/ui/dialog";
+import StepThreeConfirmDialog from "./StepThreeConfirmDialog";
 
 export default function StepThree() {
   const {
@@ -43,6 +45,8 @@ export default function StepThree() {
     defaultValues: enrollmentData,
   });
 
+  const [showDialog, setShowDialog] = useState(false);
+
   const onSubmit = (data) => {
     let trackValue = "";
     if (
@@ -58,10 +62,15 @@ export default function StepThree() {
     setEnrollmentData({ ...enrollmentData, ...data, track: trackValue });
 
     // nextStep();
+    setShowDialog(true);
   };
 
   return (
     <>
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <StepThreeConfirmDialog />
+      </Dialog>
+
       <header className="py-6 text-center">
         <h4>Step 3</h4>
         <h1 className="text-2xl">Academic Information</h1>
@@ -105,7 +114,7 @@ export default function StepThree() {
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value.toString()}
+                      defaultValue={field.value?.toString()}
                     >
                       <FormControl>
                         <SelectTrigger>

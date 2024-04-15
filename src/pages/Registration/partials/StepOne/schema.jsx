@@ -31,7 +31,7 @@ export const schema = yup.object().shape({
     .string()
     .required("Please provide your current address.")
     .max(255, "Your current address must be at most 255 characters long."),
-  email: yup
+  emailAddress: yup
     .string()
     .email("Please enter a valid email address.")
     .required("Your email address is required.")
