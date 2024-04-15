@@ -44,9 +44,20 @@ export default function StepThree() {
   });
 
   const onSubmit = (data) => {
-    setEnrollmentData({ ...enrollmentData, ...data });
+    let trackValue = "";
+    if (
+      data.strand === "abm" ||
+      data.strand === "humss" ||
+      data.strand === "stem"
+    ) {
+      trackValue = "academic";
+    } else {
+      trackValue = "tvl";
+    }
 
-    nextStep();
+    setEnrollmentData({ ...enrollmentData, ...data, track: trackValue });
+
+    // nextStep();
   };
 
   return (
@@ -62,24 +73,21 @@ export default function StepThree() {
           className="mx-auto space-y-8 px-24 lg:px-[12.5rem]"
         >
           <section className="flex flex-col justify-between gap-8 ">
-            <div className="flex justify-between gap-24">
+            <div className="flex w-full flex-col gap-8">
               <FormField
                 control={form.control}
-                name="guardianName"
+                name="lrn"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem>
                     <FormLabel>
-                      Guardian's Name{" "}
+                      LRN (Learner Reference Number){" "}
                       <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your guardian's name"
+                        placeholder="Enter your learner reference number"
+                        type="number"
                         {...field}
-                        onChange={(e) => {
-                          const uppercaseValue = e.target.value.toUpperCase();
-                          field.onChange(uppercaseValue);
-                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -89,137 +97,56 @@ export default function StepThree() {
 
               <FormField
                 control={form.control}
-                name="guardianContactNumber"
+                name="gradeLevel"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem>
                     <FormLabel>
-                      Guardian's Contact Number{" "}
-                      <span className="text-destructive">*</span>
+                      Grade Level <span className="text-destructive">*</span>
                     </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="eg. 09123456789"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your grade level" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="11">Grade 11</SelectItem>
+                        <SelectItem value="12">Grade 12</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
 
-            <div>
               <FormField
                 control={form.control}
-                name="guardianRelationship"
+                name="strand"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem>
                     <FormLabel>
-                      Relationship <span className="text-destructive">*</span>
+                      Strand <span className="text-destructive">*</span>
                     </FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Relationship" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Relative">Relative</SelectItem>
-                          <SelectItem value="Non-relative">
-                            Non-relative
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <Separator className="my-4 h-[.5px] bg-muted" />
-
-            <div className="flex justify-between gap-24">
-              <FormField
-                control={form.control}
-                name="fatherName"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Father's Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your father's name"
-                        {...field}
-                        onChange={(e) => {
-                          const uppercaseValue = e.target.value.toUpperCase();
-                          field.onChange(uppercaseValue);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="fatherContactNumber"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Father's Contact Number </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="eg. 09123456789"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="flex justify-between gap-24">
-              <FormField
-                control={form.control}
-                name="motherName"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Mother's Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your mother's name"
-                        {...field}
-                        onChange={(e) => {
-                          const uppercaseValue = e.target.value.toUpperCase();
-                          field.onChange(uppercaseValue);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="motherContactNumber"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>Mother's Contact Number </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="eg. 09123456789"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your strand" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="humss">HUMSS (Academic)</SelectItem>
+                        <SelectItem value="abm">ABM (Academic)</SelectItem>
+                        <SelectItem value="stem">STEM (Academic)</SelectItem>
+                        <SelectItem value="ict">ICT (TVL)</SelectItem>
+                        <SelectItem value="he">HE (TVL)</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

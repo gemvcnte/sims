@@ -8,7 +8,7 @@ export const schema = yup.object().shape({
   lrn: yup
     .string()
     .required("Please provide your LRN (Learner Reference Number).")
-    .matches(/^\d{12}$/, "Your LRN must be exactly 12 digits."),
+    .matches(/^\d{12}$/, "LRN must be exactly 12 digits."),
   gradeLevel: yup
     .number()
     .required("Please select your grade level.")
