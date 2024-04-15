@@ -26,6 +26,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import TermsOfServiceDialog from "@/components/terms-of-service-dialog";
+import PrivacyPolicyDialog from "@/components/privacy-policy-dialog";
 
 export function StepOneConfirmDialog() {
   const { enrollmentData, setEnrollmentData, prevStep, setHasAccount } =
@@ -164,7 +165,13 @@ export function StepOneConfirmDialog() {
                     Terms of Service{" "}
                   </span>
                 </TermsOfServiceDialog>
-                and Privacy Policy.
+                and{" "}
+                <PrivacyPolicyDialog>
+                  <span className=" underline underline-offset-4 hover:cursor-pointer">
+                    Privacy Policy
+                  </span>
+                </PrivacyPolicyDialog>
+                .
               </p>
             </div>
           </section>
