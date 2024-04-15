@@ -24,6 +24,7 @@ import { registrationEndpoint } from "@/config/adminEndpoints";
 import { toast } from "react-toastify";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function StepOneConfirmDialog() {
   const { enrollmentData, setEnrollmentData, prevStep, setHasAccount } =
@@ -60,7 +61,9 @@ export function StepOneConfirmDialog() {
     }
   };
 
-  const handleConfirmSubmission = () => {
+  const handleConfirmSubmission = (e) => {
+    e.preventDefault();
+
     const objectWithBackendSchemaStructure = {
       schoolYear: {
         year: globalSettings.schoolYear,
@@ -142,11 +145,30 @@ export function StepOneConfirmDialog() {
         </div>
       </div>
 
-      <DialogFooter>
-        <Button onClick={handleConfirmSubmission} size="lg" disabled={loading}>
-          Submit
-        </Button>
-      </DialogFooter>
+      <form onSubmit={handleConfirmSubmission}>
+        <section className="flex justify-end pb-4">
+          <section className="items-top inline-block w-[74%] gap-2 rounded-md border px-8 py-4">
+            <Checkbox id="terms1" required className="relative top-[4px]" />
+            <div className="ml-2 inline flex-col gap-1.5 leading-none">
+              <label
+                htmlFor="terms1"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Accept terms and conditions
+              </label>
+              <p className="ml-6 text-sm text-muted-foreground">
+                You agree to our Terms of Service and Privacy Policy.
+              </p>
+            </div>
+          </section>
+        </section>
+
+        <DialogFooter>
+          <Button type="submit" size="lg" className="px-12" disabled={loading}>
+            Submit
+          </Button>
+        </DialogFooter>
+      </form>
     </DialogContent>
   );
 }
