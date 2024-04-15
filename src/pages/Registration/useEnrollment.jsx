@@ -43,6 +43,7 @@ export const EnrollmentProvider = ({ children }) => {
     enrollmentData,
     setEnrollmentData,
     step,
+    setStep,
     nextStep,
     prevStep,
     resetStep,
