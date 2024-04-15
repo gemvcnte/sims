@@ -19,6 +19,8 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { toast } from "react-toastify";
 import { registrationEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
+import TermsOfServiceDialog from "@/components/terms-of-service-dialog";
+import PrivacyPolicyDialog from "@/components/privacy-policy-dialog";
 
 const InputField = ({
   type,
@@ -99,7 +101,6 @@ export default function StepThreeConfirmDialog() {
       setLoading(false);
     }
   };
-
 
   return (
     <DialogContent className={"max-h-[80%] overflow-y-scroll lg:max-w-[720px]"}>
@@ -389,7 +390,19 @@ export default function StepThreeConfirmDialog() {
                 Accept terms and conditions
               </label>
               <p className="ml-6 text-sm text-muted-foreground">
-                You agree to our Terms of Service and Privacy Policy.
+                By checking this box, you're agreeing to our <br />
+                <TermsOfServiceDialog>
+                  <span className="mr-[1ch] underline underline-offset-4 hover:cursor-pointer">
+                    Terms of Service{" "}
+                  </span>
+                </TermsOfServiceDialog>
+                and{" "}
+                <PrivacyPolicyDialog>
+                  <span className=" underline underline-offset-4 hover:cursor-pointer">
+                    Privacy Policy
+                  </span>
+                </PrivacyPolicyDialog>
+                .
               </p>
             </div>
           </section>

@@ -25,6 +25,8 @@ import { toast } from "react-toastify";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import TermsOfServiceDialog from "@/components/terms-of-service-dialog";
+import PrivacyPolicyDialog from "@/components/privacy-policy-dialog";
 
 export function StepOneConfirmDialog() {
   const { enrollmentData, setEnrollmentData, prevStep, setHasAccount } =
@@ -157,7 +159,19 @@ export function StepOneConfirmDialog() {
                 Accept terms and conditions
               </label>
               <p className="ml-6 text-sm text-muted-foreground">
-                You agree to our Terms of Service and Privacy Policy.
+                By checking this box, you're agreeing to our <br />
+                <TermsOfServiceDialog>
+                  <span className="mr-[1ch] underline underline-offset-4 hover:cursor-pointer">
+                    Terms of Service{" "}
+                  </span>
+                </TermsOfServiceDialog>
+                and{" "}
+                <PrivacyPolicyDialog>
+                  <span className=" underline underline-offset-4 hover:cursor-pointer">
+                    Privacy Policy
+                  </span>
+                </PrivacyPolicyDialog>
+                .
               </p>
             </div>
           </section>

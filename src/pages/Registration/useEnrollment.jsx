@@ -31,13 +31,7 @@ export const EnrollmentProvider = ({ children }) => {
     if (step === 0) {
       setEnrollmentData({});
     }
-
-    console.log(`step`, step);
   }, [step]);
-
-  useEffect(() => {
-    console.log(`enrollmentData`, enrollmentData);
-  }, [enrollmentData]);
 
   const values = {
     enrollmentData,
