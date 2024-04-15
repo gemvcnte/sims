@@ -25,7 +25,7 @@ export function EmploymentInformationSection({
             type="number"
             placeholder="Enter Your TIN number"
             value={adminProfile?.tinNumber}
-            onChange={(e) => handleInputChange("tinNu", e.target.value)}
+            onChange={(e) => handleInputChange("tinNumber", e.target.value)}
           />
         </div>
 

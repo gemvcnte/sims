@@ -79,9 +79,9 @@ export function ClassroomsDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger>
-            <DropdownMenuItem>
+            <button className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <Link onClick={handleDialogClick}>Create New Section</Link>
-            </DropdownMenuItem>
+            </button>
           </DialogTrigger>
           <CreateNewSection onClose={handleDialogClick} />
         </Dialog>
