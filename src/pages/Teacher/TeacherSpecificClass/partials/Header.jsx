@@ -35,7 +35,7 @@ export default function Header() {
         <ChevronLeft className="mr-2 inline-block text-muted-foreground transition-all duration-300  group-hover:mr-4" />
 
         <span className="hidden text-sm text-muted-foreground sm:inline">
-          View My Sections
+          My Sections
         </span>
       </Button>
     </header>
