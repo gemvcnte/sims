@@ -86,11 +86,11 @@ export function StudentsDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <DropdownMenuItem>
+            <button className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-start text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <Link className="w-full" onClick={handleDialogClick}>
                 Reset Student Password
               </Link>
-            </DropdownMenuItem>
+            </button>
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Student" />
         </Dialog>
