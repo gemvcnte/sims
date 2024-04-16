@@ -270,7 +270,7 @@ const StudentsInClassDataTable = () => {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No students found in this section.
                   </TableCell>
                 </TableRow>
               )}

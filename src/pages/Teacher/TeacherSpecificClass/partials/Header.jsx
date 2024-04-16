@@ -29,13 +29,13 @@ export default function Header() {
       <ClassNav />
       <Button
         variant="ghost"
-        className="group -mb-4 mr-4 p-4 hover:cursor-pointer"
+        className="group -mb-4 mr-2 p-4 hover:cursor-pointer sm:mr-4"
         onClick={navigateToClasses}
       >
         <ChevronLeft className="mr-2 inline-block text-muted-foreground transition-all duration-300  group-hover:mr-4" />
 
         <span className="hidden text-sm text-muted-foreground sm:inline">
-          View My Sections
+          My Sections
         </span>
       </Button>
     </header>
