@@ -39,10 +39,18 @@ import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import { useParams } from "react-router-dom";
 import { useStudentsInClassAndNoClass } from "../useStudentsInClassAndNoClass";
 import { useStudentsInSpecificClass } from "../useStudentsInSpecificClass";
+import { useClassDetails } from "../../../contexts/ClassDetailsContext";
 
 const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
   const { students, loading, error, fetchStudentsInClassAndNoClass } =
     useStudentsInClassAndNoClass();
+
+  const classDetailsContext = useClassDetails();
+  const { classDetails } = classDetailsContext;
+
+  if (classDetails) {
+    console.log(`classDetails`, classDetails);
+  }
 
   const { id } = useParams();
   const sectionId = id;
@@ -291,7 +299,11 @@ const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {`No grade ${
+                    classDetails.gradeLevel
+                  } ${classDetails.strand.toUpperCase()} students are currently enrolled for the ${
+                    classDetails.semester
+                  } of the school year ${classDetails.schoolYear}.`}
                 </TableCell>
               </TableRow>
             )}
