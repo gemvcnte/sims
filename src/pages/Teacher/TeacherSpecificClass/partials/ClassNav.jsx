@@ -17,7 +17,11 @@ function ClassNav({ className, ...props }) {
   };
 
   return (
-    <Tabs defaultValue="overview" value={selectedTab} className="px-4 pt-4">
+    <Tabs
+      defaultValue="overview"
+      value={selectedTab}
+      className="sm:pr pl-4 pt-4"
+    >
       <TabsList className="grid w-full grid-cols-5">
         <TabsTrigger
           value="overview"
