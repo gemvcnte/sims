@@ -60,11 +60,11 @@ export function AdminsDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <DropdownMenuItem>
+            <button className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
               <Link className="w-full" onClick={handleDialogClick}>
                 Reset Admin Password
               </Link>
-            </DropdownMenuItem>
+            </button>
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Admin" />
         </Dialog>
