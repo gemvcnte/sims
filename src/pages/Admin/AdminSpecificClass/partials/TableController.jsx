@@ -17,9 +17,9 @@ export default function TableController() {
     return <StudentsTable />;
   }
 
-  // if (selectedTab === "grades") {
-  //   return <GradesTable />;
-  // }
+  if (selectedTab === "grades") {
+    return <GradesTable />;
+  }
 
   if (selectedTab === "subjects") {
     return <SubjectsTable />;
