@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -15,26 +15,33 @@ export default function FilterGrades() {
   const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
     useClassDetails();
 
-  const mostLatestSchoolYearAndSemester = schoolYearAndSemesterSelectOptions
-    ? `${schoolYearAndSemesterSelectOptions[0]?.schoolYear}-${schoolYearAndSemesterSelectOptions[0]?.semester}`
-    : "";
+  if (!schoolYearAndSemesterSelectOptions) return null;
 
-  const handleSelectChange = (value) => {
-    if (!schoolYearAndSemesterSelectOptions) return;
+  const mostLatestSchoolYearAndSemester = `${schoolYearAndSemesterSelectOptions[0].schoolYear}-${schoolYearAndSemesterSelectOptions[0].semester}`;
 
-    const selectedOption = schoolYearAndSemesterSelectOptions.find(
-      (option) => `${option.schoolYear}-${option.semester}` === value,
-    );
+  const [selectedSchoolYearAndSemester, setSelectedSchoolYearAndSemester] =
+    useState(mostLatestSchoolYearAndSemester);
 
-    if (selectedOption) {
-      filterClassDetails(selectedOption);
+  const handleSelectChange = (selectedOptionString) => {
+    const selectedOptionConvertedToObject =
+      schoolYearAndSemesterSelectOptions.find(
+        (option) =>
+          `${option.schoolYear}-${option.semester}` === selectedOptionString,
+      );
+
+    if (!selectedOptionConvertedToObject) {
+      showErrorNotification("Invalid option selected");
+      return;
     }
+
+    filterClassDetails(selectedOptionConvertedToObject);
+    setSelectedSchoolYearAndSemester(selectedOptionString);
   };
 
   return (
     <header className="flex justify-between gap-2 px-4 pt-4">
       <Select
-        defaultValue={mostLatestSchoolYearAndSemester}
+        value={selectedSchoolYearAndSemester}
         onValueChange={handleSelectChange}
       >
         <SelectTrigger className="w-fit gap-2">
