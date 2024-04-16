@@ -18,7 +18,7 @@ function ClassNav({ className, ...props }) {
 
   return (
     <Tabs defaultValue="overview" value={selectedTab} className="px-4 pt-4">
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-5">
         <TabsTrigger
           value="overview"
           onClick={() => handleTabClick("overview")}
@@ -30,6 +30,9 @@ function ClassNav({ className, ...props }) {
           onClick={() => handleTabClick("students")}
         >
           Students
+        </TabsTrigger>
+        <TabsTrigger value="grades" onClick={() => handleTabClick("grades")}>
+          Grades
         </TabsTrigger>
         <TabsTrigger
           value="subjects"
