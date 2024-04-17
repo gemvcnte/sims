@@ -44,6 +44,7 @@ export default function SelectTeacherCombobox({
     <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
+          disabled
           {...field}
           variant="outline"
           role="combobox"

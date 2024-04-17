@@ -17,6 +17,8 @@ import { isClassAdviser } from "../helpers/isClassAdviser";
 import { ModalProvider } from "./AddSubjectModal/AddSubjectModal.hooks";
 import UpdateSubjectModal from "./UpdateSubjectModal";
 import { UpdateModalProvider } from "./UpdateSubjectModal/AddSubjectModal.hooks";
+import RemoveScheduleModal from "./RemoveScheduleModal";
+import { RemoveScheduleModalProvider } from "./RemoveScheduleModal/AddSubjectModal.hooks";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -60,6 +62,7 @@ export default function SubjectsTable() {
                 {subject.subjectName}
               </TableCell>
               <TableCell>{subject.subjectTeacher}</TableCell>
+
               {isAdviser ? (
                 <UpdateModalProvider>
                   <UpdateSubjectModal
@@ -70,6 +73,7 @@ export default function SubjectsTable() {
               ) : (
                 <TableCell></TableCell>
               )}
+
               {isAdviser ? (
                 <DeleteSubjectModal
                   onSuccess={() => fetchClassDetails()}
@@ -78,6 +82,18 @@ export default function SubjectsTable() {
               ) : (
                 <TableCell></TableCell>
               )}
+
+              {isAdviser ? (
+                <RemoveScheduleModalProvider>
+                  <RemoveScheduleModal
+                    onSuccess={() => fetchClassDetails()}
+                    subject={subject}
+                  />
+                </RemoveScheduleModalProvider>
+              ) : (
+                <TableCell></TableCell>
+              )}
+
               <TableCell></TableCell>
             </TableRow>
           ))}
