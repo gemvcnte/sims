@@ -102,7 +102,7 @@ export default function AddSubjectModalForm(subject) {
 
           {schedules.map((schedule, index) => (
             <div key={index} className="mt-8 flex flex-col gap-4">
-              {schedules.length > 1 && (
+              {/* {schedules.length > 1 && (
                 <Button
                   variant="text"
                   className="col-span-4 text-red-600"
@@ -110,7 +110,7 @@ export default function AddSubjectModalForm(subject) {
                 >
                   Remove
                 </Button>
-              )}
+              )} */}
 
               <FormField
                 control={form.control}
