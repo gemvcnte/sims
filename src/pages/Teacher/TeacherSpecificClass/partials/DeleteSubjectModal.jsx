@@ -46,7 +46,7 @@ export function DeleteSubjectModal({ onSuccess, subject }) {
         </TableCell> */}
 
         <Button size="sm" variant="ghost" className="justify-start px-2">
-          Delete
+          Delete subject
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

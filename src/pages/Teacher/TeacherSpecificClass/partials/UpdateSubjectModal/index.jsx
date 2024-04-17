@@ -26,7 +26,7 @@ export default function UpdateSubjectModal({ subject }) {
         {/* </TableCell> */}
 
         <Button size="sm" variant="ghost" className="justify-start px-2">
-          Update
+          Update subject
         </Button>
       </DialogTrigger>
 
