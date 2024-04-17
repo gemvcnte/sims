@@ -11,10 +11,9 @@ export default function UpdateSubjectModal({ subject }) {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      {/* <section className="mb-4 flex gap-4"> */}
       <DialogTrigger asChild>
-        <TableCell className="inline-block hover:cursor-pointer">
-          <span className="flex items-center gap-2">
+        {/* <TableCell className="inline-block hover:cursor-pointer"> */}
+        {/* <span className="flex items-center gap-2">
             <span className="border-b border-background py-1 hover:border-foreground">
               Update
             </span>
@@ -23,10 +22,13 @@ export default function UpdateSubjectModal({ subject }) {
               rotate={3}
               className="ml-2 hidden -rotate-45 transform transition-all group-hover:rotate-45 sm:inline"
             />
-          </span>
-        </TableCell>
+          </span> */}
+        {/* </TableCell> */}
+
+        <Button size="sm" variant="ghost" className="justify-start px-2">
+          Update
+        </Button>
       </DialogTrigger>
-      {/* </section> */}
 
       <DialogContent className="sm:max-h-[90svh] sm:max-w-[525px]">
         <AddSubjectModalForm subject={subject} />

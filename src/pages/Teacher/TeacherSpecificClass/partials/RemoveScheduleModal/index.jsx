@@ -13,7 +13,7 @@ export default function RemoveScheduleModal({ subject }) {
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       {/* <section className="mb-4 flex gap-4"> */}
       <DialogTrigger asChild>
-        <TableCell className="inline-block hover:cursor-pointer">
+        {/* <TableCell className="inline-block hover:cursor-pointer">
           <span className="flex items-center gap-2">
             <span className="border-b border-background py-1 hover:border-foreground">
               Remove schedule
@@ -24,7 +24,11 @@ export default function RemoveScheduleModal({ subject }) {
               className="ml-2 hidden -rotate-45 transform transition-all group-hover:rotate-45 sm:inline"
             />
           </span>
-        </TableCell>
+        </TableCell> */}
+
+        <Button size="sm" variant="ghost" className="justify-start px-2">
+          Remove schedule
+        </Button>
       </DialogTrigger>
       {/* </section> */}
 
