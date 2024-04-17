@@ -1,3 +1,4 @@
+import showErrorNotification from "@/utils/ShowErrorNotification";
 import moment from "moment";
 
 export const checkOverlap = (schedules) => {
@@ -17,6 +18,17 @@ export const checkOverlap = (schedules) => {
         continue; // Skip if schedules are on different days
       }
 
+      // Check for exact same schedule
+      if (
+        schedule1.startTime === schedule2.startTime &&
+        schedule1.endTime === schedule2.endTime
+      ) {
+        // If schedules are exactly the same, return the overlapping schedule message
+        const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
+        showErrorNotification(overlappingSchedule);
+        return overlappingSchedule;
+      }
+
       // Check for overlap within the same day
       if (
         start1.isBetween(start2, end2) ||
@@ -26,6 +38,7 @@ export const checkOverlap = (schedules) => {
       ) {
         // If overlap found, construct and return the overlapping schedule message
         const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
+        showErrorNotification(overlappingSchedule);
         return overlappingSchedule;
       }
     }
