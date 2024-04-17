@@ -90,6 +90,7 @@ export default function AddSubjectModalForm(subject) {
                   </FormLabel>
                   <FormControl>
                     <SelectTeacherCombobox
+                      disabled={true}
                       subject={subject}
                       field={field}
                       onSelectTeacher={setSelectedTeacher}

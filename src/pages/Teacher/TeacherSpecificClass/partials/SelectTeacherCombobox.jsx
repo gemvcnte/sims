@@ -24,6 +24,7 @@ import { getAllTeachersEndpoint } from "@/config/adminEndpoints";
 import useGetAllTeachers from "../hooks/useGetAllTeachers";
 
 export default function SelectTeacherCombobox({
+  disabled,
   subject,
   field,
   onSelectTeacher,
@@ -44,7 +45,7 @@ export default function SelectTeacherCombobox({
     <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
-          disabled
+          disabled={disabled}
           {...field}
           variant="outline"
           role="combobox"
