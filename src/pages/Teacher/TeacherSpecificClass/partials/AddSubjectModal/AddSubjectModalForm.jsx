@@ -41,7 +41,7 @@ export default function AddSubjectModalForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <DialogHeader>
-          <DialogTitle>Add a Subject</DialogTitle>
+          <DialogTitle>Add a New Subject</DialogTitle>
 
           <DialogDescription className="md:max-w-[80%]">
             Let's add a new subject. Fill in the details below.
@@ -248,7 +248,7 @@ export default function AddSubjectModalForm() {
           </p>
         )}
 
-        <DialogFooter>
+        <DialogFooter className="mt-4">
           <Button type="submit">Add subject</Button>
         </DialogFooter>
       </form>

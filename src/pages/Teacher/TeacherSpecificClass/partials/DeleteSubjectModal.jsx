@@ -14,6 +14,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import { Icon } from "@iconify/react";
 import deleteSubjectApi from "../helpers/deleteSubjectApi";
+import { Button } from "@/components/ui/button";
 
 export function DeleteSubjectModal({ onSuccess, subject }) {
   const handleDelete = async () => {
@@ -32,7 +33,7 @@ export function DeleteSubjectModal({ onSuccess, subject }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <TableCell className="hover:cursor-pointer">
+        {/* <TableCell className="hover:cursor-pointer">
           <span className="flex items-center gap-2">
             <span className="border-b border-background py-0 hover:border-foreground">
               Delete
@@ -42,7 +43,11 @@ export function DeleteSubjectModal({ onSuccess, subject }) {
               className="hidden sm:inline"
             />
           </span>
-        </TableCell>
+        </TableCell> */}
+
+        <Button size="sm" variant="ghost" className="justify-start px-2">
+          Delete subject
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -17,6 +17,17 @@ import { isClassAdviser } from "../helpers/isClassAdviser";
 import { ModalProvider } from "./AddSubjectModal/AddSubjectModal.hooks";
 import UpdateSubjectModal from "./UpdateSubjectModal";
 import { UpdateModalProvider } from "./UpdateSubjectModal/AddSubjectModal.hooks";
+import RemoveScheduleModal from "./RemoveScheduleModal";
+import { RemoveScheduleModalProvider } from "./RemoveScheduleModal/AddSubjectModal.hooks";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -60,7 +71,8 @@ export default function SubjectsTable() {
                 {subject.subjectName}
               </TableCell>
               <TableCell>{subject.subjectTeacher}</TableCell>
-              {isAdviser ? (
+
+              {/* {isAdviser ? (
                 <UpdateModalProvider>
                   <UpdateSubjectModal
                     onSuccess={() => fetchClassDetails()}
@@ -70,6 +82,7 @@ export default function SubjectsTable() {
               ) : (
                 <TableCell></TableCell>
               )}
+
               {isAdviser ? (
                 <DeleteSubjectModal
                   onSuccess={() => fetchClassDetails()}
@@ -78,6 +91,57 @@ export default function SubjectsTable() {
               ) : (
                 <TableCell></TableCell>
               )}
+
+              {isAdviser ? (
+                <RemoveScheduleModalProvider>
+                  <RemoveScheduleModal
+                    onSuccess={() => fetchClassDetails()}
+                    subject={subject}
+                  />
+                </RemoveScheduleModalProvider>
+              ) : (
+                <TableCell></TableCell>
+              )} */}
+
+              {isAdviser ? (
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button aria-haspopup="true" size="icon" variant="ghost">
+                        <MoreHorizontal className="h-4 w-4" />
+                        <span className="sr-only">Toggle menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="flex flex-col ">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+                      <UpdateModalProvider>
+                        <UpdateSubjectModal
+                          onSuccess={() => fetchClassDetails()}
+                          subject={subject}
+                        />
+                      </UpdateModalProvider>
+
+                      <DeleteSubjectModal
+                        onSuccess={() => fetchClassDetails()}
+                        subject={subject}
+                      />
+
+                      <DropdownMenuSeparator className="mx-2" />
+
+                      <RemoveScheduleModalProvider>
+                        <RemoveScheduleModal
+                          onSuccess={() => fetchClassDetails()}
+                          subject={subject}
+                        />
+                      </RemoveScheduleModalProvider>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              ) : (
+                <TableCell></TableCell>
+              )}
+
               <TableCell></TableCell>
             </TableRow>
           ))}

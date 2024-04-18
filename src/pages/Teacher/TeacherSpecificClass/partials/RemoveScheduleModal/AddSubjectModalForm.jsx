@@ -35,17 +35,17 @@ export default function AddSubjectModalForm(subject) {
 
   const form = useForm({
     resolver: yupResolver(schema),
-    defaultValues: subject.subject, // Set default values here
+    defaultValues: subject.subject,
   });
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <DialogHeader>
-          <DialogTitle>Update a Subject</DialogTitle>
+          <DialogTitle>Remove Schedule</DialogTitle>
 
           <DialogDescription className="md:max-w-[80%]">
-            Let's update a new subject. Update the details below.
+            Click the corresponding remove button to remove a schedule.
           </DialogDescription>
         </DialogHeader>
 
@@ -61,13 +61,14 @@ export default function AddSubjectModalForm(subject) {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      disabled
                       {...field}
                       id="name"
                       className="col-span-3"
                       placeholder="Enter Subject Name"
                       value={subjectName}
                       onChange={(e) => {
-                        field.onChange(e); // This should be sufficient for controlled inputs
+                        field.onChange(e);
                         setSubjectName(e.target.value);
                       }}
                     />
@@ -89,6 +90,7 @@ export default function AddSubjectModalForm(subject) {
                   </FormLabel>
                   <FormControl>
                     <SelectTeacherCombobox
+                      disabled={true}
                       subject={subject}
                       field={field}
                       onSelectTeacher={setSelectedTeacher}
@@ -102,15 +104,15 @@ export default function AddSubjectModalForm(subject) {
 
           {schedules.map((schedule, index) => (
             <div key={index} className="mt-8 flex flex-col gap-4">
-              {/* {schedules.length > 1 && (
+              {schedules.length > 1 && (
                 <Button
-                  variant="text"
+                  variant="ghost"
                   className="col-span-4 text-red-600"
                   onClick={() => removeSchedule(index)}
                 >
                   Remove
                 </Button>
-              )} */}
+              )}
 
               <FormField
                 control={form.control}
@@ -126,13 +128,14 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <select
+                          disabled
                           {...field}
                           className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                           id={`day-${index}`}
                           value={schedule.day}
                           onChange={(e) => {
                             updateSchedule(index, "day", e.target.value);
-                            field.onChange(e); // This should be sufficient for controlled inputs
+                            field.onChange(e);
                           }}
                         >
                           <option value="" disabled>
@@ -165,13 +168,14 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          disabled
                           {...field}
                           className="col-span-3"
                           id={`startTime-${index}`}
                           type="time"
                           value={schedule.startTime}
                           onChange={(e) => {
-                            field.onChange(e); // This should be sufficient for controlled inputs
+                            field.onChange(e);
                             updateSchedule(index, "startTime", e.target.value);
                           }}
                         />
@@ -196,6 +200,7 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          disabled
                           {...field}
                           className="col-span-3"
                           id={`endTime-${index}`}
@@ -203,7 +208,7 @@ export default function AddSubjectModalForm(subject) {
                           value={schedule.endTime}
                           onChange={(e) => {
                             updateSchedule(index, "endTime", e.target.value);
-                            field.onChange(e); // This should be sufficient for controlled inputs
+                            field.onChange(e);
                           }}
                         />
                       </FormControl>
@@ -214,36 +219,8 @@ export default function AddSubjectModalForm(subject) {
               />
             </div>
           ))}
-
-          <Button
-            variant="outline"
-            type="button"
-            onClick={addSchedule}
-            className=""
-          >
-            Add another schedule
-          </Button>
         </main>
 
-        {/* Add a conditional rendering for the error message */}
-        {/* {form.formState.errors.schedules && (
-          <div className="text-center text-red-500">
-            <p>Overlapping schedules found:</p>
-            {Array.isArray(form.formState.errors.schedules.message) ? (
-              form.formState.errors.schedules.message.map((schedule, index) => (
-                <p key={index}>
-                  {schedule.day} ({schedule.startTime} - {schedule.endTime})
-                </p>
-              ))
-            ) : (
-              <p>
-                {form.formState.errors.schedules.message.replace(/[[\]"]/g, "")}
-              </p>
-            )}
-          </div>
-        )} */}
-
-        {/* Add a conditional rendering for the error message */}
         {form.formState.errors.schedules && (
           <p className="text-center text-red-500">
             {form.formState.errors.schedules.message}
@@ -251,7 +228,7 @@ export default function AddSubjectModalForm(subject) {
         )}
 
         <DialogFooter>
-          <Button type="submit">Update subject</Button>
+          <Button type="submit">Save Changes</Button>
         </DialogFooter>
       </form>
     </Form>
