@@ -20,6 +20,7 @@ import SelectTeacherCombobox from "../SelectTeacherCombobox";
 import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
+import { useCheckOverlap } from "./useCheckOverlap";
 
 export default function AddSubjectModalForm() {
   const {
@@ -33,8 +34,10 @@ export default function AddSubjectModalForm() {
     updateSchedule,
   } = useAddSubjectModal();
 
+  const { checkOverlap } = useCheckOverlap();
+
   const form = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(checkOverlap)),
   });
 
   return (
