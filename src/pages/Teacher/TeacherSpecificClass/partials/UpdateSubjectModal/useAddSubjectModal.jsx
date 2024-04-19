@@ -7,6 +7,7 @@ import { updateSubjectApi } from "../../helpers/updateSubjectApi";
 import { useModal } from "./AddSubjectModal.hooks";
 
 export default function useAddSubjectModal({ subject }) {
+  const [loading, setLoading] = useState(false);
   const { closeModal } = useModal();
 
   const classDetailsContext = useClassDetails();
@@ -19,6 +20,8 @@ export default function useAddSubjectModal({ subject }) {
   const [schedules, setSchedules] = useState(subject.schedules || []);
 
   const handleSaveChanges = async () => {
+    setLoading(true);
+
     try {
       const updatedSubjectData = {
         subjectId: subject._id,
@@ -34,9 +37,11 @@ export default function useAddSubjectModal({ subject }) {
         closeModal();
         fetchClassDetails();
         // onSuccess();
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error updating subject:", error.message);
+      setLoading(false);
     }
   };
 
@@ -69,5 +74,6 @@ export default function useAddSubjectModal({ subject }) {
     addSchedule,
     removeSchedule,
     updateSchedule,
+    loading,
   };
 }

@@ -66,8 +66,12 @@ import ExportCsvButton from "@/components/export-csv-button";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
+  const [waitingForServerResponse, setWaitingForServerResponse] =
+    useState(false);
 
   const handleEnroll = async (application) => {
+    setWaitingForServerResponse(true);
+
     try {
       const response = await axios.post(
         enrollApplicationEndpoint,
@@ -81,8 +85,10 @@ const PendingApplicationsDataTable = () => {
         autoClose: 1000,
       });
       setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
+      setWaitingForServerResponse(false);
     } catch (error) {
       showErrorNotification(error.response.data.message);
+      setWaitingForServerResponse(false);
     }
   };
 
@@ -224,6 +230,7 @@ const PendingApplicationsDataTable = () => {
           </AlertDialog>
 
           <Button
+            disabled={waitingForServerResponse}
             className="my-1 h-8 px-4 py-0"
             onClick={(e) => {
               e.stopPropagation();

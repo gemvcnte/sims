@@ -20,12 +20,16 @@ export default function StudentsTable() {
   const { classDetails, loading, fetchClassDetails } = classDetailsContext;
   const isAdviser = isClassAdviser(classDetails);
 
+  const [isWaiting, setIsWaiting] = useState(false);
+
   const consoleLogAllLrns = () => {
     setSelectedLrns([]);
     setIsEditing(false);
   };
 
   const handleSaveChanges = async () => {
+    setIsWaiting(true);
+
     try {
       if (classDetails) {
         // Remove duplicates from selectedLrns array
@@ -37,9 +41,11 @@ export default function StudentsTable() {
         // fetchClassDetails();
         setIsEditing(false);
         setSelectedStudents([]);
+        setIsWaiting(false);
       }
     } catch (error) {
       console.error("Error updating students in class:", error);
+      setIsWaiting(false);
     }
   };
 
@@ -56,7 +62,9 @@ export default function StudentsTable() {
                 {isEditing ? "Cancel Editing" : "Edit Students"}
               </Button>
               {isEditing && (
-                <Button onClick={handleSaveChanges}>Save Changes</Button>
+                <Button disabled={isWaiting} onClick={handleSaveChanges}>
+                  Save Changes
+                </Button>
               )}
             </div>
           )}

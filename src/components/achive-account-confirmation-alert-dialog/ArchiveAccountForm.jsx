@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -32,6 +32,9 @@ export default function ArchiveAccountForm({ userType, userId }) {
     resolver: yupResolver(schema),
   });
 
+  const [waitingForServerResponse, setWaitingForServerResponse] =
+    useState(false);
+
   let refetchStudents;
   let refetchTeachers;
   let refetchAdmins;
@@ -47,6 +50,8 @@ export default function ArchiveAccountForm({ userType, userId }) {
   }
 
   const onSubmit = async (data) => {
+    setWaitingForServerResponse(true);
+
     if (userType === "student") {
       const response = await archiveStudent(userId, data.remarks);
       if (response) {
@@ -99,7 +104,11 @@ export default function ArchiveAccountForm({ userType, userId }) {
           )}
         />
 
-        <Button variant="destructive" onClick={handleSubmit}>
+        <Button
+          variant="destructive"
+          onClick={handleSubmit}
+          disabled={waitingForServerResponse}
+        >
           Confirm Archive
         </Button>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
