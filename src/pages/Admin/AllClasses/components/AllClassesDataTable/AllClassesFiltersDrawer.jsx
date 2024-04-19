@@ -150,6 +150,7 @@ export default function AllClassesFiltersDrawer() {
             <option value="humss">HUMSS</option>
             <option value="stem">STEM</option>
             <option value="ict">ICT</option>
+            <option value="he">HE</option>
           </select>
 
           <Button
