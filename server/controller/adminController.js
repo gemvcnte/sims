@@ -1413,28 +1413,140 @@ const updateAdminPassword = asyncHandler(async (req, res) => {
 });
 
 
+
 const getAllAnalytics = asyncHandler(async (req, res) => {
   try {
-    const totalStudents = await Student.countDocuments({});
+    const globalSettings = await GlobalSettings.findOne().exec();
+    const currentSchoolYear = globalSettings.schoolYear;
+    const currentSemester = globalSettings.semester;
+
+    const previousSemester =
+      currentSemester === "first semester"
+        ? "second semester"
+        : "first semester";
+    const previousSchoolYear =
+      currentSemester === "first semester"
+        ? String(Number(currentSchoolYear) - 1)
+        : currentSchoolYear;
+
+    console.log(`previousSchoolYear`, previousSchoolYear);
+
     const totalTeachers = await Teacher.countDocuments({});
     const totalAdmins = await Admin.countDocuments({});
-    const totalMaleStudents = await Student.countDocuments({ gender: 'MALE' });
-    const totalFemaleStudents = await Student.countDocuments({ gender: 'FEMALE' });
-    const totalAcadStudents = await Student.countDocuments({ track: 'ACADEMIC' });
-    const totalTVLStudents = await Student.countDocuments({ track: 'TVL' });
-    const totalABMStudents = await Student.countDocuments({ strand: 'ABM' });
-    const totalSTEMStudents = await Student.countDocuments({ strand: 'STEM' });
-    const totalHumssStudents = await Student.countDocuments({ strand: 'HUMSS' });
-    const totalICTStudents = await Student.countDocuments({ strand: 'ICT' });
-    const totalHEStudents = await Student.countDocuments({ strand: 'HE' });
+
+    // Count students based on current school year and semester
+    const totalStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+    });
+    const totalMaleStudents = await Student.countDocuments({
+      gender: "MALE",
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+    });
+    const totalFemaleStudents = await Student.countDocuments({
+      gender: "FEMALE",
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+    });
+    const totalAcadStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.track": "ACADEMIC",
+    });
+    const totalTVLStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.track": "TVL",
+    });
+    const totalABMStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.strand": "ABM",
+    });
+    const totalSTEMStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.strand": "STEM",
+    });
+    const totalHumssStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.strand": "HUMSS",
+    });
+    const totalICTStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.strand": "ICT",
+    });
+    const totalHEStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "schoolYear.strand": "HE",
+    });
+
+    const calculatePercentageChange = async (current, previous) => {
+      const currentCount = await current;
+      const previousCount = await previous;
+      return ((currentCount - previousCount) / previousCount) * 100;
+    };
+
+    const totalStudentsPercentage = await calculatePercentageChange(
+      totalStudents,
+      Student.countDocuments({
+        "schoolYear.year": previousSchoolYear,
+        "schoolYear.semester": previousSemester,
+      })
+    );
+
+    const totalMaleStudentsPercentage = await calculatePercentageChange(
+      totalMaleStudents,
+      Student.countDocuments({
+        gender: "MALE",
+        "schoolYear.year": previousSchoolYear,
+        "schoolYear.semester": previousSemester,
+      })
+    );
+
+    const totalFemaleStudentsPercentage = await calculatePercentageChange(
+      totalFemaleStudents,
+      Student.countDocuments({
+        gender: "FEMALE",
+        "schoolYear.year": previousSchoolYear,
+        "schoolYear.semester": previousSemester,
+      })
+    );
+
+    const totalAcadStudentsPercentage = await calculatePercentageChange(
+      totalAcadStudents,
+      Student.countDocuments({
+        "schoolYear.year": previousSchoolYear,
+        "schoolYear.semester": previousSemester,
+        "schoolYear.track": "ACADEMIC",
+      })
+    );
+
+    const totalTVLStudentsPercentage = await calculatePercentageChange(
+      totalTVLStudents,
+      Student.countDocuments({
+        "schoolYear.year": previousSchoolYear,
+        "schoolYear.semester": previousSemester,
+        "schoolYear.track": "TVL",
+      })
+    );
 
     res.json({
       students: {
         totalStudents,
+        totalStudentsPercentage,
         totalMaleStudents,
+        totalMaleStudentsPercentage,
         totalFemaleStudents,
+        totalFemaleStudentsPercentage,
         totalAcadStudents,
+        totalAcadStudentsPercentage,
         totalTVLStudents,
+        totalTVLStudentsPercentage,
         totalABMStudents,
         totalSTEMStudents,
         totalHumssStudents,
@@ -1450,6 +1562,8 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+
 
 
 
