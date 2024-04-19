@@ -15,7 +15,7 @@ import StudentAnalyticsCards from "./StudentAnalyticsCards";
 export function StudentsTabContent() {
   const componentsArray = [
     StudentAnalyticsCards,
-    // StudentsStackedBarChart,
+    StudentsStackedBarChart,
     StudentsGenderPieChart,
   ];
 

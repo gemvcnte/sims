@@ -70,6 +70,8 @@ export default function GradesTable() {
   const [modifiedGrades, setModifiedGrades] = useState({});
   const [csvData, setCsvData] = useState([]); // State to store CSV data
 
+  const [isWaiting, setIsWaiting] = useState(false);
+
   useEffect(() => {
     if (classDetails && selectedSubject) {
       const selectedSubjectDetails = classDetails.subjects.find(
@@ -104,6 +106,7 @@ export default function GradesTable() {
 
   const handleSaveChanges = async (e) => {
     e.preventDefault(); // Prevent default form submission
+    setIsWaiting(true);
 
     // console.log(`modifiedGrades: ${modifiedGrades}`);
 
@@ -131,11 +134,14 @@ export default function GradesTable() {
         showSuccessNotification("Updated Successfully");
         fetchClassDetails();
         setIsEditing(false);
+        setIsWaiting(false);
       } else {
         console.error("Failed to update grades:", response.data.message);
+        setIsWaiting(false);
       }
     } catch (error) {
       console.error("Error updating grades:", error.message);
+      setIsWaiting(false);
     }
   };
 
@@ -489,7 +495,9 @@ export default function GradesTable() {
                   {isEditing ? "Cancel Editing" : "Edit Grades"}
                 </Button>
                 {isEditing && (
-                  <Button onClick={handleSaveChanges}>Save Changes</Button>
+                  <Button onClick={handleSaveChanges} disabled={isWaiting}>
+                    Save Changes
+                  </Button>
                 )}
               </div>
               <div className="flex gap-2">

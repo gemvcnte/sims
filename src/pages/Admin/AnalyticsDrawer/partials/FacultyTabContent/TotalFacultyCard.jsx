@@ -30,7 +30,7 @@ export default function TotalFacultyCard() {
             analyticsData.faculty.totalAdmins}
         </div>
         <p className="text-xs text-muted-foreground">
-          +180.1% from last semester
+          {/* +180.1% from last semester */}
         </p>
       </CardContent>
     </Card>

@@ -29,7 +29,8 @@ export default function TotalStudentsCard() {
           {analyticsData.students.totalStudents}
         </div>
         <p className="text-xs text-muted-foreground">
-          +180.1% from last semester
+          {analyticsData.students.totalStudentsPercentage.toFixed(2)}% from last
+          semester
         </p>
       </CardContent>
     </Card>
