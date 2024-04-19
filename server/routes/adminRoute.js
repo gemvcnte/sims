@@ -145,7 +145,9 @@ router.get(
   "/analytics/total-he-students",
   adminController.getTotalStudentsInHE
 );
-router.get("/analytics/all", verifyToken, adminController.getAllAnalytics);
+router.get("/analytics/all", 
+// verifyToken,
+ adminController.getAllAnalytics);
 
 // password
 router.patch(

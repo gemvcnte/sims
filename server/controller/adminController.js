@@ -1415,18 +1415,35 @@ const updateAdminPassword = asyncHandler(async (req, res) => {
 
 const getAllAnalytics = asyncHandler(async (req, res) => {
   try {
-    // Fetch current school year and semester from global settings
+    // Fetch current and previous school year and semester from global settings
     const globalSettings = await GlobalSettings.findOne().exec();
     const currentSchoolYear = globalSettings.schoolYear;
     const currentSemester = globalSettings.semester;
 
+    // Get previous semester
+    const previousSemester = currentSemester === "first semester" ? "second semester" : "first semester";
+    const previousSchoolYear = currentSemester === "first semester" ? currentSchoolYear : String(Number(currentSchoolYear) - 1);
+
     // Count students based on current school year and semester
-    const totalStudents = await Student.countDocuments({
+    const totalStudentsCurrentSemester = await Student.countDocuments({
       'schoolYear.year': currentSchoolYear,
       'schoolYear.semester': currentSemester
     });
+
+    // Count students based on previous school year and semester
+    const totalStudentsPreviousSemester = await Student.countDocuments({
+      'schoolYear.year': previousSchoolYear,
+      'schoolYear.semester': previousSemester
+    });
+
+    // Calculate percentage increase or decrease
+    const percentageChange = ((totalStudentsCurrentSemester - totalStudentsPreviousSemester) / totalStudentsPreviousSemester) * 100;
+
+    // Count teachers and admins
     const totalTeachers = await Teacher.countDocuments({});
     const totalAdmins = await Admin.countDocuments({});
+
+    // Count students based on current school year and semester
     const totalMaleStudents = await Student.countDocuments({ gender: 'MALE', 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester });
     const totalFemaleStudents = await Student.countDocuments({ gender: 'FEMALE', 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester });
     const totalAcadStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.track': 'ACADEMIC' });
@@ -1439,7 +1456,9 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
 
     res.json({
       students: {
-        totalStudents,
+        totalStudentsCurrentSemester,
+        totalStudentsPreviousSemester,
+        percentageChange,
         totalMaleStudents,
         totalFemaleStudents,
         totalAcadStudents,
@@ -1459,6 +1478,7 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
     res.status(500).json({ message: `${error}` });
   }
 });
+
 
 
 
