@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAnalyticsContext } from "../context/AnalyticsContext";
 
 export default function AnalyticsDrawerPartial() {
-  const { analyticsData, loading, error } = useAnalyticsContext();
+  // const { analyticsData, loading, error } = useAnalyticsContext();
 
   return (
     <Drawer>
