@@ -491,6 +491,69 @@ const getTeacherSchedule = asyncHandler(async (req, res) => {
 
 
 
+const getTeacherScheduleByUsername = asyncHandler(async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // Get current school year and semester from global settings
+    const globalSettings = await GlobalSettings.findOne();
+    const { schoolYear, semester } = globalSettings;
+
+    // Find classes where the teacher is either adviser or subject teacher
+    const assignedClasses = await Classroom.find({
+      $and: [
+        {
+          $or: [
+            { adviser: username },
+            { subjects: { $elemMatch: { subjectTeacher: username } } },
+          ],
+        },
+        { schoolYear: schoolYear },
+        { semester: semester }
+      ],
+    });
+
+    // if (!assignedClasses || assignedClasses.length === 0) {
+    //   return res.status(404).json({
+    //     message: "Teacher not found or not assigned to any classes in the current school year and semester.",
+    //   });
+    // }
+
+    // Compile teacher's schedule
+    let teacherSchedule = [];
+
+    assignedClasses.forEach((classroom) => {
+      classroom.subjects.forEach((subject) => {
+        if (subject.subjectTeacher === username) {
+          // If the teacher is the subject teacher
+          subject.schedules.forEach((schedule) => {
+            teacherSchedule.push({
+              day: schedule.day,
+              class: classroom.sectionName,
+              subject: subject.subjectName,
+              startTime: schedule.startTime,
+              endTime: schedule.endTime,
+            });
+          });
+        }
+      });
+    });
+
+    return res.status(200).json({
+      message: "Teacher schedule retrieved successfully",
+      data: teacherSchedule,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again later." });
+  }
+});
+
+
+
+
+
 
 const getSpecificClass = asyncHandler(async (req, res) => {
   try {
@@ -1020,4 +1083,5 @@ module.exports = {
   getAnnouncements,
   updateGradesOnClass,
   updateTeacherPassword,
+  getTeacherScheduleByUsername,
 };
