@@ -48,9 +48,9 @@ const EditingStudentsInClassDataTable = ({ setSelectedLrns }) => {
   const classDetailsContext = useClassDetails();
   const { classDetails } = classDetailsContext;
 
-  if (classDetails) {
-    console.log(`classDetails`, classDetails);
-  }
+  // if (classDetails) {
+  //   console.log(`classDetails`, classDetails);
+  // }
 
   const { id } = useParams();
   const sectionId = id;

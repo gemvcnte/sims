@@ -63,15 +63,24 @@ export default function StepThreeConfirmDialog() {
 
     setLoading(true);
 
+    const updatedEnrollmentData = { ...enrollmentData };
+
+    if (
+      updatedEnrollmentData.extensionName &&
+      updatedEnrollmentData.extensionName.toUpperCase() === "NONE"
+    ) {
+      updatedEnrollmentData.extensionName = "";
+    }
+
     const objectWithBackendSchemaStructure = {
       schoolYear: {
         year: globalSettings.schoolYear,
         semester: globalSettings.semester,
-        gradeLevel: enrollmentData.gradeLevel,
-        track: enrollmentData.track,
-        strand: enrollmentData.strand,
+        gradeLevel: updatedEnrollmentData.gradeLevel,
+        track: updatedEnrollmentData.track,
+        strand: updatedEnrollmentData.strand,
       },
-      ...enrollmentData,
+      ...updatedEnrollmentData,
     };
 
     try {
