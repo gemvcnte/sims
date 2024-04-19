@@ -1,9 +1,12 @@
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import moment from "moment";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
+import { useSelectedTeacherSchedule } from "./useSelectedTeacherSchedule";
 
-export const useCheckOverlap = (schedules) => {
+export const useCheckOverlap = (selectedTeacher) => {
   const { classDetails } = useClassDetails();
+  const { schedule: selectedTeacherSchedule } =
+    useSelectedTeacherSchedule(selectedTeacher);
 
   // Extract schedules from classDetails
   const schedulesFromDb = classDetails.subjects.reduce((acc, subject) => {
@@ -20,7 +23,11 @@ export const useCheckOverlap = (schedules) => {
   }, []);
 
   const checkOverlap = (schedules) => {
-    const allSchedules = [...schedules, ...schedulesFromDb]; // Combine both sets of schedules
+    const allSchedules = [
+      ...schedules,
+      // ...schedulesFromDb,
+      // ...selectedTeacherSchedule,
+    ]; // Combine both sets of schedules
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
       for (let j = i + 1; j < allSchedules.length; j++) {

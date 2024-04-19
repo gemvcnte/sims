@@ -1,15 +1,15 @@
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import moment from "moment";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
+import { useSelectedTeacherSchedule } from "./useSelectedTeacherSchedule";
 
-export const useCheckOverlap = (schedules) => {
+export const useCheckOverlap = (selectedTeacher) => {
   const { classDetails } = useClassDetails();
+  const { schedule: selectedTeacherSchedule } =
+    useSelectedTeacherSchedule(selectedTeacher);
 
-  // Extract schedules from classDetails
   const schedulesFromDb = classDetails.subjects.reduce((acc, subject) => {
-    // Iterate over schedules of each subject
     subject.schedules.forEach((schedule) => {
-      // Push schedule to accumulator array
       acc.push({
         day: schedule.day,
         startTime: schedule.startTime,
@@ -20,7 +20,11 @@ export const useCheckOverlap = (schedules) => {
   }, []);
 
   const checkOverlap = (schedules) => {
-    const allSchedules = [...schedules, ...schedulesFromDb]; // Combine both sets of schedules
+    const allSchedules = [
+      ...schedules,
+      ...schedulesFromDb,
+      ...selectedTeacherSchedule,
+    ];
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
       for (let j = i + 1; j < allSchedules.length; j++) {

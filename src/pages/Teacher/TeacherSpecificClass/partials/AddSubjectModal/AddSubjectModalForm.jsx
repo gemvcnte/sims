@@ -26,6 +26,7 @@ export default function AddSubjectModalForm() {
   const {
     subjectName,
     setSubjectName,
+    selectedTeacher,
     setSelectedTeacher,
     schedules,
     handleSaveChanges,
@@ -34,7 +35,7 @@ export default function AddSubjectModalForm() {
     updateSchedule,
   } = useAddSubjectModal();
 
-  const { checkOverlap } = useCheckOverlap();
+  const { checkOverlap } = useCheckOverlap(selectedTeacher);
 
   const form = useForm({
     resolver: yupResolver(schema(checkOverlap)),
