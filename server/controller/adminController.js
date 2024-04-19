@@ -1415,18 +1415,27 @@ const updateAdminPassword = asyncHandler(async (req, res) => {
 
 const getAllAnalytics = asyncHandler(async (req, res) => {
   try {
-    const totalStudents = await Student.countDocuments({});
+    // Fetch current school year and semester from global settings
+    const globalSettings = await GlobalSettings.findOne().exec();
+    const currentSchoolYear = globalSettings.schoolYear;
+    const currentSemester = globalSettings.semester;
+
+    // Count students based on current school year and semester
+    const totalStudents = await Student.countDocuments({
+      'schoolYear.year': currentSchoolYear,
+      'schoolYear.semester': currentSemester
+    });
     const totalTeachers = await Teacher.countDocuments({});
     const totalAdmins = await Admin.countDocuments({});
-    const totalMaleStudents = await Student.countDocuments({ gender: 'MALE' });
-    const totalFemaleStudents = await Student.countDocuments({ gender: 'FEMALE' });
-    const totalAcadStudents = await Student.countDocuments({ track: 'ACADEMIC' });
-    const totalTVLStudents = await Student.countDocuments({ track: 'TVL' });
-    const totalABMStudents = await Student.countDocuments({ strand: 'ABM' });
-    const totalSTEMStudents = await Student.countDocuments({ strand: 'STEM' });
-    const totalHumssStudents = await Student.countDocuments({ strand: 'HUMSS' });
-    const totalICTStudents = await Student.countDocuments({ strand: 'ICT' });
-    const totalHEStudents = await Student.countDocuments({ strand: 'HE' });
+    const totalMaleStudents = await Student.countDocuments({ gender: 'MALE', 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester });
+    const totalFemaleStudents = await Student.countDocuments({ gender: 'FEMALE', 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester });
+    const totalAcadStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.track': 'ACADEMIC' });
+    const totalTVLStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.track': 'TVL' });
+    const totalABMStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.strand': 'ABM' });
+    const totalSTEMStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.strand': 'STEM' });
+    const totalHumssStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.strand': 'HUMSS' });
+    const totalICTStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.strand': 'ICT' });
+    const totalHEStudents = await Student.countDocuments({ 'schoolYear.year': currentSchoolYear, 'schoolYear.semester': currentSemester, 'schoolYear.strand': 'HE' });
 
     res.json({
       students: {
