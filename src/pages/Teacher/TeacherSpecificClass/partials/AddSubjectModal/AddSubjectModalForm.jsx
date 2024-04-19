@@ -33,6 +33,7 @@ export default function AddSubjectModalForm() {
     addSchedule,
     removeSchedule,
     updateSchedule,
+    loading,
   } = useAddSubjectModal();
 
   const { checkOverlap } = useCheckOverlap(selectedTeacher);
@@ -253,7 +254,9 @@ export default function AddSubjectModalForm() {
         )}
 
         <DialogFooter className="mt-4">
-          <Button type="submit">Add subject</Button>
+          <Button type="submit" disabled={loading}>
+            Add subject
+          </Button>
         </DialogFooter>
       </form>
     </Form>
