@@ -43,9 +43,9 @@ export default function StudentSidebar() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger>
           <span onClick={handleDialogClick}>
-            <SidebarItem className="flex items-center gap-2">
+            <SidebarItem className="flex items-center gap-2 px-2">
               <Icon icon="mingcute:announcement-line" />
-              <span className="ml-2">View Announcements</span>
+              <span className="">Announcements</span>
             </SidebarItem>
           </span>
         </DialogTrigger>
