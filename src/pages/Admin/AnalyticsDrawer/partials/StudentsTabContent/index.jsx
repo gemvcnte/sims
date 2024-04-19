@@ -11,8 +11,15 @@ import {
 import StudentsStackedBarChart from "./StudentsStackedBarChart";
 import StudentsGenderPieChart from "./StudentsGenderPieChart";
 import StudentAnalyticsCards from "./StudentAnalyticsCards";
+import { useAnalyticsContext } from "../../context/AnalyticsContext";
 
 export function StudentsTabContent() {
+  const { loading } = useAnalyticsContext();
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
+
   const componentsArray = [
     StudentAnalyticsCards,
     StudentsStackedBarChart,
