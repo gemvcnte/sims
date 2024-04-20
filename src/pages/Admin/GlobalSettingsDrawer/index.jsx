@@ -20,6 +20,17 @@ import {
 import { Label } from "@/components/ui/label";
 import useGlobalSettings from "./helpers/useGlobalSettings";
 import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function GlobalSetttingsDrawer({ onClose }) {
   const { loading, error, updateGlobalSettings } = useGlobalSettings();
@@ -123,7 +134,29 @@ export function GlobalSetttingsDrawer({ onClose }) {
         </section>
 
         <DrawerFooter>
-          <Button onClick={handleSaveSettings}>Save</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button>Save Changes</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Ready to make these updates?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Just a heads-up: by saving these changes, you'll impact the
+                  current school year, semester, and encoding of grades across
+                  <br className="hidden sm:block" /> the system.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleSaveSettings}>
+                  Yes, Save Changes
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
