@@ -14,6 +14,10 @@ const GlobalSettingsSchema = mongoose.Schema({
     type: String,
     enum: ["abm", "stem", "humss", "gas", "ict", "he"],
   },
+  isGlobalGradesEncodingEnabled: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const GlobalSettings = mongoose.model("GlobalSettings", GlobalSettingsSchema);
