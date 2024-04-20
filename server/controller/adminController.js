@@ -1714,18 +1714,21 @@ const getGlobalSettings = async (req, res) => {
 
 const updateGlobalSettings = async (req, res) => {
   try {
-    const { schoolYear, semester } = req.body;
-console.log(schoolYear)
+    const { schoolYear, semester, isGlobalGradesEncodingEnabled } = req.body;
+
     let globalSettings = await GlobalSettings.findOne();
-console.log(globalSettings)
+
     if (!globalSettings) {
       globalSettings = new GlobalSettings({
         schoolYear,
-        semester
+        semester,
+        isGlobalGradesEncodingEnabled
       });
     } else {
       globalSettings.schoolYear = schoolYear;
       globalSettings.semester = semester;
+      globalSettings.isGlobalGradesEncodingEnabled = isGlobalGradesEncodingEnabled;
+      
     }
 
     await globalSettings.save();
