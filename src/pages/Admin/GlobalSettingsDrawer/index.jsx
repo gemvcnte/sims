@@ -25,6 +25,8 @@ export function GlobalSetttingsDrawer({ onClose }) {
   const { loading, error, updateGlobalSettings } = useGlobalSettings();
   const [schoolYear, setSchoolYear] = React.useState("");
   const [semester, setSemester] = React.useState("");
+  const [isGlobalGradesEncodingEnabled, setIsGlobalGradesEncodingEnabled] =
+    React.useState(false);
 
   React.useEffect(() => {
     const storedGlobalSettings = JSON.parse(
@@ -33,11 +35,18 @@ export function GlobalSetttingsDrawer({ onClose }) {
     if (storedGlobalSettings) {
       setSchoolYear(storedGlobalSettings.schoolYear);
       setSemester(storedGlobalSettings.semester);
+      setIsGlobalGradesEncodingEnabled(
+        storedGlobalSettings.isGlobalGradesEncodingEnabled,
+      );
     }
   }, []);
 
   const handleSaveSettings = () => {
-    updateGlobalSettings({ schoolYear, semester });
+    updateGlobalSettings({
+      schoolYear,
+      semester,
+      isGlobalGradesEncodingEnabled,
+    });
     onClose();
   };
 
@@ -58,7 +67,12 @@ export function GlobalSetttingsDrawer({ onClose }) {
               This switch allows you to enable encoding for grades across the
               entire system.
             </span>
-            <Switch />
+            <Switch
+              checked={isGlobalGradesEncodingEnabled}
+              onCheckedChange={() =>
+                setIsGlobalGradesEncodingEnabled(!isGlobalGradesEncodingEnabled)
+              }
+            />
           </div>
         </section>
 
