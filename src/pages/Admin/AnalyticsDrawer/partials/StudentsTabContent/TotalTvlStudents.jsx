@@ -29,7 +29,7 @@ export default function TotalTvlStudents() {
           {analyticsData.students.totalTVLStudents}
         </div>
         <p className="text-xs text-muted-foreground">
-          {analyticsData.students.totalTVLStudentsPercentage.toFixed(2)}% from
+          {analyticsData.students.totalTVLStudentsPercentage?.toFixed(2)}% from
           last semester
         </p>
       </CardContent>

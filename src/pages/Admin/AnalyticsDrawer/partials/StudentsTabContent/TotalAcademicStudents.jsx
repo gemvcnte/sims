@@ -29,7 +29,7 @@ export default function TotalAcademicStudents() {
           {analyticsData.students.totalAcadStudents}
         </div>
         <p className="text-xs text-muted-foreground">
-          {analyticsData.students.totalAcadStudentsPercentage.toFixed(2)}% from
+          {analyticsData.students.totalAcadStudentsPercentage?.toFixed(2)}% from
           last semester
         </p>
       </CardContent>

@@ -19,11 +19,25 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import useGlobalSettings from "./helpers/useGlobalSettings";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function GlobalSetttingsDrawer({ onClose }) {
   const { loading, error, updateGlobalSettings } = useGlobalSettings();
   const [schoolYear, setSchoolYear] = React.useState("");
   const [semester, setSemester] = React.useState("");
+  const [isGlobalGradesEncodingEnabled, setIsGlobalGradesEncodingEnabled] =
+    React.useState(false);
 
   React.useEffect(() => {
     const storedGlobalSettings = JSON.parse(
@@ -32,11 +46,18 @@ export function GlobalSetttingsDrawer({ onClose }) {
     if (storedGlobalSettings) {
       setSchoolYear(storedGlobalSettings.schoolYear);
       setSemester(storedGlobalSettings.semester);
+      setIsGlobalGradesEncodingEnabled(
+        storedGlobalSettings.isGlobalGradesEncodingEnabled,
+      );
     }
   }, []);
 
   const handleSaveSettings = () => {
-    updateGlobalSettings({ schoolYear, semester });
+    updateGlobalSettings({
+      schoolYear,
+      semester,
+      isGlobalGradesEncodingEnabled,
+    });
     onClose();
   };
 
@@ -44,11 +65,27 @@ export function GlobalSetttingsDrawer({ onClose }) {
     <DrawerContent>
       <div className="mx-auto w-full max-w-sm">
         <DrawerHeader>
-          <DrawerTitle>School Year and Semester</DrawerTitle>
+          <DrawerTitle>Global Settings</DrawerTitle>
           <DrawerDescription>
-            Set the current school year and semester.
+            Choose the current school year and semester.
           </DrawerDescription>
         </DrawerHeader>
+
+        <section className="px-4">
+          <span className="text-sm font-semibold">Grade Encoding</span>
+          <div className="flex">
+            <span className="text-sm leading-snug text-muted-foreground">
+              This switch allows you to enable encoding for grades across the
+              entire system.
+            </span>
+            <Switch
+              checked={isGlobalGradesEncodingEnabled}
+              onCheckedChange={() =>
+                setIsGlobalGradesEncodingEnabled(!isGlobalGradesEncodingEnabled)
+              }
+            />
+          </div>
+        </section>
 
         <section className="flex flex-col gap-4 p-4">
           <div>
@@ -97,7 +134,29 @@ export function GlobalSetttingsDrawer({ onClose }) {
         </section>
 
         <DrawerFooter>
-          <Button onClick={handleSaveSettings}>Save</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button>Save Changes</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Ready to make these updates?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Just a heads-up: by saving these changes, you'll impact the
+                  current school year, semester, and encoding of grades across
+                  <br className="hidden sm:block" /> the system.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleSaveSettings}>
+                  Yes, Save Changes
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
