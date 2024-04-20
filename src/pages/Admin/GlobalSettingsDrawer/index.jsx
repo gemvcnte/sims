@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import useGlobalSettings from "./helpers/useGlobalSettings";
+import { Switch } from "@/components/ui/switch";
 
 export function GlobalSetttingsDrawer({ onClose }) {
   const { loading, error, updateGlobalSettings } = useGlobalSettings();
@@ -44,11 +45,22 @@ export function GlobalSetttingsDrawer({ onClose }) {
     <DrawerContent>
       <div className="mx-auto w-full max-w-sm">
         <DrawerHeader>
-          <DrawerTitle>School Year and Semester</DrawerTitle>
+          <DrawerTitle>Global Settings</DrawerTitle>
           <DrawerDescription>
-            Set the current school year and semester.
+            Choose the current school year and semester.
           </DrawerDescription>
         </DrawerHeader>
+
+        <section className="px-4">
+          <span className="text-sm font-semibold">Grade Encoding</span>
+          <div className="flex">
+            <span className="text-sm leading-snug text-muted-foreground">
+              This switch allows you to enable encoding for grades across the
+              entire system.
+            </span>
+            <Switch />
+          </div>
+        </section>
 
         <section className="flex flex-col gap-4 p-4">
           <div>
