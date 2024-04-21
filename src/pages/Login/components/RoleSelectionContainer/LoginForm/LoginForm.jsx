@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
 import LoadingSpinner from "@/utils/LoadingSpinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { ChevronLeft, Info } from "lucide-react";
+import { DefaultPasswordInfoPopover } from "./DefaultPasswordInfoPopover";
 
 function LoginForm({ role, setSelectedRole }) {
   const { login } = useAuth();
@@ -67,13 +69,12 @@ function LoginForm({ role, setSelectedRole }) {
 
   return (
     <>
-      {/* <ToastContainer /> */}
       <button
         onClick={() => setSelectedRole(null)}
-        className="flex justify-end gap-2 rounded-lg text-sm text-[#9FA9B9]"
+        className="flex items-center justify-end rounded-lg text-sm text-[#9FA9B9]"
       >
-        <Icon icon="majesticons:arrow-up" width="20" height="20" rotate={3} />
-        <span>back</span>
+        <ChevronLeft />
+        <span>Back</span>
       </button>
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-4">
@@ -125,10 +126,12 @@ function LoginForm({ role, setSelectedRole }) {
             value={loginData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
-            placeholder={role === "student" ? "YYYY-MM-DD" : `Password`}
+            placeholder={role === "student" ? "Password" : `Password`}
             className=" border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
           {/* <PasswordInput /> */}
+
+          {role === "student" ? <DefaultPasswordInfoPopover /> : null}
         </div>
 
         <button
