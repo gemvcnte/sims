@@ -87,25 +87,23 @@ export default function ViewStudentApplicationModal({
             />
           </div>
 
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="firstName" className="text-right">
+              First Name
+            </Label>
+            <Input
+              disabled
+              id="firstName"
+              type="text"
+              defaultValue={application.firstName}
+              name="firstName"
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+              className="col-span-3"
+            />
+          </div>
+
           {application?.hasAccount ? null : (
             <>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="firstName" className="text-right">
-                  First Name
-                </Label>
-                <Input
-                  disabled
-                  id="firstName"
-                  type="text"
-                  defaultValue={application.firstName}
-                  name="firstName"
-                  onChange={(e) =>
-                    handleInputChange(e.target.name, e.target.value)
-                  }
-                  className="col-span-3"
-                />
-              </div>
-
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="middleName" className="text-right">
                   Middle Name
