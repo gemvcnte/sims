@@ -3,15 +3,34 @@ const asyncHandler = require("express-async-handler");
 const bcryptjs = require("bcryptjs");
 const mongoose = require("mongoose");
 const { Student } = require("../models/StudentModel");
+const ArchivedStudent = require("../models/ArchivedStudentModel");
 
 const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
     if (registrationData.hasAccount) {
+      const studentIsArchived = await ArchivedStudent.findOne({
+        lrn: registrationData.lrn,
+      });
+
+      if (studentIsArchived) {
+        return res.status(404).json({
+          error:
+            "Your account is currently archived. Please reach out to the administrator for assistance.",
+        });
+      }
+
       const existingStudent = await Student.findOne({
         lrn: registrationData.lrn,
       });
+
+      if (!existingStudent) {
+        return res.status(404).json({
+          error:
+            "The LRN provided does not match any student records in our system",
+        });
+      }
 
       if (!existingStudent) {
         return res.status(404).json({
