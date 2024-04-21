@@ -5,6 +5,10 @@ export const schema = yup.object().shape({
     .string()
     .required("Oops! Looks like you forgot to provide your last name.")
     .max(255, "Your last name must be at most 255 characters long."),
+  firstName: yup
+    .string()
+    .required("Oops! Looks like you forgot to provide your first name.")
+    .max(255, "Your last name must be at most 255 characters long."),
   lrn: yup
     .string()
     .required("Please provide your LRN (Learner Reference Number).")

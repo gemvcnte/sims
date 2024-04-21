@@ -66,7 +66,7 @@ export default function StepOneHasAccount() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto flex h-[100svh] flex-col justify-center space-y-8 px-24 lg:px-[12.5rem]"
+          className="mx-auto flex flex-col justify-center space-y-8 px-24 py-8 lg:px-[12.5rem]"
         >
           <section className="flex flex-col justify-between gap-8 lg:flex-row lg:gap-24">
             <div className="flex w-full flex-col gap-8">
@@ -81,6 +81,29 @@ export default function StepOneHasAccount() {
                     <FormControl>
                       <Input
                         placeholder="Enter your last name"
+                        {...field}
+                        onChange={(e) => {
+                          const uppercaseValue = e.target.value.toUpperCase();
+                          field.onChange(uppercaseValue);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      First Name <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your first name"
                         {...field}
                         onChange={(e) => {
                           const uppercaseValue = e.target.value.toUpperCase();
