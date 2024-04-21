@@ -8,10 +8,7 @@ const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
-    console.log(`registrationData`, registrationData);
-
     if (registrationData.hasAccount) {
-      // Find the student by LRN (Learning Reference Number)
       const existingStudent = await Student.findOne({
         lrn: registrationData.lrn,
       });
@@ -23,7 +20,6 @@ const applyStudent = asyncHandler(async (req, res) => {
         });
       }
 
-      // Check for LRN conflict with different last name
       const existingEnrolledStudentWithLastnameConflict = await Student.findOne(
         {
           lrn: registrationData.lrn,
@@ -31,7 +27,6 @@ const applyStudent = asyncHandler(async (req, res) => {
         }
       );
 
-      // Check for LRN conflict with different first name
       const existingEnrolledStudentWithFirstnameConflict =
         await Student.findOne({
           lrn: registrationData.lrn,
@@ -48,7 +43,6 @@ const applyStudent = asyncHandler(async (req, res) => {
         });
       }
     } else {
-      // Find the student by LRN (Learning Reference Number)
       const existingStudent = await Student.findOne({
         lrn: registrationData.lrn,
       });
@@ -60,7 +54,6 @@ const applyStudent = asyncHandler(async (req, res) => {
       }
     }
 
-    // Check if there is an existing pending application for the LRN with the same school year and semester
     const existingPendingApplication = await StudentApplication.findOne({
       lrn: registrationData.lrn,
       "schoolYear.year": registrationData.schoolYear.year,
@@ -71,7 +64,7 @@ const applyStudent = asyncHandler(async (req, res) => {
     if (existingPendingApplication) {
       return res.status(400).json({
         message:
-          "This LRN already has a pending application for this semester.",
+          "There's already a pending application for this LRN in the current semester.",
       });
     }
 
@@ -80,13 +73,15 @@ const applyStudent = asyncHandler(async (req, res) => {
     const savedStudent = await student.save();
 
     return res.json({
-      message: "Personal information saved",
+      error:
+        "Oops! Something went wrong while processing your enrollment. Please try again later.",
       student: savedStudent,
     });
   } catch (err) {
     console.error(err);
     return res.status(500).json({
-      error: "Failed to save personal information",
+      error:
+        "Oops! Something went wrong while processing your enrollment. Please try again later.",
       message: err.message,
     });
   }
