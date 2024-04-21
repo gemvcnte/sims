@@ -8,6 +8,8 @@ const applyStudent = asyncHandler(async (req, res) => {
   try {
     const registrationData = req.body;
 
+    console.log(`registrationData`, registrationData);
+
     if (registrationData.hasAccount) {
       // Find the student by LRN (Learning Reference Number)
       const existingStudent = await Student.findOne({
@@ -29,10 +31,20 @@ const applyStudent = asyncHandler(async (req, res) => {
         }
       );
 
-      if (existingEnrolledStudentWithLastnameConflict) {
+      // Check for LRN conflict with different first name
+      const existingEnrolledStudentWithFirstnameConflict =
+        await Student.findOne({
+          lrn: registrationData.lrn,
+          firstName: { $ne: registrationData.firstName },
+        });
+
+      if (
+        existingEnrolledStudentWithLastnameConflict ||
+        existingEnrolledStudentWithFirstnameConflict
+      ) {
         return res.status(400).json({
           message:
-            "The LRN provided is already associated with a student who has a different last name",
+            "It looks like the LRN provided is already associated with a student who has a different last name or first name. Please review your details and try again.",
         });
       }
     } else {
