@@ -33,13 +33,17 @@ const applyStudent = asyncHandler(async (req, res) => {
           firstName: { $ne: registrationData.firstName },
         });
 
-      if (
-        existingEnrolledStudentWithLastnameConflict ||
-        existingEnrolledStudentWithFirstnameConflict
-      ) {
+      if (existingEnrolledStudentWithLastnameConflict) {
         return res.status(400).json({
           message:
-            "It looks like the LRN provided is already associated with a student who has a different last name or first name. Please review your details and try again.",
+            "The LRN provided is already associated with a student who has a different last name. Please review your details and try again.",
+        });
+      }
+
+      if (existingEnrolledStudentWithFirstnameConflict) {
+        return res.status(400).json({
+          message:
+            "The LRN provided is already associated with a student who has a different first name. Please review your details and try again.",
         });
       }
     } else {
