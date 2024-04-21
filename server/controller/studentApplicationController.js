@@ -39,40 +39,30 @@ const applyStudent = asyncHandler(async (req, res) => {
         });
       }
 
-      const existingEnrolledStudentWithLastnameConflict = await Student.findOne(
+      const existingEnrolledStudentWithLastNameConflict = await Student.findOne(
         {
           lrn: registrationData.lrn,
           lastName: { $ne: registrationData.lastName },
         }
       );
 
-      const existingEnrolledStudentWithFirstnameConflict =
+      const existingEnrolledStudentWithFirstNameConflict =
         await Student.findOne({
           lrn: registrationData.lrn,
           firstName: { $ne: registrationData.firstName },
         });
 
-      if (existingEnrolledStudentWithLastnameConflict) {
+      if (existingEnrolledStudentWithLastNameConflict) {
         return res.status(400).json({
           message:
             "The LRN provided is already associated with a student who has a different last name. Please review your details and try again.",
         });
       }
 
-      if (existingEnrolledStudentWithFirstnameConflict) {
+      if (existingEnrolledStudentWithFirstNameConflict) {
         return res.status(400).json({
           message:
             "The LRN provided is already associated with a student who has a different first name. Please review your details and try again.",
-        });
-      }
-    } else {
-      const existingStudent = await Student.findOne({
-        lrn: registrationData.lrn,
-      });
-
-      if (existingStudent) {
-        return res.status(404).json({
-          error: "A student with this LRN is already registered in our system",
         });
       }
     }
