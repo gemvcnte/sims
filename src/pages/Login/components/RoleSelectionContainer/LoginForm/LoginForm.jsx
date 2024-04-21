@@ -9,7 +9,8 @@ import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/contexts/AuthContext";
 import LoadingSpinner from "@/utils/LoadingSpinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Info } from "lucide-react";
+import { DefaultPasswordInfoPopover } from "./DefaultPasswordInfoPopover";
 
 function LoginForm({ role, setSelectedRole }) {
   const { login } = useAuth();
@@ -125,10 +126,12 @@ function LoginForm({ role, setSelectedRole }) {
             value={loginData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
-            placeholder={role === "student" ? "YYYY-MM-DD" : `Password`}
+            placeholder={role === "student" ? "Password" : `Password`}
             className=" border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
           {/* <PasswordInput /> */}
+
+          {role === "student" ? <DefaultPasswordInfoPopover /> : null}
         </div>
 
         <button
