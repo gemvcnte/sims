@@ -1,31 +1,56 @@
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+const localizer = momentLocalizer(moment);
+
+const minimumStartTime7am = new Date();
+minimumStartTime7am.setHours(7, 0, 0);
+
+const maximumEndTime6pm = new Date();
+maximumEndTime6pm.setHours(18, 0, 0);
 
 export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails: fetchedClass, loading } = classDetailsContext;
 
-  const [classDetails, setClassDetails] = useState(null);
+  const checkIsMobile = () => {
+    const width = window.innerWidth;
+    setIsMobile(width <= 768);
+  };
 
   useEffect(() => {
-    if (fetchedClass && fetchedClass.length > 0) {
-      const sortedClasses = [...fetchedClass].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-      );
-      setClassDetails(sortedClasses[0]);
-    }
-  }, [fetchedClass]);
+    window.addEventListener("resize", checkIsMobile);
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    const styleElement = document.createElement("style");
+    styleElement.textContent = ".rbc-time-header { display: none; }";
+    document.head.appendChild(styleElement);
+
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   const currentDay = moment().format("dddd");
+  //   const customHeaderDiv = document.createElement("div");
+  //   customHeaderDiv.className = "rbc-header text-center";
+  //   customHeaderDiv.textContent = `${currentDay}`;
+
+  //   const timeHeaderContent = document.querySelector(".rbc-row-content");
+  //   if (timeHeaderContent) {
+  //     timeHeaderContent.appendChild(customHeaderDiv);
+  //   }
+  // }, []);
 
   if (loading) {
     return (
@@ -35,71 +60,63 @@ export default function ScheduleTable() {
     );
   }
 
-  const currentDay = new Date().toLocaleString("en-us", { weekday: "long" });
+  const generateEvents = () => {
+    const events = [];
+    let firstClassDetails;
+
+    if (fetchedClass && fetchedClass.length > 0) {
+      const sortedClasses = [...fetchedClass].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      );
+      firstClassDetails = sortedClasses[0];
+    }
+
+    if (firstClassDetails && firstClassDetails.subjects) {
+      firstClassDetails.subjects.forEach((subject) => {
+        subject.schedules.forEach((schedule) => {
+          if (
+            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(
+              schedule.day,
+            )
+          ) {
+            events.push({
+              id: `${firstClassDetails._id}-${subject._id}-${schedule._id}`,
+              title: subject.subjectName,
+              start: moment()
+                .day(schedule.day)
+                .hour(Number(schedule.startTime.split(":")[0]))
+                .minute(Number(schedule.startTime.split(":")[1]))
+                .toDate(),
+              end: moment()
+                .day(schedule.day)
+                .hour(Number(schedule.endTime.split(":")[0]))
+                .minute(Number(schedule.endTime.split(":")[1]))
+                .toDate(),
+              allDay: false,
+            });
+          }
+        });
+      });
+    }
+
+    return events;
+  };
 
   return (
     <main className="order-2 min-w-[60%]">
-      <Table>
-        {!classDetails && (
-          <TableCaption className="pb-6 pt-4">No Schedule Found</TableCaption>
-        )}
-        <TableHeader>
-          <TableRow>
-            {classDetails && <TableHead></TableHead>}
-            <TableHead className="text-center">{currentDay}</TableHead>
-          </TableRow>
-        </TableHeader>
-        {classDetails && (
-          <TableBody>
-            {Array.from({ length: 12 }, (_, index) => index + 7).map((hour) => (
-              <TableRow key={hour}>
-                <TableCell className="font-medium">
-                  {hour < 12
-                    ? `${hour === 0 ? 12 : hour}:00 AM`
-                    : hour === 12
-                      ? `12:00 PM`
-                      : `${hour - 12}:00 PM`}
-                </TableCell>
-                <TableCell
-                  className="text-center"
-                  key={`${currentDay}-${hour}`}
-                >
-                  {classDetails.subjects.map((subject) => {
-                    const subjectSchedule = subject.schedules.find(
-                      (schedule) =>
-                        schedule.day === currentDay &&
-                        parseInt(schedule.startTime.split(":")[0]) === hour,
-                    );
-                    return subjectSchedule ? (
-                      <div key={subject._id}>
-                        <p>{subject.subjectName}</p>
-                        <p>
-                          {convertTo12HourFormat(
-                            subjectSchedule.startTime.replace(/^0/, ""),
-                          )}{" "}
-                          <br className="sm:hidden" />-
-                          <br className="sm:hidden" />{" "}
-                          {convertTo12HourFormat(
-                            subjectSchedule.endTime.replace(/^0/, ""),
-                          )}
-                        </p>
-                      </div>
-                    ) : null;
-                  })}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        )}
-        <TableFooter></TableFooter>
-      </Table>
+      <Calendar
+        localizer={localizer}
+        events={generateEvents()}
+        min={minimumStartTime7am}
+        max={maximumEndTime6pm}
+        step={15}
+        startAccessor="start"
+        endAccessor="end"
+        toolbar={false}
+        views={{ work_week: true, day: true }}
+        defaultView="day"
+        titleAccessor={"title"}
+      />
     </main>
   );
-}
-
-function convertTo12HourFormat(time) {
-  const [hours, minutes] = time.split(":");
-  const period = hours >= 12 ? "PM" : "AM";
-  const formattedHours = hours % 12 || 12;
-  return `${formattedHours}:${minutes}`;
 }
