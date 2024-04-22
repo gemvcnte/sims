@@ -11,7 +11,7 @@ export default function SidebarItem({ to, icon, children, className }) {
   const isActive = location.pathname === `/${to}`; // Prepend "/" to "to"
 
   // Conditionally apply classes based on isActive
-  const isActiveClasses = isActive ? "bg-primary text-background" : "";
+  const isActiveClasses = isActive ? "bg-primary text-white" : "";
 
   return (
     <Link to={to} onClick={toggleSidebar}>
