@@ -69,6 +69,9 @@ app.use("/apply", studentApplicationRoute);
 const resetPasswordRoute = require("./routes/resetPasswordRoute");
 app.use("/reset", resetPasswordRoute);
 
+const facultyRoute = require("./routes/facultyRoute");
+app.use("/faculty", facultyRoute);
+
 // Announcements for Login Page
 const publicAnnouncementRoute = require("./routes/publicAnnouncementRoute");
 app.use("/announcement", publicAnnouncementRoute);
