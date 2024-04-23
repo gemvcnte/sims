@@ -844,49 +844,49 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
 
     await Announcement.insertMany([announcement]);
 
-    const studentEmails = await Student.find({}).distinct("emailAddress");
-    const teacherEmails = await Teacher.find({}).distinct("emailAddress");
-    const adminEmails = await Admin.find({}).distinct("emailAddress");
+    // const studentEmails = await Student.find({}).distinct("emailAddress");
+    // const teacherEmails = await Teacher.find({}).distinct("emailAddress");
+    // const adminEmails = await Admin.find({}).distinct("emailAddress");
 
-    const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
+    // const allEmails = [...studentEmails, ...teacherEmails, ...adminEmails];
 
-    const mailOptions = {
-      from: "mrmnhs.simsannouncement@gmail.com",
-      subject: `New School Announcement: ${typeOfAnnouncement || "General"}`,
-      // Use HTML content for the email body
-      html: `
-        <html>
-        <head>
-        </head>
-          <body>
-            <h2>${title}</h2>
-            <p>${content}</p>
-            <p>Created By: ${createdBy}</p>
-            <p>Type of Announcement: ${
-              typeOfAnnouncement || "Important Announcement"
-            }</p>
-          </body>
-        </html>
-      `,
-    };
+    // const mailOptions = {
+    //   from: "mrmnhs.simsannouncement@gmail.com",
+    //   subject: `New School Announcement: ${typeOfAnnouncement || "General"}`,
+    //   // Use HTML content for the email body
+    //   html: `
+    //     <html>
+    //     <head>
+    //     </head>
+    //       <body>
+    //         <h2>${title}</h2>
+    //         <p>${content}</p>
+    //         <p>Created By: ${createdBy}</p>
+    //         <p>Type of Announcement: ${
+    //           typeOfAnnouncement || "Important Announcement"
+    //         }</p>
+    //       </body>
+    //     </html>
+    //   `,
+    // };
 
-    await Promise.all(
-      allEmails.map(async (email) => {
-        try {
-          const personalizedMailOptions = {
-            ...mailOptions,
-            to: email,
-          };
+    // await Promise.all(
+    //   allEmails.map(async (email) => {
+    //     try {
+    //       const personalizedMailOptions = {
+    //         ...mailOptions,
+    //         to: email,
+    //       };
 
-          await transporter.sendMail(personalizedMailOptions);
+    //       await transporter.sendMail(personalizedMailOptions);
 
-          console.log(`personalizedMailOptions`, personalizedMailOptions)
-          console.log(`Email sent successfully to ${email}`);
-        } catch (error) {
-          console.error(`Error sending email to ${email}, ${error}`);
-        }
-      })
-    );
+    //       console.log(`personalizedMailOptions`, personalizedMailOptions)
+    //       console.log(`Email sent successfully to ${email}`);
+    //     } catch (error) {
+    //       console.error(`Error sending email to ${email}, ${error}`);
+    //     }
+    //   })
+    // );
 
     res.status(201).json({
       message: "Announcement created successfully.",

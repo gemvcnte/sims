@@ -96,12 +96,14 @@ const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
       },
       to: resetCodeInfo.email,
       subject: "Password Reset Code",
-      text: `Password reset successfully.`,
+      text: `Your password has been reset successfully.`,
     };
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ message: "Password reset successfully." });
+    res
+      .status(200)
+      .json({ message: "Your password has been reset successfully." });
   } catch (error) {
     console.error("Error resetting password:", error);
     res.status(500).json({ error: "Internal server error" });
