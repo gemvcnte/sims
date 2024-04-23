@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 function LoginForm() {
   const { login, rememberMe, setRememberMe } = useAuth();
+  const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
   let apiUrl = `${baseUrl}/login`;
 
@@ -151,6 +152,7 @@ function LoginForm() {
           <Button
             variant="link"
             className="h-fit justify-end p-0 text-sm text-muted-foreground"
+            onClick={() => navigate("/forgot-password")}
           >
             Forgot password?
           </Button>
