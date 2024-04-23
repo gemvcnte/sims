@@ -20,7 +20,7 @@ export function UserNav() {
     return null;
   }
 
-  const displayText = user?.username || "";
+  const displayText = user?.name || "";
   const abbreviatedText = displayText.slice(0, 2).toUpperCase();
   return (
     <div className="hidden lg:inline">
@@ -38,9 +38,7 @@ export function UserNav() {
         <DropdownMenuContent className="w-56 p-2" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {user?.username}
-              </p>
+              <p className="text-sm font-medium leading-none">{user?.name}</p>
               <p className="text-xs leading-none text-muted-foreground">
                 {user?.role}
               </p>
