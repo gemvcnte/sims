@@ -4,8 +4,9 @@ const expressAsyncHandler = require("express-async-handler");
 
 const { Admin } = require("../models/AdminModel");
 const { Teacher } = require("../models/TeacherModel");
+const { Student } = require("../models/StudentModel");
 
-const facultyLogin = expressAsyncHandler(async (req, res) => {
+const login = expressAsyncHandler(async (req, res) => {
   try {
     let { username, password } = req.body;
     username = username.toLowerCase();
@@ -46,6 +47,24 @@ const facultyLogin = expressAsyncHandler(async (req, res) => {
       }
     }
 
+    user = await Student.findOne({ lrn: username });
+    if (user) {
+      const passwordMatch = await bcryptjs.compare(password, user.password);
+      if (passwordMatch) {
+        const tokenPayload = {
+          _id: user.id,
+          lrn: user.lrn,
+          username: `${user.firstName} ${user.lastName}`,
+          role: "student",
+        };
+        const token = generateAuthToken(tokenPayload);
+        return res.status(200).json({
+          message: "Hello, Student! You've successfully logged in.",
+          token,
+        });
+      }
+    }
+
     return res.status(401).json({ message: "Invalid username or password" });
   } catch (error) {
     console.error(`There is an error: ${error}`);
@@ -53,4 +72,4 @@ const facultyLogin = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { facultyLogin };
+module.exports = { login };
