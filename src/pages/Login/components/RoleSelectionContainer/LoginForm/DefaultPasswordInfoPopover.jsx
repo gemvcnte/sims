@@ -11,7 +11,10 @@ export function DefaultPasswordInfoPopover() {
     <Popover>
       <PopoverTrigger asChild>
         {/* <Button variant="icon" className="p-0"> */}
-        <Info className="text-[#9FA9B9] hover:cursor-pointer" />
+        <Info
+          className="text-[#7F7F7F] hover:cursor-pointer"
+          strokeWidth={1.5}
+        />
         {/* </Button> */}
       </PopoverTrigger>
       <PopoverContent className="w-80">
