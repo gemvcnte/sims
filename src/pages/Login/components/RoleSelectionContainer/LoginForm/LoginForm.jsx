@@ -64,13 +64,6 @@ function LoginForm() {
 
   return (
     <>
-      <button
-        onClick={() => setSelectedRole(null)}
-        className="flex items-center justify-end rounded-lg text-sm text-[#9FA9B9]"
-      >
-        <ChevronLeft />
-        <span>Back</span>
-      </button>
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
