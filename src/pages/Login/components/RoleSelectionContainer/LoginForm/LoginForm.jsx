@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormValidator from "../../../../../utils/FormValidator";
 import axios from "axios";
 import notify from "../../../../../utils/BlankFieldNotification";
@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 function LoginForm() {
-  const { login } = useAuth();
+  const { login, rememberMe, setRememberMe } = useAuth();
   const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
   let apiUrl = `${baseUrl}/login`;
 
@@ -23,6 +23,16 @@ function LoginForm() {
     username: "",
     password: "",
   });
+
+  useEffect(() => {
+    const rememberMeUsername = localStorage.getItem("rememberMeUsername");
+    if (rememberMeUsername) {
+      setLoginData({
+        ...loginData,
+        username: rememberMeUsername,
+      });
+    }
+  }, []);
 
   const [loading, setLoading] = useState(false);
 
@@ -125,7 +135,11 @@ function LoginForm() {
 
         <section className="flex justify-between py-4">
           <div className=" flex items-center space-x-2">
-            <Checkbox id="terms" />
+            <Checkbox
+              id="terms"
+              checked={rememberMe}
+              onCheckedChange={() => setRememberMe(!rememberMe)}
+            />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none text-muted-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

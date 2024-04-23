@@ -8,15 +8,23 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [rememberMe, setRememberMe] = useState(false);
 
   const login = (token) => {
     localStorage.setItem("authToken", token);
 
     const decodedToken = jwtDecode(token);
-    setUser((prevUser) => {
-      localStorage.setItem("lastUsedRole", decodedToken.role);
-      return decodedToken;
-    });
+
+    if (!rememberMe) {
+      localStorage.removeItem("rememberMeUsername");
+    }
+
+    if (rememberMe) {
+      setUser((prevUser) => {
+        localStorage.setItem("rememberMeUsername", decodedToken.username);
+        return decodedToken;
+      });
+    }
 
     window.location.reload();
   };
@@ -79,7 +87,9 @@ export const AuthProvider = ({ children }) => {
   }, [user, logout]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, rememberMe, setRememberMe }}
+    >
       {children}
     </AuthContext.Provider>
   );
