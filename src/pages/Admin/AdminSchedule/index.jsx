@@ -16,11 +16,7 @@ maximumEndTime6pm.setHours(18, 0, 0);
 export default function AdminSchedule() {
   const { schedule, loading } = useAdminSchedule();
   const [isMobile, setIsMobile] = useState(false);
-
-  if (loading) {
-    return <AdminScheduleSkeleton />;
-  }
-
+  
   const checkIsMobile = () => {
     const width = window.innerWidth;
     setIsMobile(width <= 768);
@@ -32,6 +28,10 @@ export default function AdminSchedule() {
       window.removeEventListener("resize", checkIsMobile);
     };
   }, []);
+
+  if (loading) {
+    return <AdminScheduleSkeleton />;
+  }
 
   const generateEvents = () => {
     const events = [];
