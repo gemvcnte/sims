@@ -4,7 +4,7 @@ const { Student } = require("../models/StudentModel");
 const { transporter } = require("../mailer");
 const bcryptjs = require("bcryptjs");
 
-const resetPassword = asyncHandler(async (req, res) => {
+const resetStudentPassword = asyncHandler(async (req, res) => {
   const { lrn } = req.body;
 
   try {
@@ -24,13 +24,12 @@ const resetPassword = asyncHandler(async (req, res) => {
         .json({ message: "Email not found. Please try again." });
     }
 
-    // Generate a random 6-digit code
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
 
     const resetPasswordCode = new ResetPasswordCode({
       lrn: lrn,
       email: studentEmail,
-      code: resetCode, // Assign the generated code to the resetPasswordCode object
+      code: resetCode,
     });
 
     const mailOptions = {
@@ -60,7 +59,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
-const resetPasswordFinal = asyncHandler(async (req, res) => {
+const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
   const { code } = req.body;
 
   try {
@@ -109,4 +108,4 @@ const resetPasswordFinal = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { resetPassword, resetPasswordFinal };
+module.exports = { resetStudentPassword, resetStudentPasswordFinal };
