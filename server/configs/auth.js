@@ -17,6 +17,7 @@ const generateAuthToken = (user) => {
   // Add lrn property to payload only if the user's role is "student"
   if (user.role === "student") {
     payload.lrn = user.lrn;
+    payload.name = user.name
   }
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });

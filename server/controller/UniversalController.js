@@ -54,7 +54,8 @@ const login = expressAsyncHandler(async (req, res) => {
         const tokenPayload = {
           _id: user.id,
           lrn: user.lrn,
-          username: `${user.firstName} ${user.lastName}`,
+          username: user.lrn,
+          name: `${user.firstName} ${user.lastName}`,
           role: "student",
         };
         const token = generateAuthToken(tokenPayload);
