@@ -70,3 +70,19 @@ body {
     }
   }
 }
+
+.rbc-event {
+  background-color: hsl(253 91% 58%);
+}
+
+.rbc-today {
+  background-color: hsla(253, 91%, 58%, 0.1);
+}
+
+.rbc-time-view {
+  border-radius: 0.5rem;
+}
+
+.rbc-current-time-indicator {
+  height: 5px;
+}
