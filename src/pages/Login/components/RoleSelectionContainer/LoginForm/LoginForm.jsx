@@ -12,14 +12,12 @@ import { PasswordInput } from "@/components/ui/PasswordInput";
 import { ChevronLeft, Info } from "lucide-react";
 import { DefaultPasswordInfoPopover } from "./DefaultPasswordInfoPopover";
 
-function LoginForm({ role, setSelectedRole }) {
+function LoginForm() {
   const { login } = useAuth();
-  const navigate = useNavigate();
   const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-  let apiUrl = `${baseUrl}/${role}/login`;
+  let apiUrl = `${baseUrl}/login`;
 
   const [loginData, setLoginData] = useState({
-    role: role,
     username: "",
     password: "",
   });
@@ -40,9 +38,6 @@ function LoginForm({ role, setSelectedRole }) {
         if (response.status === 200) {
           const token = response.data.token;
           login(token);
-          // localStorage.setItem("authToken", token);
-          // navigate("/");
-          // window.location.reload();
         } else {
           showErrorNotification("Login failed");
         }
@@ -69,13 +64,6 @@ function LoginForm({ role, setSelectedRole }) {
 
   return (
     <>
-      <button
-        onClick={() => setSelectedRole(null)}
-        className="flex items-center justify-end rounded-lg text-sm text-[#9FA9B9]"
-      >
-        <ChevronLeft />
-        <span>Back</span>
-      </button>
       <form onSubmit={handleLogin} className="flex flex-col gap-3">
         <div className="flex items-center justify-between gap-4">
           <span className="w-[10%]">
@@ -94,12 +82,12 @@ function LoginForm({ role, setSelectedRole }) {
             )}
           </span>
           <input
-            type={role === "student" ? "number" : "text"}
+            type="text"
             name="username"
             value={loginData.username}
             onChange={(e) => handleInputChange("username", e.target.value)}
             required
-            placeholder={role === "student" ? "LRN" : `Username`}
+            placeholder="Username"
             className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
         </div>
@@ -126,12 +114,12 @@ function LoginForm({ role, setSelectedRole }) {
             value={loginData.password}
             onChange={(e) => handleInputChange("password", e.target.value)}
             required
-            placeholder={role === "student" ? "Password" : `Password`}
+            placeholder="Password"
             className=" border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
           />
           {/* <PasswordInput /> */}
 
-          {role === "student" ? <DefaultPasswordInfoPopover /> : null}
+          <DefaultPasswordInfoPopover />
         </div>
 
         <button
