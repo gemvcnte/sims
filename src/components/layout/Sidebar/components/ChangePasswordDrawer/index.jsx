@@ -11,8 +11,6 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import updatePasswordApi from "./update-password-api";
