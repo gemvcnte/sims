@@ -879,6 +879,8 @@ const createSchoolAnnouncement = asyncHandler(async (req, res) => {
           };
 
           await transporter.sendMail(personalizedMailOptions);
+
+          console.log(`personalizedMailOptions`, personalizedMailOptions)
           console.log(`Email sent successfully to ${email}`);
         } catch (error) {
           console.error(`Error sending email to ${email}, ${error}`);

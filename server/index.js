@@ -37,7 +37,7 @@ app.use(
         frameAncestors: ["'none'"], //valid sources for the ancestor sources for embedded frames
       },
     },
-  }),
+  })
 );
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
@@ -65,6 +65,9 @@ const studentRateLimiter = getRateLimiter("student");
 // Apply @ school
 const studentApplicationRoute = require("./routes/studentApplicationRoute");
 app.use("/apply", studentApplicationRoute);
+
+const resetPasswordRoute = require("./routes/resetPasswordRoute");
+app.use("/reset", resetPasswordRoute);
 
 // Announcements for Login Page
 const publicAnnouncementRoute = require("./routes/publicAnnouncementRoute");
