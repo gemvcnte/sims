@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Drawer,
   DrawerClose,
@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { Loader2 } from "lucide-react";
 
 const schema = yup.object().shape({
   currentPassword: yup.string().required("Current password is required"),
@@ -46,7 +47,11 @@ export default function ChangePasswordDrawer({ userType }) {
     resolver: yupResolver(schema),
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChangePassword = async (data) => {
+    setLoading(true);
+
     try {
       const response = await updatePasswordApi(
         data.currentPassword,
@@ -58,8 +63,11 @@ export default function ChangePasswordDrawer({ userType }) {
       form.setValue("currentPassword", "");
       form.setValue("newPassword", "");
       form.setValue("repeatPassword", "");
+
+      setLoading(false);
     } catch (error) {
       showErrorNotification(error.response?.data.message);
+      setLoading(false);
     }
   };
 
@@ -140,7 +148,15 @@ export default function ChangePasswordDrawer({ userType }) {
               />
 
               <DrawerFooter className="mb-4">
-                <Button type="submit">Change Password</Button>
+                {loading ? (
+                  <Button disabled>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait...
+                  </Button>
+                ) : (
+                  <Button type="submit"> Change Password</Button>
+                )}
+
                 <DrawerClose className="w-full">
                   <Button variant="outline" className="w-full">
                     Cancel
