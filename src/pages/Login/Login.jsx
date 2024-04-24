@@ -19,7 +19,7 @@ function Login() {
       <AnnouncementsModal />
 
       <Header />
-      <main className="-mt-4 px-8">
+      <main className="-mt-6 px-8">
         <section className="mx-auto mt-12 flex max-w-[350px] flex-col gap-4 rounded-lg p-4">
           <LoginForm />
         </section>

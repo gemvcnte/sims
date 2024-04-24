@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from "react";
+import logo from "../../assets/sims-logo-img.svg";
+import { Icon } from "@iconify/react";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import {
+  resetPasswordGenerateEndpoint,
+  resetPasswordVerifyEndpoint,
+} from "@/config/publicEndpoints";
+import showErrorNotification from "@/utils/ShowErrorNotification";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "../ui/input-otp";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+
+export default function VerifyResetCode() {
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.style.backgroundColor = "var(--clr-white-400)";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
+
+  const [loading, setLoading] = useState(false);
+
+  const verifyResetCode = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (!code) {
+        return;
+      }
+
+      const response = await axios.post(resetPasswordVerifyEndpoint, { code });
+
+      if (response.status === 200) {
+        navigate("/");
+
+        toast("Success! Check your email", {
+          description: "Your password has been reset successfully.",
+        });
+      }
+
+      setLoading(false);
+    } catch (error) {
+      showErrorNotification(error.response?.data?.message);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <main className="flex h-[100svh]  items-center justify-center overflow-hidden px-8">
+        <form onSubmit={verifyResetCode}>
+          <section className="mx-auto mt-8 flex max-w-[56ch] flex-col gap-6 rounded-lg p-4 text-center">
+            <div className="flex flex-col items-center gap-4 pt-8 ">
+              <img src={logo} alt="" className="max-w-[2rem]" />
+              <h1 className="text-2xl font-semibold leading-none tracking-tight">
+                Verify Reset Code
+              </h1>
+              <h2 className=" leading-7 text-muted-foreground">
+                Please enter the 6-digit code we <br className="sm:hidden" />{" "}
+                sent to your email.
+              </h2>
+            </div>
+            <div className="flex items-center justify-center py-2">
+              <InputOTP
+                maxLength={6}
+                value={code}
+                onChange={(value) => setCode(value)}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} className="p-6" />
+                  <InputOTPSlot index={1} className="p-6" />
+                  <InputOTPSlot index={2} className="p-6" />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} className="p-6" />
+                  <InputOTPSlot index={4} className="p-6" />
+                  <InputOTPSlot index={5} className="p-6" />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
+
+            {loading ? (
+              <Button
+                variant="primary"
+                disabled
+                className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 "
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 hover:gap-8"
+                disabled={code.length !== 6}
+                onClick={verifyResetCode}
+              >
+                Reset Password
+                <Icon
+                  icon="ph:arrow-up-thin"
+                  width="20"
+                  color="white"
+                  rotate={1}
+                />
+              </Button>
+            )}
+          </section>
+        </form>
+      </main>
+    </>
+  );
+}
