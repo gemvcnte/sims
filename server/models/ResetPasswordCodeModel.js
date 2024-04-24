@@ -5,9 +5,9 @@ const ResetPasswordSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  lrn: {
-    type: String,
-  },
+  // lrn: {
+  //   type: String,
+  // },
   username: {
     type: String,
   },
