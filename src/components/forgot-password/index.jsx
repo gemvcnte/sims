@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { resetPasswordGenerateEndpoint } from "@/config/publicEndpoints";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 export default function ForgotPassword() {
   const [username, setUsername] = useState("");
@@ -24,14 +26,20 @@ export default function ForgotPassword() {
   const handleContinueWithToast = (e) => {
     e.preventDefault();
 
-    navigate("/reset-password");
+    console.log("hello");
 
     toast("Success! Check your email", {
       description: "We've sent a reset code to your email address.",
     });
+    console.log("end of toast");
+
+    navigate("/reset-password");
+    console.log("end of navigate");
   };
 
-  const generateResetCode = (username) => {
+  const generateResetCode = async (e) => {
+    e.preventDefault();
+
     setLoading(true);
 
     try {
@@ -39,15 +47,25 @@ export default function ForgotPassword() {
         return;
       }
 
-      const response = axios.post(resetPasswordGenerateEndpoint, { username });
+      const response = await axios.post(resetPasswordGenerateEndpoint, {
+        username,
+      });
+
+      console.log(`response`, response);
 
       if (response.status === 200) {
-        handleContinueWithToast();
+        console.log(`STATUS 200`);
+
+        toast("Success! Check your email", {
+          description: "We've sent a reset code to your email address.",
+        });
+
+        navigate("/reset-password");
       }
 
       setLoading(false);
     } catch (error) {
-      showErrorNotification("Error:", error);
+      showErrorNotification(error.response?.data?.message);
       setLoading(false);
     }
   };
@@ -55,7 +73,7 @@ export default function ForgotPassword() {
   return (
     <>
       <main className="flex h-[100svh]  items-center justify-center overflow-hidden px-8">
-        <form>
+        <form onSubmit={generateResetCode}>
           <section className="mx-auto mt-8 flex max-w-[45ch] flex-col gap-4 rounded-lg p-4 text-center">
             <div className="flex flex-col items-center gap-2 pt-8 ">
               <img src={logo} alt="" className="max-w-[3rem]" />
@@ -93,18 +111,28 @@ export default function ForgotPassword() {
               />
             </div>
 
-            <button
-              className=" flex items-center justify-center gap-2 rounded-md bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
-              type="submit"
-            >
-              Continue
-              <Icon
-                icon="ph:arrow-up-thin"
-                width="20"
-                color="white"
-                rotate={1}
-              />
-            </button>
+            {loading ? (
+              <Button
+                disabled
+                className=" flex items-center justify-center gap-2 rounded-md bg-primary px-10 py-6 text-white transition-all duration-300 hover:gap-8"
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                className=" flex items-center justify-center gap-2 rounded-md bg-primary px-10 py-6 text-white transition-all duration-300 hover:gap-8"
+              >
+                Continue
+                <Icon
+                  icon="ph:arrow-up-thin"
+                  width="20"
+                  color="white"
+                  rotate={1}
+                />
+              </Button>
+            )}
 
             <Button
               variant="link"
@@ -112,10 +140,6 @@ export default function ForgotPassword() {
               onClick={() => navigate("/")}
             >
               Back to login
-            </Button>
-
-            <Button variant="outline" onClick={handleContinueWithToast}>
-              Show Toast
             </Button>
           </section>
         </form>
