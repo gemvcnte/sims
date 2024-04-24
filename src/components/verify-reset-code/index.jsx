@@ -4,7 +4,10 @@ import { Icon } from "@iconify/react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { resetPasswordGenerateEndpoint } from "@/config/publicEndpoints";
+import {
+  resetPasswordGenerateEndpoint,
+  resetPasswordVerifyEndpoint,
+} from "@/config/publicEndpoints";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import {
   InputOTP,
@@ -12,6 +15,8 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 export default function VerifyResetCode() {
   const [code, setCode] = useState("");
@@ -27,33 +32,28 @@ export default function VerifyResetCode() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleContinueWithToast = (e) => {
+  const verifyResetCode = async (e) => {
     e.preventDefault();
-
-    navigate("/reset-password");
-
-    toast("Success! Check your email", {
-      description: "We've sent a reset code to your email address.",
-    });
-  };
-
-  const verifyResetCode = (username) => {
     setLoading(true);
 
     try {
-      if (!username) {
+      if (!code) {
         return;
       }
 
-      const response = axios.post(resetPasswordGenerateEndpoint, { username });
+      const response = await axios.post(resetPasswordVerifyEndpoint, { code });
 
       if (response.status === 200) {
-        handleContinueWithToast();
+        navigate("/");
+
+        toast("Success! Check your email", {
+          description: "Your password has been reset successfully.",
+        });
       }
 
       setLoading(false);
     } catch (error) {
-      showErrorNotification("Error:", error);
+      showErrorNotification(error.response?.data?.message);
       setLoading(false);
     }
   };
@@ -93,20 +93,31 @@ export default function VerifyResetCode() {
               </InputOTP>
             </div>
 
-            <Button
-              variant="primary"
-              className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 hover:gap-8"
-              type="submit"
-              disabled={code.length !== 6}
-            >
-              Reset Password
-              <Icon
-                icon="ph:arrow-up-thin"
-                width="20"
-                color="white"
-                rotate={1}
-              />
-            </Button>
+            {loading ? (
+              <Button
+                variant="primary"
+                disabled
+                className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 "
+              >
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 hover:gap-8"
+                disabled={code.length !== 6}
+                onClick={verifyResetCode}
+              >
+                Reset Password
+                <Icon
+                  icon="ph:arrow-up-thin"
+                  width="20"
+                  color="white"
+                  rotate={1}
+                />
+              </Button>
+            )}
           </section>
         </form>
       </main>

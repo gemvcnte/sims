@@ -23,20 +23,6 @@ export default function ForgotPassword() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleContinueWithToast = (e) => {
-    e.preventDefault();
-
-    console.log("hello");
-
-    toast("Success! Check your email", {
-      description: "We've sent a reset code to your email address.",
-    });
-    console.log("end of toast");
-
-    navigate("/reset-password");
-    console.log("end of navigate");
-  };
-
   const generateResetCode = async (e) => {
     e.preventDefault();
 
@@ -51,11 +37,7 @@ export default function ForgotPassword() {
         username,
       });
 
-      console.log(`response`, response);
-
       if (response.status === 200) {
-        console.log(`STATUS 200`);
-
         toast("Success! Check your email", {
           description: "We've sent a reset code to your email address.",
         });
