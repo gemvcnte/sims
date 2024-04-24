@@ -46,7 +46,8 @@ export const useCheckOverlap = (selectedTeacher) => {
         // Check for exact same schedule
         if (
           schedule1.startTime === schedule2.startTime &&
-          schedule1.endTime === schedule2.endTime
+          schedule1.endTime === schedule2.endTime &&
+          schedule1.subjectId !== schedule2.subjectId
         ) {
           // If schedules are exactly the same, return the overlapping schedule message
           const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
