@@ -47,14 +47,14 @@ export default function AddSubjectModalForm(subject) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <DialogHeader>
-          <DialogTitle>Update a Subject</DialogTitle>
+          <DialogTitle>Update Subject</DialogTitle>
 
           <DialogDescription className="md:max-w-[80%]">
-            Let's update a new subject. Update the details below.
+            Let's update the subject details below.
           </DialogDescription>
         </DialogHeader>
 
-        <main className="my-4 grid h-80 gap-4 overflow-y-auto py-4">
+        <main className="my-4 flex flex-col gap-4 overflow-auto py-4">
           <FormField
             control={form.control}
             name="subjectName"
@@ -106,25 +106,6 @@ export default function AddSubjectModalForm(subject) {
           />
         </main>
 
-        {/* Add a conditional rendering for the error message */}
-        {/* {form.formState.errors.schedules && (
-          <div className="text-center text-red-500">
-            <p>Overlapping schedules found:</p>
-            {Array.isArray(form.formState.errors.schedules.message) ? (
-              form.formState.errors.schedules.message.map((schedule, index) => (
-                <p key={index}>
-                  {schedule.day} ({schedule.startTime} - {schedule.endTime})
-                </p>
-              ))
-            ) : (
-              <p>
-                {form.formState.errors.schedules.message.replace(/[[\]"]/g, "")}
-              </p>
-            )}
-          </div>
-        )} */}
-
-        {/* Add a conditional rendering for the error message */}
         {form.formState.errors.schedules && (
           <p className="text-center text-red-500">
             {form.formState.errors.schedules.message}
@@ -133,7 +114,7 @@ export default function AddSubjectModalForm(subject) {
 
         <DialogFooter>
           <Button type="submit" disabled={loading}>
-            Update subject
+            Save changes
           </Button>
         </DialogFooter>
       </form>
