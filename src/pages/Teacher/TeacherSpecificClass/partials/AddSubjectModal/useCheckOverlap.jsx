@@ -14,6 +14,7 @@ export const useCheckOverlap = (selectedTeacher) => {
         day: schedule.day,
         startTime: schedule.startTime,
         endTime: schedule.endTime,
+        subjectId: schedule.subjectId,
       });
     });
     return acc;
