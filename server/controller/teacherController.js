@@ -533,6 +533,7 @@ const getTeacherScheduleByUsername = asyncHandler(async (req, res) => {
               subject: subject.subjectName,
               startTime: schedule.startTime,
               endTime: schedule.endTime,
+              subjectId: subject._id,
             });
           });
         }
