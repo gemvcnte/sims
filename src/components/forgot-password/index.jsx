@@ -74,16 +74,16 @@ export default function ForgotPassword() {
     <>
       <main className="flex h-[100svh]  items-center justify-center overflow-hidden px-8">
         <form onSubmit={generateResetCode}>
-          <section className="mx-auto mt-8 flex max-w-[45ch] flex-col gap-4 rounded-lg p-4 text-center">
-            <div className="flex flex-col items-center gap-2 pt-8 ">
-              <img src={logo} alt="" className="max-w-[3rem]" />
+          <section className="mx-auto mt-8 flex max-w-[45ch] flex-col gap-6 rounded-lg p-4 text-center">
+            <div className="flex flex-col items-center gap-4 pt-8 ">
+              <img src={logo} alt="" className="max-w-[2rem]" />
+              <h1 className="text-2xl font-semibold leading-none tracking-tight">
+                Forgot Password?
+              </h1>
+              <h2 className="leading-7 text-muted-foreground">
+                No worries, We'll send you a reset code.
+              </h2>
             </div>
-            <h1 className="text-2xl font-semibold leading-none tracking-tight">
-              Forgot Password?
-            </h1>
-            <h2 className="leading-7 text-muted-foreground">
-              No worries, We'll send you a reset code.
-            </h2>
             <div className="flex items-center justify-between gap-4">
               <span className="w-[10%]">
                 {!username ? (
@@ -136,7 +136,7 @@ export default function ForgotPassword() {
 
             <Button
               variant="link"
-              className="mt-4 text-muted-foreground"
+              className="mt-2 text-muted-foreground"
               onClick={() => navigate("/")}
             >
               Back to login
