@@ -6,6 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { resetPasswordGenerateEndpoint } from "@/config/publicEndpoints";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "../ui/input-otp";
 
 export default function VerifyResetCode() {
   const [username, setUsername] = useState("");
@@ -56,48 +62,38 @@ export default function VerifyResetCode() {
     <>
       <main className="flex h-[100svh]  items-center justify-center overflow-hidden px-8">
         <form>
-          <section className="mx-auto mt-8 flex max-w-[45ch] flex-col gap-4 rounded-lg p-4 text-center">
+          <section className="mx-auto mt-8 flex max-w-[56ch] flex-col gap-4 rounded-lg p-4 text-center">
             <div className="flex flex-col items-center gap-2 pt-8 ">
               <img src={logo} alt="" className="max-w-[3rem]" />
             </div>
             <h1 className="text-2xl font-semibold leading-none tracking-tight">
-              Forgot Password?
+              Verify Reset Code
             </h1>
             <h2 className="leading-7 text-muted-foreground">
-              No worries, We'll send you a reset code.
+              Please enter the 6-digit code we sent to your email.
             </h2>
-            <div className="flex items-center justify-between gap-4">
-              <span className="w-[10%]">
-                {!username ? (
-                  <Icon
-                    icon="teenyicons:user-outline"
-                    width="20"
-                    className="text-primary"
-                  />
-                ) : (
-                  <Icon
-                    icon="teenyicons:user-solid"
-                    width="20"
-                    className="text-primary"
-                  />
-                )}
-              </span>
-              <input
-                type="text"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                placeholder="Username"
-                className="border-white-700 placeholder-white-700 w-full rounded-md border-b p-3 focus:border focus:border-primary focus:outline-none"
-              />
+            <div className="flex items-center justify-center py-2">
+              <InputOTP maxLength={6}>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} className="p-6" />
+                  <InputOTPSlot index={1} className="p-6" />
+                  <InputOTPSlot index={2} className="p-6" />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} className="p-6" />
+                  <InputOTPSlot index={4} className="p-6" />
+                  <InputOTPSlot index={5} className="p-6" />
+                </InputOTPGroup>
+              </InputOTP>
             </div>
 
+            {/* <div className="flex flex-col justify-center"> */}
             <button
-              className=" flex items-center justify-center gap-2 rounded-md bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
+              className="mx-auto flex w-full max-w-[45ch] items-center justify-center gap-2 rounded-md bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
               type="submit"
             >
-              Continue
+              Reset Password
               <Icon
                 icon="ph:arrow-up-thin"
                 width="20"
@@ -105,18 +101,14 @@ export default function VerifyResetCode() {
                 rotate={1}
               />
             </button>
-
-            <Button
+            {/* <Button
               variant="link"
               className="mt-4 text-muted-foreground"
               onClick={() => navigate("/")}
             >
               Back to login
-            </Button>
-
-            <Button variant="outline" onClick={handleContinueWithToast}>
-              Show Toast
-            </Button>
+            </Button> */}
+            {/* </div> */}
           </section>
         </form>
       </main>
