@@ -150,6 +150,7 @@ function LoginForm() {
           </div>
 
           <Button
+            type="button"
             variant="link"
             className="h-fit justify-end p-0 text-sm text-muted-foreground"
             onClick={() => navigate("/forgot-password")}
