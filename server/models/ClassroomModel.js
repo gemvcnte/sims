@@ -54,6 +54,10 @@ const classroomSchema = mongoose.Schema(
     ],
     subjects: [
       {
+        _id: {
+          type: mongoose.Schema.Types.ObjectId,
+          auto: true,
+        },
         subjectName: {
           type: String,
           required: true,
@@ -64,6 +68,12 @@ const classroomSchema = mongoose.Schema(
         },
         schedules: [
           {
+            subjectId: {
+              type: mongoose.Schema.Types.ObjectId,
+              default: function () {
+                return this.parent().id;
+              },
+            },
             day: {
               type: String,
               required: true,
