@@ -14,7 +14,7 @@ import {
 } from "../ui/input-otp";
 
 export default function VerifyResetCode() {
-  const [username, setUsername] = useState("");
+  const [code, setCode] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function VerifyResetCode() {
     });
   };
 
-  const generateResetCode = (username) => {
+  const verifyResetCode = (username) => {
     setLoading(true);
 
     try {
@@ -61,19 +61,24 @@ export default function VerifyResetCode() {
   return (
     <>
       <main className="flex h-[100svh]  items-center justify-center overflow-hidden px-8">
-        <form>
-          <section className="mx-auto mt-8 flex max-w-[56ch] flex-col gap-4 rounded-lg p-4 text-center">
-            <div className="flex flex-col items-center gap-2 pt-8 ">
-              <img src={logo} alt="" className="max-w-[3rem]" />
+        <form onSubmit={verifyResetCode}>
+          <section className="mx-auto mt-8 flex max-w-[56ch] flex-col gap-6 rounded-lg p-4 text-center">
+            <div className="flex flex-col items-center gap-4 pt-8 ">
+              <img src={logo} alt="" className="max-w-[2rem]" />
+              <h1 className="text-2xl font-semibold leading-none tracking-tight">
+                Verify Reset Code
+              </h1>
+              <h2 className=" leading-7 text-muted-foreground">
+                Please enter the 6-digit code we <br className="sm:hidden" />{" "}
+                sent to your email.
+              </h2>
             </div>
-            <h1 className="text-2xl font-semibold leading-none tracking-tight">
-              Verify Reset Code
-            </h1>
-            <h2 className="leading-7 text-muted-foreground">
-              Please enter the 6-digit code we sent to your email.
-            </h2>
             <div className="flex items-center justify-center py-2">
-              <InputOTP maxLength={6}>
+              <InputOTP
+                maxLength={6}
+                value={code}
+                onChange={(value) => setCode(value)}
+              >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} className="p-6" />
                   <InputOTPSlot index={1} className="p-6" />
@@ -88,10 +93,11 @@ export default function VerifyResetCode() {
               </InputOTP>
             </div>
 
-            {/* <div className="flex flex-col justify-center"> */}
-            <button
-              className="mx-auto flex w-full max-w-[45ch] items-center justify-center gap-2 rounded-md bg-primary px-10 py-3 text-white transition-all duration-300 hover:gap-8"
+            <Button
+              variant="primary"
+              className="mx-auto flex w-full max-w-[48ch] items-center justify-center gap-2 rounded-md bg-primary px-24 py-6 text-background transition-all duration-300 hover:gap-8"
               type="submit"
+              disabled={code.length !== 6}
             >
               Reset Password
               <Icon
@@ -100,15 +106,7 @@ export default function VerifyResetCode() {
                 color="white"
                 rotate={1}
               />
-            </button>
-            {/* <Button
-              variant="link"
-              className="mt-4 text-muted-foreground"
-              onClick={() => navigate("/")}
-            >
-              Back to login
-            </Button> */}
-            {/* </div> */}
+            </Button>
           </section>
         </form>
       </main>
