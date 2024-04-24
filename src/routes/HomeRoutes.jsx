@@ -6,6 +6,7 @@ import StudentRouter from "./StudentRouter";
 import TeacherRouter from "./TeacherRouter";
 import { jwtDecode } from "jwt-decode";
 import ForgotPassword from "@/components/forgot-password";
+import VerifyResetCode from "@/components/verify-reset-code";
 
 const HomeRoutes = () => {
   const [userRole, setUserRole] = useState(null);
@@ -32,6 +33,7 @@ const HomeRoutes = () => {
       {userRole == "admin" && <Route path="*" element={<AdminRouter />} />}
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<VerifyResetCode />} />
       {!userRole && <Route path="*" element={<LoginRoutes />} />}
     </Routes>
   );

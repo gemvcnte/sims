@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { resetPasswordGenerateEndpoint } from "@/config/publicEndpoints";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 
-export default function ForgotPassword() {
+export default function VerifyResetCode() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
