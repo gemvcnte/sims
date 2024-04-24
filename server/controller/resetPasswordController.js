@@ -81,7 +81,7 @@ const resetUserPassword = asyncHandler(async (req, res) => {
   }
 });
 
-const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
+const resetUserPasswordFinal = asyncHandler(async (req, res) => {
   const { code } = req.body;
 
   try {
@@ -97,19 +97,27 @@ const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
         .json({ message: "Reset password code is expired." });
     }
 
-    const student = await Student.findOne({ lrn: resetCodeInfo.lrn });
+    let user;
 
-    if (!student) {
-      return res.status(404).json({ message: "Student not found." });
+    user = await Student.findOne({ lrn: resetCodeInfo.username });
+
+    if (!user) {
+      user = await Teacher.findOne({ username: resetCodeInfo.username });
     }
 
-    student.password = bcryptjs.hashSync(student.birthDate, 10);
-    await student.save();
+    if (!user) {
+      user = await Admin.findOne({ username: resetCodeInfo.username });
+    }
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    user.password = bcryptjs.hashSync(user.birthDate, 10);
+    await user.save();
 
     resetCodeInfo.status = "expired";
     await resetCodeInfo.save();
-
-    await student.save();
 
     const mailOptions = {
       from: {
@@ -117,8 +125,16 @@ const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
         address: "noreply@simsv1.com",
       },
       to: resetCodeInfo.email,
-      subject: "Password Reset Code",
-      text: `Your password has been reset successfully.`,
+      subject: "Password Reset Successful",
+      html: `
+        <div style="font-family: Arial, sans-serif;">
+          <p>Hello ${user.firstName || user.name},</p>
+          <p>Your password has been successfully reset to your default password, which is your birthdate (yyyy-mm-dd).</p>
+          <p>If you didn't request this change, please contact our support team immediately.</p>
+          <p>Thank you,</p>
+          <p>SIMSv1 Support Team</p>
+        </div>
+      `,
     };
 
     await transporter.sendMail(mailOptions);
@@ -132,4 +148,4 @@ const resetStudentPasswordFinal = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { resetUserPassword, resetStudentPasswordFinal };
+module.exports = { resetUserPassword, resetUserPasswordFinal };
