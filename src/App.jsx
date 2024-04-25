@@ -8,7 +8,9 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <Toaster />
+      {/* <Toaster /> */}
+      <Toaster richColors position="top-right" />
+
       <AppRouter />
     </>
   );
