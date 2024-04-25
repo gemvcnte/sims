@@ -21,6 +21,12 @@ import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
 import { useCheckOverlap } from "./useCheckOverlap";
+import {
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 export default function AddSubjectModalForm(subject) {
   const {
@@ -46,13 +52,13 @@ export default function AddSubjectModalForm(subject) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
-        <DialogHeader>
-          <DialogTitle>Update Subject</DialogTitle>
+        <SheetHeader>
+          <SheetTitle>Update Subject</SheetTitle>
 
-          <DialogDescription className="md:max-w-[80%]">
+          <SheetDescription className="md:max-w-[80%]">
             Let's update the subject details below.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
 
         <main className="my-4 flex flex-col gap-4 overflow-auto py-4">
           <FormField
@@ -112,11 +118,11 @@ export default function AddSubjectModalForm(subject) {
           </p>
         )}
 
-        <DialogFooter>
+        <SheetFooter>
           <Button type="submit" disabled={loading}>
             Save changes
           </Button>
-        </DialogFooter>
+        </SheetFooter>
       </form>
     </Form>
   );
