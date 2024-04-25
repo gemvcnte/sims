@@ -43,8 +43,8 @@ export default function AdminSchedule() {
           events.push({
             id: `${classItem.class}-${classItem.subject}-${classItem.startTime}-${classItem.endTime}`,
             title: isMobile
-              ? `${abbreviateSubject(classItem.subject)} - ${classItem.class}`
-              : `${classItem.subject} - ${classItem.class}`,
+              ? `${abbreviateSubject(classItem.subject)}`
+              : `${classItem.subject} - ${classItem.class.toUpperCase()}`,
             start: moment()
               .day(dayOfWeek)
               .hour(Number(classItem.startTime.split(":")[0]))
