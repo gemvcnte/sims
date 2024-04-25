@@ -21,7 +21,11 @@ export const useCheckOverlap = (selectedTeacher) => {
   }, []);
 
   const checkOverlap = (schedules) => {
-    const allSchedules = [...schedules, ...schedulesFromDb];
+    const allSchedules = [
+      ...schedules,
+      ...schedulesFromDb,
+      ...selectedTeacherSchedule,
+    ];
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
       for (let j = i + 1; j < allSchedules.length; j++) {
