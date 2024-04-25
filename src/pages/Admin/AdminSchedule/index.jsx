@@ -16,7 +16,7 @@ maximumEndTime6pm.setHours(18, 0, 0);
 export default function AdminSchedule() {
   const { schedule, loading } = useAdminSchedule();
   const [isMobile, setIsMobile] = useState(false);
-  
+
   const checkIsMobile = () => {
     const width = window.innerWidth;
     setIsMobile(width <= 768);
@@ -43,8 +43,8 @@ export default function AdminSchedule() {
           events.push({
             id: `${classItem.class}-${classItem.subject}-${classItem.startTime}-${classItem.endTime}`,
             title: isMobile
-              ? abbreviateSubject(classItem.subject)
-              : classItem.subject,
+              ? `${abbreviateSubject(classItem.subject)} - ${classItem.class}`
+              : `${classItem.subject} - ${classItem.class}`,
             start: moment()
               .day(dayOfWeek)
               .hour(Number(classItem.startTime.split(":")[0]))
