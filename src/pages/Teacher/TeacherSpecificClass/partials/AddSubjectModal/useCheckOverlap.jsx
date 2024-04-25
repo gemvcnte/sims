@@ -24,13 +24,15 @@ export const useCheckOverlap = (selectedTeacher) => {
     let allSchedules = [...schedules, ...schedulesFromDb];
 
     if (selectedTeacher) {
-      // Convert selectedTeacherSchedule object to array
-      const selectedTeacherScheduleArray = Object.values(
-        selectedTeacherSchedule,
-      ).flatMap((daySchedules) => daySchedules);
+      // // Convert selectedTeacherSchedule object to array
+      // const selectedTeacherScheduleArray = Object.values(
+      //   selectedTeacherSchedule,
+      // ).flatMap((daySchedules) => daySchedules);
 
-      // Spread the selectedTeacherScheduleArray
-      allSchedules = [...allSchedules, ...selectedTeacherScheduleArray];
+      // // Spread the selectedTeacherScheduleArray
+      // allSchedules = [...allSchedules, ...selectedTeacherScheduleArray];
+
+      allSchedules = [...allSchedules, ...selectedTeacherSchedule];
     }
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
@@ -54,8 +56,8 @@ export const useCheckOverlap = (selectedTeacher) => {
           (schedule1.startTime === schedule2.startTime &&
             schedule1.endTime === schedule2.endTime &&
             schedule1.subjectId !== schedule2.subjectId) ||
-          schedule1.subjectId === undefined
-          // schedule2.subjectId !== undefined
+          (schedule1.subjectId === undefined &&
+            schedule2.subjectId === undefined)
         ) {
           // If schedules are exactly the same, return the overlapping schedule message
           const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
