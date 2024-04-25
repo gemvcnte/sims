@@ -17,6 +17,7 @@ export const useCheckOverlap = (selectedTeacher) => {
         day: schedule.day,
         startTime: schedule.startTime,
         endTime: schedule.endTime,
+        subjectId: schedule.subjectId,
       });
     });
     return acc;
@@ -25,8 +26,8 @@ export const useCheckOverlap = (selectedTeacher) => {
   const checkOverlap = (schedules) => {
     const allSchedules = [
       ...schedules,
-      // ...schedulesFromDb,
-      // ...selectedTeacherSchedule,
+      ...schedulesFromDb,
+      ...selectedTeacherSchedule,
     ]; // Combine both sets of schedules
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
@@ -48,7 +49,8 @@ export const useCheckOverlap = (selectedTeacher) => {
         // Check for exact same schedule
         if (
           schedule1.startTime === schedule2.startTime &&
-          schedule1.endTime === schedule2.endTime
+          schedule1.endTime === schedule2.endTime &&
+          schedule1.subjectId !== schedule2.subjectId
         ) {
           // If schedules are exactly the same, return the overlapping schedule message
           const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;

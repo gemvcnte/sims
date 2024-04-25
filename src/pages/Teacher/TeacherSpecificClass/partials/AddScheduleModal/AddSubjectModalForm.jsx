@@ -14,6 +14,8 @@ import SelectTeacherCombobox from "../SelectTeacherCombobox";
 import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
+import { useCheckOverlap } from "./useCheckOverlap";
+import { BadgePlus } from "lucide-react";
 import {
   SheetDescription,
   SheetFooter,
@@ -25,27 +27,41 @@ export default function AddSubjectModalForm(subject) {
   const {
     subjectName,
     setSubjectName,
+    selectedTeacher,
     setSelectedTeacher,
     schedules,
     handleSaveChanges,
     addSchedule,
     removeSchedule,
     updateSchedule,
+    loading,
   } = useAddSubjectModal(subject);
 
+  const { checkOverlap } = useCheckOverlap(selectedTeacher);
+
   const form = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: subject.subject,
+    resolver: yupResolver(schema(checkOverlap)),
+    defaultValues: subject.subject, // Set default values here
   });
+
+  const scrollToEmptyDiv = () => {
+    setTimeout(() => {
+      const emptyDiv = document.getElementById("scrollHere");
+      if (emptyDiv) {
+        emptyDiv.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <SheetHeader>
-          <SheetTitle>Remove Schedule</SheetTitle>
+          <SheetTitle>Add Schedule</SheetTitle>
 
           <SheetDescription className="md:max-w-[80%]">
-            Click the corresponding remove button to remove a schedule.
+            Click the "Add Another Schedule" button below to add another
+            schedule.
           </SheetDescription>
         </SheetHeader>
 
@@ -68,7 +84,7 @@ export default function AddSubjectModalForm(subject) {
                       placeholder="Enter Subject Name"
                       value={subjectName}
                       onChange={(e) => {
-                        field.onChange(e);
+                        field.onChange(e); // This should be sufficient for controlled inputs
                         setSubjectName(e.target.value);
                       }}
                     />
@@ -90,7 +106,7 @@ export default function AddSubjectModalForm(subject) {
                   </FormLabel>
                   <FormControl>
                     <SelectTeacherCombobox
-                      disabled={true}
+                      disabled
                       subject={subject}
                       field={field}
                       onSelectTeacher={setSelectedTeacher}
@@ -104,15 +120,15 @@ export default function AddSubjectModalForm(subject) {
 
           {schedules.map((schedule, index) => (
             <div key={index} className="mt-8 flex flex-col gap-4">
-              {schedules.length > 1 && (
+              {/* {schedules.length > 1 && (
                 <Button
-                  variant="ghost"
+                  variant="text"
                   className="col-span-4 text-red-600"
                   onClick={() => removeSchedule(index)}
                 >
                   Remove
                 </Button>
-              )}
+              )} */}
 
               <FormField
                 control={form.control}
@@ -128,14 +144,14 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <select
-                          disabled
+                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                           id={`day-${index}`}
                           value={schedule.day}
                           onChange={(e) => {
                             updateSchedule(index, "day", e.target.value);
-                            field.onChange(e);
+                            field.onChange(e); // This should be sufficient for controlled inputs
                           }}
                         >
                           <option value="" disabled>
@@ -168,14 +184,14 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          disabled
+                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3"
                           id={`startTime-${index}`}
                           type="time"
                           value={schedule.startTime}
                           onChange={(e) => {
-                            field.onChange(e);
+                            field.onChange(e); // This should be sufficient for controlled inputs
                             updateSchedule(index, "startTime", e.target.value);
                           }}
                         />
@@ -200,7 +216,7 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          disabled
+                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3"
                           id={`endTime-${index}`}
@@ -208,7 +224,7 @@ export default function AddSubjectModalForm(subject) {
                           value={schedule.endTime}
                           onChange={(e) => {
                             updateSchedule(index, "endTime", e.target.value);
-                            field.onChange(e);
+                            field.onChange(e); // This should be sufficient for controlled inputs
                           }}
                         />
                       </FormControl>
@@ -219,6 +235,7 @@ export default function AddSubjectModalForm(subject) {
               />
             </div>
           ))}
+          <div id="scrollHere"></div>
         </main>
 
         {form.formState.errors.schedules && (
@@ -228,7 +245,22 @@ export default function AddSubjectModalForm(subject) {
         )}
 
         <SheetFooter>
-          <Button type="submit">Save Changes</Button>
+          <Button
+            variant="outline"
+            type="button"
+            // onClick={addSchedule}
+            onClick={() => {
+              addSchedule();
+              scrollToEmptyDiv();
+            }}
+            className="order-1 mb-4 sm:order-2 sm:mb-0"
+          >
+            <BadgePlus className="mr-2 h-4 w-4" /> Add another schedule
+          </Button>
+
+          <Button type="submit" disabled={loading} className="sm:order-2">
+            Save changes
+          </Button>
         </SheetFooter>
       </form>
     </Form>

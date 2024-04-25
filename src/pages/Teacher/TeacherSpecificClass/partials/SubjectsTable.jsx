@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
+import { AddScheduleProvider } from "./AddScheduleModal/AddSubjectModal.hooks";
+import AddScheduleModal from "./AddScheduleModal";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
@@ -128,6 +130,13 @@ export default function SubjectsTable() {
                       />
 
                       <DropdownMenuSeparator className="mx-2" />
+
+                      <AddScheduleProvider>
+                        <AddScheduleModal
+                          onSuccess={() => fetchClassDetails()}
+                          subject={subject}
+                        />
+                      </AddScheduleProvider>
 
                       <RemoveScheduleModalProvider>
                         <RemoveScheduleModal

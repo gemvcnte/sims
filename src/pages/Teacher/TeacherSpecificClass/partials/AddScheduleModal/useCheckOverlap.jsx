@@ -8,8 +8,11 @@ export const useCheckOverlap = (selectedTeacher) => {
   const { schedule: selectedTeacherSchedule } =
     useSelectedTeacherSchedule(selectedTeacher);
 
+  // Extract schedules from classDetails
   const schedulesFromDb = classDetails.subjects.reduce((acc, subject) => {
+    // Iterate over schedules of each subject
     subject.schedules.forEach((schedule) => {
+      // Push schedule to accumulator array
       acc.push({
         day: schedule.day,
         startTime: schedule.startTime,
@@ -25,7 +28,8 @@ export const useCheckOverlap = (selectedTeacher) => {
       ...schedules,
       ...schedulesFromDb,
       ...selectedTeacherSchedule,
-    ];
+    ]; // Combine both sets of schedules
+
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
       for (let j = i + 1; j < allSchedules.length; j++) {
