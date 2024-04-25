@@ -2,12 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Form,
   FormControl,
   FormField,
@@ -20,6 +14,12 @@ import SelectTeacherCombobox from "../SelectTeacherCombobox";
 import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
+import {
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 export default function AddSubjectModalForm(subject) {
   const {
@@ -41,13 +41,13 @@ export default function AddSubjectModalForm(subject) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
-        <DialogHeader>
-          <DialogTitle>Remove Schedule</DialogTitle>
+        <SheetHeader>
+          <SheetTitle>Remove Schedule</SheetTitle>
 
-          <DialogDescription className="md:max-w-[80%]">
+          <SheetDescription className="md:max-w-[80%]">
             Click the corresponding remove button to remove a schedule.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
 
         <main className="my-4 grid h-80 gap-4 overflow-y-auto py-4">
           <FormField
@@ -227,9 +227,9 @@ export default function AddSubjectModalForm(subject) {
           </p>
         )}
 
-        <DialogFooter>
+        <SheetFooter>
           <Button type="submit">Save Changes</Button>
-        </DialogFooter>
+        </SheetFooter>
       </form>
     </Form>
   );
