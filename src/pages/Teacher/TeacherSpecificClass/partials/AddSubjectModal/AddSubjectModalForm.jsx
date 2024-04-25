@@ -21,6 +21,13 @@ import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
 import { useCheckOverlap } from "./useCheckOverlap";
+import {
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { BadgePlus } from "lucide-react";
 
 export default function AddSubjectModalForm() {
   const {
@@ -42,18 +49,27 @@ export default function AddSubjectModalForm() {
     resolver: yupResolver(schema(checkOverlap)),
   });
 
+  const scrollToEmptyDiv = () => {
+    setTimeout(() => {
+      const emptyDiv = document.getElementById("scrollHere");
+      if (emptyDiv) {
+        emptyDiv.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
-        <DialogHeader>
-          <DialogTitle>Add a New Subject</DialogTitle>
+        <SheetHeader>
+          <SheetTitle>Add a New Subject</SheetTitle>
 
-          <DialogDescription className="md:max-w-[80%]">
+          <SheetDescription className="md:max-w-[80%]">
             Let's add a new subject. Fill in the details below.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
 
-        <main className="my-4 grid h-80 gap-4 overflow-y-auto py-4">
+        <main className="my-4 grid h-[60svh] gap-4 overflow-y-auto py-4">
           <FormField
             control={form.control}
             name="subjectName"
@@ -218,13 +234,19 @@ export default function AddSubjectModalForm() {
             </div>
           ))}
 
+          <div id="scrollHere"></div>
+
           <Button
             variant="outline"
             type="button"
-            onClick={addSchedule}
+            // onClick={addSchedule}
+            onClick={() => {
+              addSchedule();
+              scrollToEmptyDiv();
+            }}
             className=""
           >
-            Add another schedule
+            <BadgePlus className="mr-2 h-4 w-4" /> Add another schedule
           </Button>
         </main>
 
@@ -253,11 +275,11 @@ export default function AddSubjectModalForm() {
           </p>
         )}
 
-        <DialogFooter className="mt-4">
+        <SheetFooter className="mt-4">
           <Button type="submit" disabled={loading}>
             Add subject
           </Button>
-        </DialogFooter>
+        </SheetFooter>
       </form>
     </Form>
   );
