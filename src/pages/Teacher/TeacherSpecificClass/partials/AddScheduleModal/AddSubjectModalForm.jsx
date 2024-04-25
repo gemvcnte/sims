@@ -2,12 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Form,
   FormControl,
   FormField,
@@ -21,7 +15,13 @@ import { Button } from "@/components/ui/button";
 import useAddSubjectModal from "./useAddSubjectModal";
 import { schema } from "./schema";
 import { useCheckOverlap } from "./useCheckOverlap";
-import { BadgePlus, MessageSquarePlus, Plus } from "lucide-react";
+import { BadgePlus } from "lucide-react";
+import {
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 export default function AddSubjectModalForm(subject) {
   const {
@@ -56,14 +56,14 @@ export default function AddSubjectModalForm(subject) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
-        <DialogHeader>
-          <DialogTitle>Add Schedule</DialogTitle>
+        <SheetHeader>
+          <SheetTitle>Add Schedule</SheetTitle>
 
-          <DialogDescription className="md:max-w-[80%]">
+          <SheetDescription className="md:max-w-[80%]">
             Click the "Add Another Schedule" button below to add another
             schedule.
-          </DialogDescription>
-        </DialogHeader>
+          </SheetDescription>
+        </SheetHeader>
 
         <main className="my-4 grid h-80 gap-4 overflow-y-auto py-4">
           <FormField
@@ -244,7 +244,7 @@ export default function AddSubjectModalForm(subject) {
           </p>
         )}
 
-        <DialogFooter>
+        <SheetFooter>
           <Button
             variant="outline"
             type="button"
@@ -253,15 +253,15 @@ export default function AddSubjectModalForm(subject) {
               addSchedule();
               scrollToEmptyDiv();
             }}
-            className=""
+            className="order-1 mb-4 sm:order-2 sm:mb-0"
           >
             <BadgePlus className="mr-2 h-4 w-4" /> Add another schedule
           </Button>
 
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading} className="sm:order-2">
             Save changes
           </Button>
-        </DialogFooter>
+        </SheetFooter>
       </form>
     </Form>
   );

@@ -1,17 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import useAddSubjectModal from "./useAddSubjectModal";
 import AddSubjectModalForm from "./AddSubjectModalForm";
 import { useModal } from "./AddSubjectModal.hooks";
-import { Icon } from "@iconify/react";
-import { TableCell } from "@/components/ui/table";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function AddScheduleModal({ subject }) {
   const { isModalOpen, setIsModalOpen } = useModal();
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <DialogTrigger asChild>
+    <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <SheetTrigger asChild>
         {/* <TableCell className="inline-block hover:cursor-pointer"> */}
         {/* <span className="flex items-center gap-2">
             <span className="border-b border-background py-1 hover:border-foreground">
@@ -28,11 +25,11 @@ export default function AddScheduleModal({ subject }) {
         <Button size="sm" variant="ghost" className="justify-start px-2">
           Add schedule
         </Button>
-      </DialogTrigger>
+      </SheetTrigger>
 
-      <DialogContent className="sm:max-h-[90svh] sm:max-w-[525px]">
+      <SheetContent className="sm:max-h-[100svh] sm:max-w-[525px]">
         <AddSubjectModalForm subject={subject} />
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
