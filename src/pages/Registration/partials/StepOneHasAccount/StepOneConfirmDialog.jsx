@@ -27,6 +27,7 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import TermsOfServiceDialog from "@/components/terms-of-service-dialog";
 import PrivacyPolicyDialog from "@/components/privacy-policy-dialog";
+import ShowSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export function StepOneConfirmDialog() {
   const { enrollmentData, setEnrollmentData, prevStep, setHasAccount } =
@@ -41,10 +42,7 @@ export function StepOneConfirmDialog() {
     try {
       const response = await axiosInstance.post(registrationEndpoint, data);
       if (response.status === 200) {
-        toast.success("Data submitted successfully", {
-          autoClose: 10000,
-          pauseOnHover: true,
-        });
+        ShowSuccessNotification("Data submitted successfully");
 
         setLoading(false);
         setEnrollmentData({});

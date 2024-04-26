@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import Step5 from "./components/Step5";
 import StepFiveReviewStudentInformationModal from "./components/Step5/StepFiveReviewStudentInformationModal";
+import ShowSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export default function Registration() {
   const { setTheme, theme } = useTheme();
@@ -69,10 +70,8 @@ export default function Registration() {
         getAuthHeaders(),
       );
       if (response.status === 200) {
-        toast.success("Data submitted successfully", {
-          autoClose: 10000,
-          pauseOnHover: true,
-        });
+        ShowSuccessNotification("Data submitted successfully");
+
         setLoading(false);
         setFormData({});
         if (data.hasAccount) {
