@@ -8,11 +8,10 @@ function App() {
   return (
     <>
       <ToastContainer />
-      {/* <Toaster /> */}
+
       <Toaster
         richColors
         closeButton="true"
-        // duration="3000"
         position="top-right"
         toastOptions={{
           classNames: {
