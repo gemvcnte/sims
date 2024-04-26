@@ -17,6 +17,7 @@ import {
 } from "../ui/input-otp";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
+import ShowSuccessNotification from "@/utils/ShowSuccessNotification";
 
 export default function VerifyResetCode() {
   const [code, setCode] = useState("");
@@ -46,9 +47,10 @@ export default function VerifyResetCode() {
       if (response.status === 200) {
         navigate("/");
 
-        toast("Success! Check your email", {
-          description: "Your password has been reset successfully.",
-        });
+        // toast("Success! Check your email", {
+        //   description: "Your password has been reset successfully.",
+        // });
+        ShowSuccessNotification("Your password has been reset successfully.");
       }
 
       setLoading(false);
