@@ -7,6 +7,8 @@ const transporter = nodeMailer.createTransport({
   tls: {
     ciphers: "SSLv3",
   },
+  port: 587,
+  secure: false,
   auth: {
     // type: "OAuth2",
     user: process.env.MAIL_USERNAME,
