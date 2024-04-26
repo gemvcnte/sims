@@ -1,10 +1,7 @@
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "sonner";
 
-const showSuccessNotification = (message) => {
-  toast.success(message, {
-    position: "top-right",
-  });
+const ShowSuccessNotification = (message) => {
+  toast.success(message);
 };
 
-export default showSuccessNotification;
+export default ShowSuccessNotification;

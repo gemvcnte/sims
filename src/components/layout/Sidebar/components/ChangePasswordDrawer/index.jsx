@@ -27,6 +27,7 @@ import {
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { Loader2 } from "lucide-react";
+import SonnerShowErrorNotification from "@/utils/SonnerShowErrorNotification";
 
 const schema = yup.object().shape({
   currentPassword: yup.string().required("Current password is required"),
@@ -64,7 +65,7 @@ export default function ChangePasswordDrawer({ userType }) {
 
       setLoading(false);
     } catch (error) {
-      showErrorNotification(error.response?.data.message);
+      SonnerShowErrorNotification(error.response?.data.message);
       setLoading(false);
     }
   };
