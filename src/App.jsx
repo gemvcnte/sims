@@ -8,11 +8,10 @@ function App() {
   return (
     <>
       <ToastContainer />
-      {/* <Toaster /> */}
+
       <Toaster
         richColors
         closeButton="true"
-        // duration="3000"
         position="top-right"
         toastOptions={{
           classNames: {
@@ -21,12 +20,12 @@ function App() {
               "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
             cancelButton: "group-[.toast]:bg-white group-[.toast]:text-black",
             error:
-              "group toast group-[.toaster]:bg-red group-[.toaster]:text-red-600 dark:group-[.toaster]:text-foreground group-[.toaster]:shadow-lg",
+              "group toast group-[.toaster]:bg-red group-[.toaster]:text-red-600",
             success:
-              "group toast group-[.toaster]:bg-green group-[.toaster]:text-green-600 dark:group-[.toaster]:text-foreground group-[.toaster]:shadow-lg",
+              "group toast group-[.toaster]:bg-green group-[.toaster]:text-green-600",
             warning:
-              "group toast group-[.toaster]:bg-yellow group-[.toaster]:text-yellow-600 dark:group-[.toaster]:text-foreground group-[.toaster]:shadow-lg",
-            info: "group toast group-[.toaster]:bg-blue group-[.toaster]:text-blue-600 dark:group-[.toaster]:text-foreground group-[.toaster]:shadow-lg",
+              "group toast group-[.toaster]:bg-yellow group-[.toaster]:text-yellow-600 ",
+            info: "group toast group-[.toaster]:bg-blue group-[.toaster]:text-blue-600 ",
           },
         }}
       />
