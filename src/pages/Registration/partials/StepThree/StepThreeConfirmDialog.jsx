@@ -21,6 +21,7 @@ import { registrationEndpoint } from "@/config/adminEndpoints";
 import axiosInstance from "@/utils/axios";
 import TermsOfServiceDialog from "@/components/terms-of-service-dialog";
 import PrivacyPolicyDialog from "@/components/privacy-policy-dialog";
+import ShowSuccessNotification from "@/utils/ShowSuccessNotification";
 
 const InputField = ({
   type,
@@ -89,10 +90,7 @@ export default function StepThreeConfirmDialog() {
         objectWithBackendSchemaStructure,
       );
       if (response.status === 200) {
-        toast.success("Data submitted successfully", {
-          autoClose: 10000,
-          pauseOnHover: true,
-        });
+       ShowSuccessNotification("Data submitted successfully");
 
         setLoading(false);
         setEnrollmentData({});

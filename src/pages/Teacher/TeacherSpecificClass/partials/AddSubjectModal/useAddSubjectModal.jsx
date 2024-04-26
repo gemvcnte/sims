@@ -4,6 +4,7 @@ import showErrorNotification from "@/utils/ShowErrorNotification";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
 import { addSubjectApi } from "../../helpers/addSubjectApi";
 import { useModal } from "./AddSubjectModal.hooks";
+import SonnerShowSuccessNotification from "@/utils/SonnerShowSuccessNotification";
 
 export default function useAddSubjectModal() {
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function useAddSubjectModal() {
 
       const response = await addSubjectApi(newSubjectData);
 
-      showSuccessNotification(response.data.message);
+      SonnerShowSuccessNotification(response.data.message);
 
       setSubjectName("");
       setSelectedTeacher("");

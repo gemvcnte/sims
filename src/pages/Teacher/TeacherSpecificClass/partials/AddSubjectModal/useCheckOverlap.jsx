@@ -1,7 +1,7 @@
-import showErrorNotification from "@/utils/ShowErrorNotification";
 import moment from "moment";
 import { useClassDetails } from "../../contexts/ClassDetailsContext";
 import { useSelectedTeacherSchedule } from "./useSelectedTeacherSchedule";
+import SonnerShowErrorNotification from "@/utils/SonnerShowErrorNotification";
 
 export const useCheckOverlap = (selectedTeacher) => {
   const { classDetails } = useClassDetails();
@@ -21,11 +21,19 @@ export const useCheckOverlap = (selectedTeacher) => {
   }, []);
 
   const checkOverlap = (schedules) => {
-    const allSchedules = [
-      ...schedules,
-      ...schedulesFromDb,
-      ...selectedTeacherSchedule,
-    ];
+    let allSchedules = [...schedules, ...schedulesFromDb];
+
+    if (selectedTeacher) {
+      // // Convert selectedTeacherSchedule object to array
+      // const selectedTeacherScheduleArray = Object.values(
+      //   selectedTeacherSchedule,
+      // ).flatMap((daySchedules) => daySchedules);
+
+      // // Spread the selectedTeacherScheduleArray
+      // allSchedules = [...allSchedules, ...selectedTeacherScheduleArray];
+
+      allSchedules = [...allSchedules, ...selectedTeacherSchedule];
+    }
 
     for (let i = 0; i < allSchedules.length - 1; i++) {
       for (let j = i + 1; j < allSchedules.length; j++) {
@@ -45,13 +53,15 @@ export const useCheckOverlap = (selectedTeacher) => {
 
         // Check for exact same schedule
         if (
-          schedule1.startTime === schedule2.startTime &&
-          schedule1.endTime === schedule2.endTime &&
-          schedule1.subjectId !== schedule2.subjectId
+          (schedule1.startTime === schedule2.startTime &&
+            schedule1.endTime === schedule2.endTime &&
+            schedule1.subjectId !== schedule2.subjectId) ||
+          (schedule1.subjectId === undefined &&
+            schedule2.subjectId === undefined)
         ) {
           // If schedules are exactly the same, return the overlapping schedule message
           const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
-          showErrorNotification(overlappingSchedule);
+          SonnerShowErrorNotification(overlappingSchedule);
           return overlappingSchedule;
         }
 
@@ -64,7 +74,7 @@ export const useCheckOverlap = (selectedTeacher) => {
         ) {
           // If overlap found, construct and return the overlapping schedule message
           const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
-          showErrorNotification(overlappingSchedule);
+          SonnerShowErrorNotification(overlappingSchedule);
           return overlappingSchedule;
         }
       }

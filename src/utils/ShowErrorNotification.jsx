@@ -1,10 +1,7 @@
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "sonner";
 
-const showErrorNotification = (message) => {
-  toast.error(message, {
-    position: "top-right",
-  });
+const ShowErrorNotification = (message) => {
+  toast.error(message);
 };
 
-export default showErrorNotification;
+export default ShowErrorNotification;

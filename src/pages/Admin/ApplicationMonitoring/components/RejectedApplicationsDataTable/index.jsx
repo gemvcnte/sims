@@ -75,11 +75,7 @@ const RejectedApplicationsDataTable = () => {
         getAuthHeaders(),
       );
 
-      // showSuccessNotification("");
-      toast.success("Student Enrolled Successfully", {
-        position: "top-right",
-        autoClose: 1000,
-      });
+      showSuccessNotification("Student Enrolled Successfully");
       setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
     } catch (error) {
       showErrorNotification(error.response.data.message);
@@ -94,11 +90,7 @@ const RejectedApplicationsDataTable = () => {
         getAuthHeaders(),
       );
 
-      // showSuccessNotification("Application Rejected");
-      toast.success("Application Rejected", {
-        position: "top-right",
-        autoClose: 1000,
-      });
+      showSuccessNotification("Application Rejected");
       setEnrolledRowIds([...enrolledRowIds, application._id]); // Store the ID of the enrolled row in the array
     } catch (error) {
       console.error("Error rejecting student:", error.message);
