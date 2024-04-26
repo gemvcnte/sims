@@ -47,9 +47,6 @@ export default function VerifyResetCode() {
       if (response.status === 200) {
         navigate("/");
 
-        // toast("Success! Check your email", {
-        //   description: "Your password has been reset successfully.",
-        // });
         ShowSuccessNotification("Your password has been reset successfully.");
       }
 
