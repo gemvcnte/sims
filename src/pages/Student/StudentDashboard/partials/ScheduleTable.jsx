@@ -18,18 +18,6 @@ export default function ScheduleTable() {
   const classDetailsContext = useClassDetails();
   const { classDetails: fetchedClass, loading } = classDetailsContext;
 
-  const checkIsMobile = () => {
-    const width = window.innerWidth;
-    setIsMobile(width <= 768);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", checkIsMobile);
-    return () => {
-      window.removeEventListener("resize", checkIsMobile);
-    };
-  }, []);
-
   useEffect(() => {
     const styleElement = document.createElement("style");
     styleElement.textContent = ".rbc-time-header { display: none; }";
@@ -39,18 +27,6 @@ export default function ScheduleTable() {
       document.head.removeChild(styleElement);
     };
   }, []);
-
-  // useEffect(() => {
-  //   const currentDay = moment().format("dddd");
-  //   const customHeaderDiv = document.createElement("div");
-  //   customHeaderDiv.className = "rbc-header text-center";
-  //   customHeaderDiv.textContent = `${currentDay}`;
-
-  //   const timeHeaderContent = document.querySelector(".rbc-row-content");
-  //   if (timeHeaderContent) {
-  //     timeHeaderContent.appendChild(customHeaderDiv);
-  //   }
-  // }, []);
 
   if (loading) {
     return (
