@@ -28,18 +28,6 @@ export default function ScheduleTable() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const currentDay = moment().format("dddd");
-  //   const customHeaderDiv = document.createElement("div");
-  //   customHeaderDiv.className = "rbc-header text-center";
-  //   customHeaderDiv.textContent = `${currentDay}`;
-
-  //   const timeHeaderContent = document.querySelector(".rbc-row-content");
-  //   if (timeHeaderContent) {
-  //     timeHeaderContent.appendChild(customHeaderDiv);
-  //   }
-  // }, []);
-
   if (loading) {
     return (
       <main className="order-2 min-w-[60%]">
