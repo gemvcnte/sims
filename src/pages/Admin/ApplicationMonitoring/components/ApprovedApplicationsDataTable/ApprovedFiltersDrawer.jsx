@@ -86,11 +86,11 @@ export default function ApprovedFiltersDrawer() {
             onChange={(e) => handleFilterChange("strand", e.target.value)}
           >
             <option value="all">All Strands</option>
+            <option value="gas">GAS</option>
             <option value="abm">ABM</option>
             <option value="humss">HUMSS</option>
             <option value="stem">STEM</option>
             <option value="ict">ICT</option>
-            <option value="he">HE</option>
           </select>
 
           <DrawerClose asChild>
