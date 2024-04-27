@@ -72,7 +72,7 @@ export default function ScheduleTable() {
   };
 
   const abbreviateSubject = (subjectName) => {
-    const words = subjectName.split(" ");
+    const words = subjectName?.split(" ");
     return words.map((word) => word[0]?.toUpperCase()).join(".");
   };
 

@@ -65,7 +65,7 @@ export default function AdminSchedule() {
   };
 
   const abbreviateSubject = (subjectName) => {
-    const words = subjectName.split(" ");
+    const words = subjectName?.split(" ");
     return words.map((word) => word[0]?.toUpperCase()).join(".");
   };
 

@@ -12,7 +12,7 @@ export default function StudentDashboard() {
 
   const { user } = useAuth();
 
-  const firstName = user?.name.split(" ")[0];
+  const firstName = user?.name?.split(" ")[0];
 
   return (
     <ClassDetailsProvider>
