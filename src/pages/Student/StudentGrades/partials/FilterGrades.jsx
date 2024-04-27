@@ -15,7 +15,12 @@ export default function FilterGrades() {
   const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
     useClassDetails();
 
-  if (!schoolYearAndSemesterSelectOptions) return null;
+  if (
+    !schoolYearAndSemesterSelectOptions ||
+    schoolYearAndSemesterSelectOptions.length === 0
+  ) {
+    return null;
+  }
 
   const mostLatestSchoolYearAndSemester = `${schoolYearAndSemesterSelectOptions[0].schoolYear}-${schoolYearAndSemesterSelectOptions[0].semester}`;
 
