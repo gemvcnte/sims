@@ -111,29 +111,22 @@ const ScheduleTable = () => {
   // State to track device width
   const [isMobile, setIsMobile] = useState(false);
 
-  // Function to check if the device width is less than or equal to a certain threshold
   const checkIsMobile = () => {
     const width = window.innerWidth;
-    setIsMobile(width <= 768); // Adjust threshold as needed
+    setIsMobile(width <= 768);
   };
 
   useEffect(() => {
-    // Add event listener on component mount to check device width
-    window.addEventListener("resize", checkIsMobile);
-    // Remove event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", checkIsMobile);
-    };
+    checkIsMobile();
   }, []);
 
   if (loading) {
     return <AdminScheduleSkeleton />;
   }
 
-  // Function to generate events dynamically for all Mondays and Fridays
   const generateEvents = () => {
     const events = [];
-    const firstClassDetail = fetchedClassDetails[0]; // Get the first class detail
+    const firstClassDetail = fetchedClassDetails[0]; 
 
     // Check if the first class detail exists and has subjects
     if (firstClassDetail && firstClassDetail.subjects) {
