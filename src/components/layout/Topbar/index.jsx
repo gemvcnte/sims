@@ -23,7 +23,10 @@ export default function Topbar({ children }) {
   const { user } = useAuth();
 
   const handleKeyDown = (event) => {
-    if ((event.ctrlKey && event.key === "m") || event.key === "M") {
+    if (
+      (event.ctrlKey && event.key === "m") ||
+      (event.ctrlKey && event.key === "M")
+    ) {
       toggleMode();
     }
   };

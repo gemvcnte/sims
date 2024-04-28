@@ -7,12 +7,14 @@ import TeacherRouter from "./TeacherRouter";
 import { jwtDecode } from "jwt-decode";
 import ForgotPassword from "@/components/forgot-password";
 import VerifyResetCode from "@/components/verify-reset-code";
+import { useAuth } from "@/contexts/AuthContext";
 
 const HomeRoutes = () => {
+  const { getCookie } = useAuth();
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
+    const authToken = getCookie("authToken");
 
     if (authToken) {
       try {

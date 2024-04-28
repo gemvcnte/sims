@@ -1,5 +1,9 @@
+import useCookie from "@/hooks/useCookie";
+
 export default function getAuthHeaders() {
-  const authToken = localStorage.getItem("authToken");
+  const { getCookie } = useCookie();
+
+  const authToken = getCookie("authToken");
   return {
     headers: {
       Authorization: `Bearer ${authToken}`,

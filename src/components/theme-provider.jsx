@@ -1,3 +1,4 @@
+import useCookie from "@/hooks/useCookie";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const initialState = {
@@ -13,12 +14,14 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }) {
+  const { getCookie } = useCookie();
+
   const [theme, setTheme] = useState(() => {
     const isDefaultPath =
       window.location.pathname === "/" ||
       window.location.pathname === "/registration";
 
-    const authToken = localStorage.getItem("authToken");
+    const authToken = getCookie("authToken");
 
     const initialTheme =
       !authToken || isDefaultPath

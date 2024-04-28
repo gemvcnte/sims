@@ -11,7 +11,15 @@ export const AuthProvider = ({ children }) => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const login = (token) => {
-    localStorage.setItem("authToken", token);
+    const ONE_HOUR = 3600000;
+    const expirationTime = new Date(Date.now() + ONE_HOUR);
+    // Format expiration time to UTC string
+    const expirationUTCString = expirationTime.toUTCString();
+
+    // Encode the token value using btoa
+    const encodedToken = btoa(token);
+
+    document.cookie = `authToken=${encodedToken}; expires=${expirationUTCString}; path=/`;
 
     const decodedToken = jwtDecode(token);
 
@@ -30,18 +38,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("studentProfile");
-    localStorage.removeItem("teacherProfile");
-    localStorage.removeItem("adminProfile");
-    setUser(null);
+    // Remove authToken and user cookies
+    document.cookie =
+      "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     navigate("/");
     window.location.reload();
   };
 
   useEffect(() => {
     const checkTokenExpiration = async () => {
-      const storedToken = localStorage.getItem("authToken");
+      const storedToken = getCookie("authToken");
       if (storedToken) {
         try {
           const decodedToken = jwtDecode(storedToken);
@@ -72,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
   // useEffect for setting the user when refreshed
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
+    const storedToken = getCookie("authToken");
 
     if (storedToken && user === null) {
       try {
@@ -88,7 +95,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, rememberMe, setRememberMe }}
+      value={{ user, login, logout, rememberMe, setRememberMe, getCookie }}
     >
       {children}
     </AuthContext.Provider>
@@ -99,13 +106,20 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// const getCookie = (name) => {
-//   const cookies = document.cookie.split(";");
-//   for (const cookie of cookies) {
-//     const [cookieName, cookieValue] = cookie.trim().split("=");
-//     if (cookieName === name) {
-//       return cookieValue;
-//     }
-//   }
-//   return null;
-// };
+const getCookie = (name) => {
+  const cookies = document.cookie.split("; ");
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      if (cookieValue) {
+        try {
+          return atob(cookieValue);
+        } catch (error) {
+          console.error("Error decoding cookie value:", error);
+          return null;
+        }
+      }
+    }
+  }
+  return null;
+};

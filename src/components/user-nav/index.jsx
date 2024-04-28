@@ -20,13 +20,8 @@ export function UserNav() {
     return null;
   }
 
-  let displayText = user.role === "student" ? user?.name : user?.username;
-
-  // Check if displayText is not undefined and has at least 2 characters
-  const abbreviatedText =
-    displayText && displayText.length >= 2
-      ? displayText.slice(0, 2).toUpperCase()
-      : "";
+  const displayText = user?.name || user?.username || "";
+  const abbreviatedText = displayText.slice(0, 2).toUpperCase();
 
   return (
     <div className="hidden lg:inline">

@@ -78,7 +78,11 @@ export default function FilterSchedule({ children }) {
                   key={index}
                   value={`${option.schoolYear}-${option.semester}`}
                 >
-                  {`${option.schoolYear} - ${option.semester}`}
+                  {`${option.schoolYear} - ${
+                    option.semester === "first semester"
+                      ? "1st Semester"
+                      : "2nd Semester"
+                  }`}{" "}
                 </SelectItem>
               ))}
           </SelectGroup>

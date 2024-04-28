@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import useCookie from "@/hooks/useCookie";
 
 const AutoLogout = () => {
   const navigate = useNavigate();
   const millisecondsPerMinute = 60 * 1000;
+  const { getCookie } = useCookie();
 
   useEffect(() => {
     const checkTokenExpiration = () => {
-      const token = localStorage.getItem("authToken");
+      const token = getCookie("authToken");
 
       if (token) {
         const tokenData = jwtDecode(token);

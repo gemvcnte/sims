@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getTeacherProfileEndpoint } from "@/config/teacherEndpoints";
+import useCookie from "@/hooks/useCookie";
 
 const useTeacherProfile = () => {
+  const { getCookie } = useCookie();
+
   const [teacherProfile, setTeacherProfile] = useState({});
   const [error, setError] = useState(null);
-  const authToken = localStorage.getItem("authToken");
+  const authToken = getCookie("authToken");
 
   const loadStoredProfile = () => {
     const storedProfileData = JSON.parse(

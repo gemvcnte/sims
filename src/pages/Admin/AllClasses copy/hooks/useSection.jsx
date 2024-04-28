@@ -3,10 +3,12 @@ import getAuthHeaders from "@/utils/getAuthHeaders";
 import { useEffect, useState } from "react";
 
 export default function useSection() {
+  const { getCookie } = useCookie();
+
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const authToken = localStorage.getItem("authToken");
+  const authToken = getCookie("authToken");
 
   useEffect(() => {
     const fetchSections = async () => {
