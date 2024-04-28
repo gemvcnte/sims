@@ -865,6 +865,14 @@ const updateSubjectClass = asyncHandler(async (req, res) => {
       });
     }
 
+    const existingSubject = classroom.subjects.find(subject => subject.subjectName === subjectName);
+    if (existingSubject) {
+      return res.status(400).json({
+        message: "This subject already exists in this section.",
+      });
+    }
+  
+
     const subjectIndex = classroom.subjects.findIndex(
       (subject) => subject._id.toString() === subjectId
     );
