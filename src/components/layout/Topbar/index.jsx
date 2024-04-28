@@ -23,7 +23,7 @@ export default function Topbar({ children }) {
   const { user } = useAuth();
 
   const handleKeyDown = (event) => {
-    if (event.altKey && event.key === "a") {
+    if ((event.altKey && event.key === "a") || event.key === "A") {
       toggleMode();
     }
   };
@@ -62,6 +62,7 @@ export default function Topbar({ children }) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Toggle between Teacher Mode and Admin Mode</p>
+                  <p>Shortcut: Alt + A</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
