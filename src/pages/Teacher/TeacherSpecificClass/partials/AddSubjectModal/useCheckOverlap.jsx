@@ -5,8 +5,12 @@ import SonnerShowErrorNotification from "@/utils/SonnerShowErrorNotification";
 
 export const useCheckOverlap = (selectedTeacher) => {
   const { classDetails } = useClassDetails();
-  const { schedule: selectedTeacherSchedule } =
+  const { schedule: selectedTeacherScheduleResult } =
     useSelectedTeacherSchedule(selectedTeacher);
+
+  const selectedTeacherSchedule = Array.isArray(selectedTeacherScheduleResult)
+    ? selectedTeacherScheduleResult
+    : [];
 
   const schedulesFromDb = classDetails.subjects.reduce((acc, subject) => {
     subject.schedules.forEach((schedule) => {
