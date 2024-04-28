@@ -11,12 +11,8 @@ import {
 } from "@/components/ui/select";
 import ExportCsvButton from "@/components/export-csv-button";
 import showErrorNotification from "@/utils/ShowErrorNotification";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 export default function FilterSchedule() {
   const {
@@ -53,6 +49,16 @@ export default function FilterSchedule() {
     setSelectedSchoolYearAndSemester(selectedOptionString);
   };
 
+  // Define a function to generate abbreviation
+  const generateAbbreviation = (subjectName) => {
+    const words = subjectName.split(" ");
+    let abbreviation = "";
+    words.forEach((word) => {
+      abbreviation += word.charAt(0).toUpperCase() + ".";
+    });
+    return abbreviation;
+  };
+
   return (
     <header className="flex justify-between gap-2 px-4 pt-4">
       <Select
@@ -79,24 +85,25 @@ export default function FilterSchedule() {
       </Select>
 
       {/* <ExportCsvButton /> */}
-      <Popover>
-        <PopoverTrigger asChild>
+      <Drawer>
+        <DrawerTrigger asChild>
           <Button variant="outline">Display All Subjects</Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-80">
-          <div className="grid gap-4">
-            {classDetails.map((classDetail) => (
-              <div key={classDetail._id}>
-                <ul>
-                  {classDetail.subjects.map((subject) => (
-                    <li key={subject._id}>{subject.subjectName}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </PopoverContent>
-      </Popover>
+        </DrawerTrigger>
+        <DrawerContent>
+          {classDetails.map((classDetail) => (
+            <div key={classDetail._id}>
+              <ul>
+                {classDetail.subjects.map((subject) => (
+                  <li key={subject._id}>
+                    {generateAbbreviation(subject.subjectName)} -{" "}
+                    {subject.subjectName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </DrawerContent>
+      </Drawer>
     </header>
   );
 }
