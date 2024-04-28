@@ -87,7 +87,6 @@ export default function FilterSchedule({ children }) {
 
       {/* <ExportCsvButton /> */}
       <section className="flex items-center justify-center gap-2">
-        {children}
         <Drawer>
           <DrawerTrigger asChild>
             <Button variant="icon" className="p-0">
@@ -125,6 +124,8 @@ export default function FilterSchedule({ children }) {
             </div>
           </DrawerContent>
         </Drawer>
+
+        {children}
       </section>
     </header>
   );

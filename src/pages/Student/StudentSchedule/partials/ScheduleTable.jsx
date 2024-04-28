@@ -98,6 +98,7 @@ import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
 import { Button } from "@/components/ui/button";
 import generatePDF, { Resolution, Margin } from "react-to-pdf";
 import FilterSchedule from "./FilterSchedule";
+import { Download } from "lucide-react";
 
 const localizer = momentLocalizer(moment);
 
@@ -204,8 +205,13 @@ const ScheduleTable = () => {
   return (
     <>
       <FilterSchedule>
-        <Button onClick={() => generatePDF(getTargetElement, options)}>
-          Generate PDF
+        <Button
+          variant="outline"
+          onClick={() => generatePDF(getTargetElement, options)}
+        >
+          <Download className="h-4 w-4" />{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
         </Button>
       </FilterSchedule>
 
