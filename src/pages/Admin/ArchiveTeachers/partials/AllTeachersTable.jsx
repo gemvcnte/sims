@@ -267,7 +267,7 @@ const AllTeachersTable = () => {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No archived teacher found
                   </TableCell>
                 </TableRow>
               )}
@@ -282,12 +282,13 @@ const AllTeachersTable = () => {
           )}
         </Dialog>
       </div>
+
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total of {""}
           {table.getFilteredRowModel().rows.length} teacher(s).
         </div>
-        {/* <div className="space-x-2">
+        <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
@@ -304,7 +305,7 @@ const AllTeachersTable = () => {
           >
             Next
           </Button>
-        </div> */}
+        </div>
       </footer>
     </div>
   );

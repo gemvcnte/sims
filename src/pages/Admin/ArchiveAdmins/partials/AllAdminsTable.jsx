@@ -265,7 +265,7 @@ const AllAdminsTable = () => {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No archived admin found
                   </TableCell>
                 </TableRow>
               )}
@@ -280,12 +280,13 @@ const AllAdminsTable = () => {
           )}
         </Dialog>
       </div>
+
       <footer className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           Total of {""}
           {table.getFilteredRowModel().rows.length} admin(s).
         </div>
-        {/* <div className="space-x-2">
+        <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
@@ -302,7 +303,7 @@ const AllAdminsTable = () => {
           >
             Next
           </Button>
-        </div> */}
+        </div>
       </footer>
     </div>
   );
