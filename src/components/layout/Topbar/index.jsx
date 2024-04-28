@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
@@ -22,6 +22,19 @@ export default function Topbar({ children }) {
 
   const { user } = useAuth();
 
+  const handleKeyDown = (event) => {
+    if ((event.ctrlKey && event.key === "m") || event.key === "M") {
+      toggleMode();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       {/* <ToastContainer /> */}
@@ -44,7 +57,12 @@ export default function Topbar({ children }) {
                       checked={isAdminMode}
                       onCheckedChange={toggleMode}
                     />
-                    <Label>Admin Mode</Label>
+                    <Label className="align-center flex items-center gap-2">
+                      <span>Admin Mode</span>
+                      <kbd className="pointer-events-none  hidden h-5 w-fit select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+                        <span className="text-xs">⌘</span>M
+                      </kbd>
+                    </Label>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
