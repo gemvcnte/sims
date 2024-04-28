@@ -6,6 +6,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -13,6 +14,7 @@ import ExportCsvButton from "@/components/export-csv-button";
 import showErrorNotification from "@/utils/ShowErrorNotification";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { BadgeInfo, InfoIcon } from "lucide-react";
 
 export default function FilterSchedule() {
   const {
@@ -87,21 +89,45 @@ export default function FilterSchedule() {
       {/* <ExportCsvButton /> */}
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="outline">Display All Subjects</Button>
+          <Button variant="icon" className="p-0">
+            <BadgeInfo strokeWidth={1} className="sm:hidden " />
+          </Button>
         </DrawerTrigger>
         <DrawerContent>
-          {classDetails.map((classDetail) => (
-            <div key={classDetail._id}>
-              <ul>
-                {classDetail.subjects.map((subject) => (
-                  <li key={subject._id}>
-                    {generateAbbreviation(subject.subjectName)} -{" "}
-                    {subject.subjectName}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid gap-3 p-4">
+            <div className="font-semibold">Section Details</div>
+            <ul className="grid gap-3">
+              <li className="flex items-center justify-between">
+                <span className="text-muted-foreground">Subject Name</span>
+                <span>{classDetails[0].sectionName}</span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span className="text-muted-foreground">Adviser</span>
+                <span>{classDetails[0].adviser}</span>
+              </li>
+            </ul>
+
+            <SelectSeparator className="my-2" />
+
+            {/* <div className="font-semibold">Subjects</div> */}
+            {classDetails.map((classDetail) => (
+              <div key={classDetail._id}>
+                <ul className="grid gap-3">
+                  {classDetail.subjects.map((subject) => (
+                    <li
+                      key={subject._id}
+                      className="flex items-center justify-between"
+                    >
+                      <span>{subject.subjectName}</span>
+                      <span className="text-muted-foreground">
+                        {generateAbbreviation(subject.subjectName)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </DrawerContent>
       </Drawer>
     </header>
