@@ -14,7 +14,7 @@ export default function SidebarFooter() {
     return null;
   }
 
-  const displayText = user?.username || "";
+  const displayText = user?.name || user?.username || "";
   const abbreviatedText = displayText.slice(0, 2).toUpperCase();
 
   return (
@@ -33,11 +33,19 @@ export default function SidebarFooter() {
             <AvatarFallback>{abbreviatedText}</AvatarFallback>
           </Avatar>{" "}
           <div className="flex flex-col items-start justify-around">
-            <span>
-              {user?.username && user.username.length > 15
-                ? `${user.username.slice(0, 15)}..`
-                : user.username || "username"}
-            </span>
+            {user?.role === "student" ? (
+              <span>
+                {user?.name && user.name.length > 20
+                  ? `${user.name.slice(0, 20)}..`
+                  : user.name || "username"}
+              </span>
+            ) : (
+              <span>
+                {user?.username && user.username.length > 20
+                  ? `${user.username.slice(0, 20)}..`
+                  : user.username || "username"}
+              </span>
+            )}
             <span className="text-muted-foreground">{user?.role}</span>
           </div>
         </section>
