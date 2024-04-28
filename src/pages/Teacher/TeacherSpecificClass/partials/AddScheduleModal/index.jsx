@@ -23,7 +23,7 @@ export default function AddScheduleModal({ subject }) {
         {/* </TableCell> */}
 
         <Button size="sm" variant="ghost" className="justify-start px-2">
-          Add schedule
+          Update schedule
         </Button>
       </SheetTrigger>
 

@@ -5,6 +5,7 @@ import { useClassDetails } from "../../contexts/ClassDetailsContext";
 import { addSubjectApi } from "../../helpers/addSubjectApi";
 import { updateSubjectApi } from "../../helpers/updateSubjectApi";
 import { useModal } from "./AddSubjectModal.hooks";
+import ShowErrorNotification from "@/utils/ShowErrorNotification";
 
 export default function useAddSubjectModal({ subject }) {
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ export default function useAddSubjectModal({ subject }) {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error updating subject:", error.message);
+      ShowErrorNotification(error.response.data.message);
       setLoading(false);
     }
   };

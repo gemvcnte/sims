@@ -57,7 +57,7 @@ export default function AddSubjectModalForm(subject) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
         <SheetHeader>
-          <SheetTitle>Add Schedule</SheetTitle>
+          <SheetTitle>Update Schedule</SheetTitle>
 
           <SheetDescription className="md:max-w-[80%]">
             Click the "Add Another Schedule" button below to add another
@@ -72,7 +72,7 @@ export default function AddSubjectModalForm(subject) {
             render={({ field }) => (
               <FormItem>
                 <section className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel htmlFor="name" className="text-right">
+                  <FormLabel htmlFor="name" className="text-right opacity-0">
                     Subject <span className="hidden sm:inline">Name</span>
                   </FormLabel>
                   <FormControl>
@@ -101,7 +101,7 @@ export default function AddSubjectModalForm(subject) {
             render={({ field }) => (
               <FormItem>
                 <section className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel htmlFor="teacher" className="text-right">
+                  <FormLabel htmlFor="teacher" className="text-right opacity-0">
                     Teacher
                   </FormLabel>
                   <FormControl>
@@ -144,7 +144,6 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <select
-                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                           id={`day-${index}`}
@@ -184,7 +183,6 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3"
                           id={`startTime-${index}`}
@@ -216,7 +214,6 @@ export default function AddSubjectModalForm(subject) {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          disabled={schedule.subjectId}
                           {...field}
                           className="col-span-3"
                           id={`endTime-${index}`}
