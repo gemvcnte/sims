@@ -125,8 +125,19 @@ const RejectedApplicationsDataTable = () => {
   const columns = [
     {
       accessorKey: "lastName",
-      header: "Last Name",
-      cell: ({ row }) => <div>{row.getValue("lastName")}</div>,
+      header: ({ column }) => {
+        return (
+          <Button
+            className="m-0 p-0"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Last Name
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => <div className="">{row.getValue("lastName")}</div>,
     },
     {
       accessorKey: "firstName",
