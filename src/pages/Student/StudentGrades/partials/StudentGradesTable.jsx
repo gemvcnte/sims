@@ -12,6 +12,10 @@ import {
 } from "@/components/ui/table";
 import { useAuth } from "@/contexts/AuthContext";
 import { Skeleton } from "@/components/ui/skeleton";
+import FilterGrades from "./FilterGrades";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+import generatePDF, { Resolution, Margin } from "react-to-pdf";
 
 export default function StudentGradesTable({ setSectionName }) {
   const { user } = useAuth();
@@ -113,25 +117,59 @@ export default function StudentGradesTable({ setSectionName }) {
     });
   };
 
+  const options = {
+    method: "open",
+    resolution: Resolution.NORMAL,
+    page: {
+      margin: Margin.SMALL,
+      format: "letter",
+      orientation: "landscape",
+    },
+    canvas: {
+      mimeType: "image/jpeg",
+      qualityRatio: 1,
+    },
+    overrides: {
+      pdf: {
+        compress: true,
+      },
+    },
+  };
+
+  const getTargetElement = () => document.getElementById("content-id");
+
   return (
-    <main className="m-4">
-      <Table>
-        {!classDetails && (
-          <TableCaption className="pb-6 pt-4">No Grades Found</TableCaption>
-        )}
-        <TableHeader>
-          <TableRow>
-            <TableHead>Subject Name</TableHead>
-            <TableHead>Subject Teacher</TableHead>
-            <TableHead>P1 Grade</TableHead>
-            <TableHead>P2 Grade</TableHead>
-            <TableHead>Final Grade</TableHead>
-            <TableHead>Remarks</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>{renderSubjects()}</TableBody>
-        <TableFooter></TableFooter>
-      </Table>
-    </main>
+    <>
+      <FilterGrades>
+        <Button
+          variant="outline"
+          onClick={() => generatePDF(getTargetElement, options)}
+        >
+          <Download className="h-4 w-4" />{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
+        </Button>
+      </FilterGrades>
+
+      <main className="m-4" id="content-id">
+        <Table>
+          {!classDetails && (
+            <TableCaption className="pb-6 pt-4">No Grades Found</TableCaption>
+          )}
+          <TableHeader>
+            <TableRow>
+              <TableHead>Subject Name</TableHead>
+              <TableHead>Subject Teacher</TableHead>
+              <TableHead>P1 Grade</TableHead>
+              <TableHead>P2 Grade</TableHead>
+              <TableHead>Final Grade</TableHead>
+              <TableHead>Remarks</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>{renderSubjects()}</TableBody>
+          <TableFooter></TableFooter>
+        </Table>
+      </main>
+    </>
   );
 }
