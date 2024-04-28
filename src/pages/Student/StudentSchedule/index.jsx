@@ -13,7 +13,7 @@ export default function StudentSchedule() {
           <ClassName />
         </Topbar>
 
-        <FilterSchedule />
+        {/* <FilterSchedule /> */}
         <ScheduleTable />
       </main>
     </ClassDetailsProvider>

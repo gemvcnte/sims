@@ -95,6 +95,10 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useClassDetails } from "../contexts/ClassDetailsContext";
 import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
+import { Button } from "@/components/ui/button";
+import generatePDF, { Resolution, Margin } from "react-to-pdf";
+import FilterSchedule from "./FilterSchedule";
+import { Download } from "lucide-react";
 
 const localizer = momentLocalizer(moment);
 
@@ -126,7 +130,7 @@ const ScheduleTable = () => {
 
   const generateEvents = () => {
     const events = [];
-    const firstClassDetail = fetchedClassDetails[0]; 
+    const firstClassDetail = fetchedClassDetails[0];
 
     // Check if the first class detail exists and has subjects
     if (firstClassDetail && firstClassDetail.subjects) {
@@ -177,25 +181,59 @@ const ScheduleTable = () => {
   const dayFormat = (date, culture, localizer) =>
     localizer.format(date, "ddd").toUpperCase();
 
+  const options = {
+    method: "open",
+    resolution: Resolution.LOW,
+    page: {
+      margin: Margin.SMALL,
+      format: "letter",
+      orientation: "landscape",
+    },
+    canvas: {
+      mimeType: "image/jpeg",
+      qualityRatio: 1,
+    },
+    overrides: {
+      pdf: {
+        compress: true,
+      },
+    },
+  };
+
+  const getTargetElement = () => document.getElementById("content-id");
+
   return (
-    <div className="p-4">
-      <Calendar
-        localizer={localizer}
-        events={generateEvents()}
-        formats={{ dayFormat }}
-        min={minTime} // Set minimum time
-        max={maxTime} // Set maximum time
-        step={15} // Interval between time slots
-        startAccessor="start" // Start time accessor
-        endAccessor="end" // End time accessor
-        toolbar={false} // Hide the toolbar
-        views={{ work_week: true }} // Show only the work_week view
-        defaultView="work_week" // Default view set to work_week
-        // view="work_week" // Default view set to work_week
-        // Conditionally set title accessor based on device width
-        titleAccessor={isMobile ? "title" : undefined}
-      />
-    </div>
+    <>
+      <FilterSchedule>
+        <Button
+          variant="outline"
+          onClick={() => generatePDF(getTargetElement, options)}
+        >
+          <Download className="h-4 w-4" />{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
+        </Button>
+      </FilterSchedule>
+
+      <div className="p-4" id="content-id">
+        <Calendar
+          localizer={localizer}
+          events={generateEvents()}
+          formats={{ dayFormat }}
+          min={minTime} // Set minimum time
+          max={maxTime} // Set maximum time
+          step={15} // Interval between time slots
+          startAccessor="start" // Start time accessor
+          endAccessor="end" // End time accessor
+          toolbar={false} // Hide the toolbar
+          views={{ work_week: true }} // Show only the work_week view
+          defaultView="work_week" // Default view set to work_week
+          // view="work_week" // Default view set to work_week
+          // Conditionally set title accessor based on device width
+          titleAccessor={isMobile ? "title" : undefined}
+        />
+      </div>
+    </>
   );
 };
 

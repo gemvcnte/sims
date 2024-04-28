@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { BadgeInfo, InfoIcon } from "lucide-react";
 
-export default function FilterSchedule() {
+export default function FilterSchedule({ children }) {
   const {
     schoolYearAndSemesterSelectOptions,
     filterClassDetails,
@@ -86,45 +86,47 @@ export default function FilterSchedule() {
       </Select>
 
       {/* <ExportCsvButton /> */}
-      <Drawer>
-        <DrawerTrigger asChild>
-          <Button variant="icon" className="p-0">
-            <BadgeInfo strokeWidth={1} className="sm:hidden " />
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent>
-          <div className="grid gap-3 p-4">
-            <div className="font-semibold">Section Details</div>
-            <ul className="grid gap-3">
-              <li className="flex items-center justify-between">
-                <span className="text-muted-foreground">Subject Name</span>
-                <span>{classDetails[0].sectionName}</span>
-              </li>
-              <li className="flex items-center justify-between">
-                <span className="text-muted-foreground">Adviser</span>
-                <span>{classDetails[0].adviser}</span>
-              </li>
-            </ul>
-
-            <SelectSeparator className="my-2" />
-
-            {/* <div className="font-semibold">Subjects</div> */}
-            <ul className="grid gap-3">
-              {classDetails[0].subjects.map((subject) => (
-                <li
-                  key={subject._id}
-                  className="flex items-center justify-between"
-                >
-                  <span>{subject.subjectName}</span>
-                  <span className="text-muted-foreground">
-                    {generateAbbreviation(subject.subjectName)}
-                  </span>
+      <section className="flex items-center justify-center gap-2">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="icon" className="p-0">
+              <BadgeInfo strokeWidth={1} className="sm:hidden " />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <div className="grid gap-3 p-4">
+              <div className="font-semibold">Section Details</div>
+              <ul className="grid gap-3">
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Subject Name</span>
+                  <span>{classDetails[0].sectionName}</span>
                 </li>
-              ))}
-            </ul>
-          </div>
-        </DrawerContent>
-      </Drawer>
+                <li className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Adviser</span>
+                  <span>{classDetails[0].adviser}</span>
+                </li>
+              </ul>
+              <SelectSeparator className="my-2" />
+              {/* <div className="font-semibold">Subjects</div> */}
+              <ul className="grid gap-3">
+                {classDetails[0].subjects.map((subject) => (
+                  <li
+                    key={subject._id}
+                    className="flex items-center justify-between"
+                  >
+                    <span>{subject.subjectName}</span>
+                    <span className="text-muted-foreground">
+                      {generateAbbreviation(subject.subjectName)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </DrawerContent>
+        </Drawer>
+
+        {children}
+      </section>
     </header>
   );
 }
