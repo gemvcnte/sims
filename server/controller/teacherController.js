@@ -815,6 +815,15 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
     });
   }
 
+  const lowercaseSubjectName = subjectName.toLowerCase();
+
+  const existingSubject = classroom.subjects.find(subject => subject.subjectName.toLowerCase() === lowercaseSubjectName);
+  if (existingSubject) {
+    return res.status(400).json({
+      message: "This subject already exists in this section.",
+    });
+  }
+
   const studentLrns = classroom.students.map(student => student.lrn);
 
   const newSubject = {
@@ -855,6 +864,16 @@ const updateSubjectClass = asyncHandler(async (req, res) => {
         message: "Unauthorized: You are not the adviser of this class.",
       });
     }
+
+    const lowercaseSubjectName = subjectName.toLowerCase();
+
+    const existingSubject = classroom.subjects.find(subject => subject.subjectName.toLowerCase() === lowercaseSubjectName && subject._id != subjectId);
+    if (existingSubject) {
+      return res.status(400).json({
+        message: "This subject already exists in this section.",
+      });
+    }
+  
 
     const subjectIndex = classroom.subjects.findIndex(
       (subject) => subject._id.toString() === subjectId
