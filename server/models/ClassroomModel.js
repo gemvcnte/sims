@@ -1,4 +1,3 @@
-const { Teacher } = require("../models/TeacherModel");
 const mongoose = require("mongoose");
 
 const classroomSchema = mongoose.Schema(
@@ -7,7 +6,7 @@ const classroomSchema = mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
+      uppercase: true,
       trim: true,
     },
     gradeLevel: {
