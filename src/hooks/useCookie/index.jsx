@@ -6,7 +6,14 @@ const useCookie = () => {
     for (const cookie of cookies) {
       const [cookieName, cookieValue] = cookie.split("=");
       if (cookieName === name) {
-        return cookieValue;
+        if (cookieValue) {
+          try {
+            return atob(cookieValue);
+          } catch (error) {
+            console.error("Error decoding cookie value:", error);
+            return null;
+          }
+        }
       }
     }
     return null;

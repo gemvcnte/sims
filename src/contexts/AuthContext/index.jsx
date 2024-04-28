@@ -16,7 +16,10 @@ export const AuthProvider = ({ children }) => {
     // Format expiration time to UTC string
     const expirationUTCString = expirationTime.toUTCString();
 
-    document.cookie = `authToken=${token}; expires=${expirationUTCString}; path=/`;
+    // Encode the token value using btoa
+    const encodedToken = btoa(token);
+
+    document.cookie = `authToken=${encodedToken}; expires=${expirationUTCString}; path=/`;
 
     const decodedToken = jwtDecode(token);
 
@@ -108,7 +111,14 @@ const getCookie = (name) => {
   for (const cookie of cookies) {
     const [cookieName, cookieValue] = cookie.split("=");
     if (cookieName === name) {
-      return cookieValue;
+      if (cookieValue) {
+        try {
+          return atob(cookieValue);
+        } catch (error) {
+          console.error("Error decoding cookie value:", error);
+          return null;
+        }
+      }
     }
   }
   return null;
