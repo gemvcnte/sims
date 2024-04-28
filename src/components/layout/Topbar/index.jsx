@@ -23,7 +23,7 @@ export default function Topbar({ children }) {
   const { user } = useAuth();
 
   const handleKeyDown = (event) => {
-    if ((event.altKey && event.key === "a") || event.key === "A") {
+    if ((event.ctrlKey && event.key === "m") || event.key === "M") {
       toggleMode();
     }
   };
@@ -57,12 +57,16 @@ export default function Topbar({ children }) {
                       checked={isAdminMode}
                       onCheckedChange={toggleMode}
                     />
-                    <Label>Admin Mode</Label>
+                    <Label className="align-center flex items-center gap-2">
+                      <span>Admin Mode</span>
+                      <kbd className="pointer-events-none  hidden h-5 w-fit select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+                        <span className="text-xs">⌘</span>M
+                      </kbd>
+                    </Label>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Toggle between Teacher Mode and Admin Mode</p>
-                  <p>Shortcut: Alt + A</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
