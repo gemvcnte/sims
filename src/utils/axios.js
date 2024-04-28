@@ -1,10 +1,13 @@
+import useCookie from "@/hooks/useCookie";
 import axios from "axios";
 
 const axiosInstance = axios.create({});
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.getItem("authToken");
+    const { getCookie } = useCookie();
+
+    const authToken = getCookie("authToken");
 
     if (authToken) {
       config.headers.Authorization = `Bearer ${authToken}`;

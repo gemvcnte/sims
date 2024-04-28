@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getAdminProfileEndpoint } from "@/config/adminEndpoints";
+import useCookie from "@/hooks/useCookie";
 
 const useAdminProfile = () => {
+  const { getCookie } = useCookie();
+
   const [adminProfile, setAdminProfile] = useState({});
   const [error, setError] = useState(null);
-  const authToken = localStorage.getItem("authToken");
+  const authToken = getCookie("authToken");
 
   const loadStoredProfile = () => {
     const storedProfileData = JSON.parse(localStorage.getItem("adminProfile"));

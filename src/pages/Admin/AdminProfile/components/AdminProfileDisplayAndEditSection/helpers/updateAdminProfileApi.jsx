@@ -1,8 +1,11 @@
 import axios from "axios";
 import { updateAdminProfileEndpoint } from "@/config/adminEndpoints";
+import useCookie from "@/hooks/useCookie";
 
 export const updateAdminProfileApi = async (updatedProfileData) => {
-  const authToken = localStorage.getItem("authToken");
+  const { getCookie } = useCookie();
+
+  const authToken = getCookie("authToken");
 
   try {
     const response = await axios.patch(

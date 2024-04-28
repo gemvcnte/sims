@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getStudentProfileEndpoint } from "@/config/studentEndpoints";
+import useCookie from "@/hooks/useCookie";
 
 const useStudentProfile = () => {
+  const { getCookie } = useCookie();
+
   const [studentProfile, setStudentProfile] = useState(null);
   const [error, setError] = useState(null);
-  const authToken = localStorage.getItem("authToken");
+  const authToken = getCookie("authToken");
 
   useEffect(() => {
     const fetchStudentProfile = async () => {

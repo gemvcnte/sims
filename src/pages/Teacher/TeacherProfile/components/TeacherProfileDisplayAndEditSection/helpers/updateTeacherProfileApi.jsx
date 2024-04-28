@@ -1,8 +1,11 @@
 import axios from "axios";
 import { updateTeacherProfileEndpoint } from "@/config/teacherEndpoints";
+import useCookie from "@/hooks/useCookie";
 
 export const updateTeacherProfileApi = async (updatedProfileData) => {
-  const authToken = localStorage.getItem("authToken");
+  const { getCookie } = useCookie();
+
+  const authToken = getCookie("authToken");
 
   try {
     const response = await axios.patch(

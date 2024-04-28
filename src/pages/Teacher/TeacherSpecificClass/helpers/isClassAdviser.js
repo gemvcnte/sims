@@ -1,7 +1,10 @@
+import useCookie from "@/hooks/useCookie";
 import { jwtDecode } from "jwt-decode";
 
 export const isClassAdviser = (classDetails) => {
-  const authToken = localStorage.getItem("authToken");
+  const { getCookie } = useCookie();
+
+  const authToken = getCookie("authToken");
 
   if (authToken && classDetails) {
     const decodedToken = jwtDecode(authToken);

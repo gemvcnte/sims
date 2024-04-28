@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useAssignedClassesContext } from "./AssignedClassesContext";
 import { jwtDecode } from "jwt-decode";
 import useGlobalSettings from "@/pages/Registration/useGlobalSettings";
+import useCookie from "@/hooks/useCookie";
 
 const FilteredClassesContext = createContext();
 
@@ -76,7 +77,9 @@ export const useFilteredClassesContext = () => {
 
 // Function to extract user from the token using jwt-decode
 function getUserFromToken() {
-  const authToken = localStorage.getItem("authToken");
+  const { getCookie } = useCookie();
+
+  const authToken = getCookie("authToken");
 
   if (authToken) {
     try {
