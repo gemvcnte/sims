@@ -7,7 +7,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsUp,
+  MoreHorizontal,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -63,6 +70,14 @@ import SkeletonApplicationsDataTable from "./SkeletonApplicationsDataTable";
 import AllStudentsTableSkeleton from "@/pages/Admin/ViewAllStudents/partials/AllStudentsTableSkeleton";
 import ViewStudentApplicationModal from "../ViewStudentApplicationModal";
 import ExportCsvButton from "@/components/export-csv-button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
 
 const PendingApplicationsDataTable = () => {
   const [enrolledRowIds, setEnrolledRowIds] = useState([]);
@@ -252,6 +267,12 @@ const PendingApplicationsDataTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    initialState: {
+      pagination: {
+        pageIndex: 0, //custom initial page index
+        pageSize: 5, //custom default page size
+      },
+    },
     state: {
       sorting,
       columnFilters,
@@ -276,6 +297,8 @@ const PendingApplicationsDataTable = () => {
   if (loading) {
     return <AllStudentsTableSkeleton />;
   }
+
+  const pageSizeOptions = [5, 10, 20, 30, 40, 50];
 
   return (
     <div className="w-full px-4">
@@ -461,29 +484,85 @@ const PendingApplicationsDataTable = () => {
           )}
         </Dialog>
       </div>
+
       <footer className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          Total of {""}
-          {table.getFilteredRowModel().rows.length - enrolledRowIds.length}{" "}
-          student(s).
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+        <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">
+          <div className="flex-1 text-sm text-muted-foreground">
+            Total of {""}
+            {table.getFilteredRowModel().rows.length} student(s).
+          </div>
+
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
+            <div className="flex items-center space-x-2">
+              <p className="whitespace-nowrap text-sm font-medium">
+                Rows per page
+              </p>
+              <Select
+                value={`${table.getState().pagination.pageSize}`}
+                onValueChange={(value) => {
+                  table.setPageSize(Number(value));
+                }}
+              >
+                <SelectTrigger className="h-8 w-[70px]">
+                  <SelectValue
+                    placeholder={table.getState().pagination.pageSize}
+                  />
+                </SelectTrigger>
+                <SelectContent side="top">
+                  {pageSizeOptions.map((pageSize) => (
+                    <SelectItem key={pageSize} value={`${pageSize}`}>
+                      {pageSize}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount()}
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                aria-label="Go to first page"
+                variant="outline"
+                className="size-8 hidden p-0 lg:flex"
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <DoubleArrowRightIcon
+                  className="w-8 rotate-180"
+                  aria-hidden="true"
+                />
+              </Button>
+              <Button
+                aria-label="Go to previous page"
+                variant="outline"
+                className="size-8 p-0"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                <ChevronLeftIcon className="size-4" aria-hidden="true" />
+              </Button>
+              <Button
+                aria-label="Go to next page"
+                variant="outline"
+                className="size-8 p-0"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                <ChevronRightIcon className="w-8" aria-hidden="true" />
+              </Button>
+              <Button
+                aria-label="Go to last page"
+                variant="outline"
+                className="size-8 hidden p-0 lg:flex"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                <DoubleArrowRightIcon className="w-8" aria-hidden="true" />
+              </Button>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

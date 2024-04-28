@@ -320,7 +320,7 @@ const AllStudentsTable = () => {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No archived students found
+                    No archived student found
                   </TableCell>
                 </TableRow>
               ) : (
