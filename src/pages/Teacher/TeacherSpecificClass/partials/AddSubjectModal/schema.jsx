@@ -36,6 +36,14 @@ export const schema = (checkOverlap) =>
             .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid end time")
             .test({
               name: "end-time-validation",
+              message: "End time must be between 7am and 6pm",
+              test: function (value) {
+                const time = parseInt(value.split(":")[0]);
+                return time >= 7 && time <= 18;
+              },
+            })
+            .test({
+              name: "end-time-validation",
               message: "End time must be greater than start time",
               test: function (value, { parent }) {
                 const startTime = parent.startTime;

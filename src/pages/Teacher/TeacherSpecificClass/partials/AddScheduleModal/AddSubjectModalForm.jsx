@@ -72,7 +72,7 @@ export default function AddSubjectModalForm(subject) {
             render={({ field }) => (
               <FormItem>
                 <section className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel htmlFor="name" className="text-right">
+                  <FormLabel htmlFor="name" className="text-right opacity-0">
                     Subject <span className="hidden sm:inline">Name</span>
                   </FormLabel>
                   <FormControl>
@@ -101,7 +101,7 @@ export default function AddSubjectModalForm(subject) {
             render={({ field }) => (
               <FormItem>
                 <section className="grid grid-cols-4 items-center gap-4">
-                  <FormLabel htmlFor="teacher" className="text-right">
+                  <FormLabel htmlFor="teacher" className="text-right opacity-0">
                     Teacher
                   </FormLabel>
                   <FormControl>
