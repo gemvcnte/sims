@@ -1,4 +1,3 @@
-const { Teacher } = require("../models/TeacherModel");
 const mongoose = require("mongoose");
 
 const classroomSchema = mongoose.Schema(
