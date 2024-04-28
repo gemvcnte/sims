@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
@@ -21,6 +21,19 @@ export default function Topbar({ children }) {
   const { isAdminMode, toggleMode } = useTeacherAdminMode();
 
   const { user } = useAuth();
+
+  const handleKeyDown = (event) => {
+    if (event.altKey && event.key === "a") {
+      toggleMode();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>
