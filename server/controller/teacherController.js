@@ -815,6 +815,13 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
     });
   }
 
+  const existingSubject = classroom.subjects.find(subject => subject.subjectName === subjectName);
+  if (existingSubject) {
+    return res.status(400).json({
+      message: "This subject already exists in this section.",
+    });
+  }
+
   const studentLrns = classroom.students.map(student => student.lrn);
 
   const newSubject = {
