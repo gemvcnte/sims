@@ -162,6 +162,12 @@ const AllAdminsTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    initialState: {
+      pagination: {
+        pageIndex: 0, //custom initial page index
+        pageSize: 5, //custom default page size
+      },
+    },
     state: {
       sorting,
       columnFilters,
