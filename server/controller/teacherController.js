@@ -815,7 +815,9 @@ const addSubjectToClass = asyncHandler(async (req, res) => {
     });
   }
 
-  const existingSubject = classroom.subjects.find(subject => subject.subjectName === subjectName);
+  const lowercaseSubjectName = subjectName.toLowerCase();
+
+  const existingSubject = classroom.subjects.find(subject => subject.subjectName.toLowerCase() === lowercaseSubjectName);
   if (existingSubject) {
     return res.status(400).json({
       message: "This subject already exists in this section.",
