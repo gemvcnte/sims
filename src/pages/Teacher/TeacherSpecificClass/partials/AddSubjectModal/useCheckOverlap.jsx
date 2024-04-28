@@ -21,64 +21,162 @@ export const useCheckOverlap = (selectedTeacher) => {
   }, []);
 
   const checkOverlap = (schedules) => {
-    let allSchedules = [...schedules, ...schedulesFromDb];
+    const checkOverlapWithinNewSchedules = (newSchedules) => {
+      for (let i = 0; i < newSchedules.length - 1; i++) {
+        for (let j = i + 1; j < newSchedules.length; j++) {
+          const schedule1 = newSchedules[i];
+          const schedule2 = newSchedules[j];
 
-    if (selectedTeacher) {
-      // // Convert selectedTeacherSchedule object to array
-      // const selectedTeacherScheduleArray = Object.values(
-      //   selectedTeacherSchedule,
-      // ).flatMap((daySchedules) => daySchedules);
+          const start1 = moment(schedule1.startTime, "HH:mm");
+          const end1 = moment(schedule1.endTime, "HH:mm");
+          const start2 = moment(schedule2.startTime, "HH:mm");
+          const end2 = moment(schedule2.endTime, "HH:mm");
 
-      // // Spread the selectedTeacherScheduleArray
-      // allSchedules = [...allSchedules, ...selectedTeacherScheduleArray];
+          const isSameDay = schedule1.day === schedule2.day;
 
-      allSchedules = [...allSchedules, ...selectedTeacherSchedule];
-    }
+          if (!isSameDay) {
+            continue;
+          }
 
-    for (let i = 0; i < allSchedules.length - 1; i++) {
-      for (let j = i + 1; j < allSchedules.length; j++) {
-        const schedule1 = allSchedules[i];
-        const schedule2 = allSchedules[j];
+          // Check for exact same schedule
+          if (
+            schedule1.startTime === schedule2.startTime &&
+            schedule1.endTime === schedule2.endTime
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
 
-        // Convert start and end times to moment objects
-        const start1 = moment(schedule1.startTime, "HH:mm");
-        const end1 = moment(schedule1.endTime, "HH:mm");
-        const start2 = moment(schedule2.startTime, "HH:mm");
-        const end2 = moment(schedule2.endTime, "HH:mm");
-
-        // Check if the schedules are on different days
-        if (schedule1.day !== schedule2.day) {
-          continue; // Skip if schedules are on different days
-        }
-
-        // Check for exact same schedule
-        if (
-          (schedule1.startTime === schedule2.startTime &&
-            schedule1.endTime === schedule2.endTime &&
-            schedule1.subjectId !== schedule2.subjectId) ||
-          (schedule1.subjectId === undefined &&
-            schedule2.subjectId === undefined)
-        ) {
-          // If schedules are exactly the same, return the overlapping schedule message
-          const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
-          SonnerShowErrorNotification(overlappingSchedule);
-          return overlappingSchedule;
-        }
-
-        // Check for overlap within the same day
-        if (
-          start1.isBetween(start2, end2) ||
-          end1.isBetween(start2, end2) ||
-          start2.isBetween(start1, end1) ||
-          end2.isBetween(start1, end1)
-        ) {
-          // If overlap found, construct and return the overlapping schedule message
-          const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
-          SonnerShowErrorNotification(overlappingSchedule);
-          return overlappingSchedule;
+          // Check for overlapping schedules
+          if (
+            start1.isBetween(start2, end2) ||
+            end1.isBetween(start2, end2) ||
+            start2.isBetween(start1, end1) ||
+            end2.isBetween(start1, end1)
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime})`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
         }
       }
+      return false;
+    };
+
+    const checkOverlapWithSchedulesFromDb = (newSchedules) => {
+      const newSchedulesWithSchedulesFromDb = [
+        ...newSchedules,
+        ...schedulesFromDb,
+      ];
+
+      for (let i = 0; i < newSchedulesWithSchedulesFromDb.length - 1; i++) {
+        for (let j = i + 1; j < newSchedulesWithSchedulesFromDb.length; j++) {
+          const schedule1 = newSchedulesWithSchedulesFromDb[i];
+          const schedule2 = newSchedulesWithSchedulesFromDb[j];
+
+          const start1 = moment(schedule1.startTime, "HH:mm");
+          const end1 = moment(schedule1.endTime, "HH:mm");
+          const start2 = moment(schedule2.startTime, "HH:mm");
+          const end2 = moment(schedule2.endTime, "HH:mm");
+
+          const isSameDay = schedule1.day === schedule2.day;
+
+          if (!isSameDay) {
+            continue;
+          }
+
+          // Check for exact same schedule
+          if (
+            schedule1.startTime === schedule2.startTime &&
+            schedule1.endTime === schedule2.endTime
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from class existing schedule`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
+
+          // Check for overlapping schedules
+          if (
+            start1.isBetween(start2, end2) ||
+            end1.isBetween(start2, end2) ||
+            start2.isBetween(start1, end1) ||
+            end2.isBetween(start1, end1)
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from class existing schedule`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
+        }
+      }
+      return false;
+    };
+
+    const checkOverlapWithSelectedTeacherSchedule = (newSchedules) => {
+      const newSchedulesWithTeacherSchedules = [
+        ...newSchedules,
+        ...selectedTeacherSchedule,
+      ];
+
+      for (let i = 0; i < newSchedulesWithTeacherSchedules.length - 1; i++) {
+        for (let j = i + 1; j < newSchedulesWithTeacherSchedules.length; j++) {
+          const schedule1 = newSchedulesWithTeacherSchedules[i];
+          const schedule2 = newSchedulesWithTeacherSchedules[j];
+
+          const start1 = moment(schedule1.startTime, "HH:mm");
+          const end1 = moment(schedule1.endTime, "HH:mm");
+          const start2 = moment(schedule2.startTime, "HH:mm");
+          const end2 = moment(schedule2.endTime, "HH:mm");
+
+          const isSameDay = schedule1.day === schedule2.day;
+
+          if (!isSameDay) {
+            continue;
+          }
+
+          // Check for exact same schedule
+          if (
+            schedule1.startTime === schedule2.startTime &&
+            schedule1.endTime === schedule2.endTime
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from subject teacher's schedule`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
+
+          // Check for overlapping schedules
+          if (
+            start1.isBetween(start2, end2) ||
+            end1.isBetween(start2, end2) ||
+            start2.isBetween(start1, end1) ||
+            end2.isBetween(start1, end1)
+          ) {
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from subject teacher's schedule`;
+            SonnerShowErrorNotification(overlappingSchedule);
+            return overlappingSchedule;
+          }
+        }
+      }
+      return false;
+    };
+
+    const overlapWithinNewSchedules = checkOverlapWithinNewSchedules(schedules);
+    if (overlapWithinNewSchedules) {
+      return overlapWithinNewSchedules;
     }
+
+    const overlapWithSchedulesFromDb =
+      checkOverlapWithSchedulesFromDb(schedules);
+    if (overlapWithSchedulesFromDb) {
+      return overlapWithSchedulesFromDb;
+    }
+
+    const overlapWithSelectedTeacherSchedule =
+      checkOverlapWithSelectedTeacherSchedule(schedules);
+    if (overlapWithSelectedTeacherSchedule) {
+      return overlapWithSelectedTeacherSchedule;
+    }
+
     return false;
   };
 
