@@ -51,7 +51,6 @@ export default function FilterSchedule() {
     setSelectedSchoolYearAndSemester(selectedOptionString);
   };
 
-  // Define a function to generate abbreviation
   const generateAbbreviation = (subjectName) => {
     const words = subjectName.split(" ");
     let abbreviation = "";
@@ -110,23 +109,19 @@ export default function FilterSchedule() {
             <SelectSeparator className="my-2" />
 
             {/* <div className="font-semibold">Subjects</div> */}
-            {classDetails.map((classDetail) => (
-              <div key={classDetail._id}>
-                <ul className="grid gap-3">
-                  {classDetail.subjects.map((subject) => (
-                    <li
-                      key={subject._id}
-                      className="flex items-center justify-between"
-                    >
-                      <span>{subject.subjectName}</span>
-                      <span className="text-muted-foreground">
-                        {generateAbbreviation(subject.subjectName)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <ul className="grid gap-3">
+              {classDetails[0].subjects.map((subject) => (
+                <li
+                  key={subject._id}
+                  className="flex items-center justify-between"
+                >
+                  <span>{subject.subjectName}</span>
+                  <span className="text-muted-foreground">
+                    {generateAbbreviation(subject.subjectName)}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </DrawerContent>
       </Drawer>
