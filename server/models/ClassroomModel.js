@@ -7,7 +7,7 @@ const classroomSchema = mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
+      uppercase: true,
       trim: true,
     },
     gradeLevel: {
