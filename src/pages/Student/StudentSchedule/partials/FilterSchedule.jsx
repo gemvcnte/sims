@@ -11,10 +11,19 @@ import {
 } from "@/components/ui/select";
 import ExportCsvButton from "@/components/export-csv-button";
 import showErrorNotification from "@/utils/ShowErrorNotification";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
 export default function FilterSchedule() {
-  const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
-    useClassDetails();
+  const {
+    schoolYearAndSemesterSelectOptions,
+    filterClassDetails,
+    classDetails,
+  } = useClassDetails();
 
   if (
     !schoolYearAndSemesterSelectOptions ||
@@ -70,6 +79,24 @@ export default function FilterSchedule() {
       </Select>
 
       {/* <ExportCsvButton /> */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline">Display All Subjects</Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <div className="grid gap-4">
+            {classDetails.map((classDetail) => (
+              <div key={classDetail._id}>
+                <ul>
+                  {classDetail.subjects.map((subject) => (
+                    <li key={subject._id}>{subject.subjectName}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
     </header>
   );
 }
