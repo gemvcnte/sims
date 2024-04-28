@@ -91,7 +91,7 @@ export const useCheckOverlap = (selectedTeacher) => {
             schedule1.startTime === schedule2.startTime &&
             schedule1.endTime === schedule2.endTime
           ) {
-            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from class existing schedule`;
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from existing class schedule`;
             SonnerShowErrorNotification(overlappingSchedule);
             return overlappingSchedule;
           }
@@ -103,7 +103,7 @@ export const useCheckOverlap = (selectedTeacher) => {
             start2.isBetween(start1, end1) ||
             end2.isBetween(start1, end1)
           ) {
-            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from class existing schedule`;
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from existing class schedule`;
             SonnerShowErrorNotification(overlappingSchedule);
             return overlappingSchedule;
           }
@@ -139,7 +139,7 @@ export const useCheckOverlap = (selectedTeacher) => {
             schedule1.startTime === schedule2.startTime &&
             schedule1.endTime === schedule2.endTime
           ) {
-            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from subject teacher's schedule`;
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) is the same as ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from the subject teacher's schedule`;
             SonnerShowErrorNotification(overlappingSchedule);
             return overlappingSchedule;
           }
@@ -151,7 +151,7 @@ export const useCheckOverlap = (selectedTeacher) => {
             start2.isBetween(start1, end1) ||
             end2.isBetween(start1, end1)
           ) {
-            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from subject teacher's schedule`;
+            const overlappingSchedule = `${schedule1.day} (${schedule1.startTime} - ${schedule1.endTime}) overlaps with ${schedule2.day} (${schedule2.startTime} - ${schedule2.endTime}) from the subject teacher's schedule`;
             SonnerShowErrorNotification(overlappingSchedule);
             return overlappingSchedule;
           }
