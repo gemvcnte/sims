@@ -46,7 +46,7 @@ const ClassDetailsProvider = ({ children }) => {
     }
     return (
       globalSettings.schoolYear === classDetails.schoolYear &&
-      globalSettings.semester == classDetails.semester
+      globalSettings.semester === classDetails.semester
     );
   };
 
