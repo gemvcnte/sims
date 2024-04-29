@@ -11,7 +11,7 @@ import {
 import ExportCsvButton from "@/components/export-csv-button";
 import { useClassDetails } from "../hooks/ClassDetailsContext";
 
-export default function FilterGrades() {
+export default function FilterGrades({ children }) {
   const { schoolYearAndSemesterSelectOptions, filterClassDetails } =
     useClassDetails();
 
@@ -61,7 +61,11 @@ export default function FilterGrades() {
                   key={index}
                   value={`${option.schoolYear}-${option.semester}`}
                 >
-                  {`${option.schoolYear} - ${option.semester}`}
+                  {`${option.schoolYear} - ${
+                    option.semester === "first semester"
+                      ? "1st Semester"
+                      : "2nd Semester"
+                  }`}{" "}
                 </SelectItem>
               ))}
           </SelectGroup>
@@ -69,6 +73,8 @@ export default function FilterGrades() {
       </Select>
 
       {/* <ExportCsvButton /> */}
+
+      {children}
     </header>
   );
 }

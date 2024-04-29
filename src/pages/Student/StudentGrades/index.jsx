@@ -18,7 +18,7 @@ export default function StudentGrades() {
               `GRADES -`}
         </Topbar>
 
-        <FilterGrades />
+        {/* <FilterGrades /> */}
         <StudentGradesTable setSectionName={setSectionName} />
       </main>
     </ClassDetailsProvider>
