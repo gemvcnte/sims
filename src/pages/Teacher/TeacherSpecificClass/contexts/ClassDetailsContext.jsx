@@ -5,12 +5,17 @@ import { useParams } from "react-router-dom";
 import getAuthHeaders from "@/utils/getAuthHeaders";
 import { getSpecificClassEndpoint } from "@/config/teacherEndpoints";
 import axiosInstance from "@/utils/axios";
+import useGlobalSettings from "@/pages/Registration/useGlobalSettings";
 
 const ClassDetailsContext = createContext();
 
 const ClassDetailsProvider = ({ children }) => {
+  const { globalSettings, loading: globalSettingsLoading } =
+    useGlobalSettings();
+
   const [classDetails, setClassDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isOnCurrentSemester, setIsOnCurrentSemester] = useState(false);
   const { id } = useParams();
 
   const fetchClassDetails = async () => {
@@ -19,17 +24,37 @@ const ClassDetailsProvider = ({ children }) => {
         const response = await axiosInstance(
           `${getSpecificClassEndpoint}/${id}`,
         );
-        setClassDetails(response.data.data);
+
+        const classData = response.data.data;
+
+        setClassDetails(classData);
+        setIsOnCurrentSemester(
+          isClassOnCurrentSemester(classData, globalSettings),
+        );
         setLoading(false);
       } catch (error) {
         console.error("Error fetching class details:", error);
+        setClassDetails(null);
+        setLoading(false);
       }
     }
   };
 
+  const isClassOnCurrentSemester = (classDetails, globalSettings) => {
+    if (!classDetails || !globalSettings) {
+      return false;
+    }
+    return (
+      globalSettings.schoolYear === classDetails.schoolYear &&
+      globalSettings.semester === classDetails.semester
+    );
+  };
+
   useEffect(() => {
-    fetchClassDetails();
-  }, [id]);
+    if (!globalSettingsLoading) {
+      fetchClassDetails();
+    }
+  }, [id, globalSettingsLoading]);
 
   return (
     <ClassDetailsContext.Provider
@@ -39,6 +64,7 @@ const ClassDetailsProvider = ({ children }) => {
         currentId: id,
         setClassDetails,
         fetchClassDetails,
+        isOnCurrentSemester,
       }}
     >
       {children}
@@ -53,6 +79,7 @@ const useClassDetails = () => {
     currentId,
     setClassDetails,
     fetchClassDetails,
+    isOnCurrentSemester,
   } = useContext(ClassDetailsContext);
 
   return {
@@ -61,6 +88,7 @@ const useClassDetails = () => {
     currentId,
     setClassDetails,
     fetchClassDetails,
+    isOnCurrentSemester,
   };
 };
 
