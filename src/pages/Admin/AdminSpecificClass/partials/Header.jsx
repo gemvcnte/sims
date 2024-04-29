@@ -4,13 +4,20 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useClassDetails } from "../contexts/ClassDetailsContext";
 
 export default function Header() {
+  const classDetailsContext = useClassDetails();
+  const { loading } = classDetailsContext;
   const navigate = useNavigate();
 
   const navigateToClasses = () => {
     navigate("/all-classes");
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <header className="flex items-center justify-between">
