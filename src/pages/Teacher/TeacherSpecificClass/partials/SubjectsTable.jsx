@@ -33,7 +33,8 @@ import AddScheduleModal from "./AddScheduleModal";
 
 export default function SubjectsTable() {
   const classDetailsContext = useClassDetails();
-  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+  const { classDetails, loading, fetchClassDetails, isOnCurrentSemester } =
+    classDetailsContext;
 
   const [rowCounter, setRowCounter] = useState(1);
 
@@ -41,7 +42,7 @@ export default function SubjectsTable() {
 
   return (
     <main className="p-4">
-      {isAdviser && (
+      {isAdviser && isOnCurrentSemester && (
         <ModalProvider>
           <AddSubjectModal />
         </ModalProvider>

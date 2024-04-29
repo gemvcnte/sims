@@ -66,7 +66,8 @@ export default function GradesTable() {
   const { updateGlobalSettings } = useGlobalSettings();
   const { user } = useAuth();
   const classDetailsContext = useClassDetails();
-  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+  const { classDetails, loading, fetchClassDetails, isOnCurrentSemester } =
+    classDetailsContext;
   const [isEditing, setIsEditing] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [modifiedGrades, setModifiedGrades] = useState({});
@@ -499,55 +500,59 @@ export default function GradesTable() {
         ) : (
           <div></div>
         )} */}
-              <TooltipProvider delayDuration={10}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="flex gap-4">
-                      <Button
-                        disabled={
-                          !isSubjectTeacher || !isGlobalGradesEncodingEnabled
-                        }
-                        type="button"
-                        variant="outline"
-                        onClick={() => setIsEditing((prev) => !prev)}
-                      >
-                        {isEditing ? "Cancel Editing" : "Edit Grades"}
-                      </Button>
-                      {isEditing && (
+              {isOnCurrentSemester ? (
+                <TooltipProvider delayDuration={10}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex gap-4">
                         <Button
-                          onClick={handleSaveChanges}
-                          disabled={isWaiting}
+                          disabled={
+                            !isSubjectTeacher || !isGlobalGradesEncodingEnabled
+                          }
+                          type="button"
+                          variant="outline"
+                          onClick={() => setIsEditing((prev) => !prev)}
                         >
-                          Save Changes
+                          {isEditing ? "Cancel Editing" : "Edit Grades"}
                         </Button>
-                      )}
-                    </div>
-                  </TooltipTrigger>
-                  {!isGlobalGradesEncodingEnabled ? (
-                    <TooltipContent>
-                      {!isGlobalGradesEncodingEnabled && isSubjectTeacher ? (
-                        <p>
-                          Oops! The encoding of grades is currently disabled.{" "}
-                          <br /> Feel free to reach out to the admin for
-                          assistance.
-                        </p>
-                      ) : (
-                        !isSubjectTeacher && (
+                        {isEditing && (
+                          <Button
+                            onClick={handleSaveChanges}
+                            disabled={isWaiting}
+                          >
+                            Save Changes
+                          </Button>
+                        )}
+                      </div>
+                    </TooltipTrigger>
+                    {!isGlobalGradesEncodingEnabled ? (
+                      <TooltipContent>
+                        {!isGlobalGradesEncodingEnabled && isSubjectTeacher ? (
                           <p>
-                            You're not the subject teacher for this subject.
+                            Oops! The encoding of grades is currently disabled.{" "}
+                            <br /> Feel free to reach out to the admin for
+                            assistance.
                           </p>
-                        )
-                      )}
-                    </TooltipContent>
-                  ) : null}
+                        ) : (
+                          !isSubjectTeacher && (
+                            <p>
+                              You're not the subject teacher for this subject.
+                            </p>
+                          )
+                        )}
+                      </TooltipContent>
+                    ) : null}
 
-                  {!isSubjectTeacher ? (
-                    <TooltipContent>
-                      <p>You're not the subject teacher for this subject.</p>
-                    </TooltipContent>
-                  ) : null}
-                </Tooltip>
-              </TooltipProvider>
+                    {!isSubjectTeacher ? (
+                      <TooltipContent>
+                        <p>You're not the subject teacher for this subject.</p>
+                      </TooltipContent>
+                    ) : null}
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <div></div>
+              )}
 
               <div className="flex gap-2">
                 {selectedSubject && (
