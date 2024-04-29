@@ -4,6 +4,9 @@ import { useAdminSchedule } from "./useAdminSchedule";
 import AdminScheduleSkeleton from "./index.skeleton";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import { Button } from "@/components/ui/button";
+import { Download } from "lucide-react";
+import generatePDF, { Resolution, Margin } from "react-to-pdf";
 
 const localizer = momentLocalizer(moment);
 
@@ -72,22 +75,58 @@ export default function AdminSchedule() {
   const dayFormat = (date, culture, localizer) =>
     localizer.format(date, "ddd").toUpperCase();
 
+  const options = {
+    method: "open",
+    resolution: Resolution.LOW,
+    page: {
+      margin: Margin.SMALL,
+      format: "letter",
+      orientation: "landscape",
+    },
+    canvas: {
+      mimeType: "image/jpeg",
+      qualityRatio: 1,
+    },
+    overrides: {
+      pdf: {
+        compress: true,
+      },
+    },
+  };
+
+  const getTargetElement = () => document.getElementById("admin-schedule");
+
   return (
-    <main className="p-4">
-      <Calendar
-        localizer={localizer}
-        events={generateEvents()}
-        formats={{ dayFormat }}
-        min={minimumStartTime7am}
-        max={maximumEndTime6pm}
-        step={15}
-        startAccessor="start"
-        endAccessor="end"
-        toolbar={false}
-        views={{ work_week: true }}
-        defaultView="work_week"
-        titleAccessor={"title"}
-      />
-    </main>
+    <>
+      <header className="flex justify-between gap-2 px-4 pt-4">
+        <div></div>
+
+        <Button
+          variant="outline"
+          onClick={() => generatePDF(getTargetElement, options)}
+        >
+          <Download className="h-4 w-4" />{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
+          <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
+        </Button>
+      </header>
+
+      <main className="p-4" id="admin-schedule">
+        <Calendar
+          localizer={localizer}
+          events={generateEvents()}
+          formats={{ dayFormat }}
+          min={minimumStartTime7am}
+          max={maximumEndTime6pm}
+          step={15}
+          startAccessor="start"
+          endAccessor="end"
+          toolbar={false}
+          views={{ work_week: true }}
+          defaultView="work_week"
+          titleAccessor={"title"}
+        />
+      </main>
+    </>
   );
 }
