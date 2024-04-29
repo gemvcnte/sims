@@ -86,11 +86,9 @@ export default function StudentGradesTable({ setSectionName }) {
             : "Failed"
           : null;
 
-      const p1GradeClassName =
-        roundedFinalGrade !== null && p1Grade < 75 ? "text-red-500" : "";
+      const p1GradeClassName = p1Grade < 75 ? "text-red-500" : "";
 
-      const p2GradeClassName =
-        roundedFinalGrade !== null && p2Grade < 75 ? "text-red-500" : "";
+      const p2GradeClassName = p2Grade < 75 ? "text-red-500" : "";
 
       const roundedFinalGradeClassName =
         roundedFinalGrade !== null && roundedFinalGrade < 75
