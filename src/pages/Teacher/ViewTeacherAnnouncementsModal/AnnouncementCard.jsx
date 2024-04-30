@@ -11,6 +11,25 @@ import {
 } from "@/components/ui/accordion";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { deleteAnnouncementApi } from "./helpers/deleteAnnouncementApi";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const AnnouncementCard = ({
   announcement,
@@ -18,6 +37,7 @@ const AnnouncementCard = ({
   toggleContent,
 }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [accordionOpen, setAccordionOpen] = useState(false); // State to track accordion open/closed
   const { user } = useAuth();
 
@@ -45,6 +65,18 @@ const AnnouncementCard = ({
 
   const toggleTitle = () => {
     setShowFullTitle(!showFullTitle);
+  };
+
+  const deleteAnnouncement = async (event) => {
+    event.preventDefault();
+
+    try {
+      await deleteAnnouncementApi(announcement._id);
+
+      setIsDeleteAlertOpen(false);
+    } catch (error) {
+      console.error("Error handling submit:", error);
+    }
   };
 
   return (
@@ -77,20 +109,70 @@ const AnnouncementCard = ({
           <div>
             {user.role === "teacher" &&
             announcement.isPublic === true ? null : (
-              <Dialog
-                open={isUpdateModalOpen}
-                onOpenChange={setIsUpdateModalOpen}
-              >
-                <DialogTrigger>
-                  <Button variant="ghost" className="p-0">
-                    <MoreVertical className="h-4 w-4" />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="-mr-2 h-8 w-8"
+                  >
+                    <MoreVertical className="h-3.5 w-3.5 " />
+                    <span className="sr-only">More</span>
                   </Button>
-                </DialogTrigger>
-                <UpdateAnnouncementModal
-                  announcement={announcement}
-                  onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
-                />
-              </Dialog>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <Dialog
+                    open={isUpdateModalOpen}
+                    onOpenChange={setIsUpdateModalOpen}
+                  >
+                    <DialogTrigger className="w-full">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="w-full justify-start px-2"
+                      >
+                        Edit
+                      </Button>
+                    </DialogTrigger>
+                    <UpdateAnnouncementModal
+                      announcement={announcement}
+                      onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+                    />
+                  </Dialog>
+                  <AlertDialog
+                    open={isDeleteAlertOpen}
+                    onOpenChange={setIsDeleteAlertOpen}
+                  >
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="w-full justify-start px-2"
+                      >
+                        Delete
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete the announcement and remove the data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={deleteAnnouncement}>
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
           </div>
         </section>
@@ -115,7 +197,7 @@ const AnnouncementCard = ({
         </Accordion>
       </section>
 
-      {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent"></div> */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent"></div>
     </div>
   );
 };
