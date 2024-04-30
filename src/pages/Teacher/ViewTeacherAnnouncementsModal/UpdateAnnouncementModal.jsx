@@ -52,7 +52,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
   return (
     <>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Update Announcement</DialogTitle>
           <DialogDescription className="md:max-w-[80%]">
