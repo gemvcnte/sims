@@ -7,22 +7,26 @@ const useAnnouncements = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const response = await axiosInstance(getTeacherAnnouncementsEndpoint);
-        setAnnouncements(response.data.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAnnouncements = async () => {
+    try {
+      const response = await axiosInstance(getTeacherAnnouncementsEndpoint);
+      setAnnouncements(response.data.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAnnouncements();
   }, []);
 
-  return { announcements, loading, error };
+  const refetchAnnouncements = async () => {
+    fetchAnnouncements();
+  };
+
+  return { announcements, loading, error, refetchAnnouncements };
 };
 
 export default useAnnouncements;

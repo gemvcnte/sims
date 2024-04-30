@@ -55,7 +55,7 @@ export default function Topbar({ children }) {
             <TooltipProvider delayDuration={10}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center space-x-2 px-4">
+                  <div className="flex items-center space-x-2 px-2 sm:px-1">
                     <Switch
                       checked={isAdminMode}
                       onCheckedChange={toggleMode}

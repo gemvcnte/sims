@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useAnnouncements from "../hooks/useAnnouncements";
+import { useAnnouncementsContext } from "../hooks/useAnnouncements";
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import ViewTeacherAnnouncementsModal from "@/pages/Teacher/ViewTeacherAnnounceme
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardAnnouncementCard() {
-  const { announcements, loading, error } = useAnnouncements();
+  const { announcements, loading, error } = useAnnouncementsContext();
   const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
 
   const toggleContent = (announcementId) => {

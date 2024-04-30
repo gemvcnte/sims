@@ -5,7 +5,7 @@ import { deleteAnnouncementEndpoint } from "@/config/adminEndpoints";
 
 const deleteAnnouncementApi = async (announcementId) => {
   try {
-    showSuccessNotification(`Successfully deleted, Please refresh the page...`);
+    showSuccessNotification(`Announcement successfully deleted! 🗑️`);
 
     const response = await axiosInstance.delete(deleteAnnouncementEndpoint, {
       data: {

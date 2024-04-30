@@ -13,7 +13,7 @@ const createAnnouncementApi = async (announcementData) => {
     );
 
     response.status == 201
-      ? showSuccessNotification(response.data.message)
+      ? showSuccessNotification(`${response.data.message}  🎉`)
       : showErrorNotification(response.data.message);
     return response.data;
   } catch (error) {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import useAnnouncements from "./useAnnouncements";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 
 const useFilteredAnnouncements = (filter) => {
-  const { announcements, loading, error } = useAnnouncements();
+  const { announcements, loading, error, refetchAnnouncements } =
+    useAnnouncementsContext();
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const useFilteredAnnouncements = (filter) => {
     }
   }, [announcements, filter]);
 
-  return { filteredAnnouncements, loading, error };
+  return { filteredAnnouncements, loading, error, refetchAnnouncements };
 };
 
 export default useFilteredAnnouncements;

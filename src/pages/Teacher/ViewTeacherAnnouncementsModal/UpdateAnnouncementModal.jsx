@@ -16,14 +16,41 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateAnnouncementApi } from "./helpers/updateAnnouncementApi.js";
 import { deleteAnnouncementApi } from "./helpers/deleteAnnouncementApi";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements.jsx";
+
+const schema = yup.object().shape({
+  title: yup
+    .string()
+    .required("Title is required")
+    .min(2, "Title must be at least 2 characters")
+    .max(50, "Title cannot exceed 50 characters"),
+  content: yup
+    .string()
+    .required("Content is required")
+    .min(10, "Content must be at least 10 characters")
+    .max(255, "Content cannot exceed 255 characters"),
+});
+
 export default function UpdateAnnouncementModal({ announcement, onClose }) {
-  const [title, setTitle] = useState(announcement.title || "");
-  const [content, setContent] = useState(announcement.content || "");
+  const { refetchAnnouncements } = useAnnouncementsContext();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: announcement,
+  });
 
+  const onSubmit = async () => {
     try {
+      const { title, content } = getValues();
+
       const updatedAnnouncementData = {
         announcementId: announcement._id,
         title,
@@ -32,18 +59,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
       await updateAnnouncementApi(updatedAnnouncementData);
 
-      onClose();
-    } catch (error) {
-      console.error("Error handling submit:", error);
-    }
-  };
-
-  const deleteAnnouncement = async (event) => {
-    event.preventDefault();
-
-    try {
-      await deleteAnnouncementApi(announcement._id);
-
+      refetchAnnouncements();
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
@@ -59,39 +75,38 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
             Update an announcement by changing the details below.
           </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
           <CardContent className="grid gap-6 px-0">
             <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
               <Input
                 id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                {...register("title")}
                 placeholder="Enter announcement title..."
-                required
+                maxLength={51}
               />
+              {errors.title && (
+                <span className="text-red-500">{errors.title.message}</span>
+              )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="content">Content</Label>
               <Textarea
                 id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                {...register("content")}
                 placeholder="Enter announcement content..."
-                required
+                maxLength={256}
               />
+              {errors.content && (
+                <span className="text-red-500">{errors.content.message}</span>
+              )}
             </div>
           </CardContent>
 
           <DialogFooter>
-            <Button
-              // className="border-red-500 text-red-500 hover:text-red-500"
-              variant="outline"
-              onClick={deleteAnnouncement}
-            >
-              Delete
+            <Button type="submit">
+              <span>Save changes</span>
             </Button>
-            <Button onClick={handleSubmit}>Update</Button>
           </DialogFooter>
         </form>
       </DialogContent>

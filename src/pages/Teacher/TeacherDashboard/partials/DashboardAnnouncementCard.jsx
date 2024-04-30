@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useAnnouncements from "../hooks/useAnnouncements";
 import {
   Card,
   CardContent,
@@ -13,9 +12,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ViewTeacherAnnouncementsModal from "../../ViewTeacherAnnouncementsModal";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 
 export default function DashboardAnnouncementCard() {
-  const { announcements, loading, error } = useAnnouncements();
+  const { announcements, loading, error } = useAnnouncementsContext();
   const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
 
   const toggleContent = (announcementId) => {

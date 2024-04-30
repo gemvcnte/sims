@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { createAnnouncementApi } from "./helpers";
+import { useAnnouncementsContext } from "../AdminDashboard/hooks/useAnnouncements";
 
 const schema = yup.object().shape({
   title: yup
@@ -30,6 +31,8 @@ const schema = yup.object().shape({
 });
 
 export default function CreateAnnouncementModal({ onClose }) {
+  const { refetchAnnouncements } = useAnnouncementsContext();
+
   const {
     register,
     handleSubmit,
@@ -42,6 +45,8 @@ export default function CreateAnnouncementModal({ onClose }) {
   const onSubmit = async (data) => {
     try {
       await createAnnouncementApi(data);
+
+      refetchAnnouncements();
       reset();
       onClose();
     } catch (error) {
