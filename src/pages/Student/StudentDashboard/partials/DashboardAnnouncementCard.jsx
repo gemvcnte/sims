@@ -16,13 +16,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardAnnouncementCard() {
   const { announcements, loading, error } = useAnnouncements();
-  const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
-
-  const toggleContent = (announcementId) => {
-    setExpandedAnnouncement((prevExpanded) =>
-      prevExpanded === announcementId ? null : announcementId,
-    );
-  };
 
   const mostRecentAnnouncement = announcements.slice(0, 1);
 
@@ -49,8 +42,6 @@ export default function DashboardAnnouncementCard() {
               <AnnouncementCard
                 key={announcement._id}
                 announcement={announcement}
-                expandedAnnouncement={expandedAnnouncement}
-                toggleContent={toggleContent}
               />
             ))}
           </>

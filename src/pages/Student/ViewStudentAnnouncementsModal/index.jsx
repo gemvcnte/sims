@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import useAnnouncements from "./hooks/useAnnouncements";
 import AnnouncementCard from "./AnnouncementCard";
 import useFilteredAnnouncements from "./hooks/useFilteredAnnouncements";
 import {
@@ -24,13 +23,6 @@ export default function ViewStudentAnnouncementsModal() {
     useFilteredAnnouncements(filter);
 
   const announcements = filteredAnnouncements;
-  const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
-
-  const toggleContent = (announcementId) => {
-    setExpandedAnnouncement((prevExpanded) =>
-      prevExpanded === announcementId ? null : announcementId,
-    );
-  };
 
   const sortedAnnouncements = [...announcements].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
@@ -73,8 +65,6 @@ export default function ViewStudentAnnouncementsModal() {
                 <AnnouncementCard
                   key={announcement._id}
                   announcement={announcement}
-                  expandedAnnouncement={expandedAnnouncement}
-                  toggleContent={toggleContent}
                 />
               ))}
             </>
