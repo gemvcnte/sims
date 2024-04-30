@@ -17,6 +17,7 @@ import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { createAdminAnnouncementApi } from "./helpers/createAdminAnnouncementApi";
 import getTeacherAssignedClassesApi from "./helpers/getTeacherAssignedClassesApi";
+import { useAnnouncementsContext } from "../AdminDashboard/hooks/useAnnouncements";
 
 const schema = yup.object().shape({
   selectedClass: yup.string().required("Class is required"),
@@ -33,6 +34,7 @@ const schema = yup.object().shape({
 });
 
 export default function CreateAdminClassAnnouncementModal({ onClose }) {
+  const { refetchAnnouncements } = useAnnouncementsContext();
   const [classes, setClasses] = useState([]);
   const {
     register,
@@ -63,6 +65,8 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
       const formDataWithRenamedKey = { classId: selectedClass, ...formData };
 
       await createAdminAnnouncementApi(formDataWithRenamedKey);
+
+      refetchAnnouncements();
       reset();
       onClose();
     } catch (error) {

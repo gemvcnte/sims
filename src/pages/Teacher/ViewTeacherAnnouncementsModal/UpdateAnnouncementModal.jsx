@@ -19,6 +19,7 @@ import { deleteAnnouncementApi } from "./helpers/deleteAnnouncementApi";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements.jsx";
 
 const schema = yup.object().shape({
   title: yup
@@ -33,11 +34,9 @@ const schema = yup.object().shape({
     .max(255, "Content cannot exceed 255 characters"),
 });
 
-export default function UpdateAnnouncementModal({
-  announcement,
-  onClose,
-  refetchAnnouncements,
-}) {
+export default function UpdateAnnouncementModal({ announcement, onClose }) {
+  const { refetchAnnouncements } = useAnnouncementsContext();
+
   const {
     register,
     handleSubmit,

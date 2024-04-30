@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useAnnouncements from "./useAnnouncements";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 
 const useFilteredAnnouncements = (filter) => {
   const { announcements, loading, error, refetchAnnouncements } =
-    useAnnouncements();
+    useAnnouncementsContext();
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
 
   useEffect(() => {

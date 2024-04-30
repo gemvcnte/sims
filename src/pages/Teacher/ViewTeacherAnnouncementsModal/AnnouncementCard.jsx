@@ -30,8 +30,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 
-const AnnouncementCard = ({ announcement, refetchAnnouncements }) => {
+const AnnouncementCard = ({ announcement }) => {
+  const { refetchAnnouncements } = useAnnouncementsContext();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [accordionOpen, setAccordionOpen] = useState(false); // State to track accordion open/closed
@@ -133,7 +135,6 @@ const AnnouncementCard = ({ announcement, refetchAnnouncements }) => {
                     </DialogTrigger>
                     <UpdateAnnouncementModal
                       announcement={announcement}
-                      refetchAnnouncements={refetchAnnouncements}
                       onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
                     />
                   </Dialog>

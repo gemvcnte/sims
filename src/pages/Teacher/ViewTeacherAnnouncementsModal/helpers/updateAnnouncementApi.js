@@ -5,7 +5,7 @@ import { updateAnnouncementEndpoint } from "@/config/adminEndpoints";
 
 const updateAnnouncementApi = async (updatedAnnouncementData) => {
   try {
-    showSuccessNotification(`Successfully updated, Please refresh...`);
+    showSuccessNotification(`Announcement successfully updated! 🎉`);
 
     const response = await axiosInstance.patch(
       updateAnnouncementEndpoint,

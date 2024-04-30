@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import AutoLogout from "@/utils/AutoLogout";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { TeacherAdminModeProvider } from "@/hooks/useTeacherAdminMode";
+import { AnnouncementsProvider } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 
 const AppRouter = () => {
   return (
@@ -18,10 +19,12 @@ const AppRouter = () => {
 
           <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <SidebarProvider>
-              <RegistrationRoutes />
-              <Routes>
-                <Route path="*" element={<HomeRoutes />} />
-              </Routes>
+              <AnnouncementsProvider>
+                <RegistrationRoutes />
+                <Routes>
+                  <Route path="*" element={<HomeRoutes />} />
+                </Routes>
+              </AnnouncementsProvider>
             </SidebarProvider>
           </ThemeProvider>
         </TeacherAdminModeProvider>
