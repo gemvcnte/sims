@@ -24,13 +24,6 @@ export default function ViewTeacherAnnouncementsModal() {
     useFilteredAnnouncements(filter);
 
   const announcements = filteredAnnouncements;
-  const [expandedAnnouncement, setExpandedAnnouncement] = useState(null);
-
-  const toggleContent = (announcementId) => {
-    setExpandedAnnouncement((prevExpanded) =>
-      prevExpanded === announcementId ? null : announcementId,
-    );
-  };
 
   const sortedAnnouncements = [...announcements].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
@@ -73,8 +66,6 @@ export default function ViewTeacherAnnouncementsModal() {
                 <AnnouncementCard
                   key={announcement._id}
                   announcement={announcement}
-                  expandedAnnouncement={expandedAnnouncement}
-                  toggleContent={toggleContent}
                 />
               ))}
             </>
