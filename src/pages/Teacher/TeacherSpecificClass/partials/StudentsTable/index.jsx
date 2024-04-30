@@ -17,7 +17,8 @@ export default function StudentsTable() {
   const [selectedLrns, setSelectedLrns] = useState([]);
 
   const classDetailsContext = useClassDetails();
-  const { classDetails, loading, fetchClassDetails } = classDetailsContext;
+  const { classDetails, loading, fetchClassDetails, isOnCurrentSemester } =
+    classDetailsContext;
   const isAdviser = isClassAdviser(classDetails);
 
   const [isWaiting, setIsWaiting] = useState(false);
@@ -53,7 +54,7 @@ export default function StudentsTable() {
     <main className="p-4">
       <StudentsInSpecificClassProvider>
         <StudentsInClassAndNoClassProvider>
-          {isAdviser && (
+          {isAdviser && isOnCurrentSemester && (
             <div className="mb-4 flex gap-4">
               <Button
                 variant="outline"

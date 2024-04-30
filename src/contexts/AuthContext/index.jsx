@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const login = (token) => {
-    const ONE_HOUR = 3600000;
+    const ONE_HOUR = 3600000 * 2;
     const expirationTime = new Date(Date.now() + ONE_HOUR);
     // Format expiration time to UTC string
     const expirationUTCString = expirationTime.toUTCString();
@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }) => {
     // Remove authToken and user cookies
     document.cookie =
       "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     navigate("/");
     window.location.reload();
   };
@@ -49,6 +48,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkTokenExpiration = async () => {
       const storedToken = getCookie("authToken");
+
       if (storedToken) {
         try {
           const decodedToken = jwtDecode(storedToken);

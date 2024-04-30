@@ -4,15 +4,44 @@ import useAddSubjectModal from "./useAddSubjectModal";
 import AddSubjectModalForm from "./AddSubjectModalForm";
 import { useModal } from "./AddSubjectModal.hooks";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { useClassDetails } from "../../contexts/ClassDetailsContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function AddSubjectModal() {
   const { isModalOpen, setIsModalOpen } = useModal();
+  const classDetailsContext = useClassDetails();
+  const { isOnCurrentSemester } = classDetailsContext;
 
   return (
     <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
       <section className="mb-4 flex gap-4">
         <DialogTrigger asChild>
-          <Button variant="outline">Add Subject</Button>
+          <TooltipProvider delayDuration={10}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <tooltip>
+                  <Button variant="outline" disabled={!isOnCurrentSemester}>
+                    Add Subject
+                  </Button>
+                </tooltip>
+              </TooltipTrigger>
+              {!isOnCurrentSemester ? (
+                <TooltipContent>
+                  <p className="max-w-[80ch]">
+                    Oops! It looks like you're trying to add a subject, but the
+                    class is currently in a previous semester. No worries,
+                    though! If you need further assistance, feel free to reach
+                    out to the administrator for support.
+                  </p>
+                </TooltipContent>
+              ) : null}
+            </Tooltip>
+          </TooltipProvider>
         </DialogTrigger>
       </section>
 
