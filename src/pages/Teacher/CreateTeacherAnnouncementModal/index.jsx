@@ -15,9 +15,12 @@ import { CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { getTeacherAssignedClassesApi } from "../TeacherClasses/helpers";
 import { createTeacherAnnouncementApi } from "./helpers/createTeacherAnnouncementApi";
+import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
 // import { createAnnouncementApi } from "./helpers";
 
 export default function CreateTeacherAnnouncementModal({ onClose }) {
+  const { refetchAnnouncements } = useAnnouncementsContext();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [classes, setClasses] = useState([]);
@@ -41,6 +44,7 @@ export default function CreateTeacherAnnouncementModal({ onClose }) {
 
       await createTeacherAnnouncementApi(TeacherAnnouncementData);
 
+      refetchAnnouncements();
       resetAnnouncementData();
       onClose();
     } catch (error) {
