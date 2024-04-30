@@ -3,6 +3,14 @@ import { Icon } from "@iconify/react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import UpdateAnnouncementModal from "./UpdateAnnouncementModal";
 import { useAuth } from "@/contexts/AuthContext";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { MoreHorizontal, MoreVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AnnouncementCard = ({
   announcement,
@@ -10,67 +18,56 @@ const AnnouncementCard = ({
   toggleContent,
 }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(false); // State to track accordion open/closed
   const { user } = useAuth();
+
+  const toggleAccordion = () => {
+    setAccordionOpen(!accordionOpen);
+  };
 
   return (
     <div key={announcement._id} className="mb-4 rounded-lg border p-4">
-      <div className="flex items-center justify-between break-all">
-        <div>
+      <div className="flex flex-col break-all">
+        <section className=" flex items-center justify-between gap-2">
           <h2 className="break-all font-semibold">{announcement.title}</h2>
-          <p className="text-xs text-muted-foreground">
-            {new Date(announcement.createdAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-        </div>
+          <div>
+            {user.role === "teacher" &&
+            announcement.isPublic === true ? null : (
+              <Dialog
+                open={isUpdateModalOpen}
+                onOpenChange={setIsUpdateModalOpen}
+              >
+                <DialogTrigger>
+                  <Button variant="ghost" className="p-0">
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+                <UpdateAnnouncementModal
+                  announcement={announcement}
+                  onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+                />
+              </Dialog>
+            )}
+          </div>
+        </section>
+        <p className="text-xs text-muted-foreground">
+          {new Date(announcement.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
       </div>
       <section className="flex items-baseline justify-between text-xs">
-        <button
-          className="group mt-4 flex items-center justify-center gap-1"
-          variant="outline"
-          onClick={() => toggleContent(announcement._id)}
-        >
-          {expandedAnnouncement === announcement._id ? (
-            <>
-              Hide Details
-              <Icon
-                icon="dashicons:arrow-up"
-                rotate={2}
-                className="inline-block transform transition-all duration-300 group-hover:ml-1 group-hover:rotate-[360deg]"
-              />
-            </>
-          ) : (
-            <>
-              Show Details
-              <Icon
-                icon="dashicons:arrow-up"
-                rotate={1}
-                className="inline-block transform transition-all duration-300 group-hover:rotate-[360deg]"
-              />
-            </>
-          )}
-        </button>
-
-        {user.role === "teacher" && announcement.isPublic === true ? null : (
-          <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
-            <DialogTrigger>
-              <button className="group">
-                Update{" "}
-                <Icon
-                  icon="octicon:arrow-down-24"
-                  rotate={3}
-                  className="inline-block -rotate-45 transform transition-all duration-300 group-hover:rotate-45"
-                />
-              </button>
-            </DialogTrigger>
-            <UpdateAnnouncementModal
-              announcement={announcement}
-              onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
-            />
-          </Dialog>
-        )}
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-3">
+            <AccordionTrigger onClick={toggleAccordion}>
+              {accordionOpen ? "Hide Details" : "Show Details"}{" "}
+              {/* Dynamically change text based on accordion state */}
+            </AccordionTrigger>
+            <AccordionContent>{announcement.content}</AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </section>
       {expandedAnnouncement === announcement._id && (
         <div className="mt-2 break-all text-sm text-gray-400">
