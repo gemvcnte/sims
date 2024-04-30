@@ -33,7 +33,11 @@ const schema = yup.object().shape({
     .max(255, "Content cannot exceed 255 characters"),
 });
 
-export default function UpdateAnnouncementModal({ announcement, onClose }) {
+export default function UpdateAnnouncementModal({
+  announcement,
+  onClose,
+  refetchAnnouncements,
+}) {
   const {
     register,
     handleSubmit,
@@ -56,18 +60,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
       await updateAnnouncementApi(updatedAnnouncementData);
 
-      onClose();
-    } catch (error) {
-      console.error("Error handling submit:", error);
-    }
-  };
-
-  const deleteAnnouncement = async (event) => {
-    event.preventDefault();
-
-    try {
-      await deleteAnnouncementApi(announcement._id);
-
+      refetchAnnouncements();
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
@@ -91,7 +84,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
                 id="title"
                 {...register("title")}
                 placeholder="Enter announcement title..."
-                maxLength={51} 
+                maxLength={51}
               />
               {errors.title && (
                 <span className="text-red-500">{errors.title.message}</span>
@@ -103,7 +96,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
                 id="content"
                 {...register("content")}
                 placeholder="Enter announcement content..."
-                maxLength={256} 
+                maxLength={256}
               />
               {errors.content && (
                 <span className="text-red-500">{errors.content.message}</span>
@@ -112,13 +105,6 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button
-              // className="border-red-500 text-red-500 hover:text-red-500"
-              variant="outline"
-              onClick={deleteAnnouncement}
-            >
-              Delete
-            </Button>
             <Button type="submit">
               <span>Save changes</span>
             </Button>

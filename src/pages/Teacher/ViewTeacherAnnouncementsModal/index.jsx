@@ -20,7 +20,7 @@ import {
 
 export default function ViewTeacherAnnouncementsModal() {
   const [filter, setFilter] = useState("all");
-  const { filteredAnnouncements, loading, error } =
+  const { filteredAnnouncements, loading, error, refetchAnnouncements } =
     useFilteredAnnouncements(filter);
 
   const announcements = filteredAnnouncements;
@@ -66,6 +66,7 @@ export default function ViewTeacherAnnouncementsModal() {
                 <AnnouncementCard
                   key={announcement._id}
                   announcement={announcement}
+                  refetchAnnouncements={refetchAnnouncements}
                 />
               ))}
             </>

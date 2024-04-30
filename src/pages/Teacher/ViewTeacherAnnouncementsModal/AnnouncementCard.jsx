@@ -31,11 +31,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-const AnnouncementCard = ({
-  announcement,
-  expandedAnnouncement,
-  toggleContent,
-}) => {
+const AnnouncementCard = ({ announcement, refetchAnnouncements }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [accordionOpen, setAccordionOpen] = useState(false); // State to track accordion open/closed
@@ -73,6 +69,7 @@ const AnnouncementCard = ({
     try {
       await deleteAnnouncementApi(announcement._id);
 
+      refetchAnnouncements();
       setIsDeleteAlertOpen(false);
     } catch (error) {
       console.error("Error handling submit:", error);
@@ -136,6 +133,7 @@ const AnnouncementCard = ({
                     </DialogTrigger>
                     <UpdateAnnouncementModal
                       announcement={announcement}
+                      refetchAnnouncements={refetchAnnouncements}
                       onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
                     />
                   </Dialog>
