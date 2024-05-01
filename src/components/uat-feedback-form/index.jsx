@@ -29,22 +29,7 @@ export default function UatFeedbackForm() {
   };
 
   return (
-    // <DropdownMenu>
-    //   <DropdownMenuTrigger asChild>
-    //     <Draggable>
-    //       <div className="absolute  z-[1000]">
-    //         <img src={master} alt="" className="w-16 rounded-full" />
-    //         <p>REPORT ISSUE TO MASTER BOB</p>
-    //       </div>
-    //     </Draggable>
-    //   </DropdownMenuTrigger>
-    //   <DropdownMenuContent className="w-56">
-    //     <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-    //     <DropdownMenuSeparator />
-    //   </DropdownMenuContent>
-    // </DropdownMenu>
-
-    <div className="z-[99999999999999999] overflow-visible p-8">
+    <div className="absolute top-0 z-[99999999999999999] overflow-visible p-8 ">
       <TooltipProvider delayDuration={10}>
         <Tooltip>
           <Draggable>
@@ -55,8 +40,8 @@ export default function UatFeedbackForm() {
             >
               <AccordionItem value="item-1">
                 <TooltipTrigger>
-                  <AccordionTrigger className="rounded-md p-4">
-                    <div className="absolute right-0 top-0 z-[99999999999999999999999999999999999999999999] flex p-2">
+                  <AccordionTrigger className="rounded-md p-4 ">
+                    <div className=" absolute right-0 top-0 z-[99999999999999999999999999999999999999999999] flex border-t-2 border-muted p-2">
                       <img src={master} alt="" className="w-12 rounded-full" />
                       <p>REPORT ISSUE TO SENPAI BOB 🗿</p>
                     </div>
