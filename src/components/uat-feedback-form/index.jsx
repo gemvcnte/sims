@@ -49,6 +49,7 @@ export default function UatFeedbackForm() {
 
   const onSubmit = async () => {
     form.reset();
+    form.setValue("remarks", "");
     ShowSuccessNotification("Thank you for your feedback! ৻(  •̀ ᗜ •́  ৻)");
   };
 
