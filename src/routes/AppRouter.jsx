@@ -9,6 +9,7 @@ import AutoLogout from "@/utils/AutoLogout";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { TeacherAdminModeProvider } from "@/hooks/useTeacherAdminMode";
 import { AnnouncementsProvider } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements";
+import UatFeedbackForm from "@/components/uat-feedback-form";
 
 const AppRouter = () => {
   return (
@@ -21,9 +22,12 @@ const AppRouter = () => {
             <SidebarProvider>
               <AnnouncementsProvider>
                 <RegistrationRoutes />
+
                 <Routes>
                   <Route path="*" element={<HomeRoutes />} />
                 </Routes>
+
+                <UatFeedbackForm />
               </AnnouncementsProvider>
             </SidebarProvider>
           </ThemeProvider>

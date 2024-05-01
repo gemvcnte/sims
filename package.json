@@ -46,6 +46,7 @@
     "react-big-calendar": "^1.11.6",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
     "react-hook-form": "^7.51.0",
     "react-router-dom": "^6.17.0",
     "react-spinners": "^0.13.8",
