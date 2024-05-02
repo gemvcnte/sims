@@ -40,6 +40,7 @@ import {
 import { Icon } from "@iconify/react";
 import useGlobalSettings from "@/pages/Admin/GlobalSettingsDrawer/helpers/useGlobalSettings";
 import { Label } from "@/components/ui/label";
+import SpecificStudentGradesModal from "@/pages/Teacher/TeacherSpecificClass/partials/SpecificStudentGradesModal";
 
 const schema = yup.object().shape({
   p1Grade: yup
@@ -424,14 +425,14 @@ export default function GradesTable() {
                   <p>Click to View All Grades</p>
                 </TooltipContent> */}
 
-                {/* {isAdviser && !isEditing && (
+                {isAdviser && !isEditing && (
                   <TooltipContent>
                     <p>
                       Click to view all grades of {student.firstName}{" "}
                       {student.lastName}.
                     </p>
                   </TooltipContent>
-                )} */}
+                )}
               </Tooltip>
             </TooltipProvider>
           );
@@ -547,6 +548,10 @@ export default function GradesTable() {
 
               <TableFooter></TableFooter>
             </Table>
+
+            {studentDetails && (
+              <SpecificStudentGradesModal studentDetails={studentDetails} />
+            )}
           </main>
         </form>
       </Form>
