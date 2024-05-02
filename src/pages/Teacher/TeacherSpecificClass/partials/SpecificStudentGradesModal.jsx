@@ -16,10 +16,9 @@ import { CSVLink } from "react-csv";
 
 export default function SpecificStudentGradesModal({ studentDetails }) {
   if (!studentDetails) {
-    return <p>loading..</p>; // or render a loading indicator or an error message
+    return <p>loading..</p>;
   }
 
-  // Extract student details
   const {
     Firstname,
     Lastname,
@@ -44,7 +43,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
       0,
     ) / gradesWithValues.length;
 
-  // Prepare CSV data
   const csvData = [
     {
       FIRSTNAME: Firstname,
@@ -163,10 +161,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
         <Table>
           <TableHeader>
             <TableRow>
-              {/* <TableHead>Lastname</TableHead>
-              <TableHead>Firstname</TableHead>
-              <TableHead>LRN</TableHead> */}
-
               <TableHead>SUBJECT</TableHead>
               <TableHead>QTR1</TableHead>
               <TableHead>QTR2</TableHead>
@@ -178,10 +172,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
           <TableBody>
             {studentDetails.studentGrades.map((grade, index) => (
               <TableRow key={index}>
-                {/* <TableCell>{studentDetails.Lastname}</TableCell>
-                <TableCell>{studentDetails.Firstname}</TableCell>
-                <TableCell>{studentDetails.LRN}</TableCell> */}
-
                 <TableCell>{grade.Subject}</TableCell>
                 <TableCell>{grade.P1Grade || ""}</TableCell>
                 <TableCell>{grade.P2Grade || ""}</TableCell>
@@ -249,10 +239,6 @@ export default function SpecificStudentGradesModal({ studentDetails }) {
           </TableBody>
         </Table>
       </div>
-
-      {/* <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter> */}
     </DialogContent>
   );
 }
