@@ -3,16 +3,23 @@ import TotalFacultyCard from "./TotalFacultyCard";
 import TotalTeachersCard from "./TotalTeachersCard";
 import TotalAdminsCard from "./TotalAdminsCard";
 import useAnalytics from "../useAnalytics";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function FacultyTabContent() {
   const { loading } = useAnalytics();
 
   if (loading) {
-    return <p>loading...</p>;
+    return (
+      <main className="flex w-full flex-col gap-4 sm:flex-row">
+        <Skeleton className="h-[110px] w-full sm:w-[33%]"></Skeleton>
+        <Skeleton className="h-[110px] w-full sm:w-[33%]"></Skeleton>
+        <Skeleton className="h-[110px] w-full sm:w-[33%]"></Skeleton>
+      </main>
+    );
   }
 
   return (
-    <main className="flex w-full flex-col gap-2 sm:flex-row">
+    <main className="flex w-full flex-col gap-4 sm:flex-row">
       <TotalFacultyCard />
       <TotalTeachersCard />
       <TotalAdminsCard />
