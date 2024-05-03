@@ -1,12 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import useAnalytics from "../useAnalytics";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function TotalAcademicStudents() {
   const { analyticsData, loading, error } = useAnalytics();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Skeleton className="h-[110px] w-full sm:w-[33%]"></Skeleton>;
   }
 
   if (error) {
@@ -41,9 +42,9 @@ export default function TotalAcademicStudents() {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{totalAcadStudents}</div>
-        <p className="text-xs text-muted-foreground">
+        {/* <p className="text-xs text-muted-foreground">
           {totalAcadStudentsPercentage?.toFixed(2) || 0}% from last semester
-        </p>
+        </p> */}
       </CardContent>
     </Card>
   );
