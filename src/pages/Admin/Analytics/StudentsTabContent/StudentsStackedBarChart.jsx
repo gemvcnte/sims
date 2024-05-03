@@ -11,12 +11,13 @@ import {
 } from "recharts";
 import useAnalytics from "../useAnalytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const StudentsStackedBarChart = () => {
   const { analyticsData, loading, error } = useAnalytics();
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Skeleton className="h-[400px] w-full"></Skeleton>;
   }
 
   if (error) {
