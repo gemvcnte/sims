@@ -18,36 +18,36 @@ export default function AddSubjectModal() {
   const { isOnCurrentSemester } = classDetailsContext;
 
   return (
-    <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
-      <section className="mb-4 flex gap-4">
-        <DialogTrigger asChild>
-          <TooltipProvider delayDuration={10}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <tooltip>
+    <TooltipProvider delayDuration={10}>
+      <Sheet open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <section className="mb-4 flex gap-4">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <div>
                   <Button variant="outline" disabled={!isOnCurrentSemester}>
                     Add Subject
                   </Button>
-                </tooltip>
-              </TooltipTrigger>
-              {!isOnCurrentSemester ? (
-                <TooltipContent>
-                  <p className="max-w-[80ch]">
-                    Oops! It looks like you're trying to add a subject, but the
-                    class is currently in a previous semester. No worries,
-                    though! If you need further assistance, feel free to reach
-                    out to the administrator for support.
-                  </p>
-                </TooltipContent>
-              ) : null}
-            </Tooltip>
-          </TooltipProvider>
-        </DialogTrigger>
-      </section>
+                </div>
+              </DialogTrigger>
+            </TooltipTrigger>
+            {!isOnCurrentSemester ? (
+              <TooltipContent>
+                <p className="max-w-[80ch]">
+                  Oops! It looks like you're trying to add a subject, but the
+                  class is currently in a previous semester. No worries, though!
+                  If you need further assistance, feel free to reach out to the
+                  administrator for support.
+                </p>
+              </TooltipContent>
+            ) : null}
+          </Tooltip>
+        </section>
 
-      <SheetContent className="sm:max-h-[100svh] sm:max-w-[525px]">
-        <AddSubjectModalForm />
-      </SheetContent>
-    </Sheet>
+        <SheetContent className="sm:max-h-[100svh] sm:max-w-[525px]">
+          <AddSubjectModalForm />
+        </SheetContent>
+      </Sheet>
+    </TooltipProvider>
   );
 }

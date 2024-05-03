@@ -5,8 +5,10 @@ import AdminScheduleSkeleton from "./index.skeleton";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { BadgeInfo, Download } from "lucide-react";
 import generatePDF, { Resolution, Margin } from "react-to-pdf";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { SelectSeparator } from "@/components/ui/select";
 
 const localizer = momentLocalizer(moment);
 
@@ -19,6 +21,8 @@ maximumEndTime6pm.setHours(18, 0, 0);
 export default function AdminSchedule() {
   const { schedule, loading } = useAdminSchedule();
   const [isMobile, setIsMobile] = useState(false);
+
+  console.log(`schedule`, schedule);
 
   const checkIsMobile = () => {
     const width = window.innerWidth;
@@ -81,7 +85,7 @@ export default function AdminSchedule() {
     page: {
       margin: Margin.SMALL,
       format: "letter",
-      orientation: "landscape",
+      orientation: "portrait",
     },
     canvas: {
       mimeType: "image/jpeg",
@@ -99,16 +103,50 @@ export default function AdminSchedule() {
   return (
     <>
       <header className="flex justify-between gap-2 px-4 pt-4">
-        <div></div>
+        <section></section>
 
-        <Button
-          variant="outline"
-          onClick={() => generatePDF(getTargetElement, options)}
-        >
-          <Download className="h-4 w-4" />{" "}
-          <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
-          <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
-        </Button>
+        <section className="flex items-center justify-center gap-2">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button variant="icon" className="p-0">
+                <BadgeInfo strokeWidth={1} className="sm:hidden " />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="grid gap-3 p-4">
+                <div className="font-semibold">Subjects</div>
+                <ul className="grid gap-3">
+                  {Object.entries(schedule).map(([dayOfWeek, daySchedule]) =>
+                    daySchedule.map((classItem) => (
+                      <li
+                        key={`${classItem.class}-${classItem.subject}-${classItem.startTime}-${classItem.endTime}`}
+                        className="flex items-center justify-between"
+                      >
+                        <span>
+                          {classItem.subject}{" "}
+                          <span className="italic text-muted-foreground">
+                            - {classItem.class}
+                          </span>
+                        </span>
+                        <span className="text-muted-foreground">
+                          {abbreviateSubject(classItem.subject)}
+                        </span>
+                      </li>
+                    )),
+                  )}
+                </ul>
+              </div>
+            </DrawerContent>
+          </Drawer>
+          <Button
+            variant="outline"
+            onClick={() => generatePDF(getTargetElement, options)}
+          >
+            <Download className="h-4 w-4" />{" "}
+            <span className="hidden sm:ml-[1ch] sm:inline-block">Export</span>{" "}
+            <span className="hidden sm:ml-[1ch] sm:inline-block"> PDF</span>{" "}
+          </Button>
+        </section>
       </header>
 
       <main className="p-4" id="admin-schedule">
