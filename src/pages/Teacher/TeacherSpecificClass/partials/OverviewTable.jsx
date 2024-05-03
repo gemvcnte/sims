@@ -15,13 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OverviewTable() {
+  const { setTab } = useClassNav();
   const { classDetails } = useClassDetails();
 
   if (!classDetails) {
     return <Skeleton className="m-4 h-[40ch] w-[40ch]"></Skeleton>;
   }
-
-  const { setTab } = useClassNav();
 
   const handleCopySectionName = () => {
     navigator.clipboard.writeText(classDetails.sectionName.toUpperCase());
