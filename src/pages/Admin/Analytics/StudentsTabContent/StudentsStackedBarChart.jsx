@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import useAnalytics from "../useAnalytics";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const StudentsStackedBarChart = () => {
   const { analyticsData, loading, error } = useAnalytics();
@@ -48,26 +49,35 @@ const StudentsStackedBarChart = () => {
     }));
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart
-        width={500}
-        height={300}
-        data={filteredData}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="category" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="count" stackId="a" fill="#8884d8" />
-      </BarChart>
-    </ResponsiveContainer>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle className="text-sm font-bold">
+          Students Distribution by Strand
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            width={500}
+            height={300}
+            data={filteredData}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="category" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" stackId="a" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 };
 

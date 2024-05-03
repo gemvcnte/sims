@@ -5,12 +5,14 @@ import StudentsGenderPieChart from "./StudentsGenderPieChart";
 
 export default function StudentsTabContent() {
   return (
-    <header>
-      <StudentAnalyticsCards />
-      <main className="flex gap-2">
+    <>
+      <header>
+        <StudentAnalyticsCards />
+      </header>
+      <main className="mt-4 flex flex-col gap-4 sm:flex-row">
         <StudentsStackedBarChart />
         <StudentsGenderPieChart />
       </main>
-    </header>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import {
   Cell,
 } from "recharts";
 import useAnalytics from "../useAnalytics";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const StudentsGenderPieChart = () => {
   const { analyticsData, loading, error } = useAnalytics();
@@ -32,25 +33,34 @@ const StudentsGenderPieChart = () => {
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <PieChart width={400} height={400}>
-        <Pie
-          dataKey="value"
-          isAnimationActive={false}
-          data={maleFemaleData}
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          fill="#8884d8"
-          label
-        >
-          {maleFemaleData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.fill || "#8884d8"} />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle className="text-sm font-bold">
+          Students Gender Distribution
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart width={400} height={400}>
+            <Pie
+              dataKey="value"
+              isAnimationActive={false}
+              data={maleFemaleData}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              fill="#8884d8"
+              label
+            >
+              {maleFemaleData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill || "#8884d8"} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 };
 
