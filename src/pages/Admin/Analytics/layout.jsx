@@ -7,7 +7,7 @@ export default function AnalyticsLayout() {
   return (
     <>
       <AnalyticsProvider>
-        <main className="w-full ">
+        <main className="w-full">
           <Topbar>ANALYTICS</Topbar>
 
           <Analytics />

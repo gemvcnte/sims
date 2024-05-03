@@ -5,7 +5,7 @@ import TotalTvlStudents from "./TotalTvlStudents";
 
 export default function StudentAnalyticsCards() {
   return (
-    <main className="flex w-full flex-col gap-2">
+    <main className="flex w-full flex-col gap-2 sm:flex-row">
       <TotalStudentsCard />
       <TotalAcademicStudents />
       <TotalTvlStudents />

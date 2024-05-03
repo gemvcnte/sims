@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React from "react";
-import { StudentsTabContent } from "./StudentsTabContent";
+import StudentsTabContent from "./StudentsTabContent";
 
 export default function Analytics() {
   return (
@@ -13,7 +13,7 @@ export default function Analytics() {
           Faculty
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="students" className="pl-4">
+      <TabsContent value="students" className="p-0">
         <StudentsTabContent />
       </TabsContent>
       <TabsContent value="faculty">

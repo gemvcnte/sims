@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import useAnalytics from "../useAnalytics";
 
-const TwoSimplePieChart = () => {
+const StudentsGenderPieChart = () => {
   const { analyticsData, loading, error } = useAnalytics();
 
   if (loading) {
@@ -54,4 +54,4 @@ const TwoSimplePieChart = () => {
   );
 };
 
-export default TwoSimplePieChart;
+export default StudentsGenderPieChart;

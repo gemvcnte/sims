@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import useAnalytics from "../useAnalytics";
 
-const StackedBarChartExample = () => {
+const StudentsStackedBarChart = () => {
   const { analyticsData, loading, error } = useAnalytics();
 
   if (loading) {
@@ -71,4 +71,4 @@ const StackedBarChartExample = () => {
   );
 };
 
-export default StackedBarChartExample;
+export default StudentsStackedBarChart;
