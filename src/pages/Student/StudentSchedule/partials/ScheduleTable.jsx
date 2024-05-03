@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import React from "react";
 import moment from "moment";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import generatePDF, { Resolution, Margin } from "react-to-pdf";
+
 import { useClassDetails } from "../contexts/ClassDetailsContext";
+import useIsMobile from "@/hooks/useIsMobile";
+import FilterSchedule from "./FilterSchedule";
+
 import AdminScheduleSkeleton from "@/pages/Admin/AdminSchedule/index.skeleton";
 import { Button } from "@/components/ui/button";
-import generatePDF, { Resolution, Margin } from "react-to-pdf";
-import FilterSchedule from "./FilterSchedule";
 import { Download } from "lucide-react";
-import useIsMobile from "@/hooks/useIsMobile";
 
 const localizer = momentLocalizer(moment);
 
@@ -99,7 +101,7 @@ const ScheduleTable = () => {
     page: {
       margin: Margin.SMALL,
       format: "letter",
-      orientation: "landscape",
+      orientation: "portrait",
     },
     canvas: {
       mimeType: "image/jpeg",
@@ -135,11 +137,11 @@ const ScheduleTable = () => {
           min={minTimeSevenAm}
           max={maxTimeSixPm}
           step={15} // Interval between time slots
-          startAccessor="start" // Start time accessor
-          endAccessor="end" // End time accessor
-          toolbar={false} // Hide the toolbar
+          startAccessor="start"
+          endAccessor="end"
+          toolbar={false}
           views={{ work_week: true }} // Show only the work_week view
-          defaultView="work_week" // Default view set to work_week
+          defaultView="work_week"
           titleAccessor={isMobile ? "title" : undefined}
         />
       </div>

@@ -81,7 +81,7 @@ export default function AdminSchedule() {
     page: {
       margin: Margin.SMALL,
       format: "letter",
-      orientation: "landscape",
+      orientation: "portrait",
     },
     canvas: {
       mimeType: "image/jpeg",
