@@ -1537,6 +1537,79 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       })
     );
 
+    const teacherDistribution = await Teacher.aggregate([
+      {
+        $match: {
+          $or: [
+            { designation: { $in: ["TEACHER I", "TEACHER II", "TEACHER III", "MASTER TEACHER I", "MASTER TEACHER II", "MASTER TEACHER III"] } },
+            { designation: { $exists: false } },
+            { designation: { $eq: "" } }
+          ]
+        }
+      },
+      {
+        $group: {
+          _id: "$designation",
+          total: { $sum: 1 },
+          male: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+          female: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+        }
+      }
+    ]);
+    
+    const adminDistribution = await Admin.aggregate([
+      {
+        $match: {
+          $or: [
+            { designation: { $in: ["TEACHER I", "TEACHER II", "TEACHER III", "MASTER TEACHER I", "MASTER TEACHER II", "MASTER TEACHER III"] } },
+            { designation: { $exists: false } },
+            { designation: { $eq: "" } }
+          ]
+        }
+      },
+      {
+        $group: {
+          _id: "$designation",
+          total: { $sum: 1 },
+          male: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+          female: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+        }
+      }
+    ]);
+    
+    // Combine teacher and admin distributions
+    const combinedDistribution = {};
+    
+    teacherDistribution.forEach(entry => {
+      const { _id, total, male, female } = entry;
+      if (!combinedDistribution[_id]) {
+        combinedDistribution[_id] = { total, male, female };
+      } else {
+        combinedDistribution[_id].total += total;
+        combinedDistribution[_id].male += male;
+        combinedDistribution[_id].female += female;
+      }
+    });
+    
+    adminDistribution.forEach(entry => {
+      const { _id, total, male, female } = entry;
+      if (!combinedDistribution[_id]) {
+        combinedDistribution[_id] = { total, male, female };
+      } else {
+        combinedDistribution[_id].total += total;
+        combinedDistribution[_id].male += male;
+        combinedDistribution[_id].female += female;
+      }
+    });
+    
+    // Convert combinedDistribution to an array
+    const combinedDistributionArray = Object.entries(combinedDistribution).map(([designation, { total, male, female }]) => ({
+      _id: designation,
+      total,
+      male,
+      female
+    }));
+
     res.json({
       students: {
         totalStudents,
@@ -1558,6 +1631,7 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       faculty: {
         totalTeachers,
         totalAdmins,
+        distribution: combinedDistribution
       },
     });
   } catch (error) {
