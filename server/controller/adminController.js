@@ -1609,6 +1609,24 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       male,
       female
     }));
+  
+      // Count male and female students per strand
+      const maleFemalePerStrand = await Student.aggregate([
+        {
+          $match: {
+            "schoolYear.year": currentSchoolYear,
+            "schoolYear.semester": currentSemester,
+          }
+        },
+        {
+          $group: {
+            _id: "$schoolYear.strand",
+            MALE: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+            FEMALE: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+          }
+        }
+      ]);
+  
 
     res.json({
       students: {
@@ -1627,6 +1645,7 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
         totalHumssStudents,
         totalICTStudents,
         totalHEStudents,
+        maleFemalePerStrand,
       },
       faculty: {
         totalTeachers,
