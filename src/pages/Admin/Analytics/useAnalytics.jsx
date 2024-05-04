@@ -10,14 +10,19 @@ export const useAnalyticsContext = () => {
 
 const useAnalytics = () => {
   const [analyticsData, setAnalyticsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
+        setLoading(true);
+
         const response = await axiosInstance.get(getAllAnalyticsEndpoint);
-        setAnalyticsData(response.data);
+        const data = response.data;
+
+        localStorage.setItem("analyticsData", JSON.stringify(data));
+        setAnalyticsData(data);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,7 +30,14 @@ const useAnalytics = () => {
       }
     };
 
-    fetchAnalyticsData();
+    const storedData = localStorage.getItem("analyticsData");
+
+    if (!storedData) {
+      fetchAnalyticsData();
+      return;
+    }
+
+    setAnalyticsData(JSON.parse(storedData));
   }, []);
 
   return { analyticsData, loading, error };
