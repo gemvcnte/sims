@@ -4,6 +4,7 @@ import TotalTeachersCard from "./TotalTeachersCard";
 import TotalAdminsCard from "./TotalAdminsCard";
 import useAnalytics from "../useAnalytics";
 import { Skeleton } from "@/components/ui/skeleton";
+import DesignationStackedBarChart from "./DesignationStackedBarChart";
 
 export default function FacultyTabContent() {
   const { loading } = useAnalytics();
@@ -19,10 +20,16 @@ export default function FacultyTabContent() {
   }
 
   return (
-    <main className="flex w-full flex-col gap-4 sm:flex-row">
-      <TotalFacultyCard />
-      <TotalTeachersCard />
-      <TotalAdminsCard />
-    </main>
+    <>
+      <section className="flex w-full flex-col gap-4 sm:flex-row">
+        <TotalFacultyCard />
+        <TotalTeachersCard />
+        <TotalAdminsCard />
+      </section>
+
+      <main className="mt-4">
+        <DesignationStackedBarChart />
+      </main>
+    </>
   );
 }
