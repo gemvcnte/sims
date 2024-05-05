@@ -30,24 +30,13 @@ const StudentsStackedBarChart = () => {
     return <p>No student data available</p>;
   }
 
-  const excludedKeys = [
-    "totalStudents",
-    "totalStudentsPercentage",
-    "totalMaleStudents",
-    "totalMaleStudentsPercentage",
-    "totalFemaleStudents",
-    "totalFemaleStudentsPercentage",
-    "totalAcadStudents",
-    "totalAcadStudentsPercentage",
-    "totalTVLStudents",
-    "totalTVLStudentsPercentage",
-  ];
-  const filteredData = Object.entries(studentData)
-    .filter(([category]) => !excludedKeys.includes(category))
-    .map(([category, count]) => ({
-      category,
-      count,
-    }));
+  const maleFemalePerStrand = studentData.maleFemalePerStrand.map(
+    ({ _id, MALE, FEMALE }) => ({
+      strand: _id[0], // Assuming each entry contains only one strand, you might need to adjust this
+      MALE,
+      FEMALE,
+    }),
+  );
 
   return (
     <Card className="w-full">
@@ -61,7 +50,7 @@ const StudentsStackedBarChart = () => {
           <BarChart
             width={500}
             height={300}
-            data={filteredData}
+            data={maleFemalePerStrand}
             margin={{
               top: 20,
               right: 30,
@@ -70,11 +59,12 @@ const StudentsStackedBarChart = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="category" />
+            <XAxis dataKey="strand" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" stackId="a" fill="#8884d8" />
+            <Bar dataKey="MALE" stackId="a" fill="#82ca9d" />
+            <Bar dataKey="FEMALE" stackId="a" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
