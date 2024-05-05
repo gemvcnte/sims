@@ -42,7 +42,7 @@ const StudentsStackedBarChart = () => {
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="text-sm font-bold">
-          Students Distribution by Strand
+          Students Distribution by Strand and Gender
         </CardTitle>
       </CardHeader>
       <CardContent>

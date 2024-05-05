@@ -29,15 +29,21 @@ const StudentsGenderPieChart = () => {
   }
 
   const maleFemaleData = [
-    { name: "Total Male Students", value: studentData.totalMaleStudents },
-    { name: "Total Female Students", value: studentData.totalFemaleStudents },
+    {
+      name: "Total Grade 11 Students",
+      value: studentData.totalGrade11Students,
+    },
+    {
+      name: "Total Grade 12 Students",
+      value: studentData.totalGrade12Students,
+    },
   ];
 
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="text-sm font-bold">
-          Students Gender Distribution
+          Students Distribution by Grade Level
         </CardTitle>
       </CardHeader>
       <CardContent>
