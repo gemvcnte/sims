@@ -7,7 +7,7 @@ export default function TotalTvlStudents() {
   const { analyticsData, loading, error } = useAnalytics();
 
   if (loading) {
-    return <Skeleton className="h-[110px] w-full sm:w-[33%]"></Skeleton>;
+    return <Skeleton className="h-[126px] w-full sm:w-[33%]"></Skeleton>;
   }
 
   if (error) {
