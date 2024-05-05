@@ -42,9 +42,12 @@ export default function TotalAcademicStudents() {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{totalAcadStudents}</div>
-        {/* <p className="text-xs text-muted-foreground">
-          {totalAcadStudentsPercentage?.toFixed(2) || 0}% from last semester
-        </p> */}
+
+        {totalAcadStudentsPercentage !== null ? (
+          <p className="text-xs text-muted-foreground">
+            {totalAcadStudentsPercentage?.toFixed(2) || 0}% from last semester
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   );

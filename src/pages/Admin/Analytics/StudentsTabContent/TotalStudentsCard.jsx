@@ -41,9 +41,12 @@ export default function TotalStudentsCard() {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{totalStudents}</div>
-        {/* <p className="text-xs text-muted-foreground">
-          {totalStudentsPercentage?.toFixed(2) || 0}% from last semester
-        </p> */}
+
+        {totalStudentsPercentage !== null ? (
+          <p className="text-xs text-muted-foreground">
+            {totalStudentsPercentage?.toFixed(2) || 0}% from last semester
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   );

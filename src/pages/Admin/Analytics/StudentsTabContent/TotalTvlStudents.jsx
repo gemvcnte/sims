@@ -41,10 +41,13 @@ export default function TotalTvlStudents() {
         <div className="text-2xl font-bold">
           {analyticsData.students.totalTVLStudents}
         </div>
-        {/* <p className="text-xs text-muted-foreground">
-          {analyticsData.students.totalTVLStudentsPercentage?.toFixed(2)}% from
-          last semester
-        </p> */}
+
+        {analyticsData.students.totalTVLStudentsPercentage !== null ? (
+          <p className="text-xs text-muted-foreground">
+            {analyticsData.students.totalTVLStudentsPercentage?.toFixed(2)}%
+            from last semester
+          </p>
+        ) : null}
       </CardContent>
     </Card>
   );
