@@ -48,6 +48,8 @@ export const AllStudentsProvider = ({ children }) => {
   const filterStudents = ({ schoolYear, semester, gradeLevel, strand }) => {
     let filtered = originalAllStudents;
 
+    const isAllSchoolYearSemester = schoolYear === "all" && semester === "all";
+
     if (schoolYear !== "all") {
       filtered = filtered.filter((application) =>
         application.schoolYear.some(
@@ -64,7 +66,19 @@ export const AllStudentsProvider = ({ children }) => {
       );
     }
 
-    if (gradeLevel !== "") {
+    // Filter by gradeLevel when both schoolYear and semester are not set to "all"
+    if (!isAllSchoolYearSemester && gradeLevel !== "") {
+      const gradeLevelNum = parseInt(gradeLevel, 10);
+      filtered = filtered.filter((application) =>
+        application.schoolYear.some(
+          (schoolYearItem) =>
+            schoolYearItem.year === schoolYear &&
+            schoolYearItem.semester === semester &&
+            schoolYearItem.gradeLevel === gradeLevelNum,
+        ),
+      );
+    }
+    if (isAllSchoolYearSemester && gradeLevel !== "") {
       const gradeLevelNum = parseInt(gradeLevel, 10);
       filtered = filtered.filter((application) =>
         application.schoolYear.some(
