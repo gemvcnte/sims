@@ -1486,6 +1486,37 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       "schoolYear.semester": currentSemester,
       "schoolYear.strand": "HE",
     });
+    
+
+    // Fetching students where the current school year and semester match
+    const currentSemesterStudents = await Student.find({
+      "schoolYear": {
+        $elemMatch: {
+          "year": currentSchoolYear,
+          "semester": currentSemester
+        }
+      }
+    }).exec();
+
+    // Extracting the schoolYear object that matches the current semester
+    const currentSemesterSchoolYears = currentSemesterStudents.map(student => {
+      return student.schoolYear.find(year => year.year === currentSchoolYear && year.semester === currentSemester);
+    });
+
+
+    console.log(`currentSemesterSchoolYears`,currentSemesterSchoolYears)
+
+    // Counting grade 11 and grade 12 students within the current semester schoolYear objects
+    const totalGrade11Students = currentSemesterSchoolYears.filter(
+      schoolYear => schoolYear.gradeLevel === 11
+    ).length;
+
+    console.log(`totalGrade11Students`, totalGrade11Students)
+
+    const totalGrade12Students = currentSemesterSchoolYears.filter(
+      schoolYear => schoolYear.gradeLevel === 12
+    ).length;
+
 
     const calculatePercentageChange = async (current, previous) => {
       const currentCount = await current;
@@ -1624,8 +1655,19 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
             MALE: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
             FEMALE: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
           }
+        },
+        {
+          $group: {
+            _id: "$_id", // Group by unique strand ID
+            MALE: { $sum: "$MALE" }, // Sum the male count for each strand
+            FEMALE: { $sum: "$FEMALE" }, // Sum the female count for each strand
+          }
         }
       ]);
+      
+
+
+      
   
 
     res.json({
@@ -1646,6 +1688,8 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
         totalICTStudents,
         totalHEStudents,
         maleFemalePerStrand,
+        totalGrade11Students,
+        totalGrade12Students,
       },
       faculty: {
         totalTeachers,
