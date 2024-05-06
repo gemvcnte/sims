@@ -40,6 +40,7 @@ export const updateAdminPasswordEndpoint = `${baseUrl}/admin/update-password`;
 
 // analytics
 export const getAllAnalyticsEndpoint = `${baseUrl}/admin/analytics/all`;
+export const getDashboardAnalyticsEndpoint = `${baseUrl}/admin/analytics/dashboard`;
 
 // reset password
 export const StudentsEndpoint = `${baseUrl}/admin/students`;

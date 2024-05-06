@@ -60,7 +60,11 @@ export default function AdminSidebar() {
 
         <AnnouncementsDropdown />
 
-        <AnalyticsDrawer />
+        {/* <AnalyticsDrawer /> */}
+
+        <SidebarItem to="analytics" icon="material-symbols:analytics-outline">
+          Analytics
+        </SidebarItem>
 
         {/* <SidebarItem to="profile" icon="teenyicons:user-outline">
           Profile

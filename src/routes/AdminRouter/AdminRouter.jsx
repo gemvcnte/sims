@@ -23,6 +23,7 @@ import ArchiveTeachers from "@/pages/Admin/ArchiveTeachers";
 import ArchiveAdmins from "@/pages/Admin/ArchiveAdmins";
 import AdminSchedule from "@/pages/Admin/AdminSchedule";
 import AdminScheduleLayout from "@/pages/Admin/AdminSchedule/layout";
+import AnalyticsLayout from "@/pages/Admin/Analytics/layout";
 
 export default function AdminRouter() {
   return (
@@ -70,6 +71,8 @@ export default function AdminRouter() {
           <Route path="/all-classes/:id" element={<AdminSpecificClass />} />
 
           <Route path="/schedule" element={<AdminScheduleLayout />} />
+
+          <Route path="/analytics" element={<AnalyticsLayout />} />
         </Routes>
       </div>
     </>

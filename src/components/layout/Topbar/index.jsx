@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SelectSeparator } from "@/components/ui/select";
 
 export default function Topbar({ children }) {
   const { toggleSidebar } = useSidebarContext();
@@ -25,7 +26,9 @@ export default function Topbar({ children }) {
   const handleKeyDown = (event) => {
     if (
       (event.ctrlKey && event.key === "m") ||
-      (event.ctrlKey && event.key === "M")
+      (event.ctrlKey && event.key === "M") ||
+      (event.altKey && event.key === "q") ||
+      (event.altKey && event.key === "Q")
     ) {
       toggleMode();
     }
@@ -41,7 +44,7 @@ export default function Topbar({ children }) {
   return (
     <>
       {/* <ToastContainer /> */}
-      <header className="border-white-700 sticky top-0 z-50 mx-4 flex items-center justify-between border-b  bg-background/95 py-6 italic backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className=" sticky top-0 z-50 flex items-center justify-between  bg-background/95  px-4 py-6 italic backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <Icon
           icon="heroicons-outline:menu-alt-2"
           width="24"
@@ -49,7 +52,7 @@ export default function Topbar({ children }) {
           className="cursor-pointer lg:hidden"
           onClick={toggleSidebar}
         />
-        <span>{children}</span>
+        <span className="ml-4 sm:ml-0">{children}</span>
         <span className="flex justify-center sm:gap-2">
           {user?.role === "admin" && (
             <TooltipProvider delayDuration={10}>
@@ -79,6 +82,7 @@ export default function Topbar({ children }) {
           <UserNav />
         </span>
       </header>
+      <SelectSeparator className="m-0 mx-4" />
     </>
   );
 }
