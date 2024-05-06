@@ -1706,6 +1706,43 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
 
 
 
+const getDashboardAnalytics = asyncHandler(async (req, res) => {
+  try {
+    const globalSettings = await GlobalSettings.findOne().exec();
+    const currentSchoolYear = globalSettings.schoolYear;
+    const currentSemester = globalSettings.semester;
+
+    const totalStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+    });
+
+    const totalSections = await Classroom.countDocuments({
+      "schoolYear": currentSchoolYear,
+      "semester": currentSemester,
+    });
+
+
+    const totalTeachers = await Teacher.countDocuments({});
+    const totalAdmins = await Admin.countDocuments({});
+
+    const totalFaculty = totalTeachers + totalAdmins 
+
+    res.json({
+      totalStudents,
+      totalSections,
+      totalFaculty
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
+
+
+
+
+
 const resetTeacherPassword = asyncHandler(async (req, res) => {
   try {
     const { id } = req.body;
@@ -2413,6 +2450,7 @@ module.exports = {
   deleteArchivedAdmin,
   getStudentByLrn,
   updateSection,
+  getDashboardAnalytics,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {

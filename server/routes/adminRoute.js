@@ -149,6 +149,10 @@ router.get("/analytics/all",
 verifyToken,
  adminController.getAllAnalytics);
 
+router.get("/analytics/dashboard", 
+// verifyToken,
+ adminController.getDashboardAnalytics);
+
 // password
 router.patch(
   "/update-password",
