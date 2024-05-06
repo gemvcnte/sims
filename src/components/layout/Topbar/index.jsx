@@ -26,7 +26,9 @@ export default function Topbar({ children }) {
   const handleKeyDown = (event) => {
     if (
       (event.ctrlKey && event.key === "m") ||
-      (event.ctrlKey && event.key === "M")
+      (event.ctrlKey && event.key === "M") ||
+      (event.altKey && event.key === "q") ||
+      (event.altKey && event.key === "Q")
     ) {
       toggleMode();
     }

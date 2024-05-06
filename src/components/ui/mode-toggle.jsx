@@ -7,6 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
+import { useEffect } from "react";
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
@@ -15,6 +16,23 @@ export function ModeToggle() {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
   };
+
+  const handleKeyDown = (event) => {
+    if (
+      (event.altKey && event.key === "w") ||
+      (event.altKey && event.key === "W")
+    ) {
+      toggleTheme();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   return (
     <Button
