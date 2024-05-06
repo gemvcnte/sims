@@ -52,7 +52,7 @@ export default function Topbar({ children }) {
           className="cursor-pointer lg:hidden"
           onClick={toggleSidebar}
         />
-        <span>{children}</span>
+        <span className="ml-4 sm:ml-0">{children}</span>
         <span className="flex justify-center sm:gap-2">
           {user?.role === "admin" && (
             <TooltipProvider delayDuration={10}>
