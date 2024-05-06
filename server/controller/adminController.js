@@ -1486,6 +1486,37 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       "schoolYear.semester": currentSemester,
       "schoolYear.strand": "HE",
     });
+    
+
+    // Fetching students where the current school year and semester match
+    const currentSemesterStudents = await Student.find({
+      "schoolYear": {
+        $elemMatch: {
+          "year": currentSchoolYear,
+          "semester": currentSemester
+        }
+      }
+    }).exec();
+
+    // Extracting the schoolYear object that matches the current semester
+    const currentSemesterSchoolYears = currentSemesterStudents.map(student => {
+      return student.schoolYear.find(year => year.year === currentSchoolYear && year.semester === currentSemester);
+    });
+
+
+    console.log(`currentSemesterSchoolYears`,currentSemesterSchoolYears)
+
+    // Counting grade 11 and grade 12 students within the current semester schoolYear objects
+    const totalGrade11Students = currentSemesterSchoolYears.filter(
+      schoolYear => schoolYear.gradeLevel === 11
+    ).length;
+
+    console.log(`totalGrade11Students`, totalGrade11Students)
+
+    const totalGrade12Students = currentSemesterSchoolYears.filter(
+      schoolYear => schoolYear.gradeLevel === 12
+    ).length;
+
 
     const calculatePercentageChange = async (current, previous) => {
       const currentCount = await current;
@@ -1537,6 +1568,108 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
       })
     );
 
+    const teacherDistribution = await Teacher.aggregate([
+      {
+        $match: {
+          $or: [
+            { designation: { $in: ["TEACHER I", "TEACHER II", "TEACHER III", "MASTER TEACHER I", "MASTER TEACHER II", "MASTER TEACHER III"] } },
+            { designation: { $exists: false } },
+            { designation: { $eq: "" } }
+          ]
+        }
+      },
+      {
+        $group: {
+          _id: "$designation",
+          total: { $sum: 1 },
+          male: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+          female: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+        }
+      }
+    ]);
+    
+    const adminDistribution = await Admin.aggregate([
+      {
+        $match: {
+          $or: [
+            { designation: { $in: ["TEACHER I", "TEACHER II", "TEACHER III", "MASTER TEACHER I", "MASTER TEACHER II", "MASTER TEACHER III"] } },
+            { designation: { $exists: false } },
+            { designation: { $eq: "" } }
+          ]
+        }
+      },
+      {
+        $group: {
+          _id: "$designation",
+          total: { $sum: 1 },
+          male: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+          female: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+        }
+      }
+    ]);
+    
+    // Combine teacher and admin distributions
+    const combinedDistribution = {};
+    
+    teacherDistribution.forEach(entry => {
+      const { _id, total, male, female } = entry;
+      if (!combinedDistribution[_id]) {
+        combinedDistribution[_id] = { total, male, female };
+      } else {
+        combinedDistribution[_id].total += total;
+        combinedDistribution[_id].male += male;
+        combinedDistribution[_id].female += female;
+      }
+    });
+    
+    adminDistribution.forEach(entry => {
+      const { _id, total, male, female } = entry;
+      if (!combinedDistribution[_id]) {
+        combinedDistribution[_id] = { total, male, female };
+      } else {
+        combinedDistribution[_id].total += total;
+        combinedDistribution[_id].male += male;
+        combinedDistribution[_id].female += female;
+      }
+    });
+    
+    // Convert combinedDistribution to an array
+    const combinedDistributionArray = Object.entries(combinedDistribution).map(([designation, { total, male, female }]) => ({
+      _id: designation,
+      total,
+      male,
+      female
+    }));
+  
+      // Count male and female students per strand
+      const maleFemalePerStrand = await Student.aggregate([
+        {
+          $match: {
+            "schoolYear.year": currentSchoolYear,
+            "schoolYear.semester": currentSemester,
+          }
+        },
+        {
+          $group: {
+            _id: "$schoolYear.strand",
+            MALE: { $sum: { $cond: [{ $eq: ["$gender", "MALE"] }, 1, 0] } },
+            FEMALE: { $sum: { $cond: [{ $eq: ["$gender", "FEMALE"] }, 1, 0] } }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id", // Group by unique strand ID
+            MALE: { $sum: "$MALE" }, // Sum the male count for each strand
+            FEMALE: { $sum: "$FEMALE" }, // Sum the female count for each strand
+          }
+        }
+      ]);
+      
+
+
+      
+  
+
     res.json({
       students: {
         totalStudents,
@@ -1554,16 +1687,57 @@ const getAllAnalytics = asyncHandler(async (req, res) => {
         totalHumssStudents,
         totalICTStudents,
         totalHEStudents,
+        maleFemalePerStrand,
+        totalGrade11Students,
+        totalGrade12Students,
       },
       faculty: {
         totalTeachers,
         totalAdmins,
+        distribution: combinedDistribution
       },
     });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
   }
 });
+
+
+
+
+
+const getDashboardAnalytics = asyncHandler(async (req, res) => {
+  try {
+    const globalSettings = await GlobalSettings.findOne().exec();
+    const currentSchoolYear = globalSettings.schoolYear;
+    const currentSemester = globalSettings.semester;
+
+    const totalStudents = await Student.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+    });
+
+    const totalSections = await Classroom.countDocuments({
+      "schoolYear": currentSchoolYear,
+      "semester": currentSemester,
+    });
+
+
+    const totalTeachers = await Teacher.countDocuments({});
+    const totalAdmins = await Admin.countDocuments({});
+
+    const totalFaculty = totalTeachers + totalAdmins 
+
+    res.json({
+      totalStudents,
+      totalSections,
+      totalFaculty
+    });
+  } catch (error) {
+    res.status(500).json({ message: `${error}` });
+  }
+});
+
 
 
 
@@ -2276,6 +2450,7 @@ module.exports = {
   deleteArchivedAdmin,
   getStudentByLrn,
   updateSection,
+  getDashboardAnalytics,
 };
 
 // const createTeacher = asyncHandler(async (req, res) => {
