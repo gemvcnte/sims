@@ -72,9 +72,10 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
       refetchAnnouncements();
       reset();
       onClose();
-      setIsLoading(false);
     } catch (error) {
       console.error("Error handling submit:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
