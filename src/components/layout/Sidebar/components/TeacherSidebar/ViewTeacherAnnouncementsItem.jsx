@@ -15,9 +15,9 @@ export default function ViewTeacherAnnouncementsItem() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger>
-        <DropdownMenuItem>
+        <button className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
           <Link onClick={handleDialogClick}>View Announcements</Link>
-        </DropdownMenuItem>
+        </button>
       </DialogTrigger>
       <ViewTeacherAnnouncementsModal onClose={handleDialogClick} />
     </Dialog>
