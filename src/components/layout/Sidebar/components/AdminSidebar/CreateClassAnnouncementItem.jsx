@@ -1,3 +1,4 @@
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import CreateAdminClassAnnouncementModal from "@/pages/Admin/CreateAdminAnnouncementModal";
@@ -15,9 +16,11 @@ export default function CreateClassAnnouncementItem() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger>
-        <DropdownMenuItem>
-          <Link onClick={handleDialogClick}>Create Class Announcement</Link>
-        </DropdownMenuItem>
+        <Link onClick={handleDialogClick}>
+          <ButtonDropdownItem>
+            Create Create Class Announcement
+          </ButtonDropdownItem>
+        </Link>
       </DialogTrigger>
       <CreateAdminClassAnnouncementModal onClose={handleDialogClick} />
     </Dialog>

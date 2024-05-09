@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
 import useActiveClasses from "@/hooks/useActiveClasses";
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 
 export function StudentsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -63,43 +64,35 @@ export function StudentsDropdown({}) {
           </Link>
         </DropdownMenuItem> */}
 
-        <DropdownMenuItem>
-          <Link
-            onClick={handleDropdownClick}
-            to="student-enrollment-monitoring"
-            className="w-full"
-          >
-            Student Enrollment Monitoring
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          onClick={handleDropdownClick}
+          to="student-enrollment-monitoring"
+          className="w-full"
+        >
+          <ButtonDropdownItem>Student Enrollment Monitoring</ButtonDropdownItem>
+        </Link>
 
-        <DropdownMenuItem>
-          <Link
-            to="registration"
-            // target="_blank"
-            className="w-full"
-            onClick={handleDropdownClick}
-          >
-            Student Enrollment Form
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          to="registration"
+          // target="_blank"
+          className="w-full"
+          onClick={handleDropdownClick}
+        >
+          <ButtonDropdownItem>Student Enrollment Form</ButtonDropdownItem>
+        </Link>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <button className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-start text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-              <Link className="w-full" onClick={handleDialogClick}>
-                Reset Student Password
-              </Link>
-            </button>
+            <Link className="w-full" onClick={handleDialogClick}>
+              <ButtonDropdownItem>Reset Student Password</ButtonDropdownItem>
+            </Link>
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Student" />
         </Dialog>
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="students" className="w-full">
-            View All Students
-          </Link>
-        </DropdownMenuItem>
+        <Link onClick={handleDropdownClick} to="students" className="w-full">
+          <ButtonDropdownItem>View All Students</ButtonDropdownItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

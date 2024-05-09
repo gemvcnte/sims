@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
 import useActiveClasses from "@/hooks/useActiveClasses";
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 
 export function ArchiveDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -59,35 +60,29 @@ export function ArchiveDropdown({}) {
         <DropdownMenuLabel>Archived Accounts </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <Link
-            to="archived/students"
-            onClick={handleDropdownClick}
-            className="w-full"
-          >
-            Student Accounts
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          to="archived/students"
+          onClick={handleDropdownClick}
+          className="w-full"
+        >
+          <ButtonDropdownItem>Student Accounts</ButtonDropdownItem>
+        </Link>
 
-        <DropdownMenuItem>
-          <Link
-            to="archived/teachers"
-            onClick={handleDropdownClick}
-            className="w-full"
-          >
-            Teacher Accounts
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          to="archived/teachers"
+          onClick={handleDropdownClick}
+          className="w-full"
+        >
+          <ButtonDropdownItem>Teacher Accounts</ButtonDropdownItem>
+        </Link>
 
-        <DropdownMenuItem>
-          <Link
-            to="archived/admins"
-            onClick={handleDropdownClick}
-            className="w-full"
-          >
-            Admin Accounts
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          to="archived/admins"
+          onClick={handleDropdownClick}
+          className="w-full"
+        >
+          <ButtonDropdownItem>Admin Accounts</ButtonDropdownItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

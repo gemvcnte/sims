@@ -1,3 +1,4 @@
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import ViewTeacherAnnouncementsModal from "@/pages/Teacher/ViewTeacherAnnouncementsModal";
@@ -15,9 +16,9 @@ export default function ViewTeacherAnnouncementsItem() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger>
-        <DropdownMenuItem>
-          <Link onClick={handleDialogClick}>View Announcements</Link>
-        </DropdownMenuItem>
+        <Link onClick={handleDialogClick}>
+          <ButtonDropdownItem>View Announcements </ButtonDropdownItem>
+        </Link>
       </DialogTrigger>
       <ViewTeacherAnnouncementsModal onClose={handleDialogClick} />
     </Dialog>

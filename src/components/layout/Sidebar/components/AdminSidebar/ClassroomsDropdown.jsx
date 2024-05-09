@@ -16,6 +16,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import CreateNewSection from "@/pages/Admin/CreateNewSection";
 import showSuccessNotification from "@/utils/ShowSuccessNotification";
 import useActiveClasses from "@/hooks/useActiveClasses";
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 
 export function ClassroomsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -67,11 +68,9 @@ export function ClassroomsDropdown({}) {
           </Link>
         </DropdownMenuItem> */}
 
-        <DropdownMenuItem>
-          <Link onClick={handleDropdownClick} to="all-classes">
-            View All Sections
-          </Link>
-        </DropdownMenuItem>
+        <Link onClick={handleDropdownClick} to="all-classes">
+          <ButtonDropdownItem>View All Sections</ButtonDropdownItem>
+        </Link>
 
         {/* <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Section Schedule</Link>
@@ -79,9 +78,9 @@ export function ClassroomsDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger>
-            <button className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-              <Link onClick={handleDialogClick}>Create New Section</Link>
-            </button>
+            <Link onClick={handleDialogClick}>
+              <ButtonDropdownItem>Create New Section </ButtonDropdownItem>
+            </Link>
           </DialogTrigger>
           <CreateNewSection onClose={handleDialogClick} />
         </Dialog>
