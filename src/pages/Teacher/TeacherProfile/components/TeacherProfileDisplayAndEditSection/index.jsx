@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   PersonalInformationSection,
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const TeacherProfileDisplayAndEditSection = () => {
   const { teacherProfile, error, setTeacherProfile } = useTeacherProfile();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (field, value) => {
     setTeacherProfile({
@@ -27,7 +28,9 @@ const TeacherProfileDisplayAndEditSection = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const updatedProfileData = { ...teacherProfile };
+
     try {
       const response = await updateTeacherProfileApi(updatedProfileData);
       if (response && response.status === 200) {
@@ -38,6 +41,8 @@ const TeacherProfileDisplayAndEditSection = () => {
       }
     } catch (error) {
       console.error("Error in component:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,7 +75,9 @@ const TeacherProfileDisplayAndEditSection = () => {
         /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isLoading}>
+            Save changes
+          </Button>
         </footer>
       </form>
     </>
