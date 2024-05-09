@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
 import useActiveClasses from "@/hooks/useActiveClasses";
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 
 export function TeachersDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -60,30 +61,24 @@ export function TeachersDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <button className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-              <Link className="w-full" onClick={handleDialogClick}>
-                Reset Teacher Password
-              </Link>
-            </button>
+            <Link className="w-full" onClick={handleDialogClick}>
+              <ButtonDropdownItem>Reset Teacher Password</ButtonDropdownItem>
+            </Link>
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Teacher" />
         </Dialog>
 
-        <button className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-          <Link
-            to="create-teacher-account"
-            onClick={handleDropdownClick}
-            className="w-full"
-          >
-            Create Teacher Account
-          </Link>
-        </button>
+        <Link
+          to="create-teacher-account"
+          onClick={handleDropdownClick}
+          className="w-full"
+        >
+          <ButtonDropdownItem>Create Teacher Account</ButtonDropdownItem>
+        </Link>
 
-        <DropdownMenuItem>
-          <Link to="teachers" onClick={handleDropdownClick} className="w-full">
-            View All Teachers
-          </Link>
-        </DropdownMenuItem>
+        <Link to="teachers" onClick={handleDropdownClick} className="w-full">
+          <ButtonDropdownItem>View All Teachers</ButtonDropdownItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );
