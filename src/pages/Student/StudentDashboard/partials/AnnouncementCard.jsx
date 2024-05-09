@@ -78,7 +78,7 @@ const AnnouncementCard = ({ announcement }) => {
             <AccordionTrigger onClick={toggleAccordion}>
               {accordionOpen ? "Hide Details" : "Show Details"}{" "}
             </AccordionTrigger>
-            <AccordionContent className="break-all">
+            <AccordionContent className="break-word overflow-auto">
               {announcement.content}
             </AccordionContent>
           </AccordionItem>
