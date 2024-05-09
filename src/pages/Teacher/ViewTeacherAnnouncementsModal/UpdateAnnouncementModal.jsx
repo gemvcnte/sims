@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAnnouncementsContext } from "@/pages/Admin/AdminDashboard/hooks/useAnnouncements.jsx";
+import { Loader2 } from "lucide-react";
 
 const schema = yup.object().shape({
   title: yup
@@ -36,6 +37,7 @@ const schema = yup.object().shape({
 
 export default function UpdateAnnouncementModal({ announcement, onClose }) {
   const { refetchAnnouncements } = useAnnouncementsContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -49,6 +51,7 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
 
   const onSubmit = async () => {
     try {
+      setIsLoading(true);
       const { title, content } = getValues();
 
       const updatedAnnouncementData = {
@@ -63,6 +66,8 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -104,9 +109,16 @@ export default function UpdateAnnouncementModal({ announcement, onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit">
-              <span>Save changes</span>
-            </Button>
+            {!isLoading ? (
+              <Button type="submit">
+                <span>Save changes</span>
+              </Button>
+            ) : (
+              <Button disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </Button>
+            )}
           </DialogFooter>
         </form>
       </DialogContent>
