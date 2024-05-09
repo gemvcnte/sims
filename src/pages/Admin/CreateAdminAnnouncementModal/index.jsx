@@ -45,11 +45,13 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
     resolver: yupResolver(schema),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const classes = await getTeacherAssignedClassesApi();
-        setClasses(classes);
+        setClasses(classes || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,6 +62,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       // Rename selectedClass to classId
       const { selectedClass, ...formData } = data;
       const formDataWithRenamedKey = { classId: selectedClass, ...formData };
@@ -69,6 +72,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
       refetchAnnouncements();
       reset();
       onClose();
+      setIsLoading(false);
     } catch (error) {
       console.error("Error handling submit:", error);
     }
@@ -126,7 +130,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
                 id="content"
                 {...register("content")}
                 placeholder="Enter announcement content..."
-                maxLength={256} // Set maximum length to 256 characters
+                maxLength={256}
               />
               {errors.content && (
                 <span className="text-red-500">{errors.content.message}</span>
@@ -135,7 +139,7 @@ export default function CreateAdminClassAnnouncementModal({ onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit">
+            <Button type="submit" disabled={isLoading}>
               <span>
                 Create <span className="hidden sm:inline">class</span>{" "}
                 announcement
