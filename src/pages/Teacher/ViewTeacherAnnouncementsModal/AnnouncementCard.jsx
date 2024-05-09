@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { MoreVertical } from "lucide-react";
+import { Loader2, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -40,6 +40,7 @@ const AnnouncementCard = ({ announcement }) => {
   const { user } = useAuth();
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const checkIsMobile = () => {
     const width = window.innerWidth;
@@ -67,6 +68,7 @@ const AnnouncementCard = ({ announcement }) => {
 
   const deleteAnnouncement = async (event) => {
     event.preventDefault();
+    setIsDeleting(true);
 
     try {
       await deleteAnnouncementApi(announcement._id);
@@ -75,6 +77,8 @@ const AnnouncementCard = ({ announcement }) => {
       setIsDeleteAlertOpen(false);
     } catch (error) {
       console.error("Error handling submit:", error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -164,9 +168,16 @@ const AnnouncementCard = ({ announcement }) => {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={deleteAnnouncement}>
-                          Delete
-                        </AlertDialogAction>
+                        {!isDeleting ? (
+                          <AlertDialogAction onClick={deleteAnnouncement}>
+                            Delete
+                          </AlertDialogAction>
+                        ) : (
+                          <Button disabled>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                          </Button>
+                        )}
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
