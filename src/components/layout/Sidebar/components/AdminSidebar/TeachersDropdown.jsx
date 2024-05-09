@@ -69,7 +69,7 @@ export function TeachersDropdown({}) {
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Teacher" />
         </Dialog>
 
-        <DropdownMenuItem>
+        <button className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
           <Link
             to="create-teacher-account"
             onClick={handleDropdownClick}
@@ -77,7 +77,7 @@ export function TeachersDropdown({}) {
           >
             Create Teacher Account
           </Link>
-        </DropdownMenuItem>
+        </button>
 
         <DropdownMenuItem>
           <Link to="teachers" onClick={handleDropdownClick} className="w-full">
