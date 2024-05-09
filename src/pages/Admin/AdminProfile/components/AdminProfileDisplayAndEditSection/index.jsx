@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   PersonalInformationSection,
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminProfileDisplayAndEditSection = () => {
   const { adminProfile, error, setAdminProfile } = useAdminProfile();
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ const AdminProfileDisplayAndEditSection = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Error in component:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,7 +74,9 @@ const AdminProfileDisplayAndEditSection = () => {
       /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" disabled={isLoading}>
+            Save changes
+          </Button>
         </footer>
       </form>
     </>
