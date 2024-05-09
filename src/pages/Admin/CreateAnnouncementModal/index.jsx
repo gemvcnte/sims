@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { CardContent } from "@/components/ui/card";
 import { createAnnouncementApi } from "./helpers";
 import { useAnnouncementsContext } from "../AdminDashboard/hooks/useAnnouncements";
+import { useState } from "react";
 
 const schema = yup.object().shape({
   title: yup
@@ -42,8 +43,11 @@ export default function CreateAnnouncementModal({ onClose }) {
     resolver: yupResolver(schema),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       await createAnnouncementApi(data);
 
       refetchAnnouncements();
@@ -51,6 +55,8 @@ export default function CreateAnnouncementModal({ onClose }) {
       onClose();
     } catch (error) {
       console.error("Error handling submit:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,7 +77,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                 id="title"
                 {...register("title")}
                 placeholder="Enter announcement title..."
-                maxLength={51} // Set maximum length to 51 characters
+                maxLength={51}
               />
               {errors.title && (
                 <span className="text-red-500">{errors.title.message}</span>
@@ -83,7 +89,7 @@ export default function CreateAnnouncementModal({ onClose }) {
                 id="content"
                 {...register("content")}
                 placeholder="Enter announcement content..."
-                maxLength={256} // Set maximum length to 256 characters
+                maxLength={256}
               />
               {errors.content && (
                 <span className="text-red-500">{errors.content.message}</span>
@@ -92,7 +98,7 @@ export default function CreateAnnouncementModal({ onClose }) {
           </CardContent>
 
           <DialogFooter>
-            <Button type="submit">
+            <Button type="submit" disabled={isLoading}>
               <span>
                 Create <span className="hidden sm:inline">public</span>{" "}
                 announcement

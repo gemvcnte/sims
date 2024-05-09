@@ -24,8 +24,12 @@ export default function CreateNewSection({ onClose }) {
   const [selectedGradeLevel, setSelectedGradeLevel] = useState(null);
   const [selectedStrand, setSelectedStrand] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleCreateSectionButton = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const sectionDetails = {
       schoolYear: globalSettings.schoolYear,
       semester: globalSettings.semester,
@@ -49,6 +53,8 @@ export default function CreateNewSection({ onClose }) {
         setSelectedStrand(""),
         onClose())
       : showErrorNotification(result.message);
+
+    setIsLoading(false);
   };
 
   return (
@@ -112,7 +118,9 @@ export default function CreateNewSection({ onClose }) {
           </div>
 
           <DialogFooter>
-            <Button type="submit">Create Section</Button>
+            <Button type="submit" disabled={isLoading}>
+              Create Section
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
