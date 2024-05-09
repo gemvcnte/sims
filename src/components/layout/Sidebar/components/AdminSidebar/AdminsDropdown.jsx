@@ -14,6 +14,7 @@ import { useSidebarContext } from "@/contexts/SidebarContext/index.jsx";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ResetPasswordModal from "@/components/reset-password-modal";
 import useActiveClasses from "@/hooks/useActiveClasses";
+import ButtonDropdownItem from "@/components/button-dropdown-item";
 
 export function AdminsDropdown({}) {
   const { toggleSidebar } = useSidebarContext();
@@ -60,30 +61,24 @@ export function AdminsDropdown({}) {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <button className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-              <Link className="w-full" onClick={handleDialogClick}>
-                Reset Admin Password
-              </Link>
-            </button>
+            <Link className="w-full" onClick={handleDialogClick}>
+              <ButtonDropdownItem>Reset Admin Password</ButtonDropdownItem>
+            </Link>
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Admin" />
         </Dialog>
 
-        <DropdownMenuItem>
-          <Link
-            to="create-admin-account"
-            onClick={handleDropdownClick}
-            className="w-full"
-          >
-            Create Admin Account
-          </Link>
-        </DropdownMenuItem>
+        <Link
+          to="create-admin-account"
+          onClick={handleDropdownClick}
+          className="w-full"
+        >
+          <ButtonDropdownItem>Create Admin Account</ButtonDropdownItem>
+        </Link>
 
-        <DropdownMenuItem>
-          <Link to="admins" onClick={handleDropdownClick} className="w-full">
-            View All Admins
-          </Link>
-        </DropdownMenuItem>
+        <Link to="admins" onClick={handleDropdownClick} className="w-full">
+          <ButtonDropdownItem>View All Admins</ButtonDropdownItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );
