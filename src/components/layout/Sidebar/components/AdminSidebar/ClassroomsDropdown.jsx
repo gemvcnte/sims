@@ -67,11 +67,11 @@ export function ClassroomsDropdown({}) {
           </Link>
         </DropdownMenuItem> */}
 
-        <DropdownMenuItem>
+        <button className="relative flex w-full cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
           <Link onClick={handleDropdownClick} to="all-classes">
             View All Sections
           </Link>
-        </DropdownMenuItem>
+        </button>
 
         {/* <DropdownMenuItem>
           <Link onClick={handleDropdownClick}>View Section Schedule</Link>
