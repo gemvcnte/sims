@@ -35,6 +35,8 @@ export function AdminsDropdown({}) {
     "/create-admin-account",
   ]);
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
@@ -58,7 +60,6 @@ export function AdminsDropdown({}) {
       <DropdownMenuContent align="start">
         <DropdownMenuLabel>Admins</DropdownMenuLabel>
         <DropdownMenuSeparator />
-
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Link className="w-full" onClick={handleDialogClick}>
@@ -67,15 +68,15 @@ export function AdminsDropdown({}) {
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Admin" />
         </Dialog>
-
-        <Link
-          to="create-admin-account"
-          onClick={handleDropdownClick}
-          className="w-full"
-        >
-          <ButtonDropdownItem>Create Admin Account</ButtonDropdownItem>
-        </Link>
-
+        {!isOnUatEnvironment ? (
+          <Link
+            to="create-admin-account"
+            onClick={handleDropdownClick}
+            className="w-full"
+          >
+            <ButtonDropdownItem>Create Admin Account</ButtonDropdownItem>
+          </Link>
+        ) : null}
         <Link to="admins" onClick={handleDropdownClick} className="w-full">
           <ButtonDropdownItem>View All Admins</ButtonDropdownItem>
         </Link>
