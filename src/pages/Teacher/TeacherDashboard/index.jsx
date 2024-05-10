@@ -7,11 +7,13 @@ import { useTeacherProfile } from "../TeacherProfile/components/TeacherProfileDi
 export default function TeacherDashboard() {
   const { teacherProfile, error } = useTeacherProfile();
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <main className="w-full">
       <Topbar>DASHBOARD</Topbar>
       <section className="flex flex-col gap-4 p-4 md:flex-row">
-        <ProfileProgressCard />
+        {!isOnUatEnvironment ? <ProfileProgressCard /> : null}
         <DashboardAnnouncementCard />
       </section>
     </main>

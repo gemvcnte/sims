@@ -11,6 +11,8 @@ import TotalSectionsCard from "./partials/TotalSectionsCard";
 export default function AdminDashboard() {
   const { isAdminMode } = useTeacherAdminMode();
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <AdminDashboardLayout>
       <main className="w-full">
@@ -25,7 +27,7 @@ export default function AdminDashboard() {
             </main>
           ) : null}
           <section className="order-1 flex flex-col gap-4 p-4 sm:order-2 md:flex-row">
-            <ProfileProgressCard />
+            {!isOnUatEnvironment ? <ProfileProgressCard /> : null}
             <DashboardAnnouncementCard />
           </section>
         </div>
