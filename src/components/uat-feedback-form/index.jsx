@@ -76,9 +76,9 @@ export default function UatFeedbackForm() {
                         <img
                           src={master}
                           alt=""
-                          className="w-12 rounded-full"
+                          className="h-12 w-12 rounded-full bg-cover"
                         />
-                        <p>REPORT ISSUE TO SENPAI BOB 🗿</p>
+                        <p>REPORT ISSUE TO SENPAI RAI 🗿</p>
                       </div>
                     </AccordionTrigger>
                   </TooltipTrigger>
@@ -105,14 +105,18 @@ export default function UatFeedbackForm() {
                     />
 
                     <Button className="mt-4 w-full" onClick={handleSubmit}>
-                      Submit 凸( •̀ω•́ )凸
+                      Submit ( •̀ω•́ )
                     </Button>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
             </Draggable>
             <TooltipContent>
-              <p>You can drag me (づ๑•ᴗ•๑)づ♡ ूाीू</p>
+              <p>
+                You can drag me around (づ๑•ᴗ•๑)づ♡ <br /> You're only seeing
+                this component because <br /> you're on a SIMS UA-Testing
+                Environment
+              </p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
