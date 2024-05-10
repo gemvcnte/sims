@@ -6,6 +6,8 @@ export function EducationalInformationSection({
   adminProfile,
   handleInputChange,
 }) {
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <section className=" educational-information-section gap-4 break-words p-4 sm:flex">
       <header className="mb-2 text-center sm:max-w-[25%]  sm:text-start md:max-w-[30%] ">
@@ -25,6 +27,7 @@ export function EducationalInformationSection({
             Teaching Year/s
           </Label>
           <InputField
+            disabled={isOnUatEnvironment}
             type="number"
             placeholder="Enter Number of Years Teaching"
             value={adminProfile?.numOfYearsTeaching}
@@ -42,6 +45,7 @@ export function EducationalInformationSection({
             Designation
           </Label>
           <select
+            disabled={isOnUatEnvironment}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="designation"
             value={adminProfile?.designation}
@@ -73,6 +77,7 @@ export function EducationalInformationSection({
             Specialization
           </Label>
           <select
+            disabled={isOnUatEnvironment}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="specialization"
             value={adminProfile?.specialization}
@@ -100,6 +105,7 @@ export function EducationalInformationSection({
             Attainment
           </Label>
           <select
+            disabled={isOnUatEnvironment}
             className="col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             id="highestEducationalAttainment"
             value={adminProfile?.highestEducationalAttainment}
