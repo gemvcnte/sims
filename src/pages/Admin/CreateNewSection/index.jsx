@@ -57,6 +57,8 @@ export default function CreateNewSection({ onClose }) {
     setIsLoading(false);
   };
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <>
       <DialogContent className="sm:max-w-[425px]">
@@ -101,6 +103,7 @@ export default function CreateNewSection({ onClose }) {
               Name
             </Label>
             <Input
+              maxLength={isOnUatEnvironment ? 25 : null}
               required
               id="name"
               placeholder="Enter Section Name"
