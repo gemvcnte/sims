@@ -38,7 +38,8 @@ const schema = yup.object().shape({
 export default function UatFeedbackForm() {
   const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
 
-  if (!isOnUatEnvironment) return null;
+  // if (!isOnUatEnvironment) return null;
+  return null;
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -116,6 +117,12 @@ export default function UatFeedbackForm() {
                 You can drag me around (づ๑•ᴗ•๑)づ♡ <br /> You're only seeing
                 this component because <br /> you're on a SIMS UA-Testing
                 Environment
+                <br />
+                <br />
+                <i>
+                  Note: Close this component first before interacting with any
+                  other element
+                </i>
               </p>
             </TooltipContent>
           </Tooltip>
