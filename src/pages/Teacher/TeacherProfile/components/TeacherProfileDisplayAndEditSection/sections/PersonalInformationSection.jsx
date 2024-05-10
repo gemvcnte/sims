@@ -7,6 +7,8 @@ export function PersonalInformationSection({
   teacherProfile,
   handleInputChange,
 }) {
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <section className="academic-information-section gap-4 p-4 sm:flex">
       <header className="mb-2 text-center sm:max-w-[25%] sm:text-start md:max-w-[30%]">
@@ -23,6 +25,7 @@ export function PersonalInformationSection({
             Last Name
           </Label>
           <Input
+            disabled={isOnUatEnvironment}
             required
             id="lastName"
             type="text"
@@ -39,6 +42,7 @@ export function PersonalInformationSection({
             First Name
           </Label>
           <Input
+            disabled={isOnUatEnvironment}
             required
             id="firstName"
             type="text"
@@ -55,6 +59,7 @@ export function PersonalInformationSection({
             Middle Name
           </Label>
           <Input
+            disabled={isOnUatEnvironment}
             id="middleName"
             type="text"
             placeholder="Input Your Middle Name"
@@ -73,8 +78,9 @@ export function PersonalInformationSection({
             Extension Name
           </Label>
           <select
+            disabled={isOnUatEnvironment}
             required
-            className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className=":opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground hover:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             value={teacherProfile?.extensionName}
             name="extensionName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -92,6 +98,7 @@ export function PersonalInformationSection({
             BirthDate
           </Label>
           <InputField
+            disabled={isOnUatEnvironment}
             required
             type="date"
             placeholder="Input Your Birthdate (MM/DD/YY)"
@@ -106,7 +113,8 @@ export function PersonalInformationSection({
             Gender
           </Label>
           <select
-            className=":cursor-not-allowed :opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            disabled={isOnUatEnvironment}
+            className=":opacity-50 col-span-3 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground hover:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             value={teacherProfile?.gender}
             required
             name="gender"
@@ -126,6 +134,7 @@ export function PersonalInformationSection({
             Current Address
           </Label>
           <InputField
+            disabled={isOnUatEnvironment}
             type="text"
             placeholder="E.g., 123 Purok St, Barangay, Municipality"
             value={teacherProfile?.currentAddress}
@@ -139,6 +148,7 @@ export function PersonalInformationSection({
             Email
           </Label>
           <InputField
+            disabled={isOnUatEnvironment}
             required={true}
             type="email"
             placeholder="Input Your Email"
