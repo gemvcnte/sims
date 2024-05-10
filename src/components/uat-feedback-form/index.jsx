@@ -39,7 +39,7 @@ export default function UatFeedbackForm() {
   const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
 
   if (!isOnUatEnvironment) return null;
-  // return null;
+  return null;
 
   const form = useForm({
     resolver: yupResolver(schema),
