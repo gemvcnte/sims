@@ -35,6 +35,8 @@ export function TeachersDropdown({}) {
     "/create-teacher-account",
   ]);
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
       <DropdownMenuTrigger>
@@ -58,7 +60,6 @@ export function TeachersDropdown({}) {
       <DropdownMenuContent align="start">
         <DropdownMenuLabel>Teachers</DropdownMenuLabel>
         <DropdownMenuSeparator />
-
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Link className="w-full" onClick={handleDialogClick}>
@@ -67,15 +68,15 @@ export function TeachersDropdown({}) {
           </DialogTrigger>
           <ResetPasswordModal onClose={setIsDialogOpen} userType="Teacher" />
         </Dialog>
-
-        <Link
-          to="create-teacher-account"
-          onClick={handleDropdownClick}
-          className="w-full"
-        >
-          <ButtonDropdownItem>Create Teacher Account</ButtonDropdownItem>
-        </Link>
-
+        {!isOnUatEnvironment ? (
+          <Link
+            to="create-teacher-account"
+            onClick={handleDropdownClick}
+            className="w-full"
+          >
+            <ButtonDropdownItem>Create Teacher Account</ButtonDropdownItem>
+          </Link>
+        ) : null}
         <Link to="teachers" onClick={handleDropdownClick} className="w-full">
           <ButtonDropdownItem>View All Teachers</ButtonDropdownItem>
         </Link>
