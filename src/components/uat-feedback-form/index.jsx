@@ -38,8 +38,8 @@ const schema = yup.object().shape({
 export default function UatFeedbackForm() {
   const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
 
-  // if (!isOnUatEnvironment) return null;
-  return null;
+  if (!isOnUatEnvironment) return null;
+  // return null;
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -64,7 +64,7 @@ export default function UatFeedbackForm() {
       <div className="absolute top-0 z-[99999999999999999] overflow-visible p-8 ">
         <TooltipProvider delayDuration={10}>
           <Tooltip>
-            <Draggable>
+            <Draggable bounds="body">
               <Accordion
                 type="single"
                 collapsible
