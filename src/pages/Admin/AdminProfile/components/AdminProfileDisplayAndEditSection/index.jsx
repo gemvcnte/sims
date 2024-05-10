@@ -45,6 +45,8 @@ const AdminProfileDisplayAndEditSection = () => {
     }
   };
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <>
       {/* <ToastContainer /> */}
@@ -74,9 +76,11 @@ const AdminProfileDisplayAndEditSection = () => {
       /> */}
 
         <footer className="mb-4 p-4 text-right md:mb-8">
-          <Button type="submit" disabled={isLoading}>
-            Save changes
-          </Button>
+          {!isOnUatEnvironment ? (
+            <Button type="submit" disabled={isLoading}>
+              Save changes
+            </Button>
+          ) : null}
         </footer>
       </form>
     </>

@@ -61,6 +61,8 @@ export default function EditSectionModal({ children, section }) {
     setLoading(false);
   };
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <>
       <Dialog>
@@ -112,6 +114,7 @@ export default function EditSectionModal({ children, section }) {
                 Name
               </Label>
               <Input
+                maxLength={isOnUatEnvironment ? 25 : null}
                 required
                 id="name"
                 placeholder="Enter Section Name"

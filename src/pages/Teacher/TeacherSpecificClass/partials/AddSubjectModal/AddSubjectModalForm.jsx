@@ -58,6 +58,8 @@ export default function AddSubjectModalForm() {
     }, 100);
   };
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSaveChanges)}>
@@ -81,6 +83,7 @@ export default function AddSubjectModalForm() {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      maxLength={isOnUatEnvironment ? 40 : null}
                       {...field}
                       id="name"
                       className="col-span-3"

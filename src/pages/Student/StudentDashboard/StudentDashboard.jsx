@@ -14,6 +14,8 @@ export default function StudentDashboard() {
 
   const firstName = user?.name.split(" ")[0];
 
+  const isOnUatEnvironment = import.meta.env.VITE_ENVIRONMENT === "uat";
+
   return (
     <ClassDetailsProvider>
       <main className="w-full">
@@ -24,7 +26,7 @@ export default function StudentDashboard() {
         <section className="flex flex-col gap-4 p-4 md:flex-row ">
           <ScheduleTable />
           <div className="order-1 flex min-w-[40%] flex-col gap-4 md:order-2 md:pr-4">
-            <ProfileProgressCard />
+            {!isOnUatEnvironment ? <ProfileProgressCard /> : null}
             <DashboardAnnouncementCard />
           </div>
         </section>
