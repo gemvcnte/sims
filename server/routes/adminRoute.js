@@ -150,7 +150,7 @@ verifyToken,
  adminController.getAllAnalytics);
 
 router.get("/analytics/dashboard", 
-// verifyToken,
+verifyToken,
  adminController.getDashboardAnalytics);
 
 // password
