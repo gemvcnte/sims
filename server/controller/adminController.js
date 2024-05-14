@@ -1712,6 +1712,12 @@ const getDashboardAnalytics = asyncHandler(async (req, res) => {
     const currentSchoolYear = globalSettings.schoolYear;
     const currentSemester = globalSettings.semester;
 
+    const totalPendingEnrollmentApplications = await StudentApplication.countDocuments({
+      "schoolYear.year": currentSchoolYear,
+      "schoolYear.semester": currentSemester,
+      "status": "pending",
+    });
+
     const totalStudents = await Student.countDocuments({
       "schoolYear.year": currentSchoolYear,
       "schoolYear.semester": currentSemester,
@@ -1722,16 +1728,10 @@ const getDashboardAnalytics = asyncHandler(async (req, res) => {
       "semester": currentSemester,
     });
 
-
-    const totalTeachers = await Teacher.countDocuments({});
-    const totalAdmins = await Admin.countDocuments({});
-
-    const totalFaculty = totalTeachers + totalAdmins 
-
     res.json({
+      totalPendingEnrollmentApplications,
       totalStudents,
       totalSections,
-      totalFaculty
     });
   } catch (error) {
     res.status(500).json({ message: `${error}` });
