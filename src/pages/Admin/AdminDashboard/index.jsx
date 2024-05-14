@@ -5,8 +5,8 @@ import ProfileProgressCard from "./partials/ProfileProgressCard";
 import { useTeacherAdminMode } from "@/hooks/useTeacherAdminMode";
 import AdminDashboardLayout from "./index.layout";
 import TotalStudentsCard from "./partials/TotalStudentsCard";
-import TotalFacultyCard from "./partials/TotalFacultyCard";
 import TotalSectionsCard from "./partials/TotalSectionsCard";
+import TotalPendingEnrollmentApplicationsCard from "./partials/TotalPendingEnrollmentApplicationsCard";
 
 export default function AdminDashboard() {
   const { isAdminMode } = useTeacherAdminMode();
@@ -22,7 +22,7 @@ export default function AdminDashboard() {
           {isAdminMode ? (
             <main className="order-2 flex w-full flex-col gap-4 p-4 pb-0 pt-0 sm:order-1 sm:flex-row sm:pt-4">
               <TotalStudentsCard />
-              <TotalFacultyCard />
+              <TotalPendingEnrollmentApplicationsCard />
               <TotalSectionsCard />
             </main>
           ) : null}
